@@ -62,7 +62,7 @@ module TorSearch
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
-    config.user_agent = "TorSearcher-v0.0.2"
+    config.user_agent = "TorSearcher-v0.0.3"
 
     # Enable the asset pipeline
     config.assets.enabled = true

@@ -227,6 +227,7 @@ class Crawler
     values
   end
   def tor_method(method = 'get', address = @url)
+    address.gsub!(/\.\//,'')
     Rails.logger.debug ("visiting #{address} with method #{method}")
     unless address =~ /https?:\/\//
       address = "http://#{address}"
