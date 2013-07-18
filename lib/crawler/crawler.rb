@@ -62,12 +62,12 @@ class Crawler
       checked = []
       result.links.each do |l|
         next if l.href.nil?
-        if checked.include? link.href
+        if checked.include? l.href
           Rails.logger.debug "Already checked #{l.href}"
           next
         end
         Rails.logger.debug("Got a link: #{l.href}")
-        checked << link.href
+        checked << l.href
         href = l.href.gsub(/^http:\/\//, '')
         anchor_text = l.text
 
