@@ -12,4 +12,7 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
+/log/*.log.lck
 /tmp
+
+/solr/data/*

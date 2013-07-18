@@ -10,8 +10,9 @@ class UserAgentMatcher < GenericMatcher
     data = HashWithIndifferentAccess.new({})
     data[:user_agent] = @request.user_agent
     data.merge!(@request.headers.reject{|k,v| k.include? '.'})
-    data.delete(:'HTTP_COOKIE')
-    data.delete(:'HTTP_USER_AGENT')
+    [:'REQUEST_PATH',:'ORIGINAL_FULLPATH',:'HTTP-COOKIE', :'HTTP_USER_AGENT':'SERVER_SOFTWARE',:'HTTP_X_REQUESTED_WITH',:'HTTP_X_CSRF_TOKEN'].each do |key|
+      data.delete(key)
+    end
     {
       name: "Request Headers",
       method: 'title',

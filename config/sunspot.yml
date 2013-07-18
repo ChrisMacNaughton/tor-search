@@ -5,7 +5,7 @@ production:
     port: 8983
     solr_jar: solr/solr-4.2.0/example/start.jar
     log_level: WARNING
-    max_memory: 3G
+    max_memory: 1G
     read_timeout: 2
     # open_timeout: 0.5
 
@@ -15,7 +15,7 @@ development:
     port: 8983
     solr_jar: solr/solr-4.2.0/example/start.jar
     log_level: INFO
-    max_memory: 3G
+    max_memory: 1G
 
 test:
   solr:
