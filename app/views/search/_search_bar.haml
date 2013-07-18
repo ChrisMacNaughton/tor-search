@@ -1,0 +1,5 @@
+-searched ||= ''
+=form_tag('/', method: "get", id: 'search', class: 'form-search') do
+  .input-append
+    =text_field_tag 'q', searched, class: 'search_bar search-query span6', id: "appendedInputButtons", autofocus: "autofocus"
+    =button_tag 'Search Tor', class: 'btn', type: "submit", name: ''

@@ -1,0 +1,30 @@
+<dataConfig>
+  <dataSource driver="org.postgresql.Driver" url="jdbc:postgresql://localhost/tor_search_development" user="tor_search" password="NLKEWYBTo47iylargBKS^%(48" readOnly="true" autoCommit="false" transactionIsolation="TRANSACTION_READ_COMMITTED" holdability="CLOSE_CURSORS_AT_COMMIT"/>
+  <document>
+    <entity name="page" query="select id, title, description, body from pages where body != '' and body is not null and title != '' and title is not null ORDER BY id asc"
+      deltaImportQuery="select id, title, description, body from pages where id='${dih.delta.id}' ORDER BY id asc"
+      deltaQuery="select id from pages where updated_at > '${dih.last_index_time}' ORDER BY id asc">
+      <field column="title" name="title_text" />
+      <field column="description" name="description_text" />
+      <field column="body" name="body_text" />
+      <field column="body" name="body_textp" />
+      <entity name="links" query="select anchor_text from links where to_target_type = 'Page' and to_target_id = ${page.id} ORDER BY updated_at asc limit 1000"
+        deltaImportQuery="select anchor_text from links where id='${dih.delta.id}' ORDER BY id asc"
+        deltaQuery="select id from links where updated_at > '${dih.last_index_time}' ORDER BY updated_at asc limit 1000"
+        parentDeltaQuery="select ID from pages where to_target_type='Page' and id=${links.to_target_id} ORDER BY id asc">
+        <field column="anchor_text" name="links_text" />
+      </entity>
+    </entity>
+    <entity name="image" query="select id, alt_text from images ORDER BY id asc"
+      deltaImportQuery="select id, alt_text from pages where id='${dih.delta.id}' ORDER BY id asc"
+      deltaQuery="select id from images where updated_at > '${dih.last_index_time}' ORDER BY id asc">
+      <field column="alt_text" name="alt_text_text" />
+      <entity name="links" query="select anchor_text from links where to_target_type = 'Image' and to_target_id = ${image.id} ORDER BY updated_at asc LIMIT 250"
+        deltaImportQuery="select anchor_text from links where id='${dih.delta.id}' ORDER BY updated_at asc limit 1000"
+        deltaQuery="select id from links where updated_at > '${dih.last_index_time}' ORDER BY updated_at asc limit 1000"
+        parentDeltaQuery="select ID from images where to_target_type='Image' and id=${links.to_target_id} ORDER BY id asc">
+        <field column="anchor_text" name="links_text" />
+      </entity>
+    </entity>
+  </document>
+</dataConfig>

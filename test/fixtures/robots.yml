@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  last_checked: 2013-07-09 10:00:28
+  domain_id: 
+  allow: MyString
+  disallow: MyString
+
+two:
+  last_checked: 2013-07-09 10:00:28
+  domain_id: 
+  allow: MyString
+  disallow: MyString

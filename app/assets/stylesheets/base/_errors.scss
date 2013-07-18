@@ -1,0 +1,78 @@
+@import "variables";
+
+//Mixin for Floats
+@mixin float($float: left, $position: relative){
+  float:$float;
+  position:$position;
+}
+
+
+.field_with_errors {
+    position:       relative;
+    label {
+      color:        $alertred;
+      font-style:   italic;  }
+
+    input, select {
+      border:       1px solid $alertred !important;
+    }
+
+    .chzn-single {
+      background:   $mtred;
+      color:        $black;
+      div {
+        background: lighten($mtred, 20);  }  }
+}
+
+.formErrorMessage {
+  color:            $mtred;
+}
+
+#error_explanation {
+  color:            $red;
+  h2 {
+    font: {
+      family:       $sansFontFamily;
+      size:         .8em;
+      style:        italic;
+      weight:       900;  }
+    width:          450px;  }
+  ul{
+    float:          none;
+    font-size:      .8em;
+    left:           10px;
+    padding:        0 0 10px 10px;
+    li {
+      display:      list-item;
+      list-style:   disc inside;  }  }
+}
+
+form .error_mesg {
+  color:            $mtred;
+  font-style:       italic;
+  margin:           0 5px;
+}
+
+/* Forms, error highlighting */
+.formErrorMessage {
+  color:            $red;
+}
+.errors-holder {
+  @include float($position:absolute);
+}
+.formErrorList {
+  $primary:         $red;
+  @include float;
+  background:       lighten($cream, 2);
+  border:           none;
+  color:            $primary;
+  margin:           5px 0 5px 10px;
+  padding:          5px;
+  h5 {
+    margin:         2px 8px;
+    width:          100%;
+    &.title {
+      color:        mix($charcoal, $primary, 70%);
+      margin:       2px 0;
+    }  }
+}

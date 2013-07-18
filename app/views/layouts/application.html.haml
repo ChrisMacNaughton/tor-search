@@ -1,0 +1,26 @@
+!!! 5
+%html
+  %head
+    %title TorSearch
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = #stylesheet_link_tag params[:controller], media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+
+  %body
+    .container-fluid
+      -unless notice.nil? && alert.nil?
+        .row.span12
+          - if flash[:alert]
+            #flash_alert.alert
+              .center-edge.shadow
+                = flash[:alert]
+          - if flash[:notice]
+            #flash_alert.notice
+              .center-edge.shadow
+                = flash[:notice]
+      .row.span8.offset2
+        = yield
+    .container-fluid
+      =yield(:footer)
+    =yield(:javascripts)

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  from_page_id: 1
+  to_page_id: 1
+  anchor_text: MyText
+
+two:
+  from_page_id: 1
+  to_page_id: 1
+  anchor_text: MyText

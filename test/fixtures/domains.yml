@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  path: MyString
+  last_crawled: 2013-07-09 09:03:17
+
+two:
+  path: MyString
+  last_crawled: 2013-07-09 09:03:17

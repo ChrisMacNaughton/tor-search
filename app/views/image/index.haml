@@ -1,0 +1,6 @@
+.home
+  =render partial: 'search_bar'
+  %p.muted
+    about
+    =number_with_precision @total_images_found, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
+    images found

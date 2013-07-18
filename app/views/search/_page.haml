@@ -1,0 +1,9 @@
+.page-listing.span8
+  -url = "http://#{page.stored(:domain_path)[0]}/#{page.stored(:path_texts)}"
+  %a.title{href:url, data: {id: page.primary_key}}= page.stored(:title)[0] || "<No title>"
+  %span.path= url
+  .description
+    -if page.stored(:description) == ""
+      %p.muted No description provided
+    -else
+      =page.stored(:description)[0]

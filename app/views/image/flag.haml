@@ -1,0 +1,9 @@
+%h1 Why are you flagging this image?
+<img src='#{@image.image.url('thumbnail')}' />
+%br/
+%br
+= form_for @flag, as: :post, url: save_flag_path(@flag) do |f|
+  =select_tag :flag_reason, options_for_select([['Select a reason', nil]] + FlagReason.all.map{|f| [f.description, f.id]})
+  =f.text_field :reason
+  =f.hidden_field :content_id, value: @image.id
+  =f.submit

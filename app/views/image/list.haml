@@ -1,0 +1,28 @@
+-@images.each_slice(5) do |row|
+  .row-fluid.span10.offset1
+  -row.each do |image|
+    .span1
+      =link_to "<img src='#{image.image.url('thumbnail')}' />".html_safe, image.image.url('original'), rel: 'shadowbox;player=img', title: "#{link_to("Source", image.url)} | #{link_to("<i class='icon-flag'></i>".html_safe, image_flag_path(image))}", style: "padding-top: 15px; position: relative"
+
+.row.span10.offset1
+  =will_paginate(@images)
+
+:javascript
+  $('.flagable').on('mouseover', function(e){
+    target = $(e.target).parent().parent()
+    image_id = target.data('id')
+
+    $('#' + image_id).toggle()
+    //debugger
+  })
+
+  $('.flagable').on('mouseout', function(e){
+    target = $(e.target).parent().parent()
+    image_id = target.data('id')
+
+    $('#' + image_id).toggle()
+    //debugger
+  })
+  $().ready(function(){
+  Shadowbox.init();
+  });

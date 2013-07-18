@@ -1,0 +1,24 @@
+.results
+  =render partial: 'search_bar', locals: {searched: @search_term}
+  %p.muted#totals
+    About
+    =number_with_precision @search.total, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
+    results
+  .search-results
+    -i = 0
+    -@search.results.each do |image|
+      -i += 1
+      -if i % 10 == 0
+        %br
+      =link_to "<img src='#{image.image}' />".html_safe, image.url, rel: 'shadowbox'
+    .span8
+      =will_paginate @search.results
+:javascript
+  $(document).ready(function(){
+    $('.search-results').on('mousedown', function(e){
+      target = $(e.target)[0]
+
+      href = target.getAttribute('href')
+      target.setAttribute('href', '/r?s=#{@search_id}&p='+target.getAttribute('data-id'))
+    });
+  })

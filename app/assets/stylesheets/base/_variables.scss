@@ -1,0 +1,132 @@
+// variables.scss
+
+// Color Sets
+
+//Gray Scale Colors
+$black:           #000000;
+$lightblack:      lighten($black, 5%);
+$darkgray:        lighten($black, 15%);
+$gray333:         lighten($black, 20%);
+$charcoal:        lighten($black, 25%);
+$gray666:         lighten($black, 40%);
+$gray:            lighten($black, 50%);
+$mediumgray:      lighten($black, 65%);
+$lightgray:       lighten($black, 80%);
+$gray85:          lighten($black, 85%);
+$offwhite:        lighten($black, 90%);
+$bone:            lighten($black, 96%);
+$cream:           #F7F6EF;
+$ltwhite:         #F1F1F1;
+$white:           #FFFFFF;
+
+// Accent Colors
+$red:             #F00000;
+$alertred:        #990000;
+$lightgreen:      #6AA001;
+$alertgreen:      #6CCD67;
+$mutedgreen:      #7e9837;
+$lime:            #6ea31f;
+$lemon:           #ecff45;
+$orange:          #F97129;
+$darkorange:      darken($orange, 10%);  //#CB6928;
+
+//Blues
+$darkblue:        #0a3953;
+$mediumblue:      #004E6C;
+$skyblue:         #8fc1df;
+$listblue:        #E2F1FE;
+$dklistblue:      #C5E3FD;
+$realdkblue:      darken($darkblue,2%);
+$mmblue:          #44728e;
+
+//Button colors
+$buttonBlue:      $darkblue;
+$buttonGreen:     #367D33;
+$buttonOrange:    $darkorange; //#C25217;
+$buttonLightBlue: #2F8AA9;
+$buttonRed:       #AE100A;
+
+$ltgreen:         #A4C384;
+$ltorange:        #F9A774;
+$ltblue:          #A7DFF2;
+$ltyellow:        #FFE499;
+$ltred:           #EF3030;
+
+// muted
+$mtgreen:         #B6CC9F;
+$mtorange:        #F4BA92;
+$mtblue:          #B6E2EF;
+$mtyellow:        #FFEEC2;
+$mtred:           #EF4848;
+$mtgray:          #BEBEBF;
+
+//Banner/Footer Color
+$bannerBlue:      #003C4F; //#004661;
+$bannerGreen:     #367D33;
+
+
+//List Colors
+
+$listblue-dk:#A6D5FE;
+$listblue-mt:lighten($listblue-dk, 5);
+$listblue-lt:lighten($listblue-dk, 10);
+
+$listgreen-dk:#8ACC66;
+$listgreen-mt:lighten($listgreen-dk, 10);
+$listgreen-lt:lighten($listgreen-dk, 20);
+
+$listyellow-dk:#FFFA1E;
+$listyellow-mt:lighten($listyellow-dk, 10);
+$listyellow-lt:lighten($listyellow-dk, 20);
+
+$listorange-dk:#FF8337;
+$listorange-mt:lighten($listorange-dk, 10);
+$listorange-lt:lighten($listorange-dk, 20);
+
+$listred-dk:#D13232;
+$listred-mt:lighten($listred-dk, 10);
+$listred-lt:lighten($listred-dk, 20);
+
+$listpurple-dk:#B693D1;
+$listpurple-mt:lighten($listpurple-dk, 10%);
+$listpurple-lt:lighten($listpurple-dk, 20%);
+
+
+//Base
+$bodyBackground:  $white;
+$textColor:       $charcoal;
+
+
+//Links
+$linkColor:       $textColor;
+$linkColorHover:  $orange;
+
+
+//Typography
+$sansFontFamily:    "Helvetica Neue", Helvetica, Arial, sans-serif;
+$serifFontFamily:   "Georgia", "Times New Roman", Times, serif;
+$monoFontFamily:    Menlo, Monaco, Consolas, "Courier New", monospace;
+$adminFontFamily:   Arial, sans-serif;
+$fatFontFamily:     "Gotham", $monoFontFamily;
+$ChunkFiveRegular:  "ChunkFiveRegular", $sansFontFamily;
+
+$headingFontFamily: $sansFontFamily;
+$headingFontColor:  $charcoal;
+
+$baseFontSize:      14px;
+$baseFontFamily:    $sansFontFamily;
+$baseLineHeight:    18px;
+// $altFontFamily:     "Francois One", $sansFontFamily;
+
+
+
+// GRID
+// Default 940px grid
+$gridColumns:             12;
+$gridColumnWidth:         60px;
+$gridGutterWidth:         20px;
+$gridRowWidth:            ($gridColumns * $gridColumnWidth) + ($gridGutterWidth * ($gridColumns - 1));
+
+// Fluid grid
+$fluidGridColumnWidth:    6.382978723%;
+$fluidGridGutterWidth:    2.127659574%;

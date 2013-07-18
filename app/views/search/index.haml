@@ -1,0 +1,16 @@
+.home
+  =render partial: 'search_bar'
+  %p.muted
+    =number_with_precision @total_pages_indexed, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
+    pages indexed on
+    =number_with_precision @total_domains_found, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
+    domains
+-content_for(:footer) do
+  #footer_home
+    .row-fluid
+      #footer_home_left
+        =#link_to "Instant", "#"
+      #footer_home_right
+      .span6.offset3
+        %p
+          Bitcoin Donations Accepted at #{TorSearch::Application.config.tor_search.bitcoin_address}

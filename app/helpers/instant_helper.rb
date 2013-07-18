@@ -1,0 +1,2 @@
+module InstantHelper
+end

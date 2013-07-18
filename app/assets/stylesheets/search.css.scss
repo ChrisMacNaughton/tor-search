@@ -1,0 +1,64 @@
+// Place all the styles related to the Search controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.home{
+  //position: fixed;
+  padding-top: 212px;
+}
+.results{
+  margin-top: 25px;
+}
+#search{
+  width: 100%
+}
+.page-listing{
+  .title{
+    display: block;
+    width: 100%;
+    margin-bottom: -5px;
+  }
+  .path{
+    color: #093;
+    font-size: 0.8em;
+  }
+}
+#instant_results {
+  min-height: 50px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.instant-result {
+  padding-left: 20px;
+  display: block;
+  hr{
+    margin-top: 5px;
+    margin-bottom: 0px;
+  }
+  dt{
+    //float: left;
+    font-size: .9em;
+  }
+  dd{
+    //float: left;
+    padding-right: 25px;
+    font-size: .9em;
+  }
+  .inline {
+    dt{
+      display: inline-block;
+    }
+    dd{
+      display: inline-block;
+    }
+  }
+  .ordered {
+    dt{
+      display: block;
+    }
+    dd{
+      display: block;
+    }
+  }
+}
