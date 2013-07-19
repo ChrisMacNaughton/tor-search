@@ -1,4 +1,4 @@
-worker_processes 6
+worker_processes 3
 
 preload_app true
 # What to do right before exec()-ing the new unicorn binary
