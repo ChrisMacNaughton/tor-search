@@ -60,7 +60,7 @@ group :development do
 end
 # Use unicorn as the app server
 gem 'unicorn'
-
+gem 'newrelic_rpm'
 gem "acts_as_textcaptcha", "~> 3.0.10"
 # Use Capistrano for deployment
-# gem 'capistrano', group: :development
+gem 'capistrano', group: :development

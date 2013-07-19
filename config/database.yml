@@ -38,4 +38,4 @@ test: &test
 
 production:
   <<: *development
-  #database: tor_search_production
+  database: tor_search_production

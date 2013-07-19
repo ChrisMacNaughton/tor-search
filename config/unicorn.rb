@@ -6,6 +6,15 @@ else
 end
 preload_app true
 # What to do before we fork a worker
+
+# This is where we specify the socket.
+# We will point the upstream Nginx module to this socket later on
+listen "/var/rails/tor_search/current/tmp/sockets/unicorn.sock", :backlog => 64
+
+pid "/var/rails/tor_search/tmp/pids/unicorn.pid"
+
+working_directory "/var/rails/tor_search/current"
+
 before_fork do |server, worker|
     defined?(ActiveRecord::Base) && ActiveRecord::Base.connection.disconnect!
 

@@ -4,7 +4,8 @@
 
 .home{
   //position: fixed;
-  padding-top: 212px;
+  padding-top: 92px;
+  min-height: 301px;
 }
 .results{
   margin-top: 25px;
@@ -61,4 +62,12 @@
       display: block;
     }
   }
+}
+.logo {
+  height: 64px;
+  width: 188px;
+  background-image: url('/logo.png');
+}
+.logo-large {
+  background-image: url('/logo-large.png');
 }

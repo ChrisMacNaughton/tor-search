@@ -1,4 +1,5 @@
 .home
+  .logo
   =render partial: 'search_bar'
   %p.muted
     =number_with_precision @total_pages_indexed, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
