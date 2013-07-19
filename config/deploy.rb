@@ -40,8 +40,7 @@ namespace :deploy do
   end
 
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "/etc/init.d/unicorn stop"
-    run "/etc/init.d/unicorn start"
+    run "/etc/init.d/unicorn restart"
   end
 
   # Precompile assets
