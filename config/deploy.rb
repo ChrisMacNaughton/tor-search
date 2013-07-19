@@ -11,7 +11,7 @@ role :db,  "ec2-54-224-36-225.compute-1.amazonaws.com", :primary => true # This 
 
 # if you want to clean up old releases on each deploy uncomment this:
 after "deploy:restart", "deploy:cleanup"
-
+after "deploy:restart", "deploy:restart_solr"
 set :rails_env, :production
 
 set :deploy_to, "/var/rails/#{application}"
@@ -27,7 +27,9 @@ set :use_sudo, true
 
 
 namespace :deploy do
-
+  task :solr_restart, roles: :app, except: {no_release: true} do
+    run "curl http://localhost:8983/solr/admin/cores?wt=json&action=RELOAD&core=collection1"
+  end
   task :start, :roles => :app, :except => { :no_release => true } do
     run "/etc/init.d/unicorn start"
   end
