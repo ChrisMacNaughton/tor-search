@@ -40,7 +40,8 @@ namespace :deploy do
   end
 
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "kill -s USR2 `cat /var/rails/tor_search/shared/pids/unicorn.pid`"
+    run "/etc/init.d/unicorn stop"
+    run "/etc/init.d/unicorn start"
   end
 
   # Precompile assets
