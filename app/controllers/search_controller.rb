@@ -59,9 +59,9 @@ class SearchController < ApplicationController
     render :search
   end
   def redirect
-    page = Page.find(params[:p])
+    page = Page.where(id: params[:p]).first
 
-    search = Search.find(params[:s])
+    search = Search.where(id: params[:s]).first
 
 
     Click.create(search: search, page: page)

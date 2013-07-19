@@ -10,6 +10,7 @@ role :db,  "ec2-54-224-36-225.compute-1.amazonaws.com", :primary => true # This 
 #role :db,  "your slave db-server here"
 
 # if you want to clean up old releases on each deploy uncomment this:
+after "deploy:update_code", "deploy:migrate"
 after "deploy:restart", "deploy:cleanup"
 after "deploy:restart", "deploy:restart_solr"
 set :rails_env, :production
@@ -39,7 +40,7 @@ namespace :deploy do
   end
 
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "kill -s USR2 `cat /var/rails/tor_search/tmp/pids/unicorn.pid`"
+    run "kill -s USR2 `cat /var/rails/tor_search/shared/pids/unicorn.pid`"
   end
 
   # Precompile assets
