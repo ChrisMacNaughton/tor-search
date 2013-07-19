@@ -11,7 +11,7 @@ preload_app true
 # We will point the upstream Nginx module to this socket later on
 listen "/var/rails/tor_search/current/tmp/sockets/unicorn.sock", :backlog => 64
 
-pid "/var/rails/tor_search/tmp/pids/unicorn.pid"
+pid "/var/rails/tor_search/current/tmp/pids/unicorn.pid"
 
 working_directory "/var/rails/tor_search/current"
 
