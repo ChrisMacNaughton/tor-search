@@ -17,6 +17,9 @@ set :rails_env, :production
 set :deploy_to, "/var/rails/#{application}"
 
 set :scm, :git
+# Instead of doing a full clone, get only changes
+set :deploy_via, :remote_cache
+set :keep_releases, 3
 
 # user on the server
 set :user, "ubuntu"
