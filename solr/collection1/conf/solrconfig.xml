@@ -74,12 +74,7 @@
   <lib dir="/usr/local/Solr/Home/contrib/clustering/lib/" regex=".*\.jar" />
   <lib dir="/usr/local/Solr/Home/contrib/langid/lib/" regex=".*\.jar" />
   <lib dir="/usr/local/Solr/Home/contrib/velocity/lib" regex=".*\.jar" />
-  <lib dir="../solr-4.2.0/dist/" regex="solr-cell-\d.*\.jar" />
-  <lib dir="../solr-4.2.0/dist/" regex="solr-clustering-\d.*\.jar" />
-  <lib dir="../solr-4.2.0/dist/" regex="solr-dataimporthandler-\d.*\.jar" />
-  <lib dir="../solr-4.2.0/dist/" regex="solr-langid-\d.*\.jar" />
-  <lib dir="../solr-4.2.0/dist/" regex="solr-velocity-\d.*\.jar" />
-  <lib dir="./lib/postgresql-9.2-1002.jdbc4.jar" />
+
   <!-- If a 'dir' option (with or without a regex) is used and nothing
        is found that matches, it will be ignored
     -->
@@ -823,11 +818,7 @@
      </lst>
   </requestHandler>
   <requestHandler name="/update/csv" class="solr.CSVRequestHandler" startup="lazy"/>
-  <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
-    <lst name="defaults">
-      <str name="config">data-config.xml</str>
-    </lst>
-  </requestHandler>
+
   <!-- realtime get handler, guaranteed to return the latest stored fields of
        any document, without the need to commit or open a new searcher.  The
        current implementation relies on the updateLog feature being enabled. -->
