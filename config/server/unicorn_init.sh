@@ -20,7 +20,7 @@ set -e
 TIMEOUT=${TIMEOUT-60}
 APP_ROOT=/var/rails/tor_search/current
 PID=$APP_ROOT/tmp/pids/unicorn.pid
-CMD="bundle exec unicorn_rails -D -c $APP_ROOT/config/server/unicorn.rb -E production"
+CMD="bundle exec unicorn_rails -D -c $APP_ROOT/config/unicorn.rb -E production"
 action="$1"
 set -u
 

@@ -49,13 +49,13 @@ namespace :deploy do
   %w[start stop].each do |command|
     desc "#{command} unicorn server"
     task command, :roles => :app, :except => { :no_release => true } do
-      run "#{current_path}/config/server/#{rails_env}/unicorn_init.sh #{command}"
+      run "#{current_path}/config/server/unicorn_init.sh #{command}"
     end
   end
 
   desc "restart unicorn server"
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{current_path}/config/server/#{rails_env}/unicorn_init.sh upgrade"
+    run "#{current_path}/config/server/unicorn_init.sh upgrade"
   end
 
 

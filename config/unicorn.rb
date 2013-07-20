@@ -14,7 +14,7 @@
 # config/server/production/unicorn.rb
 
 
-app_path          = "/home/app/public_html/app_production/current"
+app_path          = "/var/rails/tor_search/current"
 
 working_directory "#{app_path}"
 pid               "#{app_path}/tmp/pids/unicorn.pid"
