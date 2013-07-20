@@ -1,27 +1,36 @@
+# Capistrano configuration. Now with TRUE zero-downtime unless DB migration.
+#
+# require 'new_relic/recipes'         - Newrelic notification about deployment
+# require 'capistrano/ext/multistage' - We use 2 deployment environment: staging and production.
+# set :deploy_via, :remote_cache      - fetch only latest changes during deployment
+# set :normalize_asset_timestamps     - no need to touch (date modification) every assets
+# "deploy:web:disable"                - traditional maintenance page (during DB migrations deployment)
+# task :restart                       - Unicorn with preload_app should be reloaded by USR2+QUIT signals, not HUP
+#
+# http://unicorn.bogomips.org/SIGNALS.html
+# "If “preload_app” is true, then application code changes will have no effect;
+# USR2 + QUIT (see below) must be used to load newer code in this case"
+#
+# config/deploy.rb
+
+
 require 'bundler/capistrano'
 require 'capistrano/ext/multistage'
 require 'new_relic/recipes'
 
 set :stages,                     %w(staging production)
-set :default_stage,              "production"
+set :default_stage,              "staging"
 
 set :scm,                        :git
 set :repository,                 "..."
 set :deploy_via,                 :remote_cache
 default_run_options[:pty]        = true
 
-set :application,                "tor_search"
+set :application,                "app"
 set :use_sudo,                   false
 set :user,                       "app"
 set :normalize_asset_timestamps, false
 
-# set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
-
-role :web, "ec2-54-224-36-225.compute-1.amazonaws.com"                          # Your HTTP server, Apache/etc
-role :app, "ec2-54-224-36-225.compute-1.amazonaws.com"                          # This may be the same as your `Web` server
-role :db,  "ec2-54-224-36-225.compute-1.amazonaws.com", :primary => true # This is where Rails migrations will run
-#role :db,  "your slave db-server here"
 
 before "deploy",                 "deploy:delayed_job:stop"
 before "deploy:migrations",      "deploy:delayed_job:stop"
@@ -29,25 +38,9 @@ before "deploy:migrations",      "deploy:delayed_job:stop"
 after  "deploy:update_code",     "deploy:symlink_shared"
 before "deploy:migrate",         "deploy:web:disable", "deploy:db:backup"
 
-after  "deploy",                                      "newrelic:notice_deployment", "deploy:cleanup", "deploy:delayed_job:restart"
+after  "deploy",                                      "newrelic:notice_deployment", "deploy:cleanup", "deploy:delayed_job:restart", "deploy:solr_restart"
 after  "deploy:migrations",      "deploy:web:enable", "newrelic:notice_deployment", "deploy:cleanup", "deploy:delayed_job:restart"
 
-# if you want to clean up old releases on each deploy uncomment this:
-after "deploy:update_code", "deploy:migrate"
-after "deploy:restart", "deploy:cleanup"
-after "deploy:restart", "deploy:restart_solr"
-set :rails_env, :production
-
-set :deploy_to, "/var/rails/#{application}"
-
-set :scm, :git
-# Instead of doing a full clone, get only changes
-set :deploy_via, :remote_cache
-set :keep_releases, 3
-
-# user on the server
-set :user, "ubuntu"
-set :use_sudo, true
 
 namespace :deploy do
   task :solr_restart, roles: :app, except: {no_release: true} do
@@ -122,15 +115,3 @@ namespace :log do
     end
   end
 end
-
-# if you're still using the script/reaper helper you will need
-# these http://github.com/rails/irs_process_scripts
-
-# If you are using Passenger mod_rails uncomment this:
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-# end
