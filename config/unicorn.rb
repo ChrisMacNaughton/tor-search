@@ -5,7 +5,7 @@ preload_app true
 before_exec do |server|
   ENV['BUNDLE_GEMFILE'] = '/var/rails/tor_search/current/Gemfile'
 end
-
+working_directory '/var/rails/tor_search/current'
 # What to do before we fork a worker
 before_fork do |server, worker|
     defined?(ActiveRecord::Base) && ActiveRecord::Base.connection.disconnect!
