@@ -66,6 +66,6 @@ class SearchController < ApplicationController
 
     Click.create(search: search, page: page)
 
-    redirect_to page.url and return
+    render text: {status: 'ok'} and return
   end
 end

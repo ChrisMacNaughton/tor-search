@@ -53,6 +53,12 @@
         target = $(e.target)[0]
 
         href = target.getAttribute('href')
-        target.setAttribute('href', '/r?s=#{@search_id}&p='+target.getAttribute('data-id'))
+        $.get('/r?s=#{@search_id}&p='+target.getAttribute('data-id'));
+        wait_for = 200;
+        wait_for += (new Date).getTime();
+        _results = [];
+        while ((new Date).getTime() < wait_for) {
+          _results.push(i = wait_for);
+        }
       });
     })
