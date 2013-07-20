@@ -3,7 +3,7 @@ require 'capistrano/ext/multistage'
 require 'new_relic/recipes'
 
 set :stages,                     %w(staging production)
-set :default_stage,              "staging"
+set :default_stage,              "production"
 
 set :scm,                        :git
 set :repository,                 "..."
