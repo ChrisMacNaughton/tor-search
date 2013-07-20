@@ -19,16 +19,16 @@ require 'capistrano/ext/multistage'
 require 'new_relic/recipes'
 
 set :stages,                     %w(staging production)
-set :default_stage,              "staging"
+set :default_stage,              "production"
 
 set :scm,                        :git
-set :repository,                 "..."
+set :repository,                 "git@bitbucket.org:IceyEC/torsearch.git"
 set :deploy_via,                 :remote_cache
 default_run_options[:pty]        = true
 
 set :application,                "app"
 set :use_sudo,                   false
-set :user,                       "app"
+set :user,                       "ubuntu"
 set :normalize_asset_timestamps, false
 
 
