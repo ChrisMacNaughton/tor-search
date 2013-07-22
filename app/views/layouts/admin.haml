@@ -1,0 +1,27 @@
+!!! 5
+%html{'ng-app' => true}
+  %head
+    %title TorSearch Admin
+    = stylesheet_link_tag    "admin", media: "all"
+    = #stylesheet_link_tag params[:controller], media: "all", "data-turbolinks-track" => true
+    =javascript_include_tag "https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"
+    = javascript_include_tag "admin"
+    = csrf_meta_tags
+
+  %body
+    .container-fluid
+      -unless notice.nil? && alert.nil?
+        .row.span12
+          - if flash[:alert]
+            #flash_alert.alert
+              .center-edge.shadow
+                = flash[:alert]
+          - if flash[:notice]
+            #flash_alert.notice
+              .center-edge.shadow
+                = flash[:notice]
+      .row.span8.offset2
+        = yield
+    .container-fluid
+      =yield(:footer)
+    =yield(:javascripts)

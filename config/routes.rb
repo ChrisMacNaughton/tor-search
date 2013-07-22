@@ -1,5 +1,7 @@
 TorSearch::Application.routes.draw do
 
+  devise_for :admins
+
   root to: 'search#index'
 
   get 'r' => 'search#redirect', as: :redirect
@@ -7,6 +9,14 @@ TorSearch::Application.routes.draw do
   post 'add-domain' => 'domain#submit', as: :post_new_link
 
   get 'instant' => 'instant#new', as: :instant
+
+  # Admin routes
+  get 'admin' => 'admin#index'
+  get 'admin/searches' => 'admin#searches', as: :admin_searches
+  get 'admin/searches/:id/clicks' => 'admin#clicks', as: :admin_clicks
+  get 'admin/pages' => 'admin#pages', as: :admin_pages
+  get 'admin/page' => 'admin#page', as: :admin_page
+
   #get '/images' => 'image#index'
   #get '/images/list' => 'image#list'
   #get '/images/flag/:id' => 'image#flag', as: 'image_flag'

@@ -15,7 +15,8 @@
 //= require turbolinks
 //= require bootstrap
 //= require shadowbox
-//= require_tree .
+//= require instant
+//= require search
 String.prototype.titleize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
 }

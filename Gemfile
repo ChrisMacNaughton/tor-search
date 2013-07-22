@@ -23,6 +23,8 @@ gem 'socksify', require: false
 gem 'mechanize', require: false
 gem 'paperclip', '~> 3.0'
 
+gem 'devise'
+
 gem 'haml'
 gem 'haml-rails'
 # Use CoffeeScript for .js.coffee assets and views

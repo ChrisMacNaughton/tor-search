@@ -1,0 +1,10 @@
+.row-fluid
+  .span4
+  .span9#searches
+
+.row-fluid
+  .angular.span12
+    %div{:'ng-controller' => "AdminCtrl"}
+      %ul.unstyled
+        %li{ :'ng-repeat' => "search in searches"}
+          %span {{search.term}}

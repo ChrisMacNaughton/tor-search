@@ -68,6 +68,11 @@ GEM
     delayed_job_active_record (0.4.4)
       activerecord (>= 2.1.0, < 4)
       delayed_job (~> 3.0)
+    devise (2.2.4)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (~> 3.1)
+      warden (~> 1.2.1)
     domain_name (0.5.12)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (0.8.0)
@@ -134,6 +139,7 @@ GEM
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     ntlm-http (0.1.1)
+    orm_adapter (0.4.0)
     paperclip (3.4.2)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
@@ -215,6 +221,8 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    warden (1.2.1)
+      rack (>= 1.0)
     webrobots (0.1.1)
     will_paginate (3.0.4)
 
@@ -229,6 +237,7 @@ DEPENDENCIES
   daemons
   debugger
   delayed_job_active_record
+  devise
   foreman
   haml
   haml-rails
