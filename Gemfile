@@ -60,6 +60,8 @@ group :development do
   gem 'better_errors'
   gem 'foreman'
 end
+
+gem 'pubnub'
 # Use unicorn as the app server
 gem 'unicorn'
 gem 'newrelic_rpm'

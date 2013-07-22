@@ -11,6 +11,13 @@ class SearchController < ApplicationController
   end
 
   def search
+    pubnub = Pubnub.new(
+      :publish_key   => Rails::application.config.tor_search.pub_nub.publish_key,
+      :subscribe_key => Rails::application.config.tor_search.pub_nub.subscribe_key,
+      :secret_key    => Rails::application.config.tor_search.pub_nub.secret_key,
+      :cipher_key    => Rails::application.config.tor_search.pub_nub.cipher_key,
+      :ssl           => Rails::application.config.tor_search.pub_nub.ssl
+    )
     @search_term = params[:q]
 
     if @search_term.include? 'site:'
@@ -56,6 +63,11 @@ class SearchController < ApplicationController
 
     s = Search.create(query: params[:q], results_count: @search.total)
     @search_id = s.id
+    pubnub.publish(
+      channel: :searches,
+      message: {id: s.id, term: params[:q]},
+      callback: lambda { |message| puts(message) }
+    )
     render :search
   end
   def redirect

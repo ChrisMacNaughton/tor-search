@@ -1,6 +1,6 @@
 TorSearch::Application.routes.draw do
 
-  devise_for :admins
+  devise_for :admin
 
   root to: 'search#index'
 
@@ -13,6 +13,7 @@ TorSearch::Application.routes.draw do
   # Admin routes
   get 'admin' => 'admin#index'
   get 'admin/searches' => 'admin#searches', as: :admin_searches
+  get 'admin/searches/:id' => 'admin#search', as: :admin_search
   get 'admin/searches/:id/clicks' => 'admin#clicks', as: :admin_clicks
   get 'admin/pages' => 'admin#pages', as: :admin_pages
   get 'admin/page' => 'admin#page', as: :admin_page

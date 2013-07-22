@@ -6,6 +6,7 @@
     = #stylesheet_link_tag params[:controller], media: "all", "data-turbolinks-track" => true
     =javascript_include_tag "https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"
     = javascript_include_tag "admin"
+
     = csrf_meta_tags
 
   %body
@@ -20,7 +21,8 @@
             #flash_alert.notice
               .center-edge.shadow
                 = flash[:notice]
-      .row.span8.offset2
+      .row-fluid.span12
+      .row-fluid.span12
         = yield
     .container-fluid
       =yield(:footer)

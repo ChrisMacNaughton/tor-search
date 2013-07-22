@@ -80,5 +80,12 @@ module TorSearch
     config.tor_search.page_interval = 24.hours
     config.tor_search.tor_url = 'http://kbhpodhnfxl3clb4.onion'
     config.tor_search.bitcoin_address = "1MkH4pGzCtpyNUDuM9mZsftYCfWrsALprt"
+
+    config.tor_search.pub_nub = ActiveSupport::OrderedOptions.new
+    config.tor_search.pub_nub.publish_key = 'pub-c-64274781-1ba5-4e0e-92fa-dde91017cfb6'
+    config.tor_search.pub_nub.subscribe_key = 'sub-c-5c3d413e-f314-11e2-8175-02ee2ddab7fe'
+    config.tor_search.pub_nub.secret_key = 'sec-c-YTE0ZTU1MTEtMDVjZi00M2FmLWI1YTAtYTBmNjY4MDZjZDY5'
+    config.tor_search.pub_nub.cipher_key = nil
+    config.tor_search.pub_nub.ssl = nil
   end
 end
