@@ -1,8 +1,5 @@
-function IndexSearchesCtrl($scope, $http) {
+function IndexSearchesRealtimeCtrl($scope) {
   $scope.searches = [];
-  $http.get('admin/searches.json').success(function(data) {
-    $scope.searches = data;
-  });
 
   $scope.realtimeStatus = "Connecting...";
   $scope.channel = "searches";
@@ -43,5 +40,4 @@ function IndexSearchesCtrl($scope, $http) {
     }
 })
 }
-IndexSearchesCtrl.$inject = ['$scope', '$http'];
-
+IndexSearchesRealtimeCtrl.$inject = ['$scope'];

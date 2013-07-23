@@ -30,6 +30,8 @@ gem 'haml-rails'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails'
 
+gem 'angularjs-rails-resource'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

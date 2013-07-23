@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130721000737) do
+ActiveRecord::Schema.define(:version => 20130723180522) do
+
+  create_table "admin_searches", :force => true do |t|
+    t.integer "admin_id"
+    t.string  "controller_class"
+    t.text    "search_params"
+    t.text    "sort_params"
+  end
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -165,8 +172,9 @@ ActiveRecord::Schema.define(:version => 20130721000737) do
   create_table "searches", :force => true do |t|
     t.string   "query"
     t.integer  "results_count"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "clicks_count",  :default => 0
   end
 
 end

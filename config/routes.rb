@@ -12,8 +12,10 @@ TorSearch::Application.routes.draw do
 
   # Admin routes
   get 'admin' => 'admin#index'
-  get 'admin/searches' => 'admin#searches', as: :admin_searches
-  get 'admin/searches/:id' => 'admin#search', as: :admin_search
+  namespace :admin do
+    get 'searches' => 'search#index', as: :admin_searches
+    get 'searches/:id' => 'search#show', as: :admin_search
+  end
   get 'admin/searches/:id/clicks' => 'admin#clicks', as: :admin_clicks
   get 'admin/pages' => 'admin#pages', as: :admin_pages
   get 'admin/page' => 'admin#page', as: :admin_page

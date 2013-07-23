@@ -6,24 +6,7 @@ class AdminController < ApplicationController
   def index
 
   end
-  def search
-    @search = Search.where(id: params[:id]).includes(clicks: :page).first
-  end
-  def searches
-    respond_to do |format|
-      format.json do
-        limit = params[:limit] || 10
-        searches = Search.order('created_at desc').limit(limit).
-          page(params[:page])
 
-        searches = searches.map do |s|
-          {id: s.id, term: s.query, total_results: s.results_count, total_clicks: s.clicks.count}
-        end
-        meta = {total_searches: Search.count}
-        render text: searches.to_json
-      end
-    end
-  end
   def clicks
     respond_to do |format|
       format.json do
@@ -45,4 +28,5 @@ class AdminController < ApplicationController
   def page
 
   end
+
 end

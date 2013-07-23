@@ -1,14 +1,42 @@
 -content_for :title, "Admin"
 %div{:'sub-key'=>"sub-c-5c3d413e-f314-11e2-8175-02ee2ddab7fe", ssl: "off", origin: "pubsub.pubnub.com", id: "pubnub" }
-%div{:'ng-controller' => "IndexSearchesCtrl"}
+.row-fluid.app-center-content{:'ng-controller' => "IndexSearchesRealtimeCtrl"}
+  %h2 Realtime
+  %hr
   .row-fluid.span2
     .row-fluid=link_to "Logout", destroy_admin_session_path
     .row-fluid
       %b {{realtimeStatus}}
-  .row-fluid.span8.offset2
+  .row-fluid.span8
     =javascript_include_tag 'http://cdn.pubnub.com/pubnub-3.1.min.js'
     .progress.progress-striped.active#progress_bar
       .bar{style: "width: 100%"}
     .table-striped#searches
       .message{:'ng-repeat' => "search in searches"}
         %p.text= link_to "{{search.term}}", '/admin/searches/{{search.id}}'
+
+.row-fluid.app-center-content{:'ng-controller' => 'SearchesCtrl'}
+  %h2
+    Historical
+  %hr
+  .row-fluid.span8.offset2
+    .listings-table.ng-cloak.span12{style: "top:20px;"}
+      %table.span12{"ng-show" => 'searchParameters.records.length == 0'}
+        %tbody.span12
+          %tr
+            %td No Records Found
+      %table{"ng-show" => 'searchParameters.records.length > 0'}
+        %thead
+          %tr
+            %th
+              %a{ sortable: "term"} Search Term
+            %th
+              %a{ sortable: "clicksCount"} Clicks
+            %th
+              %a{ sortable: "resultsCount"} Total Results
+        %tbody
+          %tr{"ng-repeat"=>"search in searchParameters.records", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
+            %td <a href="/admin/searches/{{search.id}}">{{search.query}}</a>
+            %td {{search.clicksCount}}
+            %td {{search.resultsCount}}
+      = render 'admin/shared/angular_common_pagination'
