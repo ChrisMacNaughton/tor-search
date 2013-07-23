@@ -35,7 +35,9 @@ set :normalize_asset_timestamps, false
 before "deploy",                 "deploy:delayed_job:stop"
 before "deploy:migrations",      "deploy:delayed_job:stop"
 
-after  "deploy:update_code",     "deploy:chmod_unicorn","deploy:symlink_shared"
+
+after  "deploy:update_code",     "deploy:symlink_shared", "deploy:chmod_unicorn"
+
 before "deploy:migrate",         "deploy:web:disable", "deploy:db:backup"
 
 after  "deploy",                                      "newrelic:notice_deployment", "deploy:cleanup", "deploy:delayed_job:restart", "deploy:solr_restart"
@@ -52,14 +54,14 @@ namespace :deploy do
       run "#{current_path}/config/server/unicorn_init.sh #{command}"
     end
   end
+  desc "make unicorn executable"
+  task :chmod_unicorn, :roles => :app, :except => { :no_release => true } do
+    run "chmod +x #{current_path}/config/server/unicorn_init.sh"
+  end
 
   desc "restart unicorn server"
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{current_path}/config/server/unicorn_init.sh upgrade"
-  end
-  desc "make the unicorn init script executable"
-  task :chmod_unicorn do
-    run "chmod +x #{release_path}/config/server/unicorn_init.sh"
   end
 
   desc "Link in the production database.yml and assets"
