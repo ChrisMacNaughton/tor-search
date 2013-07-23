@@ -1,1 +1,37 @@
-=@search.to_json
+-content_for :title, "Searches"
+-#{clicks: @search.clicks.map{|c| {page: {title: c.page.title}}}}.merge(@search.attributes).to_json
+
+.row-fluid
+  .span2
+    .row-fluid=link_to "Logout", destroy_admin_session_path
+    %ul.unstyled
+      %li
+        %b
+          =@search.query
+      %li
+        =@search.results_count
+        total results
+      %li
+        Generated
+        = @search.clicks.count
+        clicks
+  .row-fluid
+    .span10
+      %h3 Clicks
+    .span10
+      -@search.clicks.each do |click|
+        -page = click.page
+        .row-fluid
+          .span4
+            %ul
+              %li=page.title
+              %li= link_to "Link", page.url
+          .span8
+            %iframe.page.span8{src: 'about:blank', data: {content: page.body}}
+-content_for :javascripts do
+  :javascript
+    $().ready(function(){
+      $.each($('.page'), function(id,e){
+        e.contentWindow.document.write($(e).attr('data-content'))
+      });
+    });

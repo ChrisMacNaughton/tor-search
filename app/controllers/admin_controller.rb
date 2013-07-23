@@ -7,7 +7,7 @@ class AdminController < ApplicationController
 
   end
   def search
-    @search = Search.where(id: params[:id]).includes(clicks: :pages).first
+    @search = Search.where(id: params[:id]).includes(clicks: :page).first
   end
   def searches
     respond_to do |format|

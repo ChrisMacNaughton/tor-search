@@ -11,6 +11,10 @@
 
   %body
     .container-fluid
+      .row-fluid.span12
+        %h1= yield(:title)
+        %hr
+    .container-fluid
       -unless notice.nil? && alert.nil?
         .row.span12
           - if flash[:alert]
