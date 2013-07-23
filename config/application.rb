@@ -72,6 +72,8 @@ module TorSearch
 
     config.serve_static_assets = true
 
+    config.assets.precompile += %w(admin.js admin.css)
+
     # Custom configuration defaults
     config.tor_search = ActiveSupport::OrderedOptions.new
 
