@@ -39,7 +39,7 @@ before "deploy:migrations",      "deploy:delayed_job:stop"
 after  "deploy:update_code",     "deploy:chmod_unicorn", "deploy:symlink_shared"
 
 before "deploy:migrate",         "deploy:web:disable", "deploy:db:backup"
-
+after "deploy:create_symlink",   "deploy:chmod_unicorn"
 after  "deploy",                                      "newrelic:notice_deployment", "deploy:cleanup", "deploy:delayed_job:restart", "deploy:solr_restart"
 after  "deploy:migrations",      "deploy:web:enable", "newrelic:notice_deployment", "deploy:cleanup", "deploy:delayed_job:restart"
 
@@ -56,7 +56,7 @@ namespace :deploy do
   end
   desc "make unicorn executable"
   task :chmod_unicorn, :roles => :app, :except => { :no_release => true } do
-    run "sudo chmod +x #{current_path}/config/server/unicorn_init.sh"
+    run "chmod +x #{current_path}/config/server/unicorn_init.sh"
   end
 
   desc "restart unicorn server"
