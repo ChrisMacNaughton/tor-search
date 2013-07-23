@@ -37,7 +37,7 @@ set :normalize_asset_timestamps, false
 
 after  "deploy:update_code",     "deploy:chmod_unicorn", "deploy:symlink_shared", "deploy:migrate"
 
-before "deploy:migrate",         "deploy:web:disable", "deploy:db:backup"
+before "deploy:migrate",         "deploy:web:disable"
 after "deploy:create_symlink",   "deploy:chmod_unicorn"
 after  "deploy",                                      "newrelic:notice_deployment", "deploy:cleanup", "deploy:solr_restart"#, "deploy:delayed_job:restart"
 after  "deploy:migrations",      "deploy:web:enable", "newrelic:notice_deployment", "deploy:cleanup"#, "deploy:delayed_job:restart"
