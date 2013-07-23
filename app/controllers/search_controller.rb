@@ -60,14 +60,19 @@ class SearchController < ApplicationController
         p[:'group.main'] = true
       end
     }
+    session[:searches] ||= []
+    unless session[:searches].include? params[:q]
+      s = Search.create(query: params[:q], results_count: @search.total)
+      session[:searches] << params[:q]
 
-    s = Search.create(query: params[:q], results_count: @search.total)
-    @search_id = s.id
-    pubnub.publish(
-      channel: :searches,
-      message: {id: s.id, term: params[:q]},
-      callback: lambda { |message| puts(message) }
-    )
+      @search_id = s.id
+      pubnub.publish(
+        channel: :searches,
+        message: {id: s.id, term: params[:q]},
+        callback: lambda { |message| puts(message) }
+      )
+    end
+
     render :search
   end
   def redirect
