@@ -5,5 +5,6 @@ class Search < ActiveRecord::Base
 
   sortable_by_keys clicksCount: :clicks_count,
     resultsCount: :results_count,
-    term: :query
+    term: :query,
+    created_at: :created_at
 end

@@ -29,6 +29,8 @@
         %thead
           %tr
             %th
+              %a{ sortable: "created_at"} Created At
+            %th
               %a{ sortable: "term"} Search Term
             %th
               %a{ sortable: "clicksCount"} Clicks
@@ -36,6 +38,7 @@
               %a{ sortable: "resultsCount"} Total Results
         %tbody
           %tr{"ng-repeat"=>"search in searchParameters.records", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
+            %td {{search.createdAt}}
             %td <a href="/admin/searches/{{search.id}}">{{search.query}}</a>
             %td {{search.clicksCount}}
             %td {{search.resultsCount}}
