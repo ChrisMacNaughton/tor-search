@@ -1,4 +1,5 @@
 class Admin::SearchController < ApplicationController
+  newrelic_ignore
   results_with_params_for Search
   def show
     @search = Search.where(id: params[:id]).includes(clicks: :page).first

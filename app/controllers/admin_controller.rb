@@ -1,4 +1,5 @@
 class AdminController < ApplicationController
+  newrelic_ignore
   before_filter :authenticate_admin!
 
   layout 'admin'
