@@ -23,6 +23,8 @@ gem 'socksify', require: false
 gem 'mechanize', require: false
 gem 'paperclip', '~> 3.0'
 
+gem 'devise'
+
 gem 'haml'
 gem 'haml-rails'
 # Use CoffeeScript for .js.coffee assets and views
@@ -58,6 +60,8 @@ group :development do
   gem 'better_errors'
   gem 'foreman'
 end
+
+gem 'pubnub'
 # Use unicorn as the app server
 gem 'unicorn'
 gem 'newrelic_rpm'

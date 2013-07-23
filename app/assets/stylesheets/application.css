@@ -18,7 +18,8 @@
  *= require bootstrap-responsive
  *= require shadowbox
  *= require_self
- *= require_tree .
+ *= require instant
+ *= require search
  *= require base/main
  */
 #footer_home {
