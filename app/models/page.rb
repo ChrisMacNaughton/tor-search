@@ -1,7 +1,7 @@
 require "#{Rails.root}/lib/crawler/crawler"
 
 class Page < ActiveRecord::Base
-  #include ::SolrSearch::Index
+  include ::SolrSearch::Index
 
   belongs_to :domain
   has_many :inbound_links, class_name: "Link", as: :to_target, dependent: :destroy

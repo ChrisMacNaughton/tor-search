@@ -26,7 +26,9 @@ class SearchController < ApplicationController
 
     page = params[:page] || 1
     filters = {}
-    filters[:with] = {}
+    filters[:with] = {
+      blocked: false
+    }
     unless site.nil?
       domain = Domain.where(path: site).first
       unless domain.nil?

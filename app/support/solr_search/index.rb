@@ -50,7 +50,7 @@ module SolrSearch
     def queue_job(j)
       if solr_index_can_be_updated?(j)
         logger.info "Indexing #{j.klass} ##{j.object_id} on Solr (in #{self.class})"
-        Delayed::Job.enqueue j, queue: 'index'
+        Delayed::Job.enqueue j, priority: -5
       else
         logger.info "Not queueing up index for #{j.klass} ##{j.object_id} on Solr (in #{self.class})"
       end
