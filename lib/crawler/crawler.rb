@@ -8,7 +8,7 @@ class Crawler
   def execute
     @target ||= get_target
     return unless good_to_crawl
-
+    Rails.logger.info "About to crawl #{@url}"
     @tor = Tor.new
 
     head = tor_method('head')
@@ -284,6 +284,7 @@ class Crawler
     t.description = clean(body).gsub(/\s+/, ' ')[0..255]
     t.last_crawled = DateTime.now
     t.save
+    Rails.logger.warn "There were errors: #{t.errors.inspect}" unless t.errors.empty?
     t.reload
     Rails.logger.debug("Built the page ##{t.id}")
     t
@@ -314,27 +315,27 @@ class Crawler
   end
   def good_to_crawl
     if domain.blocked?
-      Rails.logger.debug("Skipping #{@url} because domain is blocked")
+      Rails.logger.info("Skipping #{@url} because domain is blocked")
       return false
     end
     unless @target.nil?
       crawled = 1.year.ago
       if @target.is_a? Page
         if @target.no_crawl
-          Rails.logger.debug("Skipping #{@url} because page is no-crawled")
+          Rails.logger.info("Skipping #{@url} because page is no-crawled")
           return false
         end
       end
       crawled = @target.last_crawled || 1.year.ago
       if DateTime.now < crawled + TorSearch::Application.config.tor_search.page_interval
-        Rails.logger.debug("Skipping #{@url} because it has been crawed too recently")
+        Rails.logger.info("Skipping #{@url} because it has been crawed too recently")
         requeue(@url,crawled + TorSearch::Application.config.tor_search.page_interval)
         return false
       end
     end
     begin
       unless Robotstxt.allowed?(@url, TorSearch::Application.config.user_agent, @domain)
-        Rails.logger.debug("Skipping #{@url} because robots.txt disallows it")
+        Rails.logger.warn("Skipping #{@url} because robots.txt disallows it")
         @target.no_crawl = true
         @target.save
         return false
@@ -342,7 +343,7 @@ class Crawler
       ago = DateTime.now.to_i - @domain.last_crawled.to_i
       delay = Robotstxt.crawl_delay(TorSearch::Application.config.user_agent, @domain)
       if !@domain.last_crawled.nil? && (ago) < delay
-        Rails.logger.debug("Skipping #{@url} because domain was crawled too recently")
+        Rails.logger.info("Skipping #{@url} because domain was crawled too recently")
         requeue(@target.path) and return false
       end
     rescue => e
