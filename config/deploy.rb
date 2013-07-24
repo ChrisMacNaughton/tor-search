@@ -38,6 +38,7 @@ before "deploy:migrations",      "deploy:delayed_job:stop"
 after  "deploy:update_code",     "deploy:symlink_shared", "deploy:migrate"
 
 before "deploy:migrate",         "deploy:web:disable"
+after "deploy:migrate",          "deploy:web:enable"
 after "deploy:create_symlink",   "deploy:chmod_unicorn", "deploy:chmod_dj"
 after  "deploy",                                      "newrelic:notice_deployment", "deploy:cleanup", "deploy:solr_restart", "deploy:delayed_job:restart"
 after  "deploy:migrations",      "deploy:web:enable", "newrelic:notice_deployment", "deploy:cleanup", "deploy:delayed_job:restart"

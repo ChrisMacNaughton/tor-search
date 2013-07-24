@@ -72,7 +72,7 @@ class Page < ActiveRecord::Base
     p = "#{domain.path}/#{path}".gsub(/\/{2,}}/,'/')
     "http://#{p}"
   end
-  def crawl(delay = 0.seconds, urgency = 0)
+  def crawl(delay = 0.seconds, urgency = 5)
     return false if domain.blocked
     handler      = Crawler.new(url)
     handler_hash = Digest::MD5.hexdigest(handler.to_yaml)

@@ -89,7 +89,7 @@ class Domain < ActiveRecord::Base
     end
     i=0
     pages.order('coalesce(last_crawled) asc NULLS FIRST').each do |page|
-      page.crawl(i.seconds, -5)
+      page.crawl(i.seconds, 3)
       i+= 10
     end
   end
