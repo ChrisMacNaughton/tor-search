@@ -27,7 +27,6 @@ class SearchController < ApplicationController
     page = params[:page] || 1
     filters = {}
     filters[:with] = {
-      disabled: false
     }
     unless site.nil?
       domain = Domain.where(path: site).first
@@ -41,6 +40,10 @@ class SearchController < ApplicationController
         Array(filters[meth].keys).each do |k|
           send(meth, k, filters[meth][k])
         end if filters.include?(meth)
+      end
+      any_of do
+        with(:disabled, false)
+        with(:disabled, nil)
       end
       fulltext term do
         boost_fields links: 50, title: 15
