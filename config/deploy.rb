@@ -32,15 +32,16 @@ set :user,                       "ubuntu"
 set :normalize_asset_timestamps, false
 
 
-#before "deploy",                 "deploy:delayed_job:stop"
-#before "deploy:migrations",      "deploy:delayed_job:stop"
+before "deploy",                 "deploy:delayed_job:stop"
+before "deploy:migrations",      "deploy:delayed_job:stop"
 
 after  "deploy:update_code",     "deploy:chmod_unicorn", "deploy:symlink_shared", "deploy:migrate"
 
+before "delayed_job", "deploy:chmod_dj"
 before "deploy:migrate",         "deploy:web:disable"
 after "deploy:create_symlink",   "deploy:chmod_unicorn"
-after  "deploy",                                      "newrelic:notice_deployment", "deploy:cleanup", "deploy:solr_restart"#, "deploy:delayed_job:restart"
-after  "deploy:migrations",      "deploy:web:enable", "newrelic:notice_deployment", "deploy:cleanup"#, "deploy:delayed_job:restart"
+after  "deploy",                                      "newrelic:notice_deployment", "deploy:cleanup", "deploy:solr_restart", "deploy:delayed_job:restart"
+after  "deploy:migrations",      "deploy:web:enable", "newrelic:notice_deployment", "deploy:cleanup", "deploy:delayed_job:restart"
 
 
 namespace :deploy do
@@ -56,6 +57,11 @@ namespace :deploy do
   desc "make unicorn executable"
   task :chmod_unicorn, :roles => :app, :except => { :no_release => true } do
     run "chmod +x #{current_path}/config/server/unicorn_init.sh"
+  end
+
+  desc "make dj executable"
+  task :chmod_dj do
+    run "cd #{current_path}; chmod +x script/delayed_job"
   end
 
   desc "restart unicorn server"

@@ -316,13 +316,12 @@
         and Soft-Auto Commit (to ram) within 30 seconds
         Comment the next 3 segments to disable this feature
        -->
-       <!--
-       <autoCommit>
-         <maxDocs>100</maxDocs>
-         <maxTime>15000</maxTime>
-         <openSearcher>false</openSearcher>
-       </autoCommit>
 
+       <autoCommit>
+         <maxDocs>50</maxDocs>
+         <openSearcher>true</openSearcher>
+       </autoCommit>
+        <!--
        <updateLog>
          <str name="dir">${solr.data.dir:}</str>
        </updateLog> -->
