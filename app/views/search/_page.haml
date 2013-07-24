@@ -1,9 +1,15 @@
 .page-listing.span8
-  -url = "http://#{page.stored(:domain_path)[0]}/#{page.stored(:path_texts)}"
+  -path = (page.stored(:path) || [""]).join
+  -domain = page.stored(:domain_path)[0]
+  -url = "http://#{page.stored(:domain_path)[0]}/#{path}"
   %a.title{href:url, data: {id: page.primary_key}}= page.stored(:title)[0] || "<No title>"
-  %span.path= url
   .description
     -if page.stored(:description) == ""
       %p.muted No description provided
     -else
       =page.stored(:description)[0]
+  %span.path
+    = url[0..60]
+    = "..." if url.length > 60
+    -if include_more_links(@search_term)
+      = link_to "More from #{domain}", root_path(q: "#{@search_term} site:#{domain}")
