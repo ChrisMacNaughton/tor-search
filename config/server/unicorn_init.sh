@@ -52,29 +52,19 @@ force-stop)
         sig TERM && exit 0
         echo >&2 "Not running"
         ;;
-restart|reload)
+restart)
+        echo "Reloading" `cat $PID`
+        sig USR2 && sleep 5 && oldsig QUIT || echo >&2 "Couldn't reload, starting instead"
+        $CMD && echo "Started"
+        ;;
+reload)
         sig HUP && echo reloaded OK && exit 0
         echo >&2 "Couldn't reload, starting '$CMD' instead"
         $CMD
         ;;
 upgrade)
-        if sig USR2 && sleep 15 && sig 0 && oldsig QUIT
-        then
-                n=$TIMEOUT
-                while test -s $old_pid && test $n -ge 0
-                do
-                        printf '.' && sleep 1 && n=$(( $n - 1 ))
-                done
-                echo
-
-                if test $n -lt 0 && test -s $old_pid
-                then
-                        echo >&2 "$old_pid still exists after $TIMEOUT seconds"
-                        exit 1
-                fi
-                exit 0
-        fi
-        echo >&2 "Couldn't upgrade, starting '$CMD' instead"
+        sig USR2 && echo "Upgraded"
+        echo >&2 "Couldn't upgrade, starting instead"
         $CMD
         ;;
 kill_worker)
