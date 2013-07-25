@@ -35,7 +35,7 @@ set :normalize_asset_timestamps, false
 #before "deploy",                 "deploy:delayed_job:stop"
 #before "deploy:migrations",      "deploy:delayed_job:stop"
 
-after  "deploy:update_code",     "deploy:symlink_shared", "deploy:migrate"
+after  "deploy:update_code",     "deploy:symlink_shared"
 
 before "deploy:migrate",         "deploy:web:disable"
 after "deploy:migrate",          "deploy:web:enable"
