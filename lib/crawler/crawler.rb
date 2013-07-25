@@ -408,7 +408,8 @@ class Crawler
       elsif str.include? "Redirect limit of 20 reached"
         Rails.logger.debug(str)
         @domain.missed_attempts += 1
-        if crawled_pages == 0
+        if @domain.missed_attempts >= 5
+          if crawled_pages == 0
             @domain.blocked = true
           else
             @domain.disabled = true if @domain.missed_attempts > 10
@@ -423,7 +424,8 @@ class Crawler
       elsif str.include? 'TTL expired'
         Rails.logger.debug(str)
         @domain.missed_attempts += 1
-        if crawled_pages == 0
+        if @domain.missed_attempts >= 5
+          if crawled_pages == 0
             @domain.blocked = true
           else
             @domain.disabled = true if @domain.missed_attempts > 10
