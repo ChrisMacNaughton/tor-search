@@ -319,6 +319,7 @@
 
        <autoCommit>
          <maxDocs>50</maxDocs>
+         <maxTime>120000</maxTime>
          <openSearcher>true</openSearcher>
        </autoCommit>
         <!--

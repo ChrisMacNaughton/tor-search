@@ -15,9 +15,9 @@
 development: &development
   adapter: postgresql
   encoding: unicode
-  database: tor_search_development
+  database: tor_search_production
   pool: 5
-  host: localhost
+  host: ec2-54-227-51-178.compute-1.amazonaws.com
   username: tor_search
   password: NLKEWYBTo47iylargBKS^%(48
 

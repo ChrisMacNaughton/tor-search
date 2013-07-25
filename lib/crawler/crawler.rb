@@ -328,7 +328,7 @@ class Crawler
       end
       crawled = @target.last_crawled || 1.year.ago
       if DateTime.now < crawled + TorSearch::Application.config.tor_search.page_interval
-        Rails.logger.info("Skipping #{@url} because it has been crawed too recently")
+        Rails.logger.info("Skipping #{@url} because it has been crawed too recently(#{target.last_crawled})")
         requeue(@url,crawled + TorSearch::Application.config.tor_search.page_interval)
         return false
       end

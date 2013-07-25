@@ -32,21 +32,25 @@ set :user,                       "ubuntu"
 set :normalize_asset_timestamps, false
 
 
-before "deploy",                 "deploy:delayed_job:stop"
-before "deploy:migrations",      "deploy:delayed_job:stop"
+#before "deploy",                 "deploy:delayed_job:stop"
+#before "deploy:migrations",      "deploy:delayed_job:stop"
 
 after  "deploy:update_code",     "deploy:symlink_shared", "deploy:migrate"
 
 before "deploy:migrate",         "deploy:web:disable"
 after "deploy:migrate",          "deploy:web:enable"
 after "deploy:create_symlink",   "deploy:chmod_unicorn", "deploy:chmod_dj"
-after  "deploy",                                      "newrelic:notice_deployment", "deploy:cleanup", "deploy:solr_restart", "deploy:delayed_job:restart"
-after  "deploy:migrations",      "deploy:web:enable", "newrelic:notice_deployment", "deploy:cleanup", "deploy:delayed_job:restart"
+after  "deploy",                 "deploy:restart_monit", "newrelic:notice_deployment", "deploy:cleanup", "deploy:solr_restart"#, "deploy:delayed_job:restart"
+after  "deploy:migrations",      "deploy:web:enable", "newrelic:notice_deployment", "deploy:cleanup"#, "deploy:delayed_job:restart"
 
 
 namespace :deploy do
   task :solr_restart, roles: :app, except: {no_release: true} do
     run "curl http://localhost:8983/solr/admin/cores?wt=json&action=RELOAD&core=collection1"
+  end
+  desc "Restart the monit service."
+  task :reload_monit, :roles => :app, :except => { :no_release => true } do
+    run "#{try_sudo} monit restart -g elocal_web"
   end
   %w[start stop].each do |command|
     desc "#{command} unicorn server"
@@ -114,8 +118,8 @@ namespace :deploy do
   end
   namespace :assets do
     task :precompile, :roles => :web do
-      from = source.next_revision(current_revision)
-      if capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ lib/assets/ app/assets/ | wc -l").to_i > 0
+      from = source.next_revision(current_revision) rescue nil
+      if from.nil? || capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ lib/assets/ app/assets/ | wc -l").to_i > 0
         run_locally("rake assets:clean && rake assets:precompile")
         run_locally "cd public && tar -jcf assets.tar.bz2 assets"
         top.upload "public/assets.tar.bz2", "#{shared_path}", :via => :scp
