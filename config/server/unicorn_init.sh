@@ -18,9 +18,13 @@ set -e
 # since nginx and unicorn accept the same signals
 
 TIMEOUT=${TIMEOUT-60}
-APP_ROOT=/var/rails/tor_search/current
+DEPLOY_PATH=/var/rails/tor_search
+APP_ROOT=$DEPLOY_PATH/current
+GEM_PATH=$DEPLOY_PATH/shared/bundle/ruby/1.9.1/gems
+UNICORN_PATH=$GEM_PATH/unicorn-4.6.3/bin
 PID=$APP_ROOT/tmp/pids/unicorn.pid
-CMD="bundle exec unicorn_rails -D -c $APP_ROOT/config/unicorn.rb -E production"
+ENV=production
+CMD="$UNICORN_PATH/unicorn_rails -D -E $ENV -c $APP_ROOT/config/unicorn.rb"
 action="$1"
 set -u
 
@@ -35,11 +39,8 @@ sig () {
 oldsig () {
         test -s $old_pid && kill -$1 `cat $old_pid`
 }
-workersig () {
-  workerpid="$APP_ROOT/tmp/pids/unicorn.$2.pid"
-  test -s "$workerpid" && kill -$1 `cat $workerpid`
-}
-case $action in
+
+case $1 in
 start)
         sig 0 && echo >&2 "Already running" && exit 0
         $CMD
@@ -52,30 +53,22 @@ force-stop)
         sig TERM && exit 0
         echo >&2 "Not running"
         ;;
-restart)
-        echo "Reloading" `cat $PID`
-        sig USR2 && sleep 5 && oldsig QUIT || echo >&2 "Couldn't reload, starting instead"
-        $CMD && echo "Started"
-        ;;
-reload)
+restart|reload)
         sig HUP && echo reloaded OK && exit 0
         echo >&2 "Couldn't reload, starting '$CMD' instead"
         $CMD
         ;;
 upgrade)
-        sig USR2 && echo "Upgraded"
-        echo >&2 "Couldn't upgrade, starting instead"
+        sig USR2 && exit 0
+        echo >&2 "Couldn't upgrade, starting '$CMD' instead"
         $CMD
         ;;
-kill_worker)
-        workersig QUIT $2 && exit 0
-        echo >&2 "Worker not running"
-        ;;
-reopen-logs)
-        sig USR1
+rotate)
+        sig USR1 && echo rotated logs OK && exit 0
+        echo >&2 "Couldn't rotate logs" && exit 1
         ;;
 *)
-        echo >&2 "Usage: $0 <start|stop|restart|upgrade|force-stop|reopen-logs>"
+        echo >&2 "Usage: $0 <start|stop|restart|upgrade|rotate|force-stop>"
         exit 1
         ;;
 esac
