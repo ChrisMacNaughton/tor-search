@@ -21,6 +21,7 @@
     .span10
       -@search.clicks.each do |click|
         -page = click.page
+        -next if page.nil?
         .row-fluid
           .span4
             %ul
