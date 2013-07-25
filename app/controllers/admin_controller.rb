@@ -7,7 +7,11 @@ class AdminController < ApplicationController
   def index
 
   end
+  def status
+    render json: {
 
+    }
+  end
   def clicks
     respond_to do |format|
       format.json do
@@ -19,7 +23,7 @@ class AdminController < ApplicationController
           {id: c.id, page_id: c.page_id}
         end
         meta = {total_clicks: s.clicks.count}
-        render text: {meta: meta, clicks: clicks}.to_json
+        render json: {meta: meta, clicks: clicks}
       end
     end
   end

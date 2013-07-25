@@ -12,6 +12,7 @@ TorSearch::Application.routes.draw do
 
   # Admin routes
   get 'admin' => 'admin#index'
+  get 'admin/status' => 'admin#status'
   namespace :admin do
     get 'searches' => 'search#index', as: :admin_searches
     get 'searches/:id' => 'search#show', as: :admin_search

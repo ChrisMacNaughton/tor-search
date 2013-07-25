@@ -7,4 +7,7 @@ class Search < ActiveRecord::Base
     resultsCount: :results_count,
     term: :query,
     created_at: :created_at
+  scope :since, -> (time) {where('created_at >= ?', where)}
+  scope :last_24_hours, since(24.hours.ago)
+  scope :last_6_hours, where('created_at >= ?', 12.hours.ago)
 end
