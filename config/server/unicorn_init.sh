@@ -35,7 +35,10 @@ sig () {
 oldsig () {
         test -s $old_pid && kill -$1 `cat $old_pid`
 }
-
+workersig () {
+  workerpid="$APP_ROOT/tmp/pids/unicorn.$2.pid"
+  test -s "$workerpid" && kill -$1 `cat $workerpid`
+}
 case $action in
 start)
         sig 0 && echo >&2 "Already running" && exit 0
@@ -73,6 +76,10 @@ upgrade)
         fi
         echo >&2 "Couldn't upgrade, starting '$CMD' instead"
         $CMD
+        ;;
+kill_worker)
+        workersig QUIT $2 && exit 0
+        echo >&2 "Worker not running"
         ;;
 reopen-logs)
         sig USR1

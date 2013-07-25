@@ -49,7 +49,7 @@ after_fork do |server, worker|
   if defined?(ActiveRecord::Base)
     ActiveRecord::Base.establish_connection
   end
-
+  child_pid = server.config[:pid].sub('.pid', ".#{worker.nr}.pid")
   if defined?(Resque)
     Resque.redis           = 'localhost:6379'
   end
