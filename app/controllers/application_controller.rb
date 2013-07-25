@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
           raise
         end
       end
-      Rails.logger.info("Got some json from Solr: #{json}")
+      #Rails.logger.info("Got some json from Solr: #{json}")
       JSON.parse(json)['status']['collection1']['index']['numDocs']
     end
   end
