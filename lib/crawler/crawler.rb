@@ -318,6 +318,10 @@ class Crawler
       Rails.logger.info("Skipping #{@url} because domain is blocked")
       return false
     end
+    if domain.disabled?
+      Rails.logger.info("Skipping #{@url} because domain is disabled")
+      return false
+    end
     unless @target.nil?
       crawled = 1.year.ago
       if @target.is_a? Page
@@ -381,23 +385,34 @@ class Crawler
       Rails.logger.debug(str)
         @domain.missed_attempts += 3
         if @domain.missed_attempts >= 5 && crawled_pages == 0
-          @domain.blocked = true
+          if crawled_pages == 0
+            @domain.blocked = true
+          else
+            @domain.disabled = true if @domain.missed_attempts > 10
+          end
         end
         @domain.save
         requeue(@url, @domain.crawl_delay.seconds) and return true
       elsif str.include? "Host unreachable"
         Rails.logger.debug(str)
         @domain.missed_attempts += 1
-        if @domain.missed_attempts >= 5 && crawled_pages == 0
-          @domain.blocked = true
+        if @domain.missed_attempts >= 5
+          if crawled_pages == 0
+            @domain.blocked = true
+          else
+            @domain.disabled = true if @domain.missed_attempts > 10
+          end
         end
         @domain.save
         requeue(@url, @domain.crawl_delay.seconds) and return true
       elsif str.include? "Redirect limit of 20 reached"
         Rails.logger.debug(str)
         @domain.missed_attempts += 1
-        if @domain.missed_attempts >= 5 && crawled_pages == 0
-          @domain.blocked = true
+        if crawled_pages == 0
+            @domain.blocked = true
+          else
+            @domain.disabled = true if @domain.missed_attempts > 10
+          end
         end
         @domain.save
         requeue(@url, @domain.crawl_delay.seconds) and return true
@@ -408,8 +423,11 @@ class Crawler
       elsif str.include? 'TTL expired'
         Rails.logger.debug(str)
         @domain.missed_attempts += 1
-        if @domain.missed_attempts >= 5 && crawled_pages == 0
-          @domain.blocked = true
+        if crawled_pages == 0
+            @domain.blocked = true
+          else
+            @domain.disabled = true if @domain.missed_attempts > 10
+          end
         end
         @domain.save
         requeue(@url, @domain.crawl_delay.seconds) and return true
