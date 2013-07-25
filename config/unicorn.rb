@@ -22,7 +22,7 @@ stderr_path       "#{app_path}/log/unicorn.log"
 stdout_path       "#{app_path}/log/unicorn.log"
 
 listen            "/tmp/unicorn.production.sock"
-worker_processes
+worker_processes  3
 timeout           30
 preload_app       true
 
