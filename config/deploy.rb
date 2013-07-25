@@ -113,7 +113,6 @@ namespace :deploy do
     end
   end
   namespace :assets do
-
     task :precompile, :roles => :web do
       from = source.next_revision(current_revision)
       if capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ lib/assets/ app/assets/ | wc -l").to_i > 0
@@ -127,6 +126,7 @@ namespace :deploy do
         logger.info "Skipping asset precompilation because there were no asset changes"
       end
     end
+  end
 end
 
 
