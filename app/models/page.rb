@@ -26,7 +26,15 @@ class Page < ActiveRecord::Base
   scope :crawled, where('last_crawled IS NOT null')
 
   before_save :manage_duplicates
+  def self.crawl
+    sql = "select 'http://' || domains.path || '/' || pages.path as url from domains inner join pages on domains.id = pages.domain_id where domains.blocked = false and domains.id != 654 and pages.description is null order by random()"
 
+    Page.connection.execute(sql).each_row do |row|
+      return unless Delayed::Job.where("handler ilike '%#{row[0]}%'").first.nil?
+      url = row[0]
+      Page.connection.execute("insert into delayed_jobs(priority, attempts, handler, run_at, created_at, updated_at) values (5, 0, '--- !ruby/object:Crawler\nurl: #{url}\n', now(), now(), now())")
+    end
+  end
   def self.to_crawl
     Delayed::Job.where(queue: 'crawl').count
   end
@@ -70,7 +78,7 @@ class Page < ActiveRecord::Base
 
   def url
     p = "#{domain.path}/#{path}".gsub(/\/{2,}}/,'/')
-    "http://#{p}"
+    "http://#{p}".gsub(/\/\.\//, '/')
   end
   def crawl(delay = 0.seconds, urgency = 5)
     return false if domain.blocked
