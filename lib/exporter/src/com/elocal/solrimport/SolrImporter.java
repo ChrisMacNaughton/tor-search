@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Set;
 /*
  # Import Pages
-curl http://localhost:8983/solr/update/csv -d "stream.file=$PWD/pages.csv&stream.contentType:text/plain;charset=utf-8&f.type.split=true&f.anchor_text.split=true&separator=,&commit=true"
+curl http://localhost:8983/solr/update?commit=false -H "Content-type: text/xml" --data-binary '<delete><query>*:*</query></delete>' && curl http://localhost:8983/solr/update/csv -d "stream.file=$PWD/pages.csv&stream.contentType:text/plain;charset=utf-8&f.type.split=true&f.anchor_text.split=true&separator=,&commit=true"
 
 # Import Images
 curl http://localhost:8983/solr/update/csv -d "stream.file=$PWD/images.csv&stream.contentType:text/plain;charset=utf-8&f.type.split=true&f.anchor_text.split=true&commit=true"
@@ -56,8 +56,8 @@ public class SolrImporter {
 	@SuppressWarnings("unchecked")
 	private void exportPages() throws SQLException, IOException {
 		PrintWriter out = new PrintWriter(new FileWriter("pages.csv"));
-		out.println("id,type,id_i,title_texts,body_text,description_texts,domain_path_texts,path_texts,domain_id_i,link_count_i,anchor_text_text");
-		PreparedStatement ps = _con.prepareStatement("select pages.id AS id, pages.title AS title, pages.body AS body, links.anchor_text AS anchor_text, pages.description AS description, pages.domain_id, domains.path as domain_path, pages.path as path, ( select count(*) from links join pages as to_target on links.to_target_id = to_target.id join pages as from_target on links.from_target_id = from_target.id where links.to_target_id = pages.id and links.to_target_type = 'Page' and from_target.domain_id != to_target.domain_id) as link_count from pages left join links on links.to_target_id = pages.id and links.to_target_type = 'Page' left join domains on domains.id = pages.domain_id where pages.title is not null and pages.title != '' and pages.description is not null and pages.description != '' and pages.no_crawl = 'f' and domains.blocked = 'f' order by domains.id",
+		out.println("id,type,id_i,title_texts,body_text,description_texts,domain_path_texts,path_texts,domain_id_i,disabled_b,link_count_i,anchor_text_text");
+		PreparedStatement ps = _con.prepareStatement("select pages.id AS id, pages.title AS title, pages.body AS body, links.anchor_text AS anchor_text, pages.description AS description, pages.domain_id, domains.blocked as disabled, domains.path as domain_path, pages.path as path, ( select count(*) from links join pages as to_target on links.to_target_id = to_target.id join pages as from_target on links.from_target_id = from_target.id where links.to_target_id = pages.id and links.to_target_type = 'Page' and from_target.domain_id != to_target.domain_id) as link_count from pages left join links on links.to_target_id = pages.id and links.to_target_type = 'Page' left join domains on domains.id = pages.domain_id where pages.title is not null and pages.title != '' and pages.description is not null and pages.description != '' and pages.no_crawl = 'f' and domains.blocked = 'f' order by domains.id",
 		  ResultSet.TYPE_FORWARD_ONLY,
 		  ResultSet.CONCUR_READ_ONLY);
 		ps.setFetchSize(1000);
@@ -66,7 +66,7 @@ public class SolrImporter {
 		Set<String> links = null;
 		Map<String,String> vals = null;
 
-		String[] keys = {"title", "body", "description","domain_path","path","domain_id","link_count"};
+		String[] keys = {"title", "body", "description","domain_path","path","domain_id","disabled","link_count"};
 		while(rs.next()) {
 			int current_id = rs.getInt("id");
 			if (pageId != current_id) {

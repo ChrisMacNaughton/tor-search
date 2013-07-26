@@ -37,7 +37,7 @@ before "deploy:migrations",      "deploy:web:disable"
 
 after  "deploy:update_code",     "deploy:symlink_shared"
 
-after "deploy:create_symlink",   "deploy:chmod_unicorn", "deploy:chmod_dj"
+after "deploy:create_symlink",   "deploy:chmod_unicorn", "deploy:chmod_dj", "deploy:chown_tor"
 after  "deploy",                 "deploy:reload_monit", "newrelic:notice_deployment", "deploy:cleanup", "deploy:solr_restart"#, "deploy:delayed_job:restart"
 after  "deploy:migrations",      "deploy:web:enable", "newrelic:notice_deployment", "deploy:cleanup"#, "deploy:delayed_job:restart"
 
@@ -59,6 +59,11 @@ namespace :deploy do
   desc "make unicorn executable"
   task :chmod_unicorn, :roles => :app, :except => { :no_release => true } do
     run "chmod +x #{current_path}/config/server/unicorn_init.sh"
+  end
+
+  desc "make root own tor"
+  task :chown_tor, :roles => :app, :except => { :no_release => true } do
+    run "chown -R root:root #{current_path}/config/tor"
   end
 
   desc "make dj executable"
