@@ -1,5 +1,7 @@
-function IndexSearchesRealtimeCtrl($scope) {
+function IndexSearchesRealtimeCtrl($scope, $http) {
   $scope.searches = [];
+
+  $scope.searchInfo = $http.get('/admin/status.json');
 
   $scope.realtimeStatus = "Connecting...";
   $scope.channel = "searches";
@@ -15,6 +17,7 @@ function IndexSearchesRealtimeCtrl($scope) {
 
       $scope.$apply(function(){
         $scope.searches.unshift(message);
+        $scope.searchInfo = $http.get('/admin/status.json');
       });
       $('#progress_bar').slideToggle();
     },
@@ -40,4 +43,4 @@ function IndexSearchesRealtimeCtrl($scope) {
     }
 })
 }
-IndexSearchesRealtimeCtrl.$inject = ['$scope'];
+IndexSearchesRealtimeCtrl.$inject = ['$scope', '$http'];

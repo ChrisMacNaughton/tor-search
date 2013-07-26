@@ -7,14 +7,63 @@
     .row-fluid=link_to "Logout", destroy_admin_session_path
     .row-fluid
       %b {{realtimeStatus}}
-  .row-fluid.span8
+  .row-fluid
     =javascript_include_tag 'http://cdn.pubnub.com/pubnub-3.1.min.js'
-    .progress.progress-striped.active#progress_bar
-      .bar{style: "width: 100%"}
-    .table-striped#searches
-      .message{:'ng-repeat' => "search in searches"}
-        %p.text= link_to "{{search.term}}", '/admin/searches/{{search.id}}'
-
+    .span4
+      .progress.progress-striped.active#progress_bar
+        .bar{style: "width: 100%"}
+      .table-striped#searches
+        .message{:'ng-repeat' => "search in searches"}
+          %p.text= link_to "{{search.term}}", '/admin/searches/{{search.id}}'
+    .span4.row-fluid
+      .span4
+        %dl
+          %dt Last hour
+          %dd
+            %dl.inline
+              %dt Searches
+              %dd {{searchInfo['data']['last_hour']['searches']}}
+              %dt Most Popular Term
+              %dd {{searchInfo['data']['last_hour']['most_popular']}}
+          %dt Last 6 hours
+          %dd
+            %dl.inline
+              %dt Searches
+              %dd {{searchInfo['data']['last_6_hours']['searches']}}
+              %dt Most Popular Term
+              %dd {{searchInfo['data']['last_6_hours']['most_popular']}}
+      .span4
+        %dl
+          %dt Last 12 hours
+          %dd
+            %dl.inline
+              %dt Searches
+              %dd {{searchInfo['data']['last_12_hours']['searches']}}
+              %dt Most Popular Term
+              %dd {{searchInfo['data']['last_12_hours']['most_popular']}}
+          %dt Last 24 hours
+          %dd
+            %dl.inline
+              %dt Searches
+              %dd {{searchInfo['data']['last_24_hours']['searches']}}
+              %dt Most Popular Term
+              %dd {{searchInfo['data']['last_24_hours']['most_popular']}}
+      .span4
+        %dl
+          %dt Last week
+          %dd
+            %dl.inline
+              %dt Searches
+              %dd {{searchInfo['data']['last_week']['searches']}}
+              %dt Most Popular Term
+              %dd {{searchInfo['data']['last_week']['most_popular']}}
+          %dt Last month
+          %dd
+            %dl.inline
+              %dt Searches
+              %dd {{searchInfo['data']['last_month']['searches']}}
+              %dt Most Popular Term
+              %dd {{searchInfo['data']['last_month']['most_popular']}}
 .row-fluid.app-center-content{:'ng-controller' => 'SearchesCtrl'}
   %h2
     Historical
