@@ -63,7 +63,7 @@ namespace :deploy do
 
   desc "make root own tor"
   task :chown_tor, :roles => :app, :except => { :no_release => true } do
-    run "chown -R root:root #{current_path}/config/tor"
+    run "sudo chown -R root:root #{current_path}/config/tor"
   end
 
   desc "make dj executable"

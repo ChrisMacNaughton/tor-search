@@ -19,13 +19,10 @@ set -e
 # since nginx and unicorn accept the same signals
 
 TIMEOUT=${TIMEOUT-60}
-DEPLOY_PATH=/var/rails/tor_search
-APP_ROOT=$DEPLOY_PATH/current
-GEM_PATH=$DEPLOY_PATH/shared/bundle/ruby/1.9.1/gems
-UNICORN_PATH=$GEM_PATH/unicorn-4.6.3/bin
+APP_ROOT=/var/rails/tor_search/current
 PID=$APP_ROOT/tmp/pids/unicorn.pid
 ENV=production
-CMD="$UNICORN_PATH/unicorn_rails -D -E $ENV -c $APP_ROOT/config/unicorn.rb"
+CMD="cd $APP_ROOT && bundle exec unicorn_rails -D -E $ENV -c $APP_ROOT/config/unicorn.rb"
 action="$1"
 set -u
 
