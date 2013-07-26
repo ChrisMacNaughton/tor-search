@@ -18,7 +18,7 @@ class Crawler
       Rails.logger.info "Page isn't a page, it's a #{head.class.to_s} bailing"
 
       if head.nil?
-        @target.update_attribute(:no_crawl, true)
+        @target.update_attribute(:no_crawl, true) unless @target.nil?
       end
       return
     end
