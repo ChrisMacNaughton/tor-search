@@ -2,9 +2,15 @@
   -path = (page.stored(:path) || [""]).join
   -domain = page.stored(:domain_path)[0]
   -url = "http://#{page.stored(:domain_path)[0]}/#{path}"
-  %a.title{href:url, data: {id: page.primary_key}}= page.stored(:title)[0] || "<No title>"
+  -title = page.stored(:title)
+  - if title.nil?
+    -title = "<No Title>"
+  -else
+    -title = title[0]
+
+  %a.title{href:url, data: {id: page.primary_key}}= title
   .description
-    -if page.stored(:description) == ""
+    -if page.stored(:description) == "" or page.stored(:description).nil?
       %p.muted No description provided
     -else
       =page.stored(:description)[0]

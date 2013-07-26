@@ -11,6 +11,9 @@ class SearchController < ApplicationController
   end
 
   def search
+    if params[:q].empty?
+      redirect_to root_path and return
+    end
     pubnub = Pubnub.new(
       :publish_key   => Rails::application.config.tor_search.pub_nub.publish_key,
       :subscribe_key => Rails::application.config.tor_search.pub_nub.subscribe_key,

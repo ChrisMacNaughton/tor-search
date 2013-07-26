@@ -9,7 +9,30 @@ class AdminController < ApplicationController
   end
   def status
     render json: {
-
+      last_hour: {
+        searches: Search.last_hour.count,
+        most_popular: Search.most_popular(:last_hour, 1).keys[0]
+      },
+      last_6_hours: {
+        searches: Search.last_6_hours.count,
+        most_popular: Search.most_popular(:last_6_hours, 1).keys[0]
+      },
+      last_12_hours: {
+        searches: Search.last_12_hours.count,
+        most_popular: Search.most_popular(:last_12_hours, 1).keys[0]
+      },
+      last_24_hours: {
+        searches: Search.last_24_hours.count,
+        most_popular: Search.most_popular(:last_24_hours, 1).keys[0]
+      },
+      last_week: {
+        searches: Search.last_week.count,
+        most_popular: Search.most_popular(:last_week, 1).keys[0]
+      },
+      last_month: {
+        searches: Search.last_month.count,
+        most_popular: Search.most_popular(:last_month, 1).keys[0]
+      },
     }
   end
   def clicks
