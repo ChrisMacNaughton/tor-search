@@ -2,7 +2,7 @@ TorSearch::Application.routes.draw do
 
   devise_for :admin
 
-  root to: 'search#index'
+  root to: 'search#index', as: :search
 
   get 'r' => 'search#redirect', as: :redirect
   get 'add-domain' => 'domain#new', as: :add_link
@@ -10,6 +10,8 @@ TorSearch::Application.routes.draw do
 
   get 'instant' => 'instant#new', as: :instant
 
+  get 'contact' => 'static#contact', as: :contact
+  get 'policies' => 'static#policies', as: :policies
   # Admin routes
   get 'admin' => 'admin#index'
   get 'admin/status' => 'admin#status'
