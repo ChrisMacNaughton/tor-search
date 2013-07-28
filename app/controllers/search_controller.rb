@@ -93,4 +93,21 @@ class SearchController < ApplicationController
 
     render text: {status: 'ok'} and return
   end
+
+  def flag
+    session[:refer] = request.referer
+    @page = Page.find(params[:id])
+    @flag = ContentFlag.new(content: @page)
+    @nav = false
+    render 'flag'
+  end
+  def complete_flag
+    page = Page.find(params[:post][:content_id])
+    reason = FlagReason.where(id: params[:flag_reason]).first
+    flag = ContentFlag.create(content: page, reason: params[:post][:reason], flag_reason: reason)
+    flash.notice = "Thank you for your flag!"
+    refer = session[:refer] || root_path
+    session[:refer] = nil
+    redirect_to refer
+  end
 end

@@ -15,6 +15,10 @@ TorSearch::Application.routes.draw do
   # Admin routes
   get 'admin' => 'admin#index'
   get 'admin/status' => 'admin#status'
+
+  get '/flag/:id' => 'search#flag', as: 'page_flag'
+  post '/flag' => 'search#complete_flag', as: 'save_flag'
+
   namespace :admin do
     get 'searches' => 'search#index', as: :admin_searches
     get 'searches/:id' => 'search#show', as: :admin_search

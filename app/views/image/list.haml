@@ -7,22 +7,23 @@
 .row.span10.offset1
   =will_paginate(@images)
 
-:javascript
-  $('.flagable').on('mouseover', function(e){
-    target = $(e.target).parent().parent()
-    image_id = target.data('id')
+-content_for :javascripts
+  :javascript
+    $('.flagable').on('mouseover', function(e){
+      target = $(e.target).parent().parent()
+      image_id = target.data('id')
 
-    $('#' + image_id).toggle()
-    //debugger
-  })
+      $('#' + image_id).toggle()
+      //debugger
+    })
 
-  $('.flagable').on('mouseout', function(e){
-    target = $(e.target).parent().parent()
-    image_id = target.data('id')
+    $('.flagable').on('mouseout', function(e){
+      target = $(e.target).parent().parent()
+      image_id = target.data('id')
 
-    $('#' + image_id).toggle()
-    //debugger
-  })
-  $().ready(function(){
-  Shadowbox.init();
-  });
+      $('#' + image_id).toggle()
+      //debugger
+    })
+    $().ready(function(){
+    Shadowbox.init();
+    });

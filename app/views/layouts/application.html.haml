@@ -9,12 +9,13 @@
 
   %body
     .container-fluid
-      %ul.nav.nav-tabs
-        %li{class: (request[:controller] == 'search') ? ' active' : ''}= link_to "Search", search_path
-        %li{class: (request[:action] == 'contact') ? ' active' : ''}= link_to "Contact", contact_path
-        %li{class: (request[:action] == 'policies') ? ' active' : ''}= link_to "Policies", policies_path
+      -unless defined?(@nav) && @nav == false
+        %ul.nav.nav-tabs
+          %li{class: (request[:controller] == 'search') ? ' active' : ''}= link_to "Search", search_path
+          %li{class: (request[:action] == 'contact') ? ' active' : ''}= link_to "Contact", contact_path
+          %li{class: (request[:action] == 'policies') ? ' active' : ''}= link_to "Policies", policies_path
       -unless notice.nil? && alert.nil?
-        .row.span12
+        .row-fluid.span12
           - if flash[:alert]
             #flash_alert.alert
               .center-edge.shadow
