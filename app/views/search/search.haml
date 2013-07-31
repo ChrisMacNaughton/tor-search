@@ -1,16 +1,24 @@
-.results
-  .logo
-  =render partial: 'search_bar', locals: {searched: @search_term}
-  %p.muted#totals
-    About
-    =number_with_precision @search.total, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
-    results
-  #instant_results.row-fluid.span8{style: 'display: none'}
-  .search-results
-    -@search.hits.each do |page|
-      =render partial: 'page', locals: {page: page}
-    .span8
-      =will_paginate @search.hits
+.row
+  .span2
+    .logo
+  .span9{style: 'margin-top: 40px'}
+    =render partial: 'search_bar', locals: {searched: @search_term}
+.row
+  .span10
+    %p.muted#totals
+      About
+      =number_with_precision @search.total, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
+      results
+    .row
+      #instant_results.span10{style: 'display: none'}
+    .search-results
+      -@search.hits.each do |page|
+        =render partial: 'page', locals: {page: page}
+      .span10
+        =will_paginate @search.hits
+  .span2
+    =link_to "Contact me", "mailto:TheTorSearch@tormail.org"
+    if you're interested in advertising here
 -content_for :javascripts do
   :javascript
     var search = "#{@search_term.gsub(/\s+/, '+')}";

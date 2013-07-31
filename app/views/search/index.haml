@@ -1,11 +1,14 @@
 .home
-  .logo
-  =render partial: 'search_bar'
-  %p.muted
-    =number_with_precision @total_pages_indexed, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
-    pages indexed on
-    =number_with_precision @total_domains_found, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
-    domains
+  .row-fluid.span12.offset2
+    .logo-large
+  .row-fluid.span12.offset2
+    =render partial: 'search_bar'
+  .row-fluid.span12.offset2
+    %p.muted
+      =number_with_precision @total_pages_indexed, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
+      pages indexed on
+      =number_with_precision @total_domains_found, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
+      domains
 -content_for(:footer) do
   #footer_home
     .row-fluid

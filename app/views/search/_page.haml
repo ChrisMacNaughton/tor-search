@@ -1,24 +1,25 @@
-.page-listing.span8
-  -path = (page.stored(:path) || [""]).join
-  -domain = page.stored(:domain_path)[0]
-  -url = "http://#{page.stored(:domain_path)[0]}/#{path}"
-  -title = page.stored(:title)
-  - if title.nil?
-    -title = "<No Title>"
-  -else
-    -title = title[0]
-
-  .title
-    = link_to '<i alt="flag this image" class="icon-flag"></i>'.html_safe, page_flag_path(page), style: 'margin-right: 15px;', rel: 'shadowbox'
-    %a{href:url, data: {id: page.primary_key}}
-      = title[0...80]
-  .description
-    -if page.stored(:description) == "" or page.stored(:description).nil?
-      %p.muted No description provided
+.row
+  .page-listing.span10
+    -path = (page.stored(:path) || [""]).join
+    -domain = page.stored(:domain_path)[0]
+    -url = "http://#{page.stored(:domain_path)[0]}/#{path}"
+    -title = page.stored(:title)
+    - if title.nil?
+      -title = "<No Title>"
     -else
-      =page.stored(:description)[0]
-  %span.path
-    = url[0..60]
-    = "..." if url.length > 60
-    -if include_more_links(@search_term)
-      = link_to "More from #{domain}", search_path(q: "#{@search_term} site:#{domain}")
+      -title = title[0]
+
+    .title
+      = link_to '<i alt="flag this image" class="icon-flag"></i>'.html_safe, page_flag_path(page), style: 'margin-right: 15px;', rel: 'shadowbox'
+      %a{href:url, data: {id: page.primary_key}}
+        = title[0...80]
+    .description
+      -if page.stored(:description) == "" or page.stored(:description).nil?
+        %p.muted No description provided
+      -else
+        =page.stored(:description)[0]
+    %span.path
+      = url[0..60]
+      = "..." if url.length > 60
+      -if include_more_links(@search_term)
+        = link_to "More from #{domain}", search_path(q: "#{@search_term} site:#{domain}")

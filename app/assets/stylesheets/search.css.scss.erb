@@ -4,8 +4,13 @@
 
 .home{
   //position: fixed;
+  margin: 0px auto;
   padding-top: 92px;
   min-height: 301px;
+}
+#totals {
+  margin-right: 65px;
+  float: right;
 }
 .results{
   margin-top: 25px;
@@ -66,8 +71,10 @@
 .logo {
   height: 64px;
   width: 188px;
-  background-image: url('/logo.png');
+  background-image: url('<%=asset_path 'logo.png' %>');
 }
 .logo-large {
-  background-image: url('/logo-large.png');
+  width: 486px;
+  height: 166px;
+  background-image: url('<%=asset_path 'logo-large.png' %>');
 }
