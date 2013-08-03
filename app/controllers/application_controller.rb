@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
         json = Net::HTTP.get(URI.parse(path))
       rescue => e
         if e.message.include? 'Address family not supported by protocol family'
-          json = {status: {collection1: {index: { numDocs: Page.indexed.count}}}}.to_json
+          json = {status: {collection1: {index: { numDocs: 18245}}}}.to_json
         else
           raise
         end

@@ -6,9 +6,5 @@ class Link < ActiveRecord::Base
     :anchor_text
 
   validates :to_target_id, uniqueness: {scope: :from_target_id}
-  after_save :reindex_to_page
 
-  def reindex_to_page
-    to_target.save
-  end
 end

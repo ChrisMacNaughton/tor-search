@@ -12,7 +12,7 @@ production:
 development:
   solr:
     hostname: localhost
-    port: 8983
+    port: 8982
     solr_jar: solr/solr-4.2.0/example/start.jar
     log_level: INFO
     max_memory: 1G

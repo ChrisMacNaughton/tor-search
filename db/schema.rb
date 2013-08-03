@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130723180522) do
+ActiveRecord::Schema.define(:version => 20130801235305) do
 
   create_table "admin_searches", :force => true do |t|
     t.integer "admin_id"
@@ -40,12 +40,11 @@ ActiveRecord::Schema.define(:version => 20130723180522) do
 
   create_table "clicks", :force => true do |t|
     t.integer  "search_id"
-    t.integer  "page_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.text     "target",     :default => ""
   end
 
-  add_index "clicks", ["page_id"], :name => "index_clicks_on_page_id"
   add_index "clicks", ["search_id"], :name => "index_clicks_on_search_id"
 
   create_table "content_flags", :force => true do |t|
@@ -106,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20130723180522) do
     t.integer  "missed_attempts",   :default => 0
     t.boolean  "blocked",           :default => false
     t.boolean  "pending",           :default => false
+    t.boolean  "disabled",          :default => false
   end
 
   add_index "domains", ["path"], :name => "index_domains_on_path", :unique => true
@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(:version => 20130723180522) do
 
   add_index "pages", ["path", "domain_id"], :name => "index_pages_on_path_and_domain_id", :unique => true
   add_index "pages", ["path"], :name => "index_pages_on_path"
+  add_index "pages", ["unique_hash"], :name => "index_pages_on_unique_hash"
 
   create_table "searches", :force => true do |t|
     t.string   "query"

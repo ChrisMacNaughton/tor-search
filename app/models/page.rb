@@ -1,7 +1,7 @@
 require "#{Rails.root}/lib/crawler/crawler"
 
 class Page < ActiveRecord::Base
-  include ::SolrSearch::Index
+  #include ::SolrSearch::Index
 
   belongs_to :domain
   has_many :inbound_links, class_name: "Link", as: :to_target, dependent: :destroy
@@ -43,31 +43,15 @@ class Page < ActiveRecord::Base
   end
 
   searchable(auto_index:false, auto_remove:false) do
-    text :title, stored: true
-    text :description, stored: true
-    text :body
+    text :title, stored: true, as: :title
+    text :content, stored: true, as: :content
+    text :url, stored: true, as: :url
 
     #text :body, as: :content_textp
 
-    text :links do
-      inbound_links.map { |link| link.anchor_text }
-    end
-    text :path, stored: true
-    text :domain_path, stored: true do
-      domain.path
-    end
-    double :page_rank
+    text :anchor, stored: true
 
-    double :domain_rank do
-      domain.domain_rank
-    end
-    boolean :disabled do
-      domain.blocked
-    end
-    integer :domain_id
-    integer :links_count do
-      inbound_links.count
-    end
+    double :boost, stored: true
   end
 
   before_save :trim_url

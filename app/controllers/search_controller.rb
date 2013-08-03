@@ -24,53 +24,59 @@ class SearchController < ApplicationController
     @search_term = params[:q]
 
     if @search_term.include? 'site:'
-      site = @search_term.match(/site:\s*(.{16}.onion)/i)[0].gsub(/site:\s*/, '').gsub(/\/$/, '')
+      #site = @search_term.match(/site:\s*(.{16}.onion)/i)[0].gsub(/site:\s*/, '').gsub(/\.onion\/$/, '')
     end
 
     page = params[:page] || 1
     filters = {}
     filters[:with] = {
     }
-    unless site.nil?
-      domain = Domain.where(path: site).first
-      unless domain.nil?
-        filters[:with][:domain_id] = domain.id
-      end
-    end
-    term = @search_term
+=begin
     @search = Page.search {
       [:with, :without].each do |meth|
         Array(filters[meth].keys).each do |k|
           send(meth, k, filters[meth][k])
         end if filters.include?(meth)
       end
-      any_of do
-        with(:disabled, false)
-        with(:disabled, nil)
-      end
       fulltext term do
-        boost_fields links: 50, title: 15
-        phrase_fields title: 2.0, links: 4.0
+        #boost_fields anchor: 50, title: 15
         phrase_slop 2
         query_phrase_slop 2
-        boost(2.0) { with(:links_count, 0.0..10.0)}
-        boost(3.0) { with(:links_count, 10.0..25.0)}
-        boost(4.0) { with(:links_count, 25.0..100.0)}
-        boost(5.0) { with(:links_count, 100.0..500.0)}
-        boost(6.0) { with(:links_count).greater_than(500)}
+
       end
-      if site.nil?
-        group :domain_id
+      adjust_solr_params do |p|
+        p[:fq].delete_if{|a| !a.match(/type/).nil?}
+        unless site.nil?
+          p[:fq] << "id:*#{site}*"
+        end
+        p.delete(:fq) if p[:fq].empty?
       end
       paginate :page => params[:page], :per_page => 10
-
-      adjust_solr_params do |p|
-        p[:'group.main'] = true
-      end
     }
+=end
+    solr = RSolr.connect :url => 'http://localhost:8983/solr'
+    @page = (params[:page] || 1).to_i
+    p = {
+      fl: "* score",
+      start: @page * 10,
+      q: @search_term,
+      qf: 'title content url anchor_texts path_texts',
+      qs: 2,
+      wt: 'json',
+      rows: 10,
+      ps: 2,
+      defType: 'dismax'
+    }
+    search = JSON.parse(solr.get('select', :params => p).response[:body])
+    @total = search['response']['numFound']
+    @total ||= 0
+    @total = @total.to_i
+    @docs = search['response']['docs']
+    @docs ||= []
+    #debugger
     session[:searches] ||= []
     unless session[:searches].include? params[:q]
-      s = Search.create(query: params[:q], results_count: @search.total)
+      s = Search.create(query: params[:q], results_count: @total)
       session[:searches] << params[:q]
 
       @search_id = s.id
