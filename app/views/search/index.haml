@@ -6,9 +6,7 @@
   .row-fluid.span12.offset2
     %p.muted
       =number_with_precision @total_pages_indexed, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
-      pages indexed on
-      =number_with_precision @total_domains_found, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
-      domains
+      pages indexed
 -content_for(:footer) do
   #footer_home
     .row-fluid

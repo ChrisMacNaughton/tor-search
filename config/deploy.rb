@@ -48,7 +48,7 @@ namespace :deploy do
   end
   desc "Restart the monit service."
   task :reload_monit, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} monit restart -g elocal_web"
+    run "#{try_sudo} monit restart"
   end
   %w[start stop].each do |command|
     desc "#{command} unicorn server"
