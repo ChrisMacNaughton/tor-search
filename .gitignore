@@ -16,4 +16,5 @@
 /tmp
 /tmp/pids
 /solr/data/*
+/solr/solr-*
 /public/assets
