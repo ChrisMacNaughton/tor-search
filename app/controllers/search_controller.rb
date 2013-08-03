@@ -58,7 +58,7 @@ class SearchController < ApplicationController
     @page = (params[:page] || 1).to_i
     p = {
       fl: "* score",
-      start: @page * 10,
+      start: (@page - 1) * 10,
       q: @search_term,
       qf: 'title content url anchor_texts path_texts',
       qs: 2,
