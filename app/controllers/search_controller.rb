@@ -57,19 +57,15 @@ class SearchController < ApplicationController
     solr = RSolr.connect :url => 'http://localhost:8983/solr'
     @page = (params[:page] || 1).to_i
     p = {
-      fl: "* score",
       start: (@page - 1) * 10,
       q: @search_term,
-      qf: 'title content url anchor_texts path_texts',
-      qs: 2,
-      wt: 'json',
       rows: 10,
-      ps: 2,
-      defType: 'dismax'
+      wt: 'json'
     }
-    search = JSON.parse(solr.get('select', :params => p).response[:body])
+    search = JSON.parse(solr.get('nutch', :params => p).response[:body])
     @total = search['response']['numFound']
     @total ||= 0
+    @total_pages = (-(@total.to_f/10)).floor.abs
     @total = @total.to_i
     @docs = search['response']['docs']
     @docs ||= []

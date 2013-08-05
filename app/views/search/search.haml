@@ -17,7 +17,7 @@
       -@docs.each do |page|
         =render partial: 'page', locals: {page: page}
       .span10
-        =will_paginate OpenStruct.new(total_pages: @total, current_page: @page)
+        =will_paginate OpenStruct.new(total_pages: @total_pages, current_page: @page)
   .span2
     =link_to "Contact me", "mailto:TheTorSearch@tormail.org"
     if you're interested in advertising here

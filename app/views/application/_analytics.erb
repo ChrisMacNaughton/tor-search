@@ -1,3 +1,4 @@
+<%- unless Rails.env.downcase.include? 'development' %>
 <!-- Piwik -->
 <script type="text/javascript">
 var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.nuradu.com/" : "http://piwik.nuradu.com/");
@@ -10,3 +11,4 @@ piwikTracker.enableLinkTracking();
 } catch( err ) {}
 </script><noscript><p><img src="http://piwik.nuradu.com/piwik.php?idsite=5" style="border:0" alt="" /></p></noscript>
 <!-- End Piwik Tracking Code -->
+<%- end %>
