@@ -60,13 +60,15 @@ class SearchController < ApplicationController
       start: (@page - 1) * 10,
       q: @search_term,
       rows: 10,
-      wt: 'json'
+      wt: 'json',
+      mm: '2<-1 5<-2 6<90%'
     }
     search = JSON.parse(solr.get('nutch', :params => p).response[:body])
     @total = search['response']['numFound']
     @total ||= 0
     @total_pages = (-(@total.to_f/10)).floor.abs
     @total = @total.to_i
+    @highlights = search['highlighting']
     @docs = search['response']['docs']
     @docs ||= []
     #debugger
