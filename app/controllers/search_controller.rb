@@ -31,29 +31,7 @@ class SearchController < ApplicationController
     filters = {}
     filters[:with] = {
     }
-=begin
-    @search = Page.search {
-      [:with, :without].each do |meth|
-        Array(filters[meth].keys).each do |k|
-          send(meth, k, filters[meth][k])
-        end if filters.include?(meth)
-      end
-      fulltext term do
-        #boost_fields anchor: 50, title: 15
-        phrase_slop 2
-        query_phrase_slop 2
 
-      end
-      adjust_solr_params do |p|
-        p[:fq].delete_if{|a| !a.match(/type/).nil?}
-        unless site.nil?
-          p[:fq] << "id:*#{site}*"
-        end
-        p.delete(:fq) if p[:fq].empty?
-      end
-      paginate :page => params[:page], :per_page => 10
-    }
-=end
     solr = RSolr.connect :url => 'http://localhost:8983/solr'
     @page = (params[:page] || 1).to_i
     p = {

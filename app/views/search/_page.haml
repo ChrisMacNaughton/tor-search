@@ -1,30 +1,29 @@
+-domain = "#{page['url'].split('.onion')}.onion"
+-highlights = OpenStruct.new(@highlights[page['url']])
+-url = page['url']
+-title = highlights.try(:title)
+-if title.nil?
+  -title = page['title']
+  - if title.nil?
+    -title = "<No Title>"
+-else
+  -title = title[0]
+-start = title.length
+-content = highlights.try(:content)
+-if content.nil?
+  -content ||= page['content'][start...254+start]
+-else
+  -content = content[0]
+/
+  = title
+/
+  = content
 .row
   .page-listing.span10
-    -domain = "#{page['url'].split('.onion')}.onion"
-    -highlights = OpenStruct.new(@highlights[page['url']])
-    -url = highlights.try(:url)
-    -if url.nil?
-      -url = page['url']
-    -else
-      -url = url[0]
-    -title = highlights.try(:title)
-    -if title.nil?
-      -title = page['title']
-      - if title.nil?
-        -title = "<No Title>"
-    -else
-      -title = title[0]
-
     .title
       %a{href:page['url'], data: {path: page['url']}}
-        = title[0...80].html_safe
+        = title.html_safe
     .description
-      -start = title.length
-      -content = highlights.try(:content)
-      -if content.nil?
-        -content ||= page['content'][start...254+start]
-      -else
-        -content = content[0]
       -if content.nil?
         No Description
       -else
