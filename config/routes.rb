@@ -10,6 +10,9 @@ TorSearch::Application.routes.draw do
 
   get 'instant' => 'instant#new', as: :instant
 
+  get 'advertising' => 'advertising#advertising', as: :contact
+  post '/advertising' => 'contact#new_message'
+
   get 'contact' => 'contact#contact', as: :contact
   post '/contact' => 'contact#new_message'
   get 'policies' => 'static#policies', as: :policies
