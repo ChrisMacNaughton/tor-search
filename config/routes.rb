@@ -10,7 +10,8 @@ TorSearch::Application.routes.draw do
 
   get 'instant' => 'instant#new', as: :instant
 
-  get 'contact' => 'static#contact', as: :contact
+  get 'contact' => 'contact#contact', as: :contact
+  post '/contact' => 'contact#new_message'
   get 'policies' => 'static#policies', as: :policies
   # Admin routes
   get 'admin' => 'admin#index'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130801235305) do
+ActiveRecord::Schema.define(:version => 20130809211709) do
 
   create_table "admin_searches", :force => true do |t|
     t.integer "admin_id"
@@ -148,6 +148,15 @@ ActiveRecord::Schema.define(:version => 20130801235305) do
 
   add_index "links", ["from_target_id"], :name => "index_links_on_from_target_id"
   add_index "links", ["to_target_id"], :name => "index_links_on_to_target_id"
+
+  create_table "messages", :force => true do |t|
+    t.string   "name"
+    t.text     "text"
+    t.text     "contact_method"
+    t.boolean  "advertising"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "pages", :force => true do |t|
     t.text     "path"

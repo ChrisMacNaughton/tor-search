@@ -19,13 +19,13 @@
       -unless notice.nil? && alert.nil?
         .row.span12
           - if flash[:alert]
-            #flash_alert.alert
-              .center-edge.shadow
-                = flash[:alert]
+            .alert
+              %a.close{data: {dismiss: 'alert'}} &times;
+              = flash[:alert]
           - if flash[:notice]
-            #flash_alert.notice
-              .center-edge.shadow
-                = flash[:notice]
+            .alert.alert-info
+              %a.close{data: {dismiss: 'alert'}} &times;
+              = flash[:notice]
       .row
         .span12
           = yield
