@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130809211709) do
+ActiveRecord::Schema.define(:version => 20130810150354) do
 
   create_table "admin_searches", :force => true do |t|
     t.integer "admin_id"
@@ -179,12 +179,19 @@ ActiveRecord::Schema.define(:version => 20130809211709) do
   add_index "pages", ["path"], :name => "index_pages_on_path"
   add_index "pages", ["unique_hash"], :name => "index_pages_on_unique_hash"
 
+  create_table "queries", :force => true do |t|
+    t.text     "term"
+    t.integer  "searches_count", :default => 0
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
   create_table "searches", :force => true do |t|
-    t.string   "query"
     t.integer  "results_count"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.integer  "clicks_count",  :default => 0
+    t.integer  "query_id"
   end
 
 end

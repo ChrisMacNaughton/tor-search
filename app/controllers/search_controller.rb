@@ -12,7 +12,7 @@ class SearchController < ApplicationController
 
   def search
     if params[:q].empty?
-      redirect_to root_path and return
+      render :index and return
     end
     pubnub = Pubnub.new(
       :publish_key   => Rails::application.config.tor_search.pub_nub.publish_key,
@@ -50,18 +50,14 @@ class SearchController < ApplicationController
     @docs = search['response']['docs']
     @docs ||= []
     #debugger
-    session[:searches] ||= []
-    unless session[:searches].include? params[:q]
-      s = Search.create(query: params[:q], results_count: @total)
-      session[:searches] << params[:q]
-
-      @search_id = s.id
-      pubnub.publish(
-        channel: :searches,
-        message: {id: s.id, term: params[:q]},
-        callback: lambda { |message| puts(message) }
-      )
-    end
+    query = Query.find_or_initialize_by_term(@search_term)
+    pubnub.publish(
+      channel: :searches,
+      message: {id: s.id, term: params[:q]},
+      callback: lambda { |message| puts(message) }
+    ) if query.new_record?
+    query.save
+    s = Search.create(query: query, results_count: @total)
 
     render :search
   end
