@@ -1,4 +1,4 @@
-class Admin::SearchController < ApplicationController
+class Admin::SearchController < AdminController
   newrelic_ignore
   results_with_params_for Search
   def show
