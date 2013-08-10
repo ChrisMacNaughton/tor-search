@@ -12,7 +12,7 @@ class CreateQueries < ActiveRecord::Migration
     end
     execute "update searches set query_id = (select id from queries where queries.term = searches.term limit 1)"
 
-    execute "update queries set searches_counter = (select count(*) from searches where query_id = queries.id)"
+    execute "update queries set searches_count = (select count(*) from searches where query_id = queries.id)"
 
     remove_column :searches, :term
   end
