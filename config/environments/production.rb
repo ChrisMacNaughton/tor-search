@@ -20,7 +20,7 @@ TorSearch::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
-  config.cache_store = :memory_store, { size: 64.megabytes }
+  config.cache_store = :memory_store
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 
