@@ -12,17 +12,15 @@ class CreateQueries < ActiveRecord::Migration
     end
     execute "update searches set query_id = (select id from queries where queries.term = searches.term limit 1)"
 
-    Query.pluck(:id).each do |p_id|
-      Query.reset_counters p_id, :searches
-    end
+    execute "update queries set searches_counter = (select count(*) from searches where query_id = queries.id)"
+
     remove_column :searches, :term
   end
   def down
     add_column :searches, :term, :string
-    Search.all.each do |search|
-      term = Query.where(id: search.query_id).pluck(:term)[0]
-      search.update_attribute(:term, term)
-    end
+
+    execute "update searches set term = (select term from queries where queries.id = searches.query_id)"
+
     drop_table :queries
     remove_column :searches, :query_id
   end
