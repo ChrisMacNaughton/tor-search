@@ -77,9 +77,6 @@ module TorSearch
     # Custom configuration defaults
     config.tor_search = ActiveSupport::OrderedOptions.new
 
-    config.tor_search.update_solr_on_change = true
-    config.tor_search.update_interval = 2.seconds
-    config.tor_search.page_interval = 24.hours
     config.tor_search.tor_url = 'http://kbhpodhnfxl3clb4.onion'
     config.tor_search.bitcoin_address = "1MkH4pGzCtpyNUDuM9mZsftYCfWrsALprt"
 

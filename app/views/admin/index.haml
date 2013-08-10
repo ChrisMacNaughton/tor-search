@@ -77,18 +77,14 @@
       %table{"ng-show" => 'searchParameters.records.length > 0'}
         %thead
           %tr
-            %th
-              %a{ sortable: "created_at"} Created At
-            %th
-              %a{ sortable: "term"} Search Term
-            %th
-              %a{ sortable: "clicksCount"} Clicks
-            %th
-              %a{ sortable: "resultsCount"} Total Results
+            %th Created At
+            %th Search Term
+            %th Clicks
+            %th Total Results
         %tbody
-          %tr{"ng-repeat"=>"search in searchParameters.records", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
-            %td {{search.createdAt}}
-            %td <a href="/admin/searches/{{search.id}}">{{search.query}}</a>
-            %td {{search.clicksCount}}
-            %td {{search.resultsCount}}
-      = render 'admin/shared/angular_common_pagination'
+          %tr{"ng-repeat"=>"query in searchParameters.records", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
+            %td {{query.searches[0].createdAt}}
+            %td <a href="/admin/searches/{{query.searches[0].id}}">{{query.term}}</a>
+            %td {{query.searches[0].clicksCount || 0}}
+            %td {{query.searches[0].resultsCount || "--test search--"}}
+      = render partial: 'admin/shared/angular_common_pagination'

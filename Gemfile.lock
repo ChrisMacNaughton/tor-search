@@ -14,6 +14,8 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
+    active_model_serializers (0.8.1)
+      activemodel (>= 3.0)
     activemodel (3.2.13)
       activesupport (= 3.2.13)
       builder (~> 3.0.0)
@@ -111,9 +113,6 @@ GEM
       domain_name (~> 0.5)
     http_parser.rb (0.6.0.beta.2)
     i18n (0.6.1)
-    jbuilder (1.4.2)
-      activesupport (>= 3.0.0)
-      multi_json (>= 1.2.0)
     journey (1.0.4)
     jquery-rails (3.0.2)
       railties (>= 3.0, < 5.0)
@@ -256,6 +255,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers
   acts_as_textcaptcha (~> 3.0.10)
   angularjs-rails-resource
   better_errors
@@ -268,7 +268,6 @@ DEPENDENCIES
   foreman
   haml
   haml-rails
-  jbuilder (~> 1.2)
   jquery-rails
   mechanize
   meta_request

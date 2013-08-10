@@ -14,14 +14,6 @@ class Search < ActiveRecord::Base
   scope :last_week, -> { since((7*24).hours.ago.to_datetime) }
   scope :last_month, -> { since(1.month.ago.to_date) }
 
-  def self.most_popular(scope, limit=5)
-    searches = self.send(scope)
-
-    popular = {}
-    searches.map{|s| popular[s.query] ||= 0; popular[s.query] += 1}
-
-    popular.delete_if{|k,v| k.empty? }.sort_by{|search, count| -count}.first(5)
-  end
   def self.within_range(from_date, to_date)
     where("searches.created_at BETWEEN ? AND ?", from_date, to_date)
   end
