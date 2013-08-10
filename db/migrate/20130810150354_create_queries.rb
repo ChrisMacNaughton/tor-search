@@ -10,11 +10,8 @@ class CreateQueries < ActiveRecord::Migration
     Search.select("distinct on (query) *").pluck(:term).each do |t|
       Query.create!(term: t)
     end
-    Query.all.each do |q|
-      Search.where(term: q.term).each do |search|
-        search.update_attribute(:query_id, q.id)
-      end
-    end
+    execute "update searches set query_id = (select id from queries where queries.term = searches.term limit 1)"
+
     Query.pluck(:id).each do |p_id|
       Query.reset_counters p_id, :searches
     end
