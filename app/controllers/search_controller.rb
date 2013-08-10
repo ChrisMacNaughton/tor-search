@@ -58,17 +58,14 @@ class SearchController < ApplicationController
     ) if query.new_record?
     query.save
     s = Search.create(query: query, results_count: @total)
-
+    @search_id = s.id
     render :search
   end
   def redirect
-    page = Page.where(id: params[:p]).first
-
     search = Search.where(id: params[:s]).first
+    target = params[:p]
 
-
-    Click.create(search: search, page: page)
-
+    Click.create(search: search, target: target)
     render text: {status: 'ok'} and return
   end
 

@@ -3,6 +3,9 @@ class Admin::SearchController < AdminController
   include ModelFromParams
   def show
     @search = Search.where(id: params[:id]).includes(:query, {clicks: :page}).first
+    @clicks = @search.clicks.map do |c|
+      OpenStruct.new({id: c.id, url: c.target,body: get_body_from(c), title: get_title_from(c)})
+    end
   end
   def index
     respond_to do |format|
@@ -47,5 +50,29 @@ class Admin::SearchController < AdminController
   end
   def associated_model_name
     @model_name ||= 'query'
+  end
+
+  def get_body_from(click)
+    solr_page(click.target).try('fetch','content')
+  end
+  def get_title_from(click)
+    solr_page(click.target).try('fetch','title')
+  end
+  private
+
+  def solr_page(url)
+    @pages ||= {}
+    if @pages[url].nil?
+      solr = RSolr.connect :url => 'http://localhost:8983/solr'
+      split = url.gsub(/https?:\/\//, '').split(/\.onion/)
+      id = "\"onion.#{split[0]}:http#{split[1]}\""
+      p = {
+        q: "id:#{id}",
+        wt: 'json'
+      }
+      search = JSON.parse(solr.get('select', :params => p).response[:body])
+      @pages[url] = search['response']['docs'].select{|c| c['url'] == url }.first
+    end
+    @pages[url]
   end
 end

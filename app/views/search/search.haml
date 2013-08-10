@@ -30,12 +30,9 @@
         $('#instant_results').show()
       }
       $.getJSON("#{instant_path}?search="+search, null,function(res){
-      console.log(res);
         if(res['matches'] != null && res['matches'].length > 0) {
           matches = res['matches'];
-          console.log(matches);
           $.each(matches, function(k,e){
-          console.log(e);
             str =  "<div class='instant-result'><h4>"+e.name+"</h4><hr/><dl class='"+e.type+"'>"
             method = e.method
             if(method == null){
@@ -59,11 +56,11 @@
         $('#instant_results').hide();
         }
       }).fail(function(){ $('#instant_results').hide(); });
-      $('.search-results').on('mousedown', function(e){
+      $('.search-results a').on('mousedown', function(e){
         target = $(e.target)[0]
 
         href = target.getAttribute('href')
-        $.get('/r?s=#{@search_id}&p='+target.getAttribute('data-id'));
+        $.get('/r?s=#{@search_id}&p='+href);
         wait_for = 200;
         wait_for += (new Date).getTime();
         _results = [];

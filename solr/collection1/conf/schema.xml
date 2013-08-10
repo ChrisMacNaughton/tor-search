@@ -309,7 +309,7 @@
     <field name="boost" type="float" stored="true" indexed="true"/>
 
     <!-- fields for index-basic plugin -->
-    <field name="host" type="url" stored="false" indexed="true"/>
+    <field name="host" type="url" stored="true" indexed="true"/>
     <field name="url" type="url" stored="true" indexed="true" required="true"/>
     <!-- stored=true for highlighting, use term vectors  and positions for fast highlighting -->
     <field name="content" type="text_general" stored="true" indexed="true"/>

@@ -7,7 +7,7 @@
     %ul.unstyled
       %li
         %b
-          =@search.query
+          =@search.query.term
       %li
         =@search.results_count
         total results
@@ -19,8 +19,7 @@
     .span10
       %h3 Clicks
     .span10
-      -@search.clicks.each do |click|
-        -page = click.page
+      -@clicks.each do |page|
         -next if page.nil?
         .row-fluid
           .span4
