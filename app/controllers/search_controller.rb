@@ -56,7 +56,7 @@ class SearchController < ApplicationController
     @search_id = s.id
     pubnub.publish(
       channel: :searches,
-      message: {id: @search_id.id, term: params[:q]},
+      message: {id: @search_id, term: params[:q]},
       callback: lambda { |message| puts(message) }
     )
 
