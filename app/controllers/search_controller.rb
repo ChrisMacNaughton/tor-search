@@ -60,7 +60,6 @@ class SearchController < ApplicationController
       callback: lambda { |message| puts(message) }
     )
 
-
     render :search
   end
   def redirect
