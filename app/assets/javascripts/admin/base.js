@@ -13,13 +13,13 @@ function IndexSearchesRealtimeCtrl($scope, $http) {
 
     callback   : function(message) {
       //toggle the progress_bar
-      $('#progress_bar').slideToggle();
+      $('#progress_bar').show();
 
       $scope.$apply(function(){
         $scope.searches.unshift(message);
         $scope.searchInfo = $http.get('/admin/status.json');
       });
-      $('#progress_bar').slideToggle();
+      $('#progress_bar').hide();
     },
 
     disconnect : function() {
@@ -38,7 +38,7 @@ function IndexSearchesRealtimeCtrl($scope, $http) {
       $scope.$apply(function(){
         $scope.realtimeStatus = 'Connected';
         //hide the progress bar
-        $('#progress_bar').slideToggle();
+        $('#progress_bar').hide()();
       });
     }
 })

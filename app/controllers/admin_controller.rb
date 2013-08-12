@@ -7,34 +7,6 @@ class AdminController < ApplicationController
   def index
 
   end
-  def status
-    render json: {
-      last_hour: {
-        searches: Search.last_hour.count,
-        most_popular: Query.most_popular(:last_hour, 1)[0].try(:first)
-      },
-      last_6_hours: {
-        searches: Search.last_6_hours.count,
-        most_popular: Query.most_popular(:last_6_hours, 1)[0].try(:first)
-      },
-      last_12_hours: {
-        searches: Search.last_12_hours.count,
-        most_popular: Query.most_popular(:last_12_hours, 1)[0].try(:first)
-      },
-      last_24_hours: {
-        searches: Search.last_24_hours.count,
-        most_popular: Query.most_popular(:last_24_hours, 1)[0].try(:first)
-      },
-      last_week: {
-        searches: Search.last_week.count,
-        most_popular: Query.most_popular(:last_week, 1)[0].try(:first)
-      },
-      last_month: {
-        searches: Search.last_month.count,
-        most_popular: Query.most_popular(:last_month, 1)[0].try(:first)
-      },
-    }
-  end
   def clicks
     respond_to do |format|
       format.json do

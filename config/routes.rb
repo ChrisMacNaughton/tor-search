@@ -18,7 +18,6 @@ TorSearch::Application.routes.draw do
   get 'policies' => 'static#policies', as: :policies
   # Admin routes
   get 'admin' => 'admin#index'
-  get 'admin/status' => 'admin#status'
 
   namespace :admin do
     get 'searches' => 'search#index', as: :admin_searches

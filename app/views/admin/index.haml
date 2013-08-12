@@ -13,57 +13,12 @@
       .progress.progress-striped.active#progress_bar
         .bar{style: "width: 100%"}
       .table-striped#searches
-        .message{:'ng-repeat' => "search in searches"}
+        .message{:'ng-repeat' => "search in searches.slice(0,10)"}
           %p.text= link_to "{{search.term}}", '/admin/searches/{{search.id}}'
-    .span4.row-fluid
-      .span4
-        %dl
-          %dt Last hour
-          %dd
-            %dl.inline
-              %dt Searches
-              %dd {{searchInfo['data']['last_hour']['searches']}}
-              %dt Most Popular Term
-              %dd {{searchInfo['data']['last_hour']['most_popular']}}
-          %dt Last 6 hours
-          %dd
-            %dl.inline
-              %dt Searches
-              %dd {{searchInfo['data']['last_6_hours']['searches']}}
-              %dt Most Popular Term
-              %dd {{searchInfo['data']['last_6_hours']['most_popular']}}
-      .span4
-        %dl
-          %dt Last 12 hours
-          %dd
-            %dl.inline
-              %dt Searches
-              %dd {{searchInfo['data']['last_12_hours']['searches']}}
-              %dt Most Popular Term
-              %dd {{searchInfo['data']['last_12_hours']['most_popular']}}
-          %dt Last 24 hours
-          %dd
-            %dl.inline
-              %dt Searches
-              %dd {{searchInfo['data']['last_24_hours']['searches']}}
-              %dt Most Popular Term
-              %dd {{searchInfo['data']['last_24_hours']['most_popular']}}
-      .span4
-        %dl
-          %dt Last week
-          %dd
-            %dl.inline
-              %dt Searches
-              %dd {{searchInfo['data']['last_week']['searches']}}
-              %dt Most Popular Term
-              %dd {{searchInfo['data']['last_week']['most_popular']}}
-          %dt Last month
-          %dd
-            %dl.inline
-              %dt Searches
-              %dd {{searchInfo['data']['last_month']['searches']}}
-              %dt Most Popular Term
-              %dd {{searchInfo['data']['last_month']['most_popular']}}
+    .span4
+      .table-striped#searches
+        .message{:'ng-repeat' => "search in searches.slice(11,20)"}
+          %p.text= link_to "{{search.term}}", '/admin/searches/{{search.id}}'
 .row-fluid.app-center-content{:'ng-controller' => 'SearchesCtrl'}
   %h2
     Historical
@@ -86,5 +41,5 @@
             %td {{query.searches[0].createdAt}}
             %td <a href="/admin/searches/{{query.searches[0].id}}">{{query.term}}</a>
             %td {{query.searches[0].clicksCount || 0}}
-            %td {{query.searches[0].resultsCount || "--test search--"}}
+            %td {{query.searches[0].resultsCount || 0}}
       = render partial: 'admin/shared/angular_common_pagination'
