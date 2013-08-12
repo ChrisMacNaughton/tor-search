@@ -23,10 +23,6 @@ class SearchController < ApplicationController
     )
     @search_term = params[:q]
 
-    if @search_term.include? 'site:'
-      #site = @search_term.match(/site:\s*(.{16}.onion)/i)[0].gsub(/site:\s*/, '').gsub(/\.onion\/$/, '')
-    end
-
     page = params[:page] || 1
     filters = {}
     filters[:with] = {
@@ -41,6 +37,16 @@ class SearchController < ApplicationController
       wt: 'json',
       mm: '2<-1 5<-2 6<90%'
     }
+    if @search_term.include? 'site:'
+      site = @search_term.match(/site:\s*(.{16}.onion)/i)[0].gsub(/site:\s*/, '').gsub(/\.onion\/?$/, '')
+      fq = "id:onion.#{site}*"
+      if @search_term.include? '-site:'
+        fq = "-#{fq}"
+      end
+      p[:q].gsub!(/site:\s*(.{16}.onion)/i, '')
+      p[:fq] = fq
+    end
+    #debugger
     search = JSON.parse(solr.get('nutch', :params => p).response[:body])
     @total = search['response']['numFound']
     @total ||= 0
