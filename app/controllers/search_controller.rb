@@ -4,7 +4,6 @@ class SearchController < ApplicationController
     if params[:q]
       search
     else
-      @total_domains_found = Domain.active.count
       @total_pages_indexed = get_solr_size#Page.indexed.count
       render :index
     end

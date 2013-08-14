@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130810150354) do
+ActiveRecord::Schema.define(:version => 20130814215949) do
 
   create_table "admin_searches", :force => true do |t|
     t.integer "admin_id"
@@ -95,20 +95,10 @@ ActiveRecord::Schema.define(:version => 20130810150354) do
 
   create_table "domains", :force => true do |t|
     t.string   "path"
-    t.datetime "last_crawled"
-    t.decimal  "domain_rank"
-    t.boolean  "will_index"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.text     "robots"
-    t.datetime "last_robots_check"
-    t.integer  "missed_attempts",   :default => 0
-    t.boolean  "blocked",           :default => false
-    t.boolean  "pending",           :default => false
-    t.boolean  "disabled",          :default => false
+    t.boolean  "pending"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
-
-  add_index "domains", ["path"], :name => "index_domains_on_path", :unique => true
 
   create_table "flag_reasons", :force => true do |t|
     t.string   "description"
@@ -157,27 +147,6 @@ ActiveRecord::Schema.define(:version => 20130810150354) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
-
-  create_table "pages", :force => true do |t|
-    t.text     "path"
-    t.integer  "domain_id"
-    t.string   "title"
-    t.text     "description"
-    t.text     "meta_keywords"
-    t.text     "meta_generator"
-    t.datetime "last_crawled"
-    t.decimal  "page_rank"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.boolean  "no_crawl",       :default => false
-    t.text     "body"
-    t.string   "unique_hash",    :default => ""
-    t.integer  "duplicate_id"
-  end
-
-  add_index "pages", ["path", "domain_id"], :name => "index_pages_on_path_and_domain_id", :unique => true
-  add_index "pages", ["path"], :name => "index_pages_on_path"
-  add_index "pages", ["unique_hash"], :name => "index_pages_on_unique_hash"
 
   create_table "queries", :force => true do |t|
     t.text     "term"
