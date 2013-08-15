@@ -9,13 +9,16 @@ class GraphsController < ApplicationController
     g.labels = {}
     g.hide_legend = true
     searches = []
+    searches_raw = Search.group("to_char(created_at, 'DD/MM/YYYY')").where("created_at > ?", 31.days.ago).count
     30.times do |i|
       date = (i+1).days.ago
       g.labels[29 - i] = date.to_datetime.strftime('%m/%d') if i % 3 == 0
-      searches << Search.where("to_char(created_at, 'DD/MM/YYYY') = ?", date.to_date.strftime('%d/%m/%Y')).count
+     s = searches_raw[date.strftime('%d/%m/%Y')]
+     s ||= 0
+      searches << s
     end
     g.hide_title = true
-    g.data :Searches, searches
+    g.data :Searches, searches.reverse
 
     send_data g.to_blob('PNG'), :type => "image/png", disposition: :inline
   end
@@ -26,13 +29,20 @@ class GraphsController < ApplicationController
     g.labels = {}
     g.hide_legend = true
     searches = []
+    searches_raw = Search.group("to_char(created_at, 'MM/DD/YYYY')").where("created_at > ?", 31.days.ago).count(distinct: 'query_id')
     30.times do |i|
       date = (i+1).days.ago
-      g.labels[29 - i] = date.to_datetime.strftime('%m/%d') if i % 3 == 0
-      searches << Search.count_by_sql("select count(distinct(searches.query_id)) from searches where to_char(created_at, 'DD/MM/YYYY') = '#{date.to_date.strftime('%d/%m/%Y')}'")
+      g.labels[29 - i] = if i % 3 == 0
+        date.to_datetime.strftime('%m/%d')
+      else
+        ''
+      end
+      s = searches_raw[date.strftime('%m/%d/%Y')]
+      s ||= 0
+      searches << s
     end
     g.hide_title = true
-    g.data :Searches, searches
+    g.data :Searches, searches.reverse
 
     send_data g.to_blob('PNG'), :type => "image/png", disposition: :inline
   end
