@@ -32,11 +32,7 @@ class GraphsController < ApplicationController
     searches_raw = Search.group("to_char(created_at, 'MM/DD/YYYY')").where("created_at > ?", 31.days.ago).count(distinct: 'query_id')
     30.times do |i|
       date = (i+1).days.ago
-      g.labels[29 - i] = if i % 3 == 0
-        date.to_datetime.strftime('%m/%d')
-      else
-        ''
-      end
+      g.labels[29 - i] = date.to_datetime.strftime('%m/%d') if i % 3 == 0
       s = searches_raw[date.strftime('%m/%d/%Y')]
       s ||= 0
       searches << s
