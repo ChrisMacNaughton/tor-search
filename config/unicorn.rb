@@ -42,11 +42,13 @@ before_fork do |server, worker|
   end
   old_pid = "#{app_path}/tmp/pids/unicorn.pid.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
+    Process.kill("TTOU", server.pid)
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)
     rescue Errno::ENOENT, Errno::ESRCH
       # someone else did our job for us
     end
+    Process.kill("TTIN", server.pid)
   end
   sleep 1
 end
