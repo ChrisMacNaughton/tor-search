@@ -73,7 +73,7 @@ namespace :deploy do
 
   desc "restart unicorn server"
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{current_path}/config/server/unicorn_init.sh reload"
+    run "#{current_path}/config/server/unicorn_init.sh upgrade"
   end
 
   desc "Link in the production database.yml and assets"
