@@ -1,8 +1,6 @@
 function IndexSearchesRealtimeCtrl($scope, $http) {
   $scope.searches = [];
 
-  $scope.searchInfo = $http.get('/admin/status.json');
-
   $scope.realtimeStatus = "Connecting...";
   $scope.channel = "searches";
   $scope.limit = 20;
@@ -17,7 +15,6 @@ function IndexSearchesRealtimeCtrl($scope, $http) {
 
       $scope.$apply(function(){
         $scope.searches.unshift(message);
-        $scope.searchInfo = $http.get('/admin/status.json');
       });
       $('#progress_bar').hide();
     },
