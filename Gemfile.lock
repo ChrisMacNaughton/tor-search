@@ -272,7 +272,6 @@ DEPENDENCIES
   mechanize
   meta_request
   newrelic_rpm
-  nokogiri
   paperclip (~> 3.0)
   pg
   pubnub
