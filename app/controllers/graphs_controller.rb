@@ -29,7 +29,7 @@ class GraphsController < ApplicationController
     g.labels = {}
     g.hide_legend = true
     searches = []
-    searches_raw = Search.group("to_char(created_at, 'MM/DD/YYYY')").where("created_at > ?", 31.days.ago).count(distinct: 'query_id')
+    searches_raw = Search.group("to_char(created_at, 'MM/DD/YYYY')").where("created_at > ?", 31.days.ago).count(select: 'distinct(query_id)')
     30.times do |i|
       date = (i+1).days.ago
       g.labels[29 - i] = date.to_datetime.strftime('%m/%d') if i % 3 == 0
