@@ -18,9 +18,9 @@ gem 'sunspot_rails'
 
 gem 'will_paginate'
 
-gem 'robotstxt', require: false
-gem 'socksify', require: false
-gem 'mechanize', require: false
+#gem 'robotstxt', require: false
+#gem 'socksify', require: false
+#gem 'mechanize', require: false
 gem 'paperclip', '~> 3.0'
 
 gem 'devise'
@@ -38,11 +38,11 @@ gem 'angularjs-rails-resource'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-gem 'delayed_job_active_record'
-gem 'daemons'
+#gem 'delayed_job_active_record'
+#gem 'daemons'
 
 # allows parallel web requests from the application
-gem 'typhoeus'
+#gem 'typhoeus'
 
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
