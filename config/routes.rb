@@ -3,6 +3,9 @@ TorSearch::Application.routes.draw do
   devise_for :admin
 
   root to: 'search#index', as: :search
+  get 'graphs' => 'graphs#index', as: :graphs
+  get 'graphs/daily' => 'graphs#daily', as: :daily
+  get 'graphs/unique' => 'graphs#unique', as: :unique
 
   get 'r' => 'search#redirect', as: :redirect
   get 'add-domain' => 'domain#new', as: :add_link
