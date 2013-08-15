@@ -2,10 +2,10 @@
 -highlights = OpenStruct.new(@highlights[page['url']])
 -url = page['url']
 -title = highlights.try(:title)
--if title.nil?
+-if title.nil? || title.empty?
   -title = page['title']
-  - if title.nil?
-    -title = "<No Title>"
+  - if title.nil? || title.empty?
+    -title = h "<No Title>"
 -else
   -title = title[0]
 -start = title.length
@@ -14,10 +14,6 @@
   -content ||= page['content'][start...254+start]
 -else
   -content = content[0]
-/
-  = title
-/
-  = content
 .row
   .page-listing.span10
     .title
