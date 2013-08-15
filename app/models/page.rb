@@ -1,4 +1,4 @@
-require "#{Rails.root}/lib/crawler/crawler"
+#require "#{Rails.root}/lib/crawler/crawler"
 
 class Page < ActiveRecord::Base
   #include ::SolrSearch::Index

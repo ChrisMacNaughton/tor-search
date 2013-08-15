@@ -48,7 +48,7 @@ before_fork do |server, worker|
     rescue Errno::ENOENT, Errno::ESRCH
       # someone else did our job for us
     end
-    Process.kill("TTIN", server.pid)
+    Process.kill("TTIN", File.read(server.pid).to_i)
   end
   sleep 1
 end
