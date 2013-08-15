@@ -57,7 +57,7 @@ restart|reload)
         $CMD
         ;;
 upgrade)
-        sig TTOU && sleep 15
+        sig TTOU && sleep 5
         sig USR2 && exit 0
         echo >&2 "Couldn't upgrade, starting '$CMD' instead"
         $CMD
