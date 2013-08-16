@@ -42,7 +42,7 @@ gem 'jquery-rails'
 #gem 'daemons'
 
 # allows parallel web requests from the application
-#gem 'typhoeus'
+gem 'typhoeus'
 
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
