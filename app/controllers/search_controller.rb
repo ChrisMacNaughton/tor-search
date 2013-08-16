@@ -57,14 +57,15 @@ class SearchController < ApplicationController
     #debugger
     query = Query.find_or_initialize_by_term(@search_term)
     query.save
-    s = Search.create(query: query, results_count: @total)
-    @search_id = s.id
-    pubnub.publish(
-      channel: :searches,
-      message: {id: @search_id, term: params[:q]},
-      callback: lambda { |message| puts(message) }
-    )
-
+    if params[:page].nil? || params[:page] == 1
+      s = Search.create(query: query, results_count: @total)
+      @search_id = s.id
+      pubnub.publish(
+        channel: :searches,
+        message: {id: @search_id, term: params[:q]},
+        callback: lambda { |message| puts(message) }
+      )
+    end
     render :search
   end
   def redirect
