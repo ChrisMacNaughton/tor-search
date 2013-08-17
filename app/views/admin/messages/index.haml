@@ -1,0 +1,28 @@
+-content_for :title, "Admin - Messages"
+
+.row-fluid.app-center-content{:'ng-controller' => 'MessagesCtrl'}
+  %h2
+    Messages
+  %hr
+  .row-fluid.span8.offset2
+    .listings-table.ng-cloak.span12{style: "top:20px;"}
+      %table.span12{"ng-show" => 'searchParameters.records.length == 0'}
+        %tbody.span12
+          %tr
+            %td No Records Found
+      %table{"ng-show" => 'searchParameters.records.length > 0'}
+        %thead
+          %tr
+            %th Created At
+            %th Interested in Advertising?
+            %th Name
+            %th Contact Method
+            %th Message
+        %tbody
+          %tr{"ng-repeat"=>"message in searchParameters.records", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
+            %td {{message.createdAt|date:'short'}}
+            %td {{message.advertising}}
+            %td {{message.name}}
+            %td {{message.contactMethod}}
+            %td {{message.text}}
+      = render partial: 'admin/shared/angular_common_pagination'

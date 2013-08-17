@@ -35,7 +35,7 @@ function IndexSearchesRealtimeCtrl($scope, $http) {
       $scope.$apply(function(){
         $scope.realtimeStatus = 'Connected';
         //hide the progress bar
-        $('#progress_bar').hide()();
+        $('#progress_bar').hide();
       });
     }
 })

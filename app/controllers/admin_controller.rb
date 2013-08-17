@@ -22,10 +22,4 @@ class AdminController < ApplicationController
       end
     end
   end
-  def pages
-
-  end
-  def page
-
-  end
 end

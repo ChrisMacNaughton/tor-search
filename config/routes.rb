@@ -25,6 +25,8 @@ TorSearch::Application.routes.draw do
   namespace :admin do
     get 'searches' => 'search#index', as: :admin_searches
     get 'searches/:id' => 'search#show', as: :admin_search
+
+    resources :messages
   end
   get 'admin/searches/:id/clicks' => 'admin#clicks', as: :admin_clicks
   get 'admin/pages' => 'admin#pages', as: :admin_pages

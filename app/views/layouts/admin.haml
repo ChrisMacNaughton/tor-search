@@ -16,6 +16,8 @@
       .row-fluid.span12
         %h1= yield(:title)
         %hr
+        =render partial: 'admin/nav'
+        %hr
     .container-fluid
       -unless notice.nil? && alert.nil?
         .row.span12
