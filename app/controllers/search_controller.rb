@@ -77,6 +77,6 @@ class SearchController < ApplicationController
     render text: {status: 'ok'} and return
   end
   def ads
-    Ad.page(1).order(:created_at, :bid)
+    Ad.page(1).available.joins(:advertiser).where('advertisers.balance > ads.bid').order(:created_at, :bid)
   end
 end

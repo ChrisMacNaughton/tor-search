@@ -8,6 +8,7 @@ class AdsController < ApplicationController
   end
   def create
     @ad = Ad.new(params[:ad])
+    @ad.advertiser = current_advertiser
     if @ad.save
       flash.notice = "Your new ad has been successfully created"
       redirect_to ads_path
