@@ -66,6 +66,7 @@ class SearchController < ApplicationController
         callback: lambda { |message| puts(message) }
       )
     end
+    @ads = ads
     render :search
   end
   def redirect
@@ -75,21 +76,7 @@ class SearchController < ApplicationController
     Click.create(search: search, target: target)
     render text: {status: 'ok'} and return
   end
-
-  def flag
-    session[:refer] = request.referer
-    @page = Page.find(params[:id])
-    @flag = ContentFlag.new(content: @page)
-    @nav = false
-    render 'flag'
-  end
-  def complete_flag
-    page = Page.find(params[:post][:content_id])
-    reason = FlagReason.where(id: params[:flag_reason]).first
-    flag = ContentFlag.create(content: page, reason: params[:post][:reason], flag_reason: reason)
-    flash.notice = "Thank you for your flag!"
-    refer = session[:refer] || root_path
-    session[:refer] = nil
-    redirect_to refer
+  def ads
+    Ad.page(1).order(:created_at, :bid)
   end
 end

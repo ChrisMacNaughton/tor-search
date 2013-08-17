@@ -1,5 +1,7 @@
 TorSearch::Application.routes.draw do
 
+  devise_for :advertisers
+
   devise_for :admin
 
   root to: 'search#index', as: :search
@@ -13,7 +15,7 @@ TorSearch::Application.routes.draw do
 
   get 'instant' => 'instant#new', as: :instant
 
-  get 'advertising' => 'advertising#advertising', as: :contact
+  get 'advertising' => 'ads#advertising', as: :contact
   post '/advertising' => 'contact#new_message'
 
   get 'contact' => 'contact#contact', as: :contact
@@ -21,7 +23,7 @@ TorSearch::Application.routes.draw do
   get 'policies' => 'static#policies', as: :policies
   # Admin routes
   get 'admin' => 'admin#index'
-
+  resources :ads
   namespace :admin do
     get 'searches' => 'search#index', as: :admin_searches
     get 'searches/:id' => 'search#show', as: :admin_search

@@ -1,4 +1,11 @@
 module ApplicationHelper
+  def nav_link(link_text, link_path, base_class = "")
+    class_name = current_page?(link_path) ? 'active' : ''
+    class_name = "#{base_class} #{class_name}"
+    content_tag(:li, :class => class_name) do
+      link_to link_text, link_path
+    end
+  end
 end
 class AppFormBuilder < ActionView::Helpers::FormBuilder
   include ActionView::Helpers::TagHelper
@@ -109,7 +116,9 @@ class WithErrorFields < AppFormBuilder
   def text_field_with_error(method, opts={})
     field_with_error :text_field, method, opts
   end
-
+  def text_area_with_error(method, opts={})
+    field_with_error :text_area, method, opts
+  end
   def select_with_error(method, opts={})
     field_with_error :select, method, opts
   end

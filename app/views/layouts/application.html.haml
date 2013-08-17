@@ -13,9 +13,15 @@
     .container
       -unless defined?(@nav) && @nav == false
         %ul.nav.nav-tabs
-          %li{class: (request[:controller] == 'search') ? ' active' : ''}= link_to "Search", search_path
-          %li{class: (request[:action] == 'contact') ? ' active' : ''}= link_to "Contact", contact_path
-          %li{class: (request[:action] == 'policies') ? ' active' : ''}= link_to "Policies", policies_path
+          =nav_link "Search", search_path
+          =nav_link "Contact", contact_path
+          =nav_link "Policies", policies_path
+          -if current_advertiser
+            =nav_link "Sign Out", destroy_advertiser_session_path, 'pull-right'
+            =nav_link "Profile", edit_advertiser_registration_path, 'pull-right'
+            =nav_link "Ads", ads_path, 'pull-right'
+          -else
+            =nav_link "Advertisers", new_advertiser_session_path, "pull-right"
       -unless notice.nil? && alert.nil?
         .row.span12
           - if flash[:alert]

@@ -19,8 +19,19 @@
       .span10
         =will_paginate OpenStruct.new(total_pages: @total_pages, current_page: @page)
   .span2
-    =link_to "Contact me", "mailto:TheTorSearch@tormail.org"
-    if you're interested in advertising here
+    -unless @ads.nil? || @ads.empty?
+      - @ads.each do |ad|
+        .span2
+          .row
+            =link_to ad.title, ad.path
+          .row.path
+            =ad.path
+          .row
+            =ad.body[0...20]
+            =ad.body[21...39]
+    -else
+      =link_to "Contact me", "mailto:TheTorSearch@tormail.org"
+      if you're interested in advertising here
 -content_for :javascripts do
   :javascript
     var search = "#{@search_term.gsub(/\s+/, '+')}";
