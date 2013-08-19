@@ -34,4 +34,5 @@ TorSearch::Application.routes.draw do
   get 'admin/pages' => 'admin#pages', as: :admin_pages
   get 'admin/page' => 'admin#page', as: :admin_page
 
+  post '/payment' => 'payments#index'
 end
