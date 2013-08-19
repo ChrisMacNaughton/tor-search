@@ -70,8 +70,13 @@ class SearchController < ApplicationController
     end
     @ads = ads
     ad_ids = @ads.map(&:id)
-    ad_ids.each do |id|
-      AdView.create(ad_id: id, query_id: query.id)
+    @ads.each do |ad|
+      adv = ad.advertiser
+      bal = adv.balance - ad.bid
+      logger.info ("New balance for #{adv.email} is #{bal} after removing ad's bid (#{ad.bid})")
+      adv.balance= bal
+      adv.save
+      AdView.create(ad_id: ad.id, query_id: query.id)
     end
     render :search
   end

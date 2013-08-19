@@ -8,5 +8,6 @@ class Advertiser < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :balance
   # attr_accessible :title, :body
-  has_many :ads, :bitcoin_addresses
+  has_many :ads
+  has_many :bitcoin_addresses
 end

@@ -1,0 +1,8 @@
+-border ||= false
+.row{class: border ? "well" : ""}
+  .row.span2
+    =link_to ad.title, ad.path
+  .row.path.span2
+    =ad.path
+  .row.span2{style: 'height: 40px;'}
+    =ad.body[0...39]

@@ -23,7 +23,12 @@ TorSearch::Application.routes.draw do
   get 'policies' => 'static#policies', as: :policies
   # Admin routes
   get 'admin' => 'admin#index'
-  resources :ads
+  resources :ads do
+    member do
+      put "toggle" => 'ads#toggle', as: :toggle
+    end
+  end
+
   namespace :admin do
     get 'searches' => 'search#index', as: :admin_searches
     get 'searches/:id' => 'search#show', as: :admin_search

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130819134055) do
+ActiveRecord::Schema.define(:version => 20130819174656) do
 
   create_table "ad_views", :force => true do |t|
     t.integer  "ad_id"
@@ -53,11 +53,12 @@ ActiveRecord::Schema.define(:version => 20130819134055) do
     t.string   "title"
     t.string   "path"
     t.text     "body"
-    t.boolean  "disabled"
-    t.decimal  "bid",           :precision => 10, :scale => 2, :default => 0.01
-    t.datetime "created_at",                                                     :null => false
-    t.datetime "updated_at",                                                     :null => false
-    t.boolean  "approved",                                     :default => true
+    t.boolean  "disabled",                                      :default => false
+    t.decimal  "bid",            :precision => 10, :scale => 8, :default => 0.001
+    t.datetime "created_at",                                                       :null => false
+    t.datetime "updated_at",                                                       :null => false
+    t.boolean  "approved",                                      :default => false
+    t.integer  "ad_views_count",                                :default => 0
   end
 
   add_index "ads", ["advertiser_id"], :name => "index_ads_on_advertiser_id"
@@ -75,11 +76,20 @@ ActiveRecord::Schema.define(:version => 20130819134055) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                                                             :null => false
     t.datetime "updated_at",                                                             :null => false
-    t.decimal  "balance",                :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "balance",                :precision => 10, :scale => 8, :default => 0.0
   end
 
   add_index "advertisers", ["email"], :name => "index_advertisers_on_email", :unique => true
   add_index "advertisers", ["reset_password_token"], :name => "index_advertisers_on_reset_password_token", :unique => true
+
+  create_table "bitcoin_addresses", :force => true do |t|
+    t.string   "address"
+    t.integer  "advertiser_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "bitcoin_addresses", ["advertiser_id"], :name => "index_bitcoin_addresses_on_advertiser_id"
 
   create_table "clicks", :force => true do |t|
     t.integer  "search_id"

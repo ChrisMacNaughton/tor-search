@@ -1,6 +1,35 @@
 .row
   .span2
     %ul.nav.nav-list
-      =nav_link "All Ads", ads_path
+      =nav_link "Advertising", ads_path
       =nav_link "Create Ad", new_ad_path
   .span10
+    .row
+      %h2 Information
+      %hr/
+      %dl
+        %dt Balance
+        %dd
+          = current_advertiser.balance
+          BTC
+    .row
+      %h2 Ads
+
+      -@ads.in_groups_of(5) do |ad_group|
+        .row
+          -ad_group.each do |ad|
+            -next if ad.nil?
+            .span2
+              =render partial: 'ad', locals: {ad: ad, border:true}
+              .row.table
+                .span2
+                  %dl
+                    %dt Approved?
+                    %dd= ad.approved ? "Yes" : "No"
+                    %dt Enabled?
+                    %dd
+                      = ad.disabled ? "No" : "Yes"
+                      = link_to "Toggle", toggle_ad_path(ad), method: :put
+                    %dt Views:
+                    %dd= ad.ad_views_count
+      =will_paginate(@ads)
