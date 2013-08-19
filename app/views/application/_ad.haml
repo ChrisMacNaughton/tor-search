@@ -1,7 +1,11 @@
 -border ||= false
+-search ||= false
 .row-fluid.span2{class: border ? "well" : ""}
   .row-fluid
-    =link_to ad.title, ad.path
+    -if search
+      =link_to ad.title, ad_redirect_path(id: ad.id, q: @query.id)
+    -else
+      =link_to ad.title, ad.path
   .row-fluid.path
     =ad.path
   .row-fluid{style: 'height: 40px;'}

@@ -21,7 +21,7 @@
             =nav_link "Profile", edit_advertiser_registration_path, 'pull-right'
             =nav_link "Ads", ads_path, 'pull-right'
           -else
-            =nav_link "Advertisers", new_advertiser_session_path, "pull-right"
+            =nav_link "Advertisers", advertising_path, "pull-right"
       -unless notice.nil? && alert.nil?
         .row.span12
           - if flash[:alert]

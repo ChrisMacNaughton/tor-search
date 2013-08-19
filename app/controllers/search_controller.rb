@@ -57,10 +57,10 @@ class SearchController < ApplicationController
     @docs = search['response']['docs']
     @docs ||= []
     #debugger
-    query = Query.find_or_initialize_by_term(@search_term)
-    query.save
+    @query = Query.find_or_initialize_by_term(@search_term)
+    @query.save
     if params[:page].nil? || params[:page] == 1
-      s = Search.create(query: query, results_count: @total)
+      s = Search.create(query: @query, results_count: @total)
       @search_id = s.id
       pubnub.publish(
         channel: :searches,
@@ -76,7 +76,7 @@ class SearchController < ApplicationController
       logger.info ("New balance for #{adv.email} is #{bal} after removing ad's bid (#{ad.bid})")
       adv.balance= bal
       adv.save
-      AdView.create(ad_id: ad.id, query_id: query.id)
+      AdView.create(ad_id: ad.id, query_id: @query.id)
     end
     render :search
   end

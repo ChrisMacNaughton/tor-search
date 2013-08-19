@@ -15,14 +15,14 @@
     .row
       %h2 Ads
 
-      -@ads.in_groups_of(5) do |ad_group|
+      -@ads.in_groups_of(4) do |ad_group|
         .row
           -ad_group.each do |ad|
             -next if ad.nil?
             .span2
               =render partial: 'ad', locals: {ad: ad, border:true}
-              .row.table
-                .span2
+              .row
+                .span2{style: 'margin-left: 80px;'}
                   %dl
                     %dt Approved?
                     %dd= ad.approved ? "Yes" : "No"

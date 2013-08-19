@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130819174656) do
+ActiveRecord::Schema.define(:version => 20130819191309) do
+
+  create_table "ad_clicks", :force => true do |t|
+    t.integer  "ad_id"
+    t.integer  "query_id"
+    t.decimal  "bid",        :precision => 10, :scale => 8, :default => 0.001
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
+  end
 
   create_table "ad_views", :force => true do |t|
     t.integer  "ad_id"

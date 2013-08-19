@@ -28,8 +28,9 @@ TorSearch::Application.routes.draw do
       put "toggle" => 'ads#toggle', as: :toggle
     end
   end
-
+  get 'a/r' => 'ads#redirect', as: :ad_redirect
   namespace :admin do
+    resources :ads, controller: 'ad'
     get 'searches' => 'search#index', as: :admin_searches
     get 'searches/:id' => 'search#show', as: :admin_search
 
