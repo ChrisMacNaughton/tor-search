@@ -1,5 +1,6 @@
 class DomainController < ApplicationController
   def new
+    Pageview.create(search: false, page: "CreateDomain")
     @domain = Domain.new
     @domain.use_captcha!
     @domain.textcaptcha

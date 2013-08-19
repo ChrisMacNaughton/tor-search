@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130817163542) do
+ActiveRecord::Schema.define(:version => 20130819134055) do
+
+  create_table "ad_views", :force => true do |t|
+    t.integer  "ad_id"
+    t.integer  "query_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "ad_views", ["ad_id"], :name => "index_ad_views_on_ad_id"
+  add_index "ad_views", ["query_id"], :name => "index_ad_views_on_query_id"
 
   create_table "admin_searches", :force => true do |t|
     t.integer "admin_id"
@@ -179,6 +189,13 @@ ActiveRecord::Schema.define(:version => 20130817163542) do
     t.boolean  "advertising"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "pageviews", :force => true do |t|
+    t.boolean  "search"
+    t.string   "page"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "queries", :force => true do |t|

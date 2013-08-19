@@ -1,9 +1,10 @@
 class AdsController < ApplicationController
   before_filter :authenticate_advertiser!, except: :advertising
   def index
-
+    Pageview.create(search: false, page: "AdsIndex")
   end
   def new
+    Pageview.create(search: false, page: "AdsCreate")
     @ad = Ad.new
   end
   def create
@@ -17,6 +18,7 @@ class AdsController < ApplicationController
     end
   end
   def advertising #expressing interest page
+    Pageview.create(search: false, page: "AdsContact")
     @advertising = true
     render 'contact/contact'
   end

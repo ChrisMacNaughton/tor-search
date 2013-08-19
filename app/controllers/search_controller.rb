@@ -2,8 +2,10 @@ class SearchController < ApplicationController
   def index
     get_solr_size
     if params[:q]
+      Pageview.create(search: true, page: params[:q])
       search
     else
+      Pageview.create(search: false, page: "Home")
       @total_pages_indexed = get_solr_size#Page.indexed.count
       render :index
     end
@@ -67,6 +69,10 @@ class SearchController < ApplicationController
       )
     end
     @ads = ads
+    ad_ids = @ads.map(&:id)
+    ad_ids.each do |id|
+      AdView.create(ad_id: id, query_id: query.id)
+    end
     render :search
   end
   def redirect
