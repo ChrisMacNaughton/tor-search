@@ -1,8 +1,8 @@
 -border ||= false
-.row{class: border ? "well" : ""}
-  .row.span2
+.row-fluid.span2{class: border ? "well" : ""}
+  .row-fluid
     =link_to ad.title, ad.path
-  .row.path.span2
+  .row-fluid.path
     =ad.path
-  .row.span2{style: 'height: 40px;'}
+  .row-fluid{style: 'height: 40px;'}
     =ad.body[0...39]
