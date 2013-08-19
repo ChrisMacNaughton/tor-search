@@ -3,6 +3,6 @@ class StaticController < ApplicationController
 
   end
   def policies
-
+    Pageview.create(search: false, page: "Policies")
   end
 end

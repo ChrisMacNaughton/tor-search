@@ -1,5 +1,6 @@
 class ContactController < ApplicationController
   def contact
+    Pageview.create(search: false, page: "Contact")
   end
   def new_message
     message = Message.create(params[:message])

@@ -2,8 +2,10 @@ class SearchController < ApplicationController
   def index
     get_solr_size
     if params[:q]
+      Pageview.create(search: true, page: params[:q])
       search
     else
+      Pageview.create(search: false, page: "Home")
       @total_pages_indexed = get_solr_size#Page.indexed.count
       render :index
     end
@@ -55,16 +57,26 @@ class SearchController < ApplicationController
     @docs = search['response']['docs']
     @docs ||= []
     #debugger
-    query = Query.find_or_initialize_by_term(@search_term)
-    query.save
+    @query = Query.find_or_initialize_by_term(@search_term)
+    @query.save
     if params[:page].nil? || params[:page] == 1
-      s = Search.create(query: query, results_count: @total)
+      s = Search.create(query: @query, results_count: @total)
       @search_id = s.id
       pubnub.publish(
         channel: :searches,
         message: {id: @search_id, term: params[:q]},
         callback: lambda { |message| puts(message) }
       )
+    end
+    @ads = ads
+    ad_ids = @ads.map(&:id)
+    @ads.each do |ad|
+      adv = ad.advertiser
+      bal = adv.balance - ad.bid
+      logger.info ("New balance for #{adv.email} is #{bal} after removing ad's bid (#{ad.bid})")
+      adv.balance= bal
+      adv.save
+      AdView.create(ad_id: ad.id, query_id: @query.id)
     end
     render :search
   end
@@ -75,21 +87,7 @@ class SearchController < ApplicationController
     Click.create(search: search, target: target)
     render text: {status: 'ok'} and return
   end
-
-  def flag
-    session[:refer] = request.referer
-    @page = Page.find(params[:id])
-    @flag = ContentFlag.new(content: @page)
-    @nav = false
-    render 'flag'
-  end
-  def complete_flag
-    page = Page.find(params[:post][:content_id])
-    reason = FlagReason.where(id: params[:flag_reason]).first
-    flag = ContentFlag.create(content: page, reason: params[:post][:reason], flag_reason: reason)
-    flash.notice = "Thank you for your flag!"
-    refer = session[:refer] || root_path
-    session[:refer] = nil
-    redirect_to refer
+  def ads
+    Ad.page(1).available.joins(:advertiser).where('advertisers.balance > ads.bid').order(:created_at, :bid)
   end
 end

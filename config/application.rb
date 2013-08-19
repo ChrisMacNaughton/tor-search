@@ -76,6 +76,7 @@ module TorSearch
 
     # Custom configuration defaults
     config.tor_search = ActiveSupport::OrderedOptions.new
+    config.tor_search.coinbase_key = 'bfc79be3dc1282001d8fc17f8f664d41af4194449968ce47c0e24d8eba825b18'
 
     config.tor_search.tor_url = 'http://kbhpodhnfxl3clb4.onion'
     config.tor_search.bitcoin_address = "1MkH4pGzCtpyNUDuM9mZsftYCfWrsALprt"

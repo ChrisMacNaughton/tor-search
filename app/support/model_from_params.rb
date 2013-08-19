@@ -20,11 +20,11 @@ module ModelFromParams
 
   def with_sorting(rel)
     allowed_filter_columns.each do |param_name|
-      if params[param_name].present?
+      if params[:search][:advanced][param_name].present?
         if associated_model.respond_to?(:"with_#{param_name}")
-          rel = rel.send(:"with_#{param_name}", params[param_name])
+          rel = rel.send(:"with_#{param_name}", params[:search][:advanced][param_name])
         else
-          rel = rel.where({param_name.to_sym => params[param_name]})
+          rel = rel.where({param_name.to_sym => params[:search][:advanced][param_name]})
         end
       end
     end

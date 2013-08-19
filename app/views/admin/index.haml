@@ -19,6 +19,61 @@
       .table-striped#searches
         .message{:'ng-repeat' => "search in searches.slice(11,20)"}
           %p.text= link_to "{{search.term}}", '/admin/searches/{{search.id}}'
+
+.row-fluid.app-center-content{:'ng-controller' => 'AdsCtrl'}
+  %h2
+    Pending
+  %hr
+  .row-fluid.span8.offset2
+    .listings-table.ng-cloak.span12{style: "top:20px;"}
+      %table.span12{"ng-show" => 'searchParameters.records.length == 0'}
+        %tbody.span12
+          %tr
+            %td No Records Found
+      %table{"ng-show" => 'searchParameters.records.length > 0'}
+        %thead
+          %tr
+            %th Advertiser
+            %th Title
+            %th Path
+            %th Body
+            %th
+        %tbody
+          %tr{"ng-repeat"=>"ad in searchParameters.records", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
+            %td {{ad.advertiser.email}}
+            %td {{ad.title}}
+            %td {{ad.path}}
+            %td {{ad.body}}
+            %td
+              %a{ng_model: 'ad.approved', ng_click: 'toggleAd(ad)'} Approve
+      = render partial: 'admin/shared/angular_common_pagination'
+.row-fluid.app-center-content{:'ng-controller' => 'ActiveAdsCtrl'}
+  %h2
+    Active
+  %hr
+  .row-fluid.span8.offset2
+    .listings-table.ng-cloak.span12{style: "top:20px;"}
+      %table.span12{"ng-show" => 'searchParameters.records.length == 0'}
+        %tbody.span12
+          %tr
+            %td No Records Found
+      %table{"ng-show" => 'searchParameters.records.length > 0'}
+        %thead
+          %tr
+            %th Advertiser
+            %th Title
+            %th Path
+            %th Body
+            %th
+        %tbody
+          %tr{"ng-repeat"=>"ad in searchParameters.records", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
+            %td {{ad.advertiser.email}}
+            %td {{ad.title}}
+            %td {{ad.path}}
+            %td {{ad.body}}
+            %td
+              %a{ng_model: 'ad.approved', ng_click: 'toggleAd(ad)'} Unapprove
+      = render partial: 'admin/shared/angular_common_pagination'
 .row-fluid.app-center-content{:'ng-controller' => 'SearchesCtrl'}
   %h2
     Historical
