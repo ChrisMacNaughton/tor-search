@@ -11,12 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130819191309) do
+ActiveRecord::Schema.define(:version => 20130819195338) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
     t.integer  "query_id"
-    t.decimal  "bid",        :precision => 10, :scale => 8, :default => 0.001
+    t.decimal  "bid",        :precision => 16, :scale => 8, :default => 0.001
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
   end
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(:version => 20130819191309) do
     t.string   "path"
     t.text     "body"
     t.boolean  "disabled",                                      :default => false
-    t.decimal  "bid",            :precision => 10, :scale => 8, :default => 0.001
+    t.decimal  "bid",            :precision => 16, :scale => 8, :default => 0.001
     t.datetime "created_at",                                                       :null => false
     t.datetime "updated_at",                                                       :null => false
     t.boolean  "approved",                                      :default => false
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(:version => 20130819191309) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                                                             :null => false
     t.datetime "updated_at",                                                             :null => false
-    t.decimal  "balance",                :precision => 10, :scale => 8, :default => 0.0
+    t.decimal  "balance",                :precision => 16, :scale => 8, :default => 0.0
   end
 
   add_index "advertisers", ["email"], :name => "index_advertisers_on_email", :unique => true
