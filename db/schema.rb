@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130819195338) do
+ActiveRecord::Schema.define(:version => 20130819204050) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20130819195338) do
     t.datetime "created_at",                                                             :null => false
     t.datetime "updated_at",                                                             :null => false
     t.decimal  "balance",                :precision => 16, :scale => 8, :default => 0.0
+    t.string   "username"
   end
 
   add_index "advertisers", ["email"], :name => "index_advertisers_on_email", :unique => true
