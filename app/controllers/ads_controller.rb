@@ -23,7 +23,7 @@ class AdsController < ApplicationController
   def get_payment_address
     address = current_advertiser.bitcoin_addresses.order('created_at desc').first
 
-    if address.created_at < 6.hours.ago
+    if address.present? && address.created_at < 6.hours.ago
       coinbase = Coinbase::Client.new(TorSearch::Application.config.tor_search.coinbase_key)
       options = {address: {callback_url: 'http://chrismacnaughton.com'}}
       address = coinbase.generate_receive_address(options)
