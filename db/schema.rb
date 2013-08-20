@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130819204050) do
+ActiveRecord::Schema.define(:version => 20130820121131) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20130819204050) do
     t.datetime "updated_at",                                                       :null => false
     t.boolean  "approved",                                      :default => false
     t.integer  "ad_views_count",                                :default => 0
+    t.boolean  "onion",                                         :default => false
   end
 
   add_index "ads", ["advertiser_id"], :name => "index_ads_on_advertiser_id"
@@ -88,8 +89,8 @@ ActiveRecord::Schema.define(:version => 20130819204050) do
     t.string   "username"
   end
 
-  add_index "advertisers", ["email"], :name => "index_advertisers_on_email", :unique => true
   add_index "advertisers", ["reset_password_token"], :name => "index_advertisers_on_reset_password_token", :unique => true
+  add_index "advertisers", ["username"], :name => "index_advertisers_on_username", :unique => true
 
   create_table "bitcoin_addresses", :force => true do |t|
     t.string   "address"

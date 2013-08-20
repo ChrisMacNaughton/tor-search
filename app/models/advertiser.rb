@@ -15,7 +15,7 @@ class Advertiser < ActiveRecord::Base
   validates :username,
     :uniqueness => {
       :case_sensitive => false
-    }
+    }, presence: true
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:username)
@@ -23,5 +23,8 @@ class Advertiser < ActiveRecord::Base
     else
       where(conditions).first
     end
+  end
+  def email_required?
+    false
   end
 end

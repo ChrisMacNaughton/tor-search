@@ -72,8 +72,9 @@ class SearchController < ApplicationController
     ad_ids = @ads.map(&:id)
     @ads.each do |ad|
       adv = ad.advertiser
-      bal = adv.balance - ad.bid
-      logger.info ("New balance for #{adv.email} is #{bal} after removing ad's bid (#{ad.bid})")
+      cost = ad.onion? ? ad.bid : 2.0 * ad.bid
+      bal = adv.balance - cost
+      logger.info ("New balance for #{adv.email} is #{bal} after removing ad's bid (#{cost})")
       adv.balance= bal
       adv.save
       AdView.create(ad_id: ad.id, query_id: @query.id)
