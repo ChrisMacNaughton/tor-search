@@ -25,7 +25,7 @@ class AdsController < ApplicationController
 
     if address.nil? || address.created_at < 6.hours.ago
       coinbase = Coinbase::Client.new(TorSearch::Application.config.tor_search.coinbase_key)
-      options = {address: {callback_url: 'http://chrismacnaughton.com'}}
+      options = {address: {callback_url: 'http://ts.chrismacnaughton.com/payments'}}
       address = coinbase.generate_receive_address(options)
       @address = BitcoinAddress.new(address: address.address)
       @address.advertiser = current_advertiser
