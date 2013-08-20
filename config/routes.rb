@@ -23,6 +23,7 @@ TorSearch::Application.routes.draw do
   get 'policies' => 'static#policies', as: :policies
   # Admin routes
   get 'admin' => 'admin#index'
+  get '/ads/new-address' => 'ads#get_payment_address', as: :new_btc_address
   resources :ads do
     member do
       put "toggle" => 'ads#toggle', as: :toggle
@@ -40,5 +41,5 @@ TorSearch::Application.routes.draw do
   get 'admin/pages' => 'admin#pages', as: :admin_pages
   get 'admin/page' => 'admin#page', as: :admin_page
 
-  post '/payment' => 'payments#index'
+  post '/payment' => 'payment#index'
 end

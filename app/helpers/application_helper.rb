@@ -6,6 +6,13 @@ module ApplicationHelper
       link_to link_text, link_path
     end
   end
+  def hour_quantity duration
+    unless duration.blank?
+      hours = (duration/60)/60
+      minutes = (duration/60) % 60
+      "#{hours.to_i.to_s} hours and #{minutes.to_i.to_s} minutes"
+    end
+  end
 end
 class AppFormBuilder < ActionView::Helpers::FormBuilder
   include ActionView::Helpers::TagHelper

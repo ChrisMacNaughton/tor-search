@@ -20,6 +20,21 @@ class AdsController < ApplicationController
       render :new
     end
   end
+  def get_payment_address
+    address = current_advertiser.bitcoin_addresses.order('created_at desc').first
+
+    if address.created_at < 6.hours.ago
+      coinbase = Coinbase::Client.new(TorSearch::Application.config.tor_search.coinbase_key)
+      options = {address: {callback_url: 'http://chrismacnaughton.com'}}
+      address = coinbase.generate_receive_address(options)
+      @address = BitcoinAddress.new(address: address.address)
+      @address.advertiser = current_advertiser
+      @address.save
+    else
+      @address = address
+    end
+    @old_addresses = current_advertiser.bitcoin_addresses
+  end
   def advertising #expressing interest page
     Pageview.create(search: false, page: "AdsInterest")
     render 'ads/interested'

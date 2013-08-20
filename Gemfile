@@ -44,7 +44,8 @@ gem 'jquery-rails'
 # allows parallel web requests from the application
 gem 'typhoeus'
 
-
+# be able to get addresses and such!
+gem 'coinbase'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 

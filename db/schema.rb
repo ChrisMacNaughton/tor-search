@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130820121131) do
+ActiveRecord::Schema.define(:version => 20130820131739) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -217,6 +217,17 @@ ActiveRecord::Schema.define(:version => 20130820121131) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "payments", :force => true do |t|
+    t.decimal  "amount",             :precision => 16, :scale => 8, :default => 0.0
+    t.integer  "advertiser_id"
+    t.integer  "bitcoin_address_id"
+    t.datetime "created_at",                                                         :null => false
+    t.datetime "updated_at",                                                         :null => false
+  end
+
+  add_index "payments", ["advertiser_id"], :name => "index_payments_on_advertiser_id"
+  add_index "payments", ["bitcoin_address_id"], :name => "index_payments_on_bitcoin_address_id"
 
   create_table "queries", :force => true do |t|
     t.text     "term"

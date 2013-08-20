@@ -11,7 +11,7 @@ class Advertiser < ActiveRecord::Base
   # attr_accessible :title, :body
   has_many :ads
   has_many :bitcoin_addresses
-
+  has_many :payments
   validates :username,
     :uniqueness => {
       :case_sensitive => false
@@ -23,6 +23,9 @@ class Advertiser < ActiveRecord::Base
     else
       where(conditions).first
     end
+  end
+  def to_s
+    self.try(:email) || self.try(:username)
   end
   def email_required?
     false

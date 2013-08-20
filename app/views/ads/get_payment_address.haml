@@ -1,0 +1,20 @@
+.row
+  =render partial: 'side_nav'
+  .row.span10
+    .span10
+      %h2 You have requested a new Bitcoin payment address
+
+      .span10.row
+        your new Bitcoin address is
+        %code= @address
+      .row.span10
+        You can request a new address again in
+        = hour_quantity ((@address.created_at + 6.hours).to_f - DateTime.now.to_f)
+
+    .span10
+      %h2 All Addresses
+      %dl
+        -@old_addresses.each do |address|
+          %dt
+            %code= address
+          %dd #{address.payments.sum(&:amount)} BTC

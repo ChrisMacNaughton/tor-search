@@ -1,8 +1,5 @@
 .row
-  .span2
-    %ul.nav.nav-list
-      =nav_link "Advertising", ads_path
-      =nav_link "Create Ad", new_ad_path
+  =render partial: 'side_nav'
   .span10
     .row
       %h2 Information

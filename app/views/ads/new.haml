@@ -1,9 +1,12 @@
-=form_for @ad, builder: WithErrorFields, url: '/ads' do |f|
-  =f.label_with_error :title
-  =f.text_field :title
-  =f.label_with_error :path, "Target"
-  =f.text_field :path
-  =f.label_with_error :body
-  =f.text_area :body, rows: 4
-  %br/
-  =f.submit
+.row
+  =render partial: 'side_nav'
+  .span10
+    =form_for @ad, builder: WithErrorFields, url: '/ads' do |f|
+      =f.label_with_error :title
+      =f.text_field :title
+      =f.label_with_error :path, "Target"
+      =f.text_field :path
+      =f.label_with_error :body
+      =f.text_area :body, rows: 4
+      %br/
+      =f.submit
