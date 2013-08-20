@@ -10,7 +10,7 @@ class Tracker
       @action += "#{action}"
     end
     self.piwik_url = "http://piwik.nuradu.com/piwik.php"
-    @user_id = SecureRandom.hex[0...16]
+    @user_id = request.session["session_id"]
     @url = request.url
     @referrer = request.referrer
     @idsite = site_id
