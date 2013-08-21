@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   def new
   end
   def track
-    #return if Rails.env.include? 'development'
+    return if Rails.env.include? 'development'
     return if !!(params[:controller] =~ /admin/)
     return if params[:q]
     Thread.new do
