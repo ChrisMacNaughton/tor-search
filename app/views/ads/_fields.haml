@@ -2,7 +2,9 @@
 =f.text_field :title
 =f.label_with_error :path, "Target"
 =f.text_field :path
-=f.label :bid
+=f.label_with_error :display_path, "Display Path"
+=f.text_field :display_path
+=f.label_with_error :bid
 =f.number_field :bid
 %p.muted (0.001 BTC for not PPC, 0.05 for PPC)
 =f.label_with_error :body

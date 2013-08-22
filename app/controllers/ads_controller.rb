@@ -31,7 +31,7 @@ class AdsController < ApplicationController
     ad_attributes = params[:ad]
     ad_attributes[:approved] = false
     if @ad.update_attributes(ad_attributes)
-      flash.notice = "Your new ad has been successfully created"
+      flash.notice = "Your ad has been successfully edited!"
       redirect_to ads_path
     else
       render :new

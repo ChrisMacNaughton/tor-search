@@ -1,12 +1,13 @@
 -border ||= false
 -search ||= false
-.row-fluid.span2{class: border ? "well" : ""}
+-span ||= 2
+.row-fluid{class: "#{border ? "well" : ""} span#{span}"}
   .row-fluid
     -if search
       =link_to ad.title, ad_redirect_path(id: ad.id, q: @query.id)
     -else
       =link_to ad.title, ad.path
   .row-fluid.path
-    =ad.path
+    =ad.display_path
   .row-fluid{style: 'height: 40px;'}
     =ad.body[0...39]

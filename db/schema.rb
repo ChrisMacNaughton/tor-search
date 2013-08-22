@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130822161422) do
+ActiveRecord::Schema.define(:version => 20130822163409) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20130822161422) do
     t.boolean  "onion",                                          :default => false
     t.boolean  "ppc",                                            :default => true
     t.integer  "ad_clicks_count",                                :default => 0
+    t.string   "display_path",                                   :default => ""
   end
 
   add_index "ads", ["advertiser_id"], :name => "index_ads_on_advertiser_id"
