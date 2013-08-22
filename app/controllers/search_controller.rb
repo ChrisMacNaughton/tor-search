@@ -71,14 +71,16 @@ class SearchController < ApplicationController
     end
     @ads = ads
     ad_ids = @ads.map(&:id)
-    @ads.each do |ad|
-      adv = ad.advertiser
-      cost = ad.onion? ? ad.bid : 2.0 * ad.bid
-      bal = adv.balance - cost
-      logger.info ("New balance for #{adv.email} is #{bal} after removing ad's bid (#{cost})")
-      adv.balance= bal
-      adv.save
-      AdView.create(ad_id: ad.id, query_id: @query.id)
+    @ads.each_with_index do |ad, idx|
+      unless ad.ppc?
+        adv = ad.advertiser
+        cost = ad.onion? ? ad.bid : 2.0 * ad.bid
+        bal = adv.balance - cost
+        logger.info ("VIEW: New balance for #{adv.email} is #{bal} after removing ad's bid (#{cost})")
+        adv.balance= bal
+        adv.save
+      end
+      AdView.create(ad_id: ad.id, query_id: @query.id, position: idx+1)
     end
     render :search
   end
@@ -95,6 +97,23 @@ class SearchController < ApplicationController
 
     Click.create(search: search, target: target)
     render text: {status: 'ok'} and return
+  end
+  def ad_redirect
+    ad = Ad.find(params[:id])
+    query = Query.find(params[:q])
+    clicks = AdClick.where(ad_id: ad.id, query_id: query.id).where("created_at > ?", 5.minutes.ago)
+    if clicks.empty?
+      AdClick.create(ad: ad, query: query, bid: ad.bid)
+      if ad.ppc? &&
+        adv = ad.advertiser
+        cost = ad.onion? ? ad.bid : 2.0 * ad.bid
+        bal = adv.balance - cost
+        logger.info ("CLICK: New balance for #{adv.email} is #{bal} after removing ad's bid (#{cost})")
+        adv.balance= bal
+        adv.save
+      end
+    end
+    redirect_to ad.path, status: 302
   end
   def ads
     Ad.page(1).available.joins(:advertiser).where('advertisers.balance > ads.bid').order(:created_at, :bid)

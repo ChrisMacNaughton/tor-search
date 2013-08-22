@@ -11,22 +11,52 @@
           BTC
     .row
       %h2 Ads
-
-      -@ads.in_groups_of(4) do |ad_group|
-        .row
-          -ad_group.each do |ad|
-            -next if ad.nil?
-            .span2
-              =render partial: 'ad', locals: {ad: ad, border:true}
-              .row
-                .span2{style: 'margin-left: 80px;'}
-                  %dl
-                    %dt Approved?
-                    %dd= ad.approved ? "Yes" : "No"
-                    %dt Enabled?
-                    %dd
-                      = ad.disabled ? "No" : "Yes"
-                      = link_to "Toggle", toggle_ad_path(ad), method: :put
-                    %dt Views:
-                    %dd= ad.ad_views_count
-      =will_paginate(@ads)
+      -#
+        -@ads.in_groups_of(4) do |ad_group|
+          .row
+            -ad_group.each do |ad|
+              -next if ad.nil?
+              .span2
+                =render partial: 'ad', locals: {ad: ad, border:true}
+                .row
+                  .span2{style: 'margin-left: 80px;'}
+                    %dl
+                      %dt Approved?
+                      %dd= ad.approved ? "Yes" : "No"
+                      %dt Enabled?
+                      %dd
+                        = ad.disabled ? "No" : "Yes"
+                        = link_to "Toggle", toggle_ad_path(ad), method: :put
+                      %dt Views:
+                      %dd= ad.ad_views_count
+        =will_paginate(@ads)
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Title
+            %th Status
+            %th Bid
+            %th Cost per Click?
+            %th Views
+            %th Clicks
+            %th CTR
+            %th Avg. Pos.
+        %tbody
+          -@ads.each do |ad|
+            %tr
+              %td
+                =link_to ad.title, ad
+              %td
+                -if ad.approved?
+                  -if ad.disabled?
+                    Paused
+                  -else
+                    Active
+                -else
+                  Pending
+              %td= number_to_currency(ad.bid, precision: 6, unit: '&#x0e3f;', format: "%n%u")
+              %td= ad.ppc? ? "Yes" : "No"
+              %td= ad.ad_views_count
+              %td= ad.ad_clicks_count
+              %td= number_to_percentage(ad.ctr, precision: 2)
+              %td= number_with_precision(ad.avg_position, precision: 2)

@@ -1,5 +1,5 @@
 class AdsController < ApplicationController
-  before_filter :authenticate_advertiser!, except: [:advertising, :redirect]
+  before_filter :authenticate_advertiser!, except: [:advertising]
   def index
     Pageview.create(search: false, page: "AdsIndex")
     page = (params[:page] || 1).to_i
@@ -9,6 +9,12 @@ class AdsController < ApplicationController
   def new
     Pageview.create(search: false, page: "AdsCreate")
     @ad = Ad.new
+  end
+  def show
+    redirect_to :edit_ad
+  end
+  def edit
+    @ad = Ad.find(params[:id])
   end
   def create
     @ad = Ad.new(params[:ad])
@@ -48,12 +54,5 @@ class AdsController < ApplicationController
       flash.error = "There was a problem, try again soon!"
     end
     redirect_to :ads
-  end
-  def redirect
-    debugger
-    ad = Ad.find(params[:id])
-    query = Query.find(params[:q])
-    AdClick.create(ad: ad, query: query, bid: ad.bid)
-    redirect_to ad.path
   end
 end

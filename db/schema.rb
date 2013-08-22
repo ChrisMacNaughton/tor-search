@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130820131739) do
+ActiveRecord::Schema.define(:version => 20130822160611) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20130820131739) do
     t.integer  "query_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "position"
   end
 
   add_index "ad_views", ["ad_id"], :name => "index_ad_views_on_ad_id"
@@ -61,13 +62,15 @@ ActiveRecord::Schema.define(:version => 20130820131739) do
     t.string   "title"
     t.string   "path"
     t.text     "body"
-    t.boolean  "disabled",                                      :default => false
-    t.decimal  "bid",            :precision => 16, :scale => 8, :default => 0.001
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
-    t.boolean  "approved",                                      :default => false
-    t.integer  "ad_views_count",                                :default => 0
-    t.boolean  "onion",                                         :default => false
+    t.boolean  "disabled",                                       :default => false
+    t.decimal  "bid",             :precision => 16, :scale => 8, :default => 0.0001
+    t.datetime "created_at",                                                         :null => false
+    t.datetime "updated_at",                                                         :null => false
+    t.boolean  "approved",                                       :default => false
+    t.integer  "ad_views_count",                                 :default => 0
+    t.boolean  "onion",                                          :default => false
+    t.boolean  "ppc",                                            :default => false
+    t.integer  "ad_clicks_count",                                :default => 0
   end
 
   add_index "ads", ["advertiser_id"], :name => "index_ads_on_advertiser_id"
