@@ -36,7 +36,6 @@
             %th Title
             %th Status
             %th Bid
-            %th Cost per Click?
             %th Views
             %th Clicks
             %th CTR
@@ -55,7 +54,6 @@
                 -else
                   Pending
               %td= number_to_currency(ad.bid, precision: 6, unit: '&#x0e3f;', format: "%n%u")
-              %td= ad.ppc? ? "Yes" : "No"
               %td= ad.ad_views_count
               %td= ad.ad_clicks_count
               %td= number_to_percentage(ad.ctr, precision: 2)

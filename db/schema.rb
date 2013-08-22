@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130822160611) do
+ActiveRecord::Schema.define(:version => 20130822161422) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(:version => 20130822160611) do
     t.boolean  "approved",                                       :default => false
     t.integer  "ad_views_count",                                 :default => 0
     t.boolean  "onion",                                          :default => false
-    t.boolean  "ppc",                                            :default => false
+    t.boolean  "ppc",                                            :default => true
     t.integer  "ad_clicks_count",                                :default => 0
   end
 
