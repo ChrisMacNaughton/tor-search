@@ -8,7 +8,7 @@ class AdsController < ApplicationController
   end
   def new
     Pageview.create(search: false, page: "AdsCreate")
-    @ad = Ad.new
+    #@ad = Ad.new
   end
   def show
     redirect_to :edit_ad
@@ -20,6 +20,17 @@ class AdsController < ApplicationController
     @ad = Ad.new(params[:ad])
     @ad.advertiser = current_advertiser
     if @ad.save
+      flash.notice = "Your new ad has been successfully created"
+      redirect_to ads_path
+    else
+      render :new
+    end
+  end
+  def update
+    @ad = Ad.find(params[:id])
+    ad_attributes = params[:ad]
+    ad_attributes[:approved] = false
+    if @ad.update_attributes(ad_attributes)
       flash.notice = "Your new ad has been successfully created"
       redirect_to ads_path
     else

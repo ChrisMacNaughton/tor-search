@@ -1,1 +1,2 @@
-=render partial: 'fields'
+=form_for @ad, builder: WithErrorFields do |f|
+  =render partial: 'fields', locals: { f: f }

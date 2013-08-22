@@ -24,6 +24,7 @@ TorSearch::Application.routes.draw do
   # Admin routes
   get 'admin' => 'admin#index'
   get '/ads/new-address' => 'ads#get_payment_address', as: :new_btc_address
+
   resources :ads do
     member do
       put "toggle" => 'ads#toggle', as: :toggle

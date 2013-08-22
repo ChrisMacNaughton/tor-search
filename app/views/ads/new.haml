@@ -1,4 +1,5 @@
 .row
   =render partial: 'side_nav'
   .span10
-    =render partial: 'fields'
+    =form_for :ad, builder: WithErrorFields, url: '/ads' do |f|
+    =render partial: 'fields', locals: { f: f }

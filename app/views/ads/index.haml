@@ -51,6 +51,7 @@
                     Paused
                   -else
                     Active
+                  = link_to "Toggle", toggle_ad_path(ad), method: :put
                 -else
                   Pending
               %td= number_to_currency(ad.bid, precision: 6, unit: '&#x0e3f;', format: "%n%u")
