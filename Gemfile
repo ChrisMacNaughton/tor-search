@@ -64,7 +64,9 @@ group :development do
   gem 'better_errors'
   gem 'foreman'
 end
-
+group :test do
+  gem 'vcr', require: false
+end
 gem 'pubnub'
 # Use unicorn as the app server
 gem 'unicorn'
