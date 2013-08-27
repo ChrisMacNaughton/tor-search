@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  ad: 
+  keyword: 
+  bid: 9.99
+
+two:
+  ad: 
+  keyword: 
+  bid: 9.99

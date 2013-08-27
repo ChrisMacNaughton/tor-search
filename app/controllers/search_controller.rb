@@ -69,8 +69,7 @@ class SearchController < ApplicationController
         callback: lambda { |message| puts(message) }
       )
     end
-    @ads = ads
-    ad_ids = @ads.map(&:id)
+    @ads = AdFinder.new(@search_term).ads
     @ads.each_with_index do |ad, idx|
       unless ad.ppc?
         adv = ad.advertiser
@@ -114,8 +113,5 @@ class SearchController < ApplicationController
       end
     end
     redirect_to ad.protocol + ad.path, status: 302
-  end
-  def ads
-    Ad.page(1).available.joins(:advertiser).where('advertisers.balance > ads.bid').order(:created_at, :bid)
   end
 end

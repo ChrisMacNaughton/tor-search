@@ -17,6 +17,7 @@ class Ad < ActiveRecord::Base
   belongs_to :advertiser
   has_many :ad_views
   has_many :ad_clicks
+  has_many :ad_keywords
   attr_accessible :bid, :title, :disabled, :protocol_id, :path, :approved,
     :ppc, :display_path, :line_1, :line_2
   validates :path, presence: true

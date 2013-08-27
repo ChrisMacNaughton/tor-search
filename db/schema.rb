@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130827131211) do
+ActiveRecord::Schema.define(:version => 20130827170909) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -20,6 +20,17 @@ ActiveRecord::Schema.define(:version => 20130827131211) do
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
   end
+
+  create_table "ad_keywords", :force => true do |t|
+    t.integer  "ad_id"
+    t.integer  "keyword_id"
+    t.decimal  "bid",        :precision => 16, :scale => 8, :default => 0.0001
+    t.datetime "created_at",                                                    :null => false
+    t.datetime "updated_at",                                                    :null => false
+  end
+
+  add_index "ad_keywords", ["ad_id"], :name => "index_ad_keywords_on_ad_id"
+  add_index "ad_keywords", ["keyword_id"], :name => "index_ad_keywords_on_keyword_id"
 
   create_table "ad_views", :force => true do |t|
     t.integer  "ad_id"
@@ -93,6 +104,7 @@ ActiveRecord::Schema.define(:version => 20130827131211) do
     t.datetime "updated_at",                                                             :null => false
     t.decimal  "balance",                :precision => 16, :scale => 8, :default => 0.0
     t.string   "username"
+    t.boolean  "beta"
   end
 
   add_index "advertisers", ["reset_password_token"], :name => "index_advertisers_on_reset_password_token", :unique => true
@@ -194,6 +206,12 @@ ActiveRecord::Schema.define(:version => 20130827131211) do
 
   add_index "images", ["path", "domain_id"], :name => "index_images_on_path_and_domain_id", :unique => true
   add_index "images", ["path"], :name => "index_images_on_path"
+
+  create_table "keywords", :force => true do |t|
+    t.text     "word"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "links", :force => true do |t|
     t.integer  "from_target_id"
