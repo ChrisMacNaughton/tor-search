@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130827174545) do
+ActiveRecord::Schema.define(:version => 20130827203452) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -73,9 +73,9 @@ ActiveRecord::Schema.define(:version => 20130827174545) do
     t.string   "title",           :limit => 25,                                :default => ""
     t.text     "path",                                                         :default => ""
     t.boolean  "disabled",                                                     :default => false
-    t.decimal  "bid",                           :precision => 16, :scale => 8, :default => 0.0001
-    t.datetime "created_at",                                                                       :null => false
-    t.datetime "updated_at",                                                                       :null => false
+    t.decimal  "bid",                           :precision => 16, :scale => 8, :default => 0.005
+    t.datetime "created_at",                                                                      :null => false
+    t.datetime "updated_at",                                                                      :null => false
     t.boolean  "approved",                                                     :default => false
     t.integer  "ad_views_count",                                               :default => 0
     t.boolean  "onion",                                                        :default => false
