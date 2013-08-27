@@ -1,13 +1,8 @@
 class Ad < ActiveRecord::Base
   class AdMinimumBidValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
-      if record.ppc?
-        record.errors.add(:bid, options[:message] || "must be greater than  or equal to 0.005 BTC") \
-          if record.bid < 0.005
-      else
-        record.errors.add(:bid, options[:message] || "must be greater than  or equal to 0.0001 BTC") \
-          if record.bid < 0.0001
-      end
+      record.errors.add(:bid, options[:message] || "must be greater than  or equal to 0.005 BTC") \
+        if record.bid < 0.005
     end
   end
   PROTOCOL_ID_HTTP = 0
