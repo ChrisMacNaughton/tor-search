@@ -1,6 +1,9 @@
-=form_for @ad, builder: WithErrorFields do |f|
-  =render partial: 'fields', locals: { f: f }
-
+.row
+  .span6
+    =form_for @ad, builder: WithErrorFields do |f|
+      =render partial: 'fields', locals: { f: f }
+  .span6
+    =render partial: 'ad', locals: {search: false, ad: @ad}
 -if @ad.advertiser.beta?
   Yay for beta!
 -else
