@@ -36,14 +36,16 @@
             %th Advertiser
             %th Title
             %th Path
-            %th Body
+            %th Line 1
+            %th Line 2
             %th
         %tbody
           %tr{"ng-repeat"=>"ad in searchParameters.records", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
             %td {{ad.advertiser.email}}
             %td {{ad.title}}
             %td {{ad.path}}
-            %td {{ad.body}}
+            %td {{ad.line1}}
+            %td {{ad.line2}}
             %td
               %a{ng_model: 'ad.approved', ng_click: 'toggleAd(ad)'} Approve
       = render partial: 'admin/shared/angular_common_pagination'

@@ -1,13 +1,18 @@
 =f.label_with_error :title
 =f.text_field :title
 =f.label_with_error :path, "Target"
+=f.select "protocol_id",{"HTTP://"=>0,"HTTPS://"=>1}, {},{class: 'input-small'}
 =f.text_field :path
 =f.label_with_error :display_path, "Display Path"
 =f.text_field :display_path
+%p.muted (0.001 BTC for not PPC, 0.05 for PPC)
+
+=f.text_field_with_error :line_1
+%br/
+=f.text_field_with_error :line_2
+%br/
+%hr/
 =f.label_with_error :bid
 =f.number_field :bid
-%p.muted (0.001 BTC for not PPC, 0.05 for PPC)
-=f.label_with_error :body
-=f.text_area :body, rows: 4
-%br/
+%br
 =f.submit

@@ -10,14 +10,19 @@ class Ad < ActiveRecord::Base
       end
     end
   end
+  PROTOCOL_ID_HTTP = 0
+  PROTOCOL_ID_HTTPS = 1
+  PROTOCOL_IDS = [PROTOCOL_ID_HTTPS,PROTOCOL_ID_HTTP]
+
   belongs_to :advertiser
   has_many :ad_views
   has_many :ad_clicks
-  attr_accessible :bid, :body, :title, :disabled, :path, :approved, :ppc, :display_path
+  attr_accessible :bid, :title, :disabled, :protocol_id, :path, :approved,
+    :ppc, :display_path, :line_1, :line_2
   validates :path, presence: true
   validates :title, presence: true
-  validates :body, presence: true
   validates :bid, presence: true, ad_minimum_bid: true
+  validates :protocol_id, inclusion: { in: PROTOCOL_IDS}
   before_save :check_onion
   scope :available, -> {
     where(approved: true).where(disabled: false)
@@ -26,6 +31,13 @@ class Ad < ActiveRecord::Base
     check_path = self.path.gsub(/https?:\/\//, '')
     self.onion = !!(check_path =~ /^.{16}\.onion/)
     true
+  end
+  def protocol
+    if protocol_id == PROTOCOL_ID_HTTP
+      "http://"
+    elsif protocol_id == PROTOCOL_ID_HTTPS
+      "https://"
+    end
   end
   def ctr
     ad_clicks_count / ad_views_count.to_f * 100

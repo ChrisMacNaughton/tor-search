@@ -113,7 +113,7 @@ class SearchController < ApplicationController
         adv.save
       end
     end
-    redirect_to ad.path, status: 302
+    redirect_to ad.protocol + ad.path, status: 302
   end
   def ads
     Ad.page(1).available.joins(:advertiser).where('advertisers.balance > ads.bid').order(:created_at, :bid)
