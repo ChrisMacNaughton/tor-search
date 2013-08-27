@@ -66,4 +66,14 @@ class AdsController < ApplicationController
     end
     redirect_to :ads
   end
+  def request_beta
+    advertiser = Advertiser.find(params[:id])
+    advertiser.wants_beta = true
+    if advertiser.save
+      flash.notice = "Beta access requested"
+    else
+      flash.error "There was a problem, try again soon!"
+    end
+    redirect_to :back
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130827170909) do
+ActiveRecord::Schema.define(:version => 20130827174545) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20130827170909) do
     t.decimal  "balance",                :precision => 16, :scale => 8, :default => 0.0
     t.string   "username"
     t.boolean  "beta"
+    t.boolean  "wants_beta"
   end
 
   add_index "advertisers", ["reset_password_token"], :name => "index_advertisers_on_reset_password_token", :unique => true

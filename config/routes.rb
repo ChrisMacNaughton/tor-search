@@ -28,8 +28,10 @@ TorSearch::Application.routes.draw do
   resources :ads do
     member do
       put "toggle" => 'ads#toggle', as: :toggle
+      put "request_beta" => 'ads#request_beta', as: :request_beta
     end
   end
+
   get 'a/r' => 'search#ad_redirect', as: :ad_redirect
   namespace :admin do
     resources :ads, controller: 'ad'
