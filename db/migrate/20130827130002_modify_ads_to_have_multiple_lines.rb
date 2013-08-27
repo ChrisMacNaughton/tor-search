@@ -1,9 +1,6 @@
 class ModifyAdsToHaveMultipleLines < ActiveRecord::Migration
   def up
-    Ad.all.each do |ad|
-      ad.title = ad.title[0...25]
-      ad.save
-    end
+    execute 'UPDATE ads set title = substring(title from 01 FOR 25)'
     add_column :ads, :line_1, :string, default: "", limit: 35
     add_column :ads, :line_2, :string, default: "", limit: 35
     change_column :ads, :display_path, :string, default: "", limit: 35
