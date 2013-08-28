@@ -3,10 +3,10 @@
 .row
   .span2
     .logo
-  .span9{style: 'margin-top: 40px'}
+  .span9.offset1{style: 'margin-top: 40px'}
     =render partial: 'search_bar', locals: {searched: @search_term}
 .row
-  .span10
+  .span9
     %p.muted#totals
       About
       =number_with_precision @total, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
@@ -16,9 +16,9 @@
     .search-results
       -@docs.each do |page|
         =render partial: 'page', locals: {page: page}
-      .span10
+      .span9
         =will_paginate OpenStruct.new(total_pages: @total_pages, current_page: @page)
-  .span2
+  .span3
     -unless @ads.nil? || @ads.empty?
       - @ads.each do |ad|
         =render partial: 'ad', locals: {ad: ad, search: true}
