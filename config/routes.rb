@@ -1,8 +1,10 @@
 TorSearch::Application.routes.draw do
 
-  devise_for :advertisers
-
   devise_for :admin
+
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+
+  devise_for :advertisers
 
   root to: 'search#index', as: :search
   get 'graphs' => 'graphs#index', as: :graphs
@@ -22,7 +24,8 @@ TorSearch::Application.routes.draw do
   post '/contact' => 'contact#new_message'
   get 'policies' => 'static#policies', as: :policies
   # Admin routes
-  get 'admin' => 'admin#index'
+
+  #get 'admin' => 'admin#index'
   get '/ads/new-address' => 'ads#get_payment_address', as: :new_btc_address
 
   resources :ads do
@@ -33,16 +36,17 @@ TorSearch::Application.routes.draw do
   end
 
   get 'a/r' => 'search#ad_redirect', as: :ad_redirect
-  namespace :admin do
-    resources :ads, controller: 'ad'
-    get 'searches' => 'search#index', as: :admin_searches
-    get 'searches/:id' => 'search#show', as: :admin_search
 
-    resources :messages
-  end
-  get 'admin/searches/:id/clicks' => 'admin#clicks', as: :admin_clicks
-  get 'admin/pages' => 'admin#pages', as: :admin_pages
-  get 'admin/page' => 'admin#page', as: :admin_page
+  #namespace :admin do
+  #  resources :ads, controller: 'ad'
+  #  get 'searches' => 'search#index', as: :admin_searches
+  #  get 'searches/:id' => 'search#show', as: :admin_search
+  #
+  #  resources :messages
+  #end
+  #get 'admin/searches/:id/clicks' => 'admin#clicks', as: :admin_clicks
+  #get 'admin/pages' => 'admin#pages', as: :admin_pages
+  #get 'admin/page' => 'admin#page', as: :admin_page
 
   post '/payment' => 'payment#index'
 end
