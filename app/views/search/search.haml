@@ -3,7 +3,7 @@
 .row
   .span2
     .logo
-  .span9.offset1{style: 'margin-top: 40px'}
+  .span9{style: 'margin-top: 40px'}
     =render partial: 'search_bar', locals: {searched: @search_term}
 .row
   .span9
@@ -12,7 +12,7 @@
       =number_with_precision @total, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
       results
     .row
-      #instant_results.span10{style: 'display: none'}
+      #instant_results.span9{style: 'display: none'}
     .search-results
       -@docs.each do |page|
         =render partial: 'page', locals: {page: page}
