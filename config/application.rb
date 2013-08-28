@@ -72,8 +72,8 @@ module TorSearch
 
     config.serve_static_assets = true
 
-    config.assets.precompile += %w(admin.js admin.css rails_admin/rails_admin.css rails_admin/rails_admin.js)
-
+    config.assets.precompile += %w(admin.js admin.css)
+    config.assets.precompile += ['rails_admin/rails_admin.css', 'rails_admin/rails_admin.js']
     # Custom configuration defaults
     config.tor_search = ActiveSupport::OrderedOptions.new
     config.tor_search.coinbase_key = 'bfc79be3dc1282001d8fc17f8f664d41af4194449968ce47c0e24d8eba825b18'
