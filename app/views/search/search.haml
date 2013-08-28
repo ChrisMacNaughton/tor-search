@@ -6,22 +6,22 @@
   .span9{style: 'margin-top: 40px'}
     =render partial: 'search_bar', locals: {searched: @search_term}
 .row
-  .span9
+  .span8
     %p.muted#totals
       About
       =number_with_precision @total, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
       results
     .row
-      #instant_results.span9{style: 'display: none'}
+      #instant_results.span8{style: 'display: none'}
     .search-results
       -@docs.each do |page|
         =render partial: 'page', locals: {page: page}
       .span9
         =will_paginate OpenStruct.new(total_pages: @total_pages, current_page: @page)
-  .span3
-    -unless @ads.nil? || @ads.empty?
+  -unless @ads.nil? || @ads.empty?
+    .span4{style: 'margin-top: 20px'}
       - @ads.each do |ad|
-        =render partial: 'ad', locals: {ad: ad, search: true}
+        =render partial: 'ad', locals: {ad: ad, search: true, span:4}
 -content_for :javascripts do
   :javascript
     var search = "#{@search_term.gsub(/\s+/, '+')}";
