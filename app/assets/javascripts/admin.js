@@ -4,4 +4,3 @@
 //= require bootstrap
 //= require shadowbox
 //= require angularjs/rails/resource
-//= require_tree ./admin/
