@@ -1,12 +1,11 @@
 class SearchController < ApplicationController
   def index
-    get_solr_size
     if params[:q]
       Pageview.create(search: true, page: params[:q])
       search
     else
       Pageview.create(search: false, page: "Home")
-      @total_pages_indexed = get_solr_size#Page.indexed.count
+      @total_pages_indexed = get_solr_size
       render :index
     end
   end
@@ -15,13 +14,6 @@ class SearchController < ApplicationController
     if params[:q].empty?
       render :index and return
     end
-    pubnub = Pubnub.new(
-      :publish_key   => Rails::application.config.tor_search.pub_nub.publish_key,
-      :subscribe_key => Rails::application.config.tor_search.pub_nub.subscribe_key,
-      :secret_key    => Rails::application.config.tor_search.pub_nub.secret_key,
-      :cipher_key    => Rails::application.config.tor_search.pub_nub.cipher_key,
-      :ssl           => Rails::application.config.tor_search.pub_nub.ssl
-    )
     @search_term = params[:q]
 
     page = params[:page] || 1
@@ -58,27 +50,13 @@ class SearchController < ApplicationController
     @docs = search['response']['docs']
     @docs ||= []
     #debugger
-    @query = Query.find_or_initialize_by_term(@search_term)
-    @query.save
+    @query = Query.find_or_create_by_term(@search_term)
     if params[:page].nil? || params[:page] == 1
       s = Search.create(query: @query, results_count: @total)
       @search_id = s.id
-      pubnub.publish(
-        channel: :searches,
-        message: {id: @search_id, term: params[:q]},
-        callback: lambda { |message| puts(message) }
-      )
     end
     @ads = AdFinder.new(@search_term).ads
     @ads.each_with_index do |ad, idx|
-      unless ad.ppc?
-        adv = ad.advertiser
-        cost = ad.onion? ? ad.bid : 2.0 * ad.bid
-        bal = adv.balance - cost
-        logger.info ("VIEW: New balance for #{adv.email} is #{bal} after removing ad's bid (#{cost})")
-        adv.balance= bal
-        adv.save
-      end
       AdView.create(ad_id: ad.id, query_id: @query.id, position: idx+1)
     end
     render :search
