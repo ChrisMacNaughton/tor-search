@@ -2,8 +2,8 @@
   =text_field_tag :keyword, params[:keyword]
   =submit_tag "Check Keyword"
 
--if @queries.empty?
-  There was no search volume for '#{params[:keyword]}'
+-if @queries.empty? || @total < 50
+  There was no appreciable search volume for '#{params[:keyword]}'
 -else
   %table
     %thead
