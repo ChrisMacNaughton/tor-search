@@ -1,10 +1,8 @@
 class SearchController < ApplicationController
   def index
     if params[:q]
-      Pageview.create(search: true, page: params[:q])
       search
     else
-      Pageview.create(search: false, page: "Home")
       @total_pages_indexed = get_solr_size
       render :index
     end

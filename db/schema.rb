@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904112719) do
+ActiveRecord::Schema.define(:version => 20130904114340) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -235,13 +235,6 @@ ActiveRecord::Schema.define(:version => 20130904112719) do
     t.boolean  "advertising"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-  end
-
-  create_table "pageviews", :force => true do |t|
-    t.boolean  "search"
-    t.string   "page"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "payments", :force => true do |t|

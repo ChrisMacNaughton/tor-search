@@ -1,6 +1,5 @@
 class GraphsController < ApplicationController
   def index
-    Pageview.create(search: false, page: "Graphs")
   end
   def daily
     g = Gruff::Bar.new('500x150')

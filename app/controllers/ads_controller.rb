@@ -1,13 +1,11 @@
 class AdsController < ApplicationController
   before_filter :authenticate_advertiser!, except: [:advertising]
   def index
-    Pageview.create(search: false, page: "AdsIndex")
     page = (params[:page] || 1).to_i
     per_page = (params[:per_age] || 20).to_i
     @ads = current_advertiser.ads.page(page).per_page(per_page).order(:created_at)
   end
   def new
-    Pageview.create(search: false, page: "AdsCreate")
     #@ad = Ad.new
   end
   def show
@@ -59,7 +57,6 @@ class AdsController < ApplicationController
     @old_addresses = current_advertiser.bitcoin_addresses
   end
   def advertising #expressing interest page
-    Pageview.create(search: false, page: "AdsInterest")
     render 'ads/interested'
   end
   def toggle

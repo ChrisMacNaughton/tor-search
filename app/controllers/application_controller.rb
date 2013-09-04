@@ -2,20 +2,11 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_filter :track
 
   def index
 
   end
   def new
-  end
-  def track
-    return if Rails.env.include? 'development'
-    return if !!(params[:controller] =~ /admin/)
-    return if params[:q]
-    Thread.new do
-      Tracker.new(request).track!
-    end.join
   end
   def get_solr_size
     path = 'http://localhost:8983/solr/admin/cores?wt=json'
