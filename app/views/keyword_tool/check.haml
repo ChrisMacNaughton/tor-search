@@ -1,6 +1,4 @@
-=form_tag do
-  =text_field_tag :keyword, params[:keyword]
-  =submit_tag "Check Keyword"
+=render partial: 'keyword_header'
 
 -if @queries.empty? || @total < 50
   There was no appreciable search volume for '#{params[:keyword]}'

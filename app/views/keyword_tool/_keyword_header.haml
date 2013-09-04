@@ -1,0 +1,10 @@
+.row.span12
+  .span2.offset1
+    .logo
+  .span4.offset1
+    %h1 Keyword Tool
+.row
+  .span12.offset2
+    =form_tag do
+      =text_field_tag :keyword, params[:keyword], placeholder: 'keyword'
+      =submit_tag "Check Keyword"
