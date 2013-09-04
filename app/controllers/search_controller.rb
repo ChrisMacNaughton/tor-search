@@ -43,7 +43,6 @@ class SearchController < ApplicationController
     @total ||= 0
     @total_pages = (-(@total.to_f/10)).floor.abs
     @total = @total.to_i
-    track!
     @highlights = search['highlighting']
     @docs = search['response']['docs']
     @docs ||= []
@@ -67,13 +66,6 @@ class SearchController < ApplicationController
     end
 
     render :search
-  end
-  def track!
-    return if Rails.env.include? 'development'
-
-    Thread.new do
-      Tracker.new(request, {term: @search_term, count: @total}, "Search").track!
-    end.join
   end
   def redirect
     search = Search.where(id: params[:s]).first
