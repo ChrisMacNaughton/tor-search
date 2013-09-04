@@ -1,0 +1,32 @@
+=form_tag do
+  =text_field_tag :keyword, params[:keyword]
+  =submit_tag "Check Keyword"
+
+-if @queries.empty?
+  There was no search volume for '#{params[:keyword]}'
+-else
+  %table
+    %thead
+      %th Term
+      %th Count
+      %th
+    %tbody
+      -running_total = 0
+      -@queries.each do |query|
+        %tr
+          %td{style: 'width: 40%; border-bottom: solid 1px #ccc'}= query['term']
+          %td{style: 'width: 10%; border-bottom: solid 1px #ccc'}
+            = query['count']
+          %td{style: 'width: 50%; border-bottom: solid 1px #ccc'}
+            .progressbar.progress.progress-success.progress-striped.active{style: 'height: 10px'}
+              .bar{style: "width: #{query['count'].to_f / @total.to_f * 100}%; height: 10px"}
+        -running_total += query['count'].to_i
+    %tfoot
+      %tr
+        %td
+        %td{colspan:2}
+          =@total
+          matching queries
+          ( Showing top
+          =running_total
+          )

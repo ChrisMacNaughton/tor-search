@@ -23,9 +23,9 @@ TorSearch::Application.routes.draw do
   get 'contact' => 'contact#contact', as: :contact
   post '/contact' => 'contact#new_message'
   get 'policies' => 'static#policies', as: :policies
-  # Admin routes
 
-  #get 'admin' => 'admin#index'
+  get '/keyword_tool' => 'keyword_tool#index'
+  post '/keyword_tool' => 'keyword_tool#check'
   get '/ads/new-address' => 'ads#get_payment_address', as: :new_btc_address
 
   resources :ads do
