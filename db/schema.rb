@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130828170438) do
+ActiveRecord::Schema.define(:version => 20130904112719) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20130828170438) do
     t.decimal  "bid",        :precision => 16, :scale => 8, :default => 0.001
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
+    t.integer  "search_id"
   end
 
   create_table "ad_keywords", :force => true do |t|

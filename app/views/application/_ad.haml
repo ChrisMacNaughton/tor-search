@@ -4,7 +4,7 @@
 .row-fluid{class: "#{border ? "well" : ""} span#{span}"}
   .row-fluid
     -if search
-      =link_to ad.title, ad_redirect_path(id: ad.id, q: @query.id)
+      =link_to ad.title, ad_redirect_path(id: ad.id, q: @query.id, s: @search_id)
     -else
       =link_to ad.title, ad.protocol + ad.path
   .row-fluid.path

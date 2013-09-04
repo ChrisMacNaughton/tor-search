@@ -54,11 +54,15 @@ class SearchController < ApplicationController
     if params[:page].nil? || params[:page] == 1
       s = Search.create(query: @query, results_count: @total)
       @search_id = s.id
+
+      @ads = AdFinder.new(@search_term).ads
+      @ads.each_with_index do |ad, idx|
+        AdView.create(ad_id: ad.id, query_id: @query.id, position: idx+1)
+      end
+    else
+      @ads = []
     end
-    @ads = AdFinder.new(@search_term).ads
-    @ads.each_with_index do |ad, idx|
-      AdView.create(ad_id: ad.id, query_id: @query.id, position: idx+1)
-    end
+
     render :search
   end
   def track!
@@ -77,10 +81,11 @@ class SearchController < ApplicationController
   end
   def ad_redirect
     ad = Ad.find(params[:id])
-    query = Query.find(params[:q])
-    clicks = AdClick.where(ad_id: ad.id, query_id: query.id).where("created_at > ?", 5.minutes.ago)
-    if clicks.empty?
-      AdClick.create(ad: ad, query: query, bid: ad.bid)
+
+    ad_click = AdClick.find_or_initialize_by_ad_id_and_query_id_and_search_id(ad.id, params[:q], params[:s])
+    #debugger
+    if ad_click.new_record?
+      ad_click.save
       if ad.ppc? &&
         adv = ad.advertiser
         cost = ad.onion? ? ad.bid : 2.0 * ad.bid
