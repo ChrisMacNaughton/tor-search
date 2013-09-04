@@ -14,14 +14,13 @@ gem 'uglifier', '>= 1.3.0'
 gem 'gruff'
 # gem 'nokogiri'
 
-gem 'sunspot_rails'
+gem 'rsolr'
 
 gem 'will_paginate'
 
 #gem 'robotstxt', require: false
 #gem 'socksify', require: false
 #gem 'mechanize', require: false
-gem 'paperclip', '~> 3.0'
 
 gem 'devise'
 
@@ -55,10 +54,6 @@ gem 'turbolinks'
 #gem 'jbuilder', '~> 1.2'
 gem 'active_model_serializers'
 
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
-end
 group :development do
   gem 'sunspot_solr'
   gem 'debugger'
@@ -69,7 +64,6 @@ end
 group :test do
   gem 'vcr', require: false
 end
-gem 'pubnub'
 # Use unicorn as the app server
 gem 'unicorn'
 gem 'newrelic_rpm'
