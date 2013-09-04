@@ -4,10 +4,3 @@
       =render partial: 'fields', locals: { f: f }
   .span6
     =render partial: 'ad', locals: {search: false, ad: @ad}
--if @ad.advertiser.beta?
-  Yay for beta!
--else
-  -if @ad.advertiser.wants_beta?
-    Beta Access Requested
-  -else
-    =link_to "Request Beta Access", request_beta_ad_path(@ad.advertiser), method: :put

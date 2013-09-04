@@ -3,3 +3,7 @@
     =nav_link "Advertising", ads_path
     =nav_link "Create Ad", new_ad_path
     =nav_link "Get New Bitcoin Address", new_btc_address_path
+    -if current_advertiser.wants_beta?
+      %li Beta Access Requested
+    -else
+      =nav_link "Request Beta Access", request_beta_ad_path(current_advertiser), method: :put
