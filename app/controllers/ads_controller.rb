@@ -29,7 +29,13 @@ class AdsController < ApplicationController
   def update
     @ad = Ad.find(params[:id])
     ad_attributes = params[:ad]
-    ad_attributes[:approved] = false
+    ad_attributes[:approved] = false if @ad.changes.empty?
+
+    #keywords = params[:keywords].split(',')
+    #keys = []
+    #keywords.each do |kw|
+    #  keys << Keyword.find_or_create_by_word(kw)
+    #end
     if @ad.update_attributes(ad_attributes)
       flash.notice = "Your ad has been successfully edited!"
       redirect_to ads_path
