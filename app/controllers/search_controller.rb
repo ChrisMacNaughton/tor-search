@@ -49,10 +49,15 @@ class SearchController < ApplicationController
     @docs ||= []
     #debugger
     @query = Query.find_or_create_by_term(@search_term)
-    if params[:page].nil? || params[:page] == 1
-      s = Search.create(query: @query, results_count: @total)
-      @search_id = s.id
+    @paginated = if params[:page].nil? || params[:page] == "1"
+      false
+    else
+      true
+    end
+    s = Search.create(query: @query, results_count: @total, paginated: @paginated)
+    @search_id = s.id
 
+    if params[:page].nil? || params[:page] == 1
       @ads = AdFinder.new(@search_term).ads
       @ads.each_with_index do |ad, idx|
         AdView.create(ad_id: ad.id, query_id: @query.id, position: idx+1)

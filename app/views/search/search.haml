@@ -27,36 +27,39 @@
     var search = "#{@search_term.gsub(/\s+/, '+')}";
     var keep_space = false; // One day It'll be #{@search_term.split(/s+/).count <= 2}!
     $(document).ready(function(){
-      if(keep_space){
-        $('#instant_results').show()
-      }
-      $.getJSON("#{instant_path}?search="+search, null,function(res){
-        if(res['matches'] != null && res['matches'].length > 0) {
-          matches = res['matches'];
-          $.each(matches, function(k,e){
-            str =  "<div class='instant-result'><h4>"+e.name+"</h4><hr/><dl class='"+e.type+"'>"
-            method = e.method
-            if(method == null){
-              method = "title";
-            }
-            $.each(e.data, function(k,v){
-              value = k.toLowerCase();
-              if(method == "upper"){
-                value = value.toUpperCase();
-              } else if(method == "title"){
-                value = value.titleize();
-              }
-              str += "<dt>"+value+"</dt>";
-              str += "<dd>"+v+"</dd>";
-            });
-            str += "</dl></div><br />";
-            $('#instant_results').append(str);
-          });
-          $('#instant_results').show();
-        } else {
-        $('#instant_results').hide();
+      paginated = #{@paginated};
+      if (!paginated){
+        if(keep_space){
+          $('#instant_results').show()
         }
-      }).fail(function(){ $('#instant_results').hide(); });
+        $.getJSON("#{instant_path}?search="+search, null,function(res){
+          if(res['matches'] != null && res['matches'].length > 0) {
+            matches = res['matches'];
+            $.each(matches, function(k,e){
+              str =  "<div class='instant-result'><h4>"+e.name+"</h4><hr/><dl class='"+e.type+"'>"
+              method = e.method
+              if(method == null){
+                method = "title";
+              }
+              $.each(e.data, function(k,v){
+                value = k.toLowerCase();
+                if(method == "upper"){
+                  value = value.toUpperCase();
+                } else if(method == "title"){
+                  value = value.titleize();
+                }
+                str += "<dt>"+value+"</dt>";
+                str += "<dd>"+v+"</dd>";
+              });
+              str += "</dl></div><br />";
+              $('#instant_results').append(str);
+            });
+            $('#instant_results').show();
+          } else {
+          $('#instant_results').hide();
+          }
+        }).fail(function(){ $('#instant_results').hide(); });
+      }
       $('.search-results a').on('mousedown', function(e){
         target = $(e.target)[0]
 
@@ -70,7 +73,3 @@
         }
       });
     })
-
-    $().ready(function(){
-      Shadowbox.init();
-    });

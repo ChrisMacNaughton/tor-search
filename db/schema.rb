@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904114340) do
+ActiveRecord::Schema.define(:version => 20130904132830) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -270,10 +270,11 @@ ActiveRecord::Schema.define(:version => 20130904114340) do
 
   create_table "searches", :force => true do |t|
     t.integer  "results_count"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.integer  "clicks_count",  :default => 0
     t.integer  "query_id"
+    t.boolean  "paginated",     :default => false
   end
 
 end
