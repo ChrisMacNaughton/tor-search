@@ -21,6 +21,7 @@ class SearchController < ApplicationController
 
     solr = RSolr.connect :url => 'http://localhost:8983/solr'
     @page = (params[:page] || 1).to_i
+    @page = 1 if @page < 1
     p = {
       start: (@page - 1) * 10,
       q: @search_term,
