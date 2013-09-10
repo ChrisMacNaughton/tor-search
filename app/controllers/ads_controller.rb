@@ -1,5 +1,6 @@
 class AdsController < ApplicationController
   before_filter :authenticate_advertiser!, except: [:advertising]
+  before_filter :track
   def index
     page = (params[:page] || 1).to_i
     per_page = (params[:per_age] || 20).to_i

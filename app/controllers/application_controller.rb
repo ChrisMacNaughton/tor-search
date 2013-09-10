@@ -6,8 +6,18 @@ class ApplicationController < ActionController::Base
   def index
 
   end
+
   def new
   end
+
+  def track
+    return if Rails.env.include? 'development'
+    return if params[:q]
+
+    Tracker.new(request).track!
+  end
+
+
   def get_solr_size
     path = 'http://localhost:8983/solr/admin/cores?wt=json'
     @num_docs = read_through_cache('index_size', 24.hours) do

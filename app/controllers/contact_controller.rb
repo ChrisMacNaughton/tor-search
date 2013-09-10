@@ -1,4 +1,6 @@
 class ContactController < ApplicationController
+  before_filter :track
+
   def contact
   end
   def new_message

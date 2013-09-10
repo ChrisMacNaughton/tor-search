@@ -1,5 +1,6 @@
 class GraphsController < ApplicationController
   def index
+    track
   end
   def daily
     g = Gruff::Bar.new('500x150')

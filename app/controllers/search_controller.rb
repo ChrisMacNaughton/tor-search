@@ -3,6 +3,7 @@ class SearchController < ApplicationController
     if params[:q]
       search
     else
+      track
       @total_pages_indexed = get_solr_size
       render :index
     end
@@ -44,6 +45,7 @@ class SearchController < ApplicationController
     @total ||= 0
     @total_pages = (-(@total.to_f/10)).floor.abs
     @total = @total.to_i
+    track!
     @highlights = search['highlighting']
     @docs = search['response']['docs']
     @docs ||= []
@@ -68,6 +70,13 @@ class SearchController < ApplicationController
 
     render :search
   end
+
+  def track!
+    return if Rails.env.include? 'development'
+
+    Tracker.new(request, {term: @search_term, count: @total}, "Search").track!
+  end
+
   def redirect
     search = Search.where(id: params[:s]).first
     target = params[:p]
@@ -75,6 +84,7 @@ class SearchController < ApplicationController
     Click.create(search: search, target: target)
     render text: {status: 'ok'} and return
   end
+
   def ad_redirect
     ad = Ad.find(params[:id])
 

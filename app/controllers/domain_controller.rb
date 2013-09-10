@@ -1,5 +1,7 @@
 class DomainController < ApplicationController
+
   def new
+    track
     @domain = Domain.new
     @domain.use_captcha!
     @domain.textcaptcha

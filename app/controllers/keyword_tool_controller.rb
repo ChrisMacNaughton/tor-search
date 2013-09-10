@@ -1,4 +1,5 @@
 class KeywordToolController < ApplicationController
+  before_filter :track
   def index
 
   end
