@@ -1,19 +1,15 @@
--domain = "#{page['url'].split('.onion')}.onion"
--highlights = OpenStruct.new(@highlights[page['url']])
+-domain = page['host']
+-highlights = OpenStruct.new(@search.highlights[page['id']])
 -url = page['url']
--title = highlights.try(:title)
+-title = highlights.try(:title).try(:first)
 -if title.nil? || title.empty?
   -title = page['title']
   - if title.nil? || title.empty?
     -title = h "<No Title>"
--else
-  -title = title[0]
 -start = title.length
--content = highlights.try(:content)
+-content = highlights.try(:content).try(:first)
 -if content.nil?
   -content ||= page['content'][start...254+start]
--else
-  -content = content[0]
 .row
   .page-listing.span8
     .title

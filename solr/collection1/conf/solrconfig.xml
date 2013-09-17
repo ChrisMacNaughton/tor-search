@@ -816,7 +816,7 @@
       <str name="qf">content^0.5 anchor^1.0 title^1.2</str>
       <str name="pf">content^0.5 anchor^1.5 title^1.2 site^1.5</str>
       <str name="wt">json</str>
-      <str name="fl">content url title</str>
+      <str name="fl">id content url title host</str>
       <int name="ps">100</int>
       <str name="q.alt">*:*</str>
       <str name="hl">true</str>

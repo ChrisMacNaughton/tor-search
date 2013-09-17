@@ -13,68 +13,32 @@ class SearchController < ApplicationController
     if params[:q].empty?
       render :index and return
     end
-    @search_term = params[:q]
-
     page = params[:page] || 1
-    filters = {}
-    filters[:with] = {
-    }
+    @search = SolrSearch.new(params[:q], page)
+    track! @search
+    @query = Query.find_or_create_by_term(@search.term)
 
-    solr = RSolr.connect :url => 'http://localhost:8983/solr'
-    @page = (params[:page] || 1).to_i
-    @page = 1 if @page < 1
-    p = {
-      start: (@page - 1) * 10,
-      q: @search_term,
-      rows: 10,
-      wt: 'json',
-      mm: '2<-1 5<-2 6<90%'
-    }
-    if @search_term.include? 'site:'
-      site = @search_term.match(/site:\s*(.{16}.onion)/i)[0].gsub(/site:\s*/, '').gsub(/\.onion\/?$/, '')
-      fq = "id:onion.#{site}*"
-      if @search_term.include? '-site:'
-        fq = "-#{fq}"
-      end
-      p[:q].gsub!(/site:\s*(.{16}.onion)/i, '')
-      p[:fq] = fq
-    end
-    #debugger
-    search = JSON.parse(solr.get('nutch', :params => p).response[:body])
-    @total = search['response']['numFound']
-    @total ||= 0
-    @total_pages = (-(@total.to_f/10)).floor.abs
-    @total = @total.to_i
-    track!
-    @highlights = search['highlighting']
-    @docs = search['response']['docs']
-    @docs ||= []
-    #debugger
-    @query = Query.find_or_create_by_term(@search_term)
-    @paginated = if params[:page].nil? || params[:page] == "1"
-      false
-    else
-      true
-    end
     s = Search.create(query: @query, results_count: @total, paginated: @paginated)
     @search_id = s.id
 
-    if params[:page].nil? || params[:page] == 1
-      @ads = AdFinder.new(@search_term).ads
+    if page == 1
+      @paginated = false
+      @ads = AdFinder.new(@search.term).ads
       @ads.each_with_index do |ad, idx|
         AdView.create(ad_id: ad.id, query_id: @query.id, position: idx+1)
       end
     else
+      @paginated = true
       @ads = []
     end
 
     render :search
   end
 
-  def track!
+  def track!(search)
     return if Rails.env.include? 'development'
 
-    Tracker.new(request, {term: @search_term, count: @total}, "Search").track!
+    Tracker.new(request, {term: search.term, count: search.total}, "Search").track!
   end
 
   def redirect
