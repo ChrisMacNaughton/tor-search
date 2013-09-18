@@ -12,15 +12,10 @@ gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 gem 'gruff'
-# gem 'nokogiri'
 
 gem 'rsolr'
 
 gem 'will_paginate'
-
-#gem 'robotstxt', require: false
-#gem 'socksify', require: false
-#gem 'mechanize', require: false
 
 gem 'devise'
 
