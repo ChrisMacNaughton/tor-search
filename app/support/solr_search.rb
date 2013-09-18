@@ -17,7 +17,7 @@ class SolrSearch
   end
 
   def total
-    @total ||= nutch['response']['numFound'].to_i
+    @total ||= nutch.try(:response).try(:numFound).to_i
   end
 
   def total_pages
@@ -25,7 +25,7 @@ class SolrSearch
   end
 
   def highlights
-    @highlights ||= nutch['highlighting'] || []
+    @highlights ||= nutch.try(:highlighting) || []
   end
 
   def term
@@ -34,6 +34,14 @@ class SolrSearch
 
   def current_page
     @page
+  end
+
+  def self.indexed
+    begin
+      get_solr_size
+    rescue
+      0
+    end
   end
 
   private
@@ -45,7 +53,30 @@ class SolrSearch
       {error: "Failure to communicate with the Solr server"}
     end
   end
-
+  def self.get_solr_size
+    path = 'http://localhost:8983/solr/admin/cores?wt=json'
+    num_docs = read_through_cache('index_size', 24.hours) do
+      begin
+        json = Net::HTTP.get(URI.parse(path))
+      rescue => e
+        if e.message.include? 'Address family not supported by protocol family'
+          json = {status: {collection1: {index: { numDocs: 99872}}}}.to_json
+        else
+          raise
+        end
+      end
+      #Rails.logger.info("Got some json from Solr: #{json}")
+      JSON.parse(json)['status']['collection1']['index']['numDocs']
+    end
+  end
+  def self.read_through_cache(cache_key, expires_in, &block)
+    # Attempt to fetch the choice values from the cache, if not found then retrieve them and stuff the results into the cache.
+    if TorSearch::Application.config.action_controller.perform_caching
+      Rails.cache.fetch(cache_key, expires_in: expires_in, &block)
+    else
+      yield
+    end
+  end
   def param
     if @p.nil?
       @p = with_title(with_site(defaults))

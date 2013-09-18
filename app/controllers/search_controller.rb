@@ -4,7 +4,7 @@ class SearchController < ApplicationController
       search
     else
       track
-      @total_pages_indexed = get_solr_size
+      @total_pages_indexed = SolrSearch.indexed
       render :index
     end
   end
