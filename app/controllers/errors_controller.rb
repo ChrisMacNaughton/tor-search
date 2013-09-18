@@ -4,7 +4,7 @@ class ErrorsController < ApplicationController
     @@not_found_path = params[:not_found]
 
     respond_to do |format|
-      format.html { render status:404} # error_404.haml
+      format.html { render status:404 } # error_404.haml
     end
   end
 
