@@ -7,6 +7,14 @@ TorSearch::Application.routes.draw do
   devise_for :advertisers
 
   root to: 'search#index', as: :search
+
+  get "errors/error_404"
+  get "errors/error_500"
+
+  # See http://ramblinglabs.com/blog/2012/01/rails-3-1-adding-custom-404-and-500-error-pages for more info
+  match '*not_found', to: 'errors#error_404', as: 'not_found' unless Rails.application.config.consider_all_requests_local
+
+
   get 'graphs' => 'graphs#index', as: :graphs
   get 'graphs/daily' => 'graphs#daily', as: :daily
   get 'graphs/unique' => 'graphs#unique', as: :unique
