@@ -7,6 +7,7 @@ TorSearch::Application.routes.draw do
   devise_for :advertisers
 
   root to: 'search#index', as: :search
+
   get 'graphs' => 'graphs#index', as: :graphs
   get 'graphs/daily' => 'graphs#daily', as: :daily
   get 'graphs/unique' => 'graphs#unique', as: :unique
@@ -37,16 +38,12 @@ TorSearch::Application.routes.draw do
 
   get 'a/r' => 'search#ad_redirect', as: :ad_redirect
 
-  #namespace :admin do
-  #  resources :ads, controller: 'ad'
-  #  get 'searches' => 'search#index', as: :admin_searches
-  #  get 'searches/:id' => 'search#show', as: :admin_search
-  #
-  #  resources :messages
-  #end
-  #get 'admin/searches/:id/clicks' => 'admin#clicks', as: :admin_clicks
-  #get 'admin/pages' => 'admin#pages', as: :admin_pages
-  #get 'admin/page' => 'admin#page', as: :admin_page
-
   post '/payment' => 'payment#index'
+
+  get "errors/error_404"
+  get "errors/error_500"
+
+  # See http://ramblinglabs.com/blog/2012/01/rails-3-1-adding-custom-404-and-500-error-pages for more info
+  match '*not_found', to: 'errors#error_404', as: 'not_found' unless Rails.application.config.consider_all_requests_local
+
 end
