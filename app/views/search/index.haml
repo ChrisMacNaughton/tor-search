@@ -2,11 +2,14 @@
   .row-fluid.span12.offset2
     .logo-large
   .row-fluid.span12.offset2
-    =render partial: 'search_bar'
+    =render partial: 'search_bar', locals: {disabled: !@search.errors.empty?}
   .row-fluid.span12.offset2
-    %p.muted
-      =number_with_precision @total_pages_indexed, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
-      pages indexed
+    -if @search.errors.empty?
+      %p.muted
+        =number_with_precision @search.indexed, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
+        pages indexed
+    -else
+      %p.muted Search is offline for the moment, we are looking into it
 -content_for(:footer) do
   #footer_home
     .row-fluid

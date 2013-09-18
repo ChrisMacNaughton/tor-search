@@ -1,11 +1,22 @@
 class SolrSearch
   attr_accessor :page
 
-  attr_reader :records, :total, :total_pages, :highlights
-  def initialize(query, page=1)
+  def initialize(query = '', page=1)
     @query = query
     @solr = RSolr.connect :url => 'http://localhost:8983/solr'
     @page = page
+    @errors = []
+    true
+  end
+
+  def query=(arg)
+    @query = arg
+    clear_args
+  end
+
+  def page=(page)
+    @page = page
+    clear_args
   end
 
   def search
@@ -13,11 +24,11 @@ class SolrSearch
   end
 
   def records
-    @records ||= nutch['response']['docs'] || []
+    @records ||= response.try(:docs) || []
   end
 
   def total
-    @total ||= nutch.try(:response).try(:numFound).to_i
+    @total ||= response.try(:numFound).to_i
   end
 
   def total_pages
@@ -36,40 +47,46 @@ class SolrSearch
     @page
   end
 
-  def self.indexed
+  def indexed
     begin
       get_solr_size
     rescue
+      @errors = []
+      @errors << "Search offline"
       0
     end
+  end
+
+  def errors
+    nutch
+
+    @errors
   end
 
   private
 
   def nutch
+    return {} if @query.nil?
     @result ||= begin
-      JSON.parse(@solr.get('nutch', :params => param).response[:body])
+      OpenStruct.new JSON.parse(@solr.get('nutch', :params => param).response[:body])
     rescue
-      {error: "Failure to communicate with the Solr server"}
+      @errors << "Search offline"
+      OpenStruct.new(error: "Failure to communicate with the Solr server")
     end
   end
-  def self.get_solr_size
+
+  def response
+    OpenStruct.new(nutch.try(:response) || {})
+  end
+
+  def get_solr_size
     path = 'http://localhost:8983/solr/admin/cores?wt=json'
     num_docs = read_through_cache('index_size', 24.hours) do
-      begin
-        json = Net::HTTP.get(URI.parse(path))
-      rescue => e
-        if e.message.include? 'Address family not supported by protocol family'
-          json = {status: {collection1: {index: { numDocs: 99872}}}}.to_json
-        else
-          raise
-        end
-      end
-      #Rails.logger.info("Got some json from Solr: #{json}")
+      json = Net::HTTP.get(URI.parse(path))
       JSON.parse(json)['status']['collection1']['index']['numDocs']
     end
   end
-  def self.read_through_cache(cache_key, expires_in, &block)
+  def read_through_cache(cache_key, expires_in, &block)
     # Attempt to fetch the choice values from the cache, if not found then retrieve them and stuff the results into the cache.
     if TorSearch::Application.config.action_controller.perform_caching
       Rails.cache.fetch(cache_key, expires_in: expires_in, &block)
@@ -118,5 +135,12 @@ class SolrSearch
       mm: '2<-1 5<-2 6<90%',
       fq: []
     }
+  end
+  def clear_args
+    @result = nil
+    @records = nil
+    @total = nil
+    @total_pages = nil
+    @highlights = nil
   end
 end

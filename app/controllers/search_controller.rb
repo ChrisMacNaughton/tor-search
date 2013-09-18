@@ -4,7 +4,7 @@ class SearchController < ApplicationController
       search
     else
       track
-      @total_pages_indexed = SolrSearch.indexed
+      @search = SolrSearch.new
       render :index
     end
   end
@@ -15,23 +15,25 @@ class SearchController < ApplicationController
     end
     page = params[:page] || 1
     @search = SolrSearch.new(params[:q], page)
+
     track! @search
-    @query = Query.find_or_create_by_term(@search.term)
+    if @search.errors.empty?
+      @query = Query.find_or_create_by_term(@search.term)
 
-    s = Search.create(query: @query, results_count: @total, paginated: @paginated)
-    @search_id = s.id
+      s = Search.create(query: @query, results_count: @total, paginated: @paginated)
+      @search_id = s.id
 
-    if page == 1
-      @paginated = false
-      @ads = AdFinder.new(@search.term).ads
-      @ads.each_with_index do |ad, idx|
-        AdView.create(ad_id: ad.id, query_id: @query.id, position: idx+1)
+      if page == 1
+        @paginated = false
+        @ads = AdFinder.new(@search.term).ads
+        @ads.each_with_index do |ad, idx|
+          AdView.create(ad_id: ad.id, query_id: @query.id, position: idx+1)
+        end
+      else
+        @paginated = true
+        @ads = []
       end
-    else
-      @paginated = true
-      @ads = []
     end
-
     render :search
   end
 

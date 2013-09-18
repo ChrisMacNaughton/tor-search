@@ -1,5 +1,6 @@
 -searched ||= ''
+-disabled ||= false
 =form_tag('/', method: "get", id: 'search', class: 'form-search') do
   .input-append.span10
-    =text_field_tag 'q', searched, class: 'search_bar search-query span6', id: "appendedInputButtons", autofocus: "autofocus"
+    =text_field_tag 'q', searched, class: 'search_bar search-query span6', id: "appendedInputButtons", autofocus: "autofocus", disabled: disabled
     =button_tag 'Search Tor', class: 'btn', type: "submit", name: ''
