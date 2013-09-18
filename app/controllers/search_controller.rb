@@ -1,4 +1,7 @@
 class SearchController < ApplicationController
+
+  skip_before_filter :verify_authenticity_token
+
   def index
     if params[:q]
       search
@@ -33,6 +36,11 @@ class SearchController < ApplicationController
         @paginated = true
         @ads = []
       end
+    end
+    @instant = true
+    if params[:j] != "t"
+      @instant = false
+      @instant_matches = Matcher.new(@search.term, request).execute || []
     end
     render :search
   end

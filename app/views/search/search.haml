@@ -16,7 +16,24 @@
         =number_with_precision @search.total, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
         results
       .row
-        #instant_results.span8{style: 'display: none'}
+        #instant_results.span8{style: 'display: #{@instant? "none" : "block"}'}
+          -unless @instant
+            -@instant_matches.each do |e|
+              -method = e[:method]
+              -type = e[:type]
+              .instant-result
+                %h4=e[:name]
+                %hr/
+                %dl{class: type}
+                  -e[:data].each do |k,v|
+                    -value = k.downcase
+                    - if(method == "upper")
+                      - value = value.upcase();
+                    -elsif(method == "title")
+                      - value = value.titleize();
+                    %dt= value
+                    %dd= v
+                %br/
       .search-results
         -@search.records.each do |page|
           =render partial: 'page', locals: {page: page}
@@ -26,54 +43,55 @@
       .span4{style: 'margin-top: 20px'}
         - @ads.each do |ad|
           =render partial: 'ad', locals: {ad: ad, search: true, span:4}
-  -content_for :javascripts do
-    :javascript
-      var search = "#{@search.term.gsub(/\s+/, '+')}";
-      var keep_space = false; // One day It'll be #{@search.term.split(/s+/).count <= 2}!
-      $(document).ready(function(){
-        paginated = #{@paginated};
-        if (!paginated){
-          if(keep_space){
-            $('#instant_results').show()
-          }
-          $.getJSON("#{instant_path}?search="+search, null,function(res){
-            if(res['matches'] != null && res['matches'].length > 0) {
-              matches = res['matches'];
-              $.each(matches, function(k,e){
-                str =  "<div class='instant-result'><h4>"+e.name+"</h4><hr/><dl class='"+e.type+"'>"
-                method = e.method
-                if(method == null){
-                  method = "title";
-                }
-                $.each(e.data, function(k,v){
-                  value = k.toLowerCase();
-                  if(method == "upper"){
-                    value = value.toUpperCase();
-                  } else if(method == "title"){
-                    value = value.titleize();
-                  }
-                  str += "<dt>"+value+"</dt>";
-                  str += "<dd>"+v+"</dd>";
-                });
-                str += "</dl></div><br />";
-                $('#instant_results').append(str);
-              });
-              $('#instant_results').show();
-            } else {
-            $('#instant_results').hide();
+  -if @instant
+    -content_for :javascripts do
+      :javascript
+        var search = "#{@search.term.gsub(/\s+/, '+')}";
+        var keep_space = false; // One day It'll be #{@search.term.split(/s+/).count <= 2}!
+        $(document).ready(function(){
+          paginated = #{@paginated};
+          if (!paginated){
+            if(keep_space){
+              $('#instant_results').show()
             }
-          }).fail(function(){ $('#instant_results').hide(); });
-        }
-        $('.search-results a').on('mousedown', function(e){
-          target = $(e.target)[0]
-
-          href = target.getAttribute('href')
-          $.get('/r?s=#{@search_id}&p='+href);
-          wait_for = 200;
-          wait_for += (new Date).getTime();
-          _results = [];
-          while ((new Date).getTime() < wait_for) {
-            _results.push(i = wait_for);
+            $.getJSON("#{instant_path}?search="+search, null,function(res){
+              if(res['matches'] != null && res['matches'].length > 0) {
+                matches = res['matches'];
+                $.each(matches, function(k,e){
+                  str =  "<div class='instant-result'><h4>"+e.name+"</h4><hr/><dl class='"+e.type+"'>"
+                  method = e.method
+                  if(method == null){
+                    method = "title";
+                  }
+                  $.each(e.data, function(k,v){
+                    value = k.toLowerCase();
+                    if(method == "upper"){
+                      value = value.toUpperCase();
+                    } else if(method == "title"){
+                      value = value.titleize();
+                    }
+                    str += "<dt>"+value+"</dt>";
+                    str += "<dd>"+v+"</dd>";
+                  });
+                  str += "</dl></div><br />";
+                  $('#instant_results').append(str);
+                });
+                $('#instant_results').show();
+              } else {
+              $('#instant_results').hide();
+              }
+            }).fail(function(){ $('#instant_results').hide(); });
           }
-        });
-      })
+          $('.search-results a').on('mousedown', function(e){
+            target = $(e.target)[0]
+
+            href = target.getAttribute('href')
+            $.get('/r?s=#{@search_id}&p='+href);
+            wait_for = 200;
+            wait_for += (new Date).getTime();
+            _results = [];
+            while ((new Date).getTime() < wait_for) {
+              _results.push(i = wait_for);
+            }
+          });
+        })
