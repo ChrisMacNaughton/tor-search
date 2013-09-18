@@ -1,1 +1,10 @@
-404!
+-content_for :title do
+  404 Page Not Found
+.row
+  .span2
+    .logo
+  .span9.offset1
+    %p The page you have requested does not exist, perhaps you'd like to search Tor instead?
+.row
+  .span9.offset2{style: 'margin-top: 40px'}
+    =render partial: 'search/search_bar'
