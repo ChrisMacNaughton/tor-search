@@ -55,7 +55,6 @@ gem 'turbolinks'
 gem 'active_model_serializers'
 
 group :development do
-  gem 'sunspot_solr'
   gem 'debugger'
   gem 'meta_request'
   gem 'better_errors'
