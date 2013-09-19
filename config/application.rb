@@ -87,5 +87,14 @@ module TorSearch
     config.tor_search.pub_nub.secret_key = 'sec-c-YTE0ZTU1MTEtMDVjZi00M2FmLWI1YTAtYTBmNjY4MDZjZDY5'
     config.tor_search.pub_nub.cipher_key = nil
     config.tor_search.pub_nub.ssl = nil
+
+    config.tor_search.captcha_questions = [
+        {'question' => 'two + 12', 'answers' => '14,fourteen'},
+        {'question' => 'Is a purple box green?', 'answers' => 'no'},
+        {'question' => 'If tomorrow is Saturday, what day is today?', 'answers'=>'friday,today'},
+        {'question' => 'If a duck is black, what kind of bird is it?', 'answers' => 'duck,a duck'},
+        {'question' => 'If a duck is black, what color is it?', 'answers' => 'black'},
+        {'question' => 'What color is the black house?', 'answers' => 'black'}
+    ]
   end
 end
