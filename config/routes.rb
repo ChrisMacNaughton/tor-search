@@ -22,7 +22,7 @@ TorSearch::Application.routes.draw do
   post '/advertising' => 'contact#new_message'
 
   get 'contact' => 'contact#contact', as: :contact
-  post '/contact' => 'contact#new_message'
+  post '/contact' => 'contact#new_message', as: :messages
   get 'policies' => 'static#policies', as: :policies
 
   get '/keyword_tool' => 'keyword_tool#index'
