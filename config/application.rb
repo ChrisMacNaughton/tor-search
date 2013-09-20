@@ -89,12 +89,28 @@ module TorSearch
     config.tor_search.pub_nub.ssl = nil
 
     config.tor_search.captcha_questions = [
+        # Math questions
         {'question' => 'two + 12', 'answers' => '14,fourteen'},
+        {'question' => '3 plus five', 'answers' => '8,eight'},
+        {'question' => 'twelve - 6', 'answers' => '6,six'},
+        {'question' => '2 times two', 'answers' => '4,four'},
+        {'question' => 'one times 11', 'answers' => '11,eleven'},
+        {'question' => '42 plus one', 'answers' => '43,forty-three,forty three'},
+        {'question' => '40 - ten', 'answers' => '30,thirty'},
+        {'question' => 'two plus five', 'answers' => '7,seven'},
+        {'question' => 'six times 2', 'answers' => '12,twelve'},
+        {'question' => 'one + one', 'answers' => 'two,2'},
+        # Generic english questions
         {'question' => 'Is a purple box green?', 'answers' => 'no'},
         {'question' => 'If tomorrow is Saturday, what day is today?', 'answers'=>'friday,today'},
         {'question' => 'If a duck is black, what kind of bird is it?', 'answers' => 'duck,a duck'},
         {'question' => 'If a duck is black, what color is it?', 'answers' => 'black'},
-        {'question' => 'What color is the black house?', 'answers' => 'black'}
+        {'question' => 'What color is the black house?', 'answers' => 'black'},
+        {'question' => 'What color is the red sky at sunset?', 'answers' => 'red'},
+        {'question' => 'What color is the white paper on the brown clipboard?', 'answers' => 'white'},
+        {'question' => 'Do cars need train tracks to drive?', 'answers' => 'no'},
+        {'question' => 'Is a square a rectangle?', 'answers' => 'yes'},
+        {'question' => 'Is a square a triangle?', 'answers' => 'no'}
     ]
   end
 end
