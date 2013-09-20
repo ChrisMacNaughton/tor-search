@@ -32,7 +32,7 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['Ad', 'AdClick', 'AdKeyword', 'AdView', 'Admin', 'AdminSearch', 'Advertiser', 'BitcoinAddress', 'Click', 'Domain', 'Keyword', 'Message', 'Pageview', 'Payment', 'Query', 'Search']
 
   # Include specific models (exclude the others):
-  config.included_models = ['Ad', 'AdKeyword', 'Admin', 'Advertiser', 'BitcoinAddress', 'Domain', 'Keyword', 'Message', 'Payment', 'Query', 'Search']
+  config.included_models = ['Ad', 'AdKeyword', 'Admin', 'Advertiser', 'BitcoinAddress', 'Coupon', 'Domain', 'Keyword', 'Message', 'Payment', 'Query', 'Search']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]

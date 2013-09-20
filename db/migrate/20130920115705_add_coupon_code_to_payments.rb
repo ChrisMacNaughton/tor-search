@@ -1,5 +1,5 @@
 class AddCouponCodeToPayments < ActiveRecord::Migration
   def change
-    add_column :payments, :coupon_id, :string, default: nil
+    add_column :payments, :coupon_id, :integer, default: nil
   end
 end

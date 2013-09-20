@@ -35,7 +35,7 @@ TorSearch::Application.routes.draw do
       put "request_beta" => 'ads#request_beta', as: :request_beta
     end
   end
-
+  post 'coupons' => 'coupon#create', as: :credit_coupon
   get 'a/r' => 'search#ad_redirect', as: :ad_redirect
 
   post '/payment' => 'payment#index'

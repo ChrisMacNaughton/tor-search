@@ -250,7 +250,7 @@ ActiveRecord::Schema.define(:version => 20130920115705) do
     t.integer  "bitcoin_address_id"
     t.datetime "created_at",                                                         :null => false
     t.datetime "updated_at",                                                         :null => false
-    t.string   "coupon_id"
+    t.integer  "coupon_id"
   end
 
   add_index "payments", ["advertiser_id"], :name => "index_payments_on_advertiser_id"

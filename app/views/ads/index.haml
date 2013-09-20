@@ -9,6 +9,12 @@
         %dd
           = current_advertiser.balance
           BTC
+        %dt Apply Coupon
+        %dd
+          =form_for :coupon, class: 'form-inline', url: credit_coupon_path do |f|
+            .input-append
+              =f.text_field :code, {placeholder: "Coupon Code", class: 'input-medium', id: "appendedInputButtons"}
+              %button.btn{type: "submit"} Apply
     .row
       %h2 Ads
       -#
