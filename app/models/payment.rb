@@ -1,6 +1,7 @@
 class Payment < ActiveRecord::Base
   belongs_to :advertiser
   belongs_to :bitcoin_address
+  belongs_to :coupon
   attr_accessible :amount, :bitcoin_address, :advertiser
 
   after_create :credit_advertiser

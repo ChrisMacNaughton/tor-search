@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904132830) do
+ActiveRecord::Schema.define(:version => 20130920115705) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -139,6 +139,13 @@ ActiveRecord::Schema.define(:version => 20130904132830) do
     t.integer  "flag_reason_id"
   end
 
+  create_table "coupons", :force => true do |t|
+    t.string   "code"
+    t.decimal  "value",      :precision => 16, :scale => 8, :default => 0.0
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
+  end
+
   create_table "crawler_log_entries", :force => true do |t|
     t.string   "type_str"
     t.string   "action"
@@ -243,6 +250,7 @@ ActiveRecord::Schema.define(:version => 20130904132830) do
     t.integer  "bitcoin_address_id"
     t.datetime "created_at",                                                         :null => false
     t.datetime "updated_at",                                                         :null => false
+    t.string   "coupon_id"
   end
 
   add_index "payments", ["advertiser_id"], :name => "index_payments_on_advertiser_id"
