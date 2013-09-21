@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130920115705) do
+ActiveRecord::Schema.define(:version => 20130921022624) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -283,6 +283,7 @@ ActiveRecord::Schema.define(:version => 20130920115705) do
     t.integer  "clicks_count",  :default => 0
     t.integer  "query_id"
     t.boolean  "paginated",     :default => false
+    t.boolean  "js_enabled",    :default => false
   end
 
 end
