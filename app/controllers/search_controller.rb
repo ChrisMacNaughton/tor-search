@@ -33,17 +33,19 @@ class SearchController < ApplicationController
         @ads.each_with_index do |ad, idx|
           AdView.create(ad_id: ad.id, query_id: @query.id, position: idx+1)
         end
+        @ads << AdFinder.amazon_ad(@search.term) if @ads.count < 5
       else
         @paginated = true
         @ads = []
       end
+      @instant = true
+      if params[:j] != "t"
+        s.update_attribute(:js_enabled, false)
+        @instant = false
+        @instant_matches = Matcher.new(@search.term, request).execute || []
+      end
     end
-    @instant = true
-    if params[:j] != "t"
-      s.update_attribute(:js_enabled, true)
-      @instant = false
-      @instant_matches = Matcher.new(@search.term, request).execute || []
-    end
+
     render :search
   end
 
@@ -62,19 +64,23 @@ class SearchController < ApplicationController
   end
 
   def ad_redirect
-    ad = Ad.find(params[:id])
-
-    ad_click = AdClick.find_or_initialize_by_ad_id_and_query_id_and_search_id(ad.id, params[:q], params[:s])
-    #debugger
-    if ad_click.new_record?
-      ad_click.save
-      adv = ad.advertiser
-      cost = ad.onion? ? ad.bid : 2.0 * ad.bid
-      bal = adv.balance - cost
-      logger.info ("CLICK: New balance for #{adv.email} is #{bal} after removing ad's bid (#{cost})")
-      adv.balance= bal
-      adv.save
+    ad = Ad.where(id: params[:id]).first
+    if ad.nil?
+      path = Base64.decode64(params[:path])
+    else
+      ad_click = AdClick.find_or_initialize_by_ad_id_and_query_id_and_search_id(ad.id, params[:q], params[:s])
+      #debugger
+      if ad_click.new_record?
+        ad_click.save
+        adv = ad.advertiser
+        cost = ad.onion? ? ad.bid : 2.0 * ad.bid
+        bal = adv.balance - cost
+        logger.info ("CLICK: New balance for #{adv.email} is #{bal} after removing ad's bid (#{cost})")
+        adv.balance= bal
+        adv.save
+      end
+      path = ad.protocol + ad.path
     end
-    redirect_to ad.protocol + ad.path, status: 302
+    redirect_to path, status: 302
   end
 end

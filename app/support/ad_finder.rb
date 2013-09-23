@@ -21,6 +21,11 @@ class AdFinder
     @generic_ads ||= Ad.limit(limit).available.joins(:advertiser). \
       where('advertisers.balance > ads.bid').where("(select count(*) from ad_keywords where ad_id = ads.id) = 0").order(:bid, :created_at).map{|ad| ad.bid = ad.bid / 2; ad}
   end
+  def self.amazon_ad(query)
+    url = "http://www.amazon.com/gp/search?ie=UTF8&camp=1789&creative=9325&index=aps&keywords=#{query}&linkCode=ur2&tag=tor-search-20"
+    Ad.new(path: url, display_path: 'amazon.com', bid: 0, title: "#{query} on Amazon", line_1: "Look for #{query}", line_2: 'on Amazon.com', protocol_id: 1, ppc: true, include_path: true)
+
+  end
   def query_words
     query.split(' ')
   end
