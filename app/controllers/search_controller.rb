@@ -60,7 +60,11 @@ class SearchController < ApplicationController
     target = params[:p]
 
     Click.create(search: search, target: target)
-    render text: {status: 'ok'} and return
+    if params[:j]
+      render text: {status: 'ok'} and return
+    else
+      redirect_to params[:p]
+    end
   end
 
   def ad_redirect

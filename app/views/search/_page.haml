@@ -1,6 +1,7 @@
 -domain = page['host']
 -highlights = OpenStruct.new(@search.highlights[page['id']])
--url = page['url']
+-url = "/r?s=#{@search_id}&p=#{page['url']}"
+-url = page['url'] if @instant
 -title = highlights.try(:title).try(:first)
 -if title.nil? || title.empty?
   -title = page['title']
@@ -13,7 +14,7 @@
 .row
   .page-listing.span8
     .title
-      %a{href:page['url'], data: {path: page['url']}}
+      %a{href: url}
         = title.html_safe
     .description
       -if content.nil?

@@ -86,7 +86,7 @@
             target = $(e.target)[0]
 
             href = target.getAttribute('href')
-            $.get('/r?s=#{@search_id}&p='+href);
+            $.get('/r?s=#{@search_id}&j=true&p='+href);
             wait_for = 200;
             wait_for += (new Date).getTime();
             _results = [];
