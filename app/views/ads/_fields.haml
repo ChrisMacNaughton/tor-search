@@ -13,19 +13,6 @@
 %hr/
 =f.label_with_error :bid
 =f.number_field :bid
--if @ad.advertiser.beta?
-  %hr/
-  %h3 Keyword Bidding
-  .row
-    .span12
-      Enter new keywords seperated by commas in the field below, you will be able to assign prices to them after they are added
-    -unless @ad.ad_keywords.empty?
-      .span12
-        =f.fields_for :ad_keywords do |ff|
-          =ff.text_field :keyword, value: ff.object.keyword.word
-          =ff.number_field :bid
-          %br/
-    .span12
-      =text_area_tag "keywords"
+
 %br
 =f.submit
