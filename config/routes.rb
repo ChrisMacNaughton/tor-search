@@ -30,10 +30,10 @@ TorSearch::Application.routes.draw do
   get '/ads/new-address' => 'ads#get_payment_address', as: :new_btc_address
 
   resources :ads do
+    resources :keywords
     member do
       put "toggle" => 'ads#toggle', as: :toggle
       put "request_beta" => 'ads#request_beta', as: :request_beta
-      resources :keywords
     end
   end
   post 'coupons' => 'coupon#create', as: :credit_coupon

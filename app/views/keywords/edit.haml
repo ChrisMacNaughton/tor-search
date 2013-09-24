@@ -1,0 +1,4 @@
+=form_for :ad_keyword, method: :put, url: ad_keyword_path(@ad, @ad_keyword) do |f|
+  =f.text_field :word, placeholder: "Keyword"
+  =f.number_field :bid, placeholder: "Bid"
+  %button Save

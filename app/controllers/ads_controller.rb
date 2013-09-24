@@ -37,8 +37,12 @@ class AdsController < ApplicationController
       keywords.delete_if{|k| k[:keyword].empty? && k[:bid].empty?}
 
       keywords.each do |k|
-        @ad.ad_keywords << AdKeyword.create(keyword: Keyword.find_or_create_by_word(k[:keyword]), bid: k[:bid])
+        ad_keyword = AdKeyword.find_or_initialize_by_ad_id_and_keyword_id(@ad.id, Keyword.find_or_create_by_word(k[:keyword]).id)
+        ad_keyword.bid =  k[:bid]
+        ad_keyword.save
+        @ad.ad_keywords << ad_keyword
       end
+      redirect_to edit_ad_path(@ad)
     else
       ad_attributes[:approved] = false if @ad.changes.empty?
       if @ad.update_attributes(ad_attributes)

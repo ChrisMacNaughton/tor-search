@@ -8,4 +8,11 @@
 .row
   %h2 Keywords
   %hr/
-  =link_to "Add Keywords", new_keyword_path
+  =link_to "Add Keywords", new_ad_keyword_path(@ad)
+  %table
+    -@ad.ad_keywords.each do |k|
+      %tr
+        %td= k.keyword.word
+        %td= k.bid
+        %td= link_to "Edit", edit_ad_keyword_path(@ad, k)
+        %td= link_to "Delete", ad_keyword_path(@ad, k), method: :delete
