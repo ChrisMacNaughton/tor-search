@@ -28,7 +28,7 @@ class Ad < ActiveRecord::Base
   attr_accessor :include_path
   def check_onion
     check_path = self.path.gsub(/https?:\/\//, '')
-    self.onion = !!(check_path =~ /^.{16}\.onion/)
+    self.onion = !!(check_path =~ /^[2-7a-zA-Z]{16}\.onion/)
     true
   end
   def protocol

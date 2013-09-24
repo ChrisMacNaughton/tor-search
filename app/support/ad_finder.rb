@@ -8,7 +8,9 @@ class AdFinder
   def ads
     if @selected_ads.nil?
       Rails.logger.info "Fetching ads for #{self.query}"
-      @selected_ads = (ads_by_keyword | generic_ads).uniq.sort{|f,s| s.bid <=> f.bid }.map(&:reload).take(limit)
+      @selected_ads = (ads_by_keyword | generic_ads).uniq.sort do |s,f|
+        (s.onion? ? s.bid : s.bid * 0.75 ) <=> (f.onion? ? f.bid : f.bid * 0.75 )
+      end.map(&:reload).take(limit)
     end
     @selected_ads
   end

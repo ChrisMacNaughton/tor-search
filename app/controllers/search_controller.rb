@@ -77,7 +77,7 @@ class SearchController < ApplicationController
       if ad_click.new_record?
         ad_click.save
         adv = ad.advertiser
-        cost = ad.onion? ? ad.bid : 2.0 * ad.bid
+        cost = ad.bid
         bal = adv.balance - cost
         logger.info ("CLICK: New balance for #{adv.email} is #{bal} after removing ad's bid (#{cost})")
         adv.balance= bal
