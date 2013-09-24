@@ -1,0 +1,13 @@
+Leave any that you don't want to use blank.
+-if @ad.keywords.count <= 100
+  You can add more keywords on the next page
+  %br/
+=form_for @ad, method: :post, url: ad_keywords_path(@ad.id),html: {class: 'form form-inline'} do |f|
+  %table.table
+    -10.times do |i|
+      =fields_for :keywords, nil, :index=> i do |ff|
+        %tr
+          %td #{i+1}:
+          %td=ff.text_field :keyword, placeholder: "Keyword"
+          %td=ff.number_field :bid, placeholder: "Bid"
+  %button Submit
