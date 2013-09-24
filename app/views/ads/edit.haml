@@ -3,4 +3,9 @@
     =form_for @ad, builder: WithErrorFields do |f|
       =render partial: 'fields', locals: { f: f }
   .span6
-    =render partial: 'ad', locals: {search: false, ad: @ad}
+    .row
+      =render partial: 'ad', locals: {search: false, ad: @ad}
+.row
+  %h2 Keywords
+  %hr/
+  =link_to "Add Keywords", new_keyword_path

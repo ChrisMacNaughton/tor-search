@@ -33,6 +33,7 @@ TorSearch::Application.routes.draw do
     member do
       put "toggle" => 'ads#toggle', as: :toggle
       put "request_beta" => 'ads#request_beta', as: :request_beta
+      resources :keywords
     end
   end
   post 'coupons' => 'coupon#create', as: :credit_coupon

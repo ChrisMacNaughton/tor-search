@@ -7,7 +7,7 @@ class AdsController < ApplicationController
     @ads = current_advertiser.ads.page(page).per_page(per_page).order(:created_at)
   end
   def new
-    #@ad = Ad.new
+    @ad = Ad.new(advertiser: current_advertiser)
   end
   def show
     redirect_to :edit_ad
@@ -28,18 +28,25 @@ class AdsController < ApplicationController
   def update
     @ad = Ad.find(params[:id])
     ad_attributes = params[:ad]
-    ad_attributes[:approved] = false if @ad.changes.empty?
+    keywords = params[:keywords]
+    if ad_attributes.nil?
+      if keywords.nil?
+        render :new
+      end
+      keywords = keywords.map(&:last)
+      keywords.delete_if{|k| k[:keyword].empty? && k[:bid].empty?}
 
-    #keywords = params[:keywords].split(',')
-    #keys = []
-    #keywords.each do |kw|
-    #  keys << Keyword.find_or_create_by_word(kw)
-    #end
-    if @ad.update_attributes(ad_attributes)
-      flash.notice = "Your ad has been successfully edited!"
-      redirect_to ads_path
+      keywords.each do |k|
+        @ad.ad_keywords << AdKeyword.create(keyword: Keyword.find_or_create_by_word(k[:keyword]), bid: k[:bid])
+      end
     else
-      render :new
+      ad_attributes[:approved] = false if @ad.changes.empty?
+      if @ad.update_attributes(ad_attributes)
+        flash.notice = "Your ad has been successfully edited!"
+        redirect_to ads_path
+      else
+        render :new
+      end
     end
   end
   def get_payment_address

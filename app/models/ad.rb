@@ -16,7 +16,7 @@ class Ad < ActiveRecord::Base
   accepts_nested_attributes_for :ad_keywords
   has_many :keywords, through: :ad_keywords
   attr_accessible :bid, :title, :disabled, :protocol_id, :path, :approved,
-    :ppc, :display_path, :line_1, :line_2, :category_id, :include_path
+    :ppc, :display_path, :line_1, :line_2, :category_id, :include_path, :advertiser
   validates :path, presence: true
   validates :title, presence: true
   validates :bid, presence: true, ad_minimum_bid: true
