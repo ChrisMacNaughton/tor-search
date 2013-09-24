@@ -9,7 +9,13 @@ class ApplicationController < ActionController::Base
 
     Tracker.new(request).track!
   end
-
+  def after_sign_in_path_for(resource)
+    if resource.is_a? Admin
+      rails_admin_path
+    else
+      ads_path
+    end
+  end
   protected
   def self.custom_exception_handling
     rescue_from Exception,                           with: :render_500
