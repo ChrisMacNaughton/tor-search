@@ -73,13 +73,20 @@ class SearchController < ApplicationController
       path = Base64.decode64(params[:path])
     else
       ad_click = AdClick.find_or_initialize_by_ad_id_and_query_id_and_search_id(ad.id, params[:q], params[:s])
-      #debugger
+
       if ad_click.new_record?
+        if params[:k].nil?
+          cost = ad.bid
+          bid_source = "ad"
+        else
+          cost = AdKeyword.where(id: params[:k]).first.bid || ad.bid
+          bid_source = "keyword"
+        end
         ad_click.save
         adv = ad.advertiser
-        cost = ad.bid
+
         bal = adv.balance - cost
-        logger.info ("CLICK: New balance for #{adv.email} is #{bal} after removing ad's bid (#{cost})")
+        logger.info ("CLICK: New balance for #{adv.email} is #{bal} after removing #{bid_source}'s bid (#{cost})")
         adv.balance= bal
         adv.save
       end

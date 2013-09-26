@@ -16,8 +16,14 @@ class AdFinder
   end
   protected
   def ads_by_keyword
-    @keyword_ads ||= Ad.limit(limit).available.joins(:advertiser, ad_keywords: :keyword). \
-      where('advertisers.balance > ads.bid').where("keywords.word in (?)", query_words)
+    if @keyword_ads.nil?
+      @keyword_ads = Ad.select("ads.*").limit(limit).available.joins(:advertiser, ad_keywords: :keyword). \
+        where('advertisers.balance > ad_keywords.bid').where("keywords.word in (?)", query_words)
+      @keyword_ads.map do |ad|
+        ad.keyword_id = ad.ad_keywords.joins(:keyword).where("keywords.word in (?)", query_words).first.id
+      end
+    end
+    @keyword_ads
   end
   def generic_ads
     @generic_ads ||= Ad.limit(limit).available.joins(:advertiser). \

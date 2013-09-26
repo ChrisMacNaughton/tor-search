@@ -4,7 +4,7 @@
 .row-fluid{class: "#{border ? "well" : ""} span#{span}"}
   .row-fluid
     -if search
-      -h = {id: ad.id, q: @query.id, s: @search_id}
+      -h = {id: ad.id, q: @query.id, s: @search_id, k: ad.keyword_id}
       -h.merge!({path: Base64.encode64(ad.path)}) if ad.include_path
       =link_to ad.title, ad_redirect_path(h)
     -else
