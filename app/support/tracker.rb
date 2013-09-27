@@ -12,13 +12,8 @@ class Tracker
       @action += "#{action}"
     end
     self.piwik_url = "http://piwik.nuradu.com/piwik.php"
-    sess_id = request.session.try('[]',"piwik_session_id")
-    if sess_id.nil?
-      rand = SecureRandom.hex
-      request.session['piwik_session_id'] = rand
-      sess_id = rand
-    end
-    @user_id = sess_id[0...16]
+
+    @user_id = SecureRandom.hex[0...16]
     @url = request.url
     @referrer = request.referrer
     @idsite = site_id
@@ -56,7 +51,7 @@ class Tracker
       url: @url,
       urlref: @referrer,
       action_name: @action,
-      :cid => @user_id,
+      cid: @user_id,
       search: @search.try('[]',:term),
       search_count: @search.try('[]',:count),
       token_auth: '15a609cdc47efd8b8fe10bf568935ea6'

@@ -19,7 +19,6 @@ class SearchController < ApplicationController
     end
     page = params[:page] || 1
     @search = SolrSearch.new(params[:q], page)
-
     track! @search
     if @search.errors.empty?
       @query = Query.find_or_create_by_term(@search.term)
