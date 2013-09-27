@@ -54,7 +54,7 @@ class Tracker
       cid: @user_id,
       search: @search.try('[]',:term),
       search_count: @search.try('[]',:count),
-      token_auth: '15a609cdc47efd8b8fe10bf568935ea6'
+      token_auth: '3c5ab420b37daa3c643fca412a1f8da8'
     }.delete_if{|k,v| v.nil?}
   end
 
