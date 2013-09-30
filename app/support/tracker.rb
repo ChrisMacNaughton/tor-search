@@ -1,9 +1,11 @@
 class Tracker
 
   attr_accessor :piwik_url
-
+  attr_reader :request, :site_id
   def initialize(request, search = nil, action = nil, site_id = 5)
     #debugger
+    self.piwik_url = "http://piwik.nuradu.com/piwik.php"
+    @request = request
     @search = search
     @action = "#{request.params[:controller]}/"
     if action.nil?
@@ -11,12 +13,6 @@ class Tracker
     else
       @action += "#{action}"
     end
-    self.piwik_url = "http://piwik.nuradu.com/piwik.php"
-
-    @user_id = SecureRandom.hex[0...16]
-    @url = request.url
-    @referrer = request.referrer
-    @idsite = site_id
   end
 
   def track!
@@ -26,7 +22,27 @@ class Tracker
   end
 
   private
-
+  def user_id
+    if @user_id.nil?
+      sess_id = request.session.try('[]',"piwik_session_id")
+      if sess_id.nil?
+        rand = SecureRandom.hex
+        request.session['piwik_session_id'] = rand
+        sess_id = rand
+      end
+      @user_id = sess_id[0...16]
+    end
+    @user_id
+  end
+  def referrer
+    request.referrer
+  end
+  def url
+    request.url
+  end
+  def user_agent
+    request.user_agent
+  end
   def http
     Net::HTTP.new(uri.host, uri.port)
   end
@@ -45,16 +61,17 @@ class Tracker
 
   def options
     {
-      idsite: @idsite,
+      idsite: site_id,
       rec: 1,
       apiv: 1,
-      url: @url,
-      urlref: @referrer,
+      rand: SecureRandom.hex,
+      url: url,
+      urlref: referrer,
       action_name: @action,
-      cid: @user_id,
+      _id: user_id,
+      ua: user_agent,
       search: @search.try('[]',:term),
-      search_count: @search.try('[]',:count),
-      token_auth: '3c5ab420b37daa3c643fca412a1f8da8'
+      search_count: @search.try('[]',:count)
     }.delete_if{|k,v| v.nil?}
   end
 
