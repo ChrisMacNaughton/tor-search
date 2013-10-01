@@ -7,49 +7,38 @@ class BitcoinMatcher < GenericMatcher
     10
   end
   def execute
-    hydra = Typhoeus::Hydra.new
-
     prices = {}
+    http = Net::HTTP.new "coinbase.com", 443
+    http.use_ssl = true
 
-    usd = Typhoeus::Request.new("data.mtgox.com/api/2/BTCUSD/money/ticker_fast")
-    usd.on_complete do |resp|
-      if resp.success?
-        json = JSON.parse(resp.body)
-        unless json.nil?
-          prices[:usd] = json['data']['last_all']['display']
-        end
+    resp, data = http.get '/api/v1/currencies/exchange_rates'
+
+    json = JSON.parse(resp.body)
+    return nil if json.nil?
+    currencies = ['usd','gbp','eur','jpy']
+    matched_currencies = []
+    split = @term.downcase.split(' ')
+    currencies.each do |c|
+      if split.include? c
+        matched_currencies << c
       end
     end
-    gbp = Typhoeus::Request.new("data.mtgox.com/api/2/BTCGBP/money/ticker_fast")
-    gbp.on_complete do |resp|
-      if resp.success?
-        json = JSON.parse(resp.body)
-        unless json.nil?
-          prices[:gbp]= json['data']['last_all']['display']
-        end
+    if matched_currencies.empty?
+      prices[:usd] = json['btc_to_usd']
+      prices[:btc] = json['btc_to_gbp']
+      prices[:eur] = json['btc_to_eur']
+    else
+      matched_currencies.each do |c|
+        prices[c.to_sym] = json["btc_to_#{c}"]
       end
     end
-    eur = Typhoeus::Request.new("data.mtgox.com/api/2/BTCEUR/money/ticker_fast")
-    eur.on_complete do |resp|
-      if resp.success?
-        json = JSON.parse(resp.body)
-        unless json.nil?
-          prices[:eur] = json['data']['last_all']['display']
-        end
-      end
-    end
-
-    hydra.queue usd
-    hydra.queue gbp
-    hydra.queue eur
-
-    hydra.run
 
     {
       name: "Bitcoin Prices",
       method: "upper",
       type: 'inline',
       data: prices,
+      link: '<a href="https://coinbase.com/?r=5212431ce73770adac000003">Setup a free CoinBase account to easily use Bitcoin</a>',
       weight: weight
     }
   end

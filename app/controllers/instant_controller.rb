@@ -5,6 +5,8 @@ class InstantController < ApplicationController
     term = params[:search]
 
     matches = Matcher.new(term, request).execute || []
-    render text: {meta: {searched: term}, matches: matches}.to_json
+    hash = {meta: {searched: term}, matches: matches}
+
+    render json: hash
   end
 end

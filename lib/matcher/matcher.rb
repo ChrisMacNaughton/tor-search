@@ -30,7 +30,7 @@ class Matcher
         matcher.matches.each do |match|
           if @term.include? match
             next if @matches.count > 2
-            @matches << matcher.new(@request).execute
+            @matches << matcher.new(@request, @term).execute
             break
           end
         end

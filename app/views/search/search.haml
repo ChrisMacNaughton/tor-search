@@ -33,6 +33,8 @@
                       - value = value.titleize();
                     %dt= value
                     %dd= v
+                - if e[:link]
+                  %p= e[:link].html_safe
                 %br/
       .search-results
         -@search.records.each do |page|
@@ -73,7 +75,11 @@
                     str += "<dt>"+value+"</dt>";
                     str += "<dd>"+v+"</dd>";
                   });
-                  str += "</dl></div><br />";
+                  str += "</dl>"
+                  if(e.link != undefined){
+                    str += "<p>"+e.link+"</p>"
+                  }
+                  str += "</div><br />";
                   $('#instant_results').append(str);
                 });
                 $('#instant_results').show();
