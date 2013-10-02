@@ -19,7 +19,7 @@ class KeywordToolController < ApplicationController
           group by query_id
         ) searches_count
       on searches_count.query_id = queries.id
-      where upper(queries.term) like upper('%#{params[:keyword]}%')
+      where upper(queries.term) like upper('%#{params[:keyword].gsub(/'/, "''")}%')
       group by queries.term
       order by count desc
     ").select{|h| h['count'].to_i > 0}
