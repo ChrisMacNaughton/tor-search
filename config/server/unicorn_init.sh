@@ -38,11 +38,14 @@ oldsig () {
         test -s $old_pid && kill -$1 `cat $old_pid`
 }
 
+start () {
+        cd $APP_ROOT
+        $CMD
+}
 case $1 in
 start)
         sig 0 && echo >&2 "Already running" && exit 0
-        cd $APP_ROOT
-        $CMD
+        start
         ;;
 stop)
         sig QUIT && exit 0
@@ -55,12 +58,12 @@ force-stop)
 restart|reload)
         sig HUP && echo reloaded OK && exit 0
         echo >&2 "Couldn't reload, starting '$CMD' instead"
-        $CMD
+        start
         ;;
 upgrade)
         sig TTOU && sleep 5 && sig USR2 && exit 0
         echo >&2 "Couldn't upgrade, starting '$CMD' instead"
-        $CMD
+        start
         ;;
 rotate)
         sig USR1 && echo rotated logs OK && exit 0
