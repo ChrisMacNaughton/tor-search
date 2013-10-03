@@ -22,7 +22,7 @@ TIMEOUT=${TIMEOUT-60}
 APP_ROOT=/var/rails/tor_search/current
 PID=$APP_ROOT/tmp/pids/unicorn.pid
 ENV=production
-CMD="cd $APP_ROOT && bundle exec unicorn_rails -D -E $ENV -c $APP_ROOT/config/unicorn.rb"
+CMD="bundle exec unicorn_rails -D -E $ENV -c $APP_ROOT/config/unicorn.rb"
 action="$1"
 set -u
 
@@ -41,6 +41,7 @@ oldsig () {
 case $1 in
 start)
         sig 0 && echo >&2 "Already running" && exit 0
+        cd $APP_ROOT
         $CMD
         ;;
 stop)
