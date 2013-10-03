@@ -71,7 +71,8 @@ class Tracker
       _id: user_id,
       ua: user_agent,
       search: @search.try('[]',:term),
-      search_count: @search.try('[]',:count)
+      search_count: @search.try('[]',:count),
+      token_auth: '3c5ab420b37daa3c643fca412a1f8da8'
     }.delete_if{|k,v| v.nil?}
   end
 
