@@ -5,6 +5,7 @@ class Tracker
   def initialize(request, search = nil, action = nil, site_id = 5)
     #debugger
     self.piwik_url = "http://piwik.nuradu.com/piwik.php"
+    @site_id = site_id
     @request = request
     @search = search
     @action = "#{request.params[:controller]}/"
