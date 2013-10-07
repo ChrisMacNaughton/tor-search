@@ -19,31 +19,15 @@ class Tracker
   def track!
     Rails.logger.info "Tracking a pageview!"
     Rails.logger.debug options
-    response
+    Rails.logger.debug response.body
   end
 
   private
+
   def user_id
-    if @user_id.nil?
-      sess_id = request.session.try('[]',"piwik_session_id")
-      if sess_id.nil?
-        rand = SecureRandom.hex
-        request.session['piwik_session_id'] = rand
-        sess_id = rand
-      end
-      @user_id = sess_id[0...16]
-    end
-    @user_id
+    session[:piwik_session_id] ||= SecureRandom.hex[0...16]
   end
-  def referrer
-    request.referrer
-  end
-  def url
-    request.url
-  end
-  def user_agent
-    request.user_agent
-  end
+
   def http
     Net::HTTP.new(uri.host, uri.port)
   end
@@ -60,6 +44,14 @@ class Tracker
     http.request(net_request)
   end
 
+  def method_missing(meth, *args)
+    request.send(meth.to_sym, *args)
+  end
+
+  def respond_to_missing?(meth, *args)
+    request.respond_to? meth
+  end
+
   def options
     {
       idsite: site_id,
@@ -69,11 +61,12 @@ class Tracker
       url: url,
       urlref: referrer,
       action_name: @action,
-      _id: user_id,
       ua: user_agent,
       search: @search.try('[]',:term),
       search_count: @search.try('[]',:count),
-      token_auth: '3c5ab420b37daa3c643fca412a1f8da8'
+      token_auth: '3c5ab420b37daa3c643fca412a1f8da8',
+      cid: user_id,
+      cip: '',
     }.delete_if{|k,v| v.nil?}
   end
 
