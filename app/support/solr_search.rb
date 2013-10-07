@@ -115,7 +115,7 @@ class SolrSearch
   end
   def with_site(q)
     if q[:q].include? 'site:'
-      site = q[:q].match(/site:\s*(https?:\/\/)?(.{16}.onion)/i)[0].to_a.last.gsub(/\.onion\/?$/, '')
+      site = q[:q].match(/site:\s*(https?:\/\/)?(.{16}.onion)/i).to_a.last.gsub(/\.onion\/?$/, '')
       unless site.nil?
         fq = "id:onion.#{site}*"
         if q[:q].include? '-site:'
@@ -123,6 +123,7 @@ class SolrSearch
         end
         q[:q].gsub!(/site:\s*(.{16}.onion)/i, '')
         q[:fq] << fq
+        q[:group] = false
       end
     end
     q
@@ -134,8 +135,10 @@ class SolrSearch
       q: @query,
       rows: 10,
       wt: 'json',
-      mm: '2<-1 5<-2 6<90%',
-      fq: []
+      fq: [],
+      group: true,
+      'group.field' => 'host',
+      'group.main'=> true
     }
   end
   def clear_args
