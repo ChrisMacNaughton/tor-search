@@ -115,13 +115,15 @@ class SolrSearch
   end
   def with_site(q)
     if q[:q].include? 'site:'
-      site = q[:q].match(/site:\s*(.{16}.onion)/i)[0].gsub(/site:\s*/, '').gsub(/\.onion\/?$/, '')
-      fq = "id:onion.#{site}*"
-      if q[:q].include? '-site:'
-        fq = "-#{fq}"
+      site = q[:q].match(/site:\s*(https?:\/\/)?(.{16}.onion)/i)[0].to_a.last.gsub(/\.onion\/?$/, '')
+      unless site.nil?
+        fq = "id:onion.#{site}*"
+        if q[:q].include? '-site:'
+          fq = "-#{fq}"
+        end
+        q[:q].gsub!(/site:\s*(.{16}.onion)/i, '')
+        q[:fq] << fq
       end
-      q[:q].gsub!(/site:\s*(.{16}.onion)/i, '')
-      q[:fq] << fq
     end
     q
   end
