@@ -11,6 +11,11 @@
 -content = highlights.try(:content).try(:first)
 -if content.nil?
   -content ||= page['content'][start...254+start]
+-content.gsub!(/<hr$/, '')
+-title.gsub!(/<hr$/, '')
+-['<p>','</p>','<br>','<br/>'].each do |s|
+  -content.gsub!(s, '')
+  -title.gsub!(s, '')
 .row
   .page-listing.span8
     .title
