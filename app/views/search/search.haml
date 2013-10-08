@@ -47,7 +47,7 @@
         Try this search on
 
         %ul.unstyled
-          %li=link_to "Amazon", search_path(q: "!amazon #{@search.term}")
+          %li=link_to "Amazon", search_path(q: "@amazon #{@search.term}")
         %hr
       -unless @ads.nil? || @ads.empty?
         - @ads.each do |ad|

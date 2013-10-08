@@ -17,7 +17,7 @@ class SearchController < ApplicationController
     if params[:q].empty?
       render :index and return
     end
-    if params[:q].include? "!"
+    if params[:q].include? "@"
       require "bang"
       bang = Bang.new(params[:q])
 
