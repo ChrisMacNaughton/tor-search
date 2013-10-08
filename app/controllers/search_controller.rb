@@ -17,6 +17,14 @@ class SearchController < ApplicationController
     if params[:q].empty?
       render :index and return
     end
+    if params[:q].include? "!"
+      require "bang"
+      bang = Bang.new(params[:q])
+
+      s = OpenStruct.new(term: params[:q], total: 1)
+      track! s and redirect_to bang.redirect_target and return if bang.has_target?
+    end
+
     page = params[:page] || 1
     @search = SolrSearch.new(params[:q], page)
     track! @search
@@ -32,7 +40,7 @@ class SearchController < ApplicationController
         @ads.each_with_index do |ad, idx|
           AdView.create(ad_id: ad.id, query_id: @query.id, position: idx+1)
         end
-        @ads << AdFinder.amazon_ad(@search.term) if @ads.count < 5
+        #@ads << AdFinder.amazon_ad(@search.term) if @ads.count < 5
       else
         @paginated = true
         @ads = []
@@ -49,7 +57,7 @@ class SearchController < ApplicationController
   end
 
   def track!(search)
-    return if Rails.env.include? 'development'
+    return true if Rails.env.include? 'development'
 
     Tracker.new(request, {term: search.term, count: search.total}, "Search").track!
   end

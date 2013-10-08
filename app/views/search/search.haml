@@ -41,8 +41,15 @@
           =render partial: 'page', locals: {page: page}
         .span9
           =will_paginate @search
-    -unless @ads.nil? || @ads.empty?
-      .span4{style: 'margin-top: 20px'}
+
+    .span4{style: 'margin-top: 20px'}
+      .row.fluid.span2
+        Try this search on
+
+        %ul.unstyled
+          %li=link_to "Amazon", search_path(q: "!amazon #{@search.term}")
+        %hr
+      -unless @ads.nil? || @ads.empty?
         - @ads.each do |ad|
           =render partial: 'ad', locals: {ad: ad, search: true, span:4}
   -if @instant
