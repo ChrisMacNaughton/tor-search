@@ -5,6 +5,6 @@
     %h1 Keyword Tool
 .row
   .span12.offset2
-    =form_tag do
+    %form{method: "get"}
       =text_field_tag :keyword, params[:keyword], placeholder: 'keyword'
-      =submit_tag "Check Keyword"
+      %button{type: 'submit'} Check Keyword

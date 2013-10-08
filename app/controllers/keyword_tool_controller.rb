@@ -1,7 +1,9 @@
 class KeywordToolController < ApplicationController
   before_filter :track
   def index
-
+    if params[:keyword]
+      check
+    end
   end
   def check
     if params[:keyword] == ''
