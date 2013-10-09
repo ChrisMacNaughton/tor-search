@@ -35,6 +35,6 @@ class AdFinder
 
   end
   def query_words
-    query.split(' ')
+    query.split(/\s/)
   end
 end
