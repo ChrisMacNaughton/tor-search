@@ -136,6 +136,7 @@ class SolrSearch
       rows: 10,
       wt: 'json',
       fq: [],
+      mm: '2<-1 6<70%',
       group: true,
       'group.field' => 'host',
       'group.main'=> true
