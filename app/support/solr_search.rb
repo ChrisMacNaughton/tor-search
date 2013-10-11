@@ -4,7 +4,7 @@ class SolrSearch
   def initialize(query = '', page=1)
     @query = query
     @solr = RSolr.connect :url => 'http://localhost:8983/solr'
-    @page = page
+    @page = page.to_i
     @errors = []
     true
   end
@@ -70,6 +70,7 @@ class SolrSearch
     @result ||= begin
       OpenStruct.new JSON.parse(@solr.get('nutch', :params => param).response[:body])
     rescue
+      Rails.logger.info $!
       @errors << "Search offline"
       OpenStruct.new(error: "Failure to communicate with the Solr server")
     end

@@ -28,6 +28,7 @@ class SearchController < ApplicationController
     page = params[:page] || 1
     @search = SolrSearch.new(params[:q], page)
     track! @search
+    puts @search.errors
     if @search.errors.empty?
       @query = Query.find_or_create_by_term(@search.term)
 
@@ -51,6 +52,7 @@ class SearchController < ApplicationController
         @instant = false
         @instant_matches = Matcher.new(@search.term, request).execute || []
       end
+      puts @search.errors unless @search.errors.empty?
     end
 
     render :search
