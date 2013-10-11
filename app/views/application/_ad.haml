@@ -1,7 +1,7 @@
 -border ||= false
 -search ||= false
 -span ||= 2
-.row-fluid{class: "#{border ? "well" : ""} span#{span}"}
+.row-fluid{style: 'margin-bottom: 20px;', class: "#{border ? "well" : ""} span#{span}"}
   .row-fluid
     -if search
       -h = {id: ad.id, q: @query.id, s: @search_id, k: ad.keyword_id}
