@@ -7,7 +7,7 @@ TorSearch::Application.routes.draw do
   devise_for :advertisers
 
   root to: 'search#index', as: :search
-
+  post 'payments' => 'payments#index'
   get 'graphs' => 'graphs#index', as: :graphs
   get 'graphs/daily' => 'graphs#daily', as: :daily
   get 'graphs/unique' => 'graphs#unique', as: :unique
