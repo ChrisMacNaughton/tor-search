@@ -5,7 +5,7 @@ class Payment < ActiveRecord::Base
   attr_accessible :amount, :bitcoin_address, :advertiser, :coupon
 
   after_create :credit_advertiser
-
+  validates :transaction_hash, uniqueness: true
   def credit_advertiser
     balance = advertiser.balance
     balance += amount
