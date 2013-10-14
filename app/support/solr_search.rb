@@ -23,12 +23,15 @@ class SolrSearch
     records
   end
 
+  def group_field
+    param['group.field']
+  end
   def records
-    @records ||= response.try(:docs) || []
+    @records ||= grouped.try(:[], 'doclist').try(:[], 'docs') || []
   end
 
   def total
-    @total ||= response.try(:numFound).to_i
+    @total ||= grouped.try(:[], 'ngroups').to_i
   end
 
   def total_pages
@@ -64,7 +67,9 @@ class SolrSearch
   end
 
   private
-
+  def grouped
+    response.try(group_field.to_sym)
+  end
   def nutch
     return {} if @query.nil?
     @result ||= begin
@@ -77,7 +82,7 @@ class SolrSearch
   end
 
   def response
-    OpenStruct.new(nutch.try(:response) || {})
+    OpenStruct.new(nutch.try(:grouped) || {})
   end
 
   def get_solr_size
@@ -124,7 +129,7 @@ class SolrSearch
         end
         q[:q].gsub!(/site:\s*(.{16}.onion)/i, '')
         q[:fq] << fq
-        q[:group] = false
+        q['group.field'] = 'id'
       end
     end
     q
@@ -139,8 +144,10 @@ class SolrSearch
       fq: [],
       mm: '2<-1 6<70%',
       group: true,
+      'group.format'=>'simple',
       'group.field' => 'host',
-      'group.main'=> true
+      'group.ngroups' => true,
+      'group.limit' => 3
     }
   end
   def clear_args
