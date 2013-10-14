@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130921022624) do
+ActiveRecord::Schema.define(:version => 20131014144707) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -251,6 +251,7 @@ ActiveRecord::Schema.define(:version => 20130921022624) do
     t.datetime "created_at",                                                         :null => false
     t.datetime "updated_at",                                                         :null => false
     t.integer  "coupon_id"
+    t.string   "transaction_hash"
   end
 
   add_index "payments", ["advertiser_id"], :name => "index_payments_on_advertiser_id"
