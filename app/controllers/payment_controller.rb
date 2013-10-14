@@ -1,4 +1,4 @@
-class PaymentController < ApplicationController
+class PaymentsController < ApplicationController
   def index
     amount = params[:amount]
     address = params[:address]
