@@ -25,7 +25,7 @@ class BitcoinMatcher < GenericMatcher
     end
     if matched_currencies.empty?
       prices[:usd] = json['btc_to_usd']
-      prices[:btc] = json['btc_to_gbp']
+      prices[:gbp] = json['btc_to_gbp']
       prices[:eur] = json['btc_to_eur']
     else
       matched_currencies.each do |c|
