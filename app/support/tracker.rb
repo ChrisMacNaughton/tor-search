@@ -2,9 +2,21 @@ class Tracker
 
   attr_accessor :piwik_url
   attr_reader :request, :site_id
+  @@auth_token = '3c5ab420b37daa3c643fca412a1f8da8'
+  @@piwik_url = "http://piwik.nuradu.com/piwik.php"
+
+  def self.piwik_url= url
+    @@piwik_url = url
+  end
+
+  def self.auth_token= token
+    @@auth_token = token
+  end
+
+  def self.piwik_url
+    @@piwik_url
+  end
   def initialize(request, search = nil, action = nil, site_id = 5)
-    #debugger
-    self.piwik_url = "http://piwik.nuradu.com/piwik.php"
     @site_id = site_id
     @request = request
     @search = search
@@ -29,7 +41,12 @@ class Tracker
   end
 
   def http
-    Net::HTTP.new(uri.host, uri.port)
+    http = Net::HTTP.new(uri.host, uri.port)
+    if uri.scheme == "https"
+      http.use_ssl     = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
+    http
   end
 
   def net_request
@@ -64,14 +81,14 @@ class Tracker
       ua: user_agent,
       search: @search.try('[]',:term),
       search_count: @search.try('[]',:count),
-      token_auth: '3c5ab420b37daa3c643fca412a1f8da8',
+      token_auth: @@auth_token,
       cid: user_id,
       cip: '',
     }.delete_if{|k,v| v.nil?}
   end
 
   def uri
-    URI.parse(self.piwik_url)
+    URI.parse(@@piwik_url)
   end
 end
 
