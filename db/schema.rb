@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131014144707) do
+ActiveRecord::Schema.define(:version => 20131021182054) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -111,6 +111,13 @@ ActiveRecord::Schema.define(:version => 20131014144707) do
 
   add_index "advertisers", ["reset_password_token"], :name => "index_advertisers_on_reset_password_token", :unique => true
   add_index "advertisers", ["username"], :name => "index_advertisers_on_username", :unique => true
+
+  create_table "banned_domains", :force => true do |t|
+    t.string   "hostname",   :null => false
+    t.text     "reason"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "bitcoin_addresses", :force => true do |t|
     t.string   "address"
@@ -285,6 +292,16 @@ ActiveRecord::Schema.define(:version => 20131014144707) do
     t.integer  "query_id"
     t.boolean  "paginated",     :default => false
     t.boolean  "js_enabled",    :default => false
+  end
+
+  create_table "translations", :force => true do |t|
+    t.string   "locale"
+    t.string   "key"
+    t.text     "value"
+    t.text     "interpolations"
+    t.boolean  "is_proc",        :default => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
 end

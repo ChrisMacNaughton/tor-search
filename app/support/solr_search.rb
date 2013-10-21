@@ -102,9 +102,18 @@ class SolrSearch
   end
   def param
     if @p.nil?
-      @p = with_title(with_site(defaults))
+      @p = with_title(with_site(without_banned_hosts(defaults)))
     end
     @p
+  end
+  def without_banned_hosts(q)
+    unless banned_hosts.empty?
+      banned_hosts.each do |h|
+        base = h.split(/\.onion/).first
+        q[:fq] << "-id:onion.#{base}\\:http/*"
+      end
+    end
+    q
   end
   def with_title(q)
     if q[:q].include? 'title:'
@@ -138,7 +147,7 @@ class SolrSearch
   def defaults
     {
       start: (@page - 1) * 10,
-      q: @query,
+      q: @query.dup,
       rows: 10,
       wt: 'json',
       fq: [],
@@ -156,5 +165,8 @@ class SolrSearch
     @total = nil
     @total_pages = nil
     @highlights = nil
+  end
+  def banned_hosts
+    BannedDomain.pluck(:hostname)
   end
 end
