@@ -1,5 +1,4 @@
 TorSearch::Application.routes.draw do
-  mount Tolk::Engine => '/translations', :as => 'tolk'
 
   devise_for :admin
 
@@ -12,12 +11,9 @@ TorSearch::Application.routes.draw do
   get "errors/error_404"
   get "errors/error_500"
 
-  root to: 'search#index', as: :search
-
   get 'graphs' => 'graphs#index', as: :graphs
   get 'graphs/daily' => 'graphs#daily', as: :daily
   get 'graphs/unique' => 'graphs#unique', as: :unique
-
 
   get 'r' => 'search#redirect', as: :redirect
   scope "(:locale)", locale: /en|es/ do
@@ -47,6 +43,8 @@ TorSearch::Application.routes.draw do
     post 'coupons' => 'coupon#create', as: :credit_coupon
   end
 
+  root to: 'search#index', as: :search
+  get '/' => 'search#index', as: :root
   match '/:locale' => 'search#index'
   # See http://ramblinglabs.com/blog/2012/01/rails-3-1-adding-custom-404-and-500-error-pages for more info
   match '*not_found', to: 'errors#error_404', as: 'not_found' unless Rails.application.config.consider_all_requests_local

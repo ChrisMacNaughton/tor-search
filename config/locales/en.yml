@@ -1,22 +1,76 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
+---
 en:
-  hello: "Hello world"
   bitcoin_note: "Bitcoin Donations Accepted at "
   submit_a_domain: "Submit a Domain"
-  nav:
-    search: "Search"
-    contact: "Contact"
-    policies: "Policies"
-    advertisers:
-      advertisers: "Advertisers"
-      sign_out: "Sign Out"
-      profile: "Profile"
-      ads: "Ads"
+  ads:
+    active: Active
+    ads: Ads
+    apply_coupon: "Apply Coupon"
+    avg_pos: "Avg. Pos."
+    balance: Balance
+    beta_access_requested: "Beta Access Requested"
+    bid: Bid
+    clicks: Clicks
+    ctr: CTR
+    fields:
+      bid: Bid
+      display_path: "Display Path"
+      target: Target
+      title: Title
+    information: Information
+    paused: Paused
+    pending: Pending
+    side_nav:
+      advertising: Advertising
+      create_ad: "Create Ad"
+      get_new_bitcoin_address: "Get New Bitcoin Address"
+      request_beta_access: "Request Beta Access"
+    status: Status
+    title: Title
+    toggle: Toggle
+    views: Views
   contact:
     send_message: "Send Message"
+  nav:
+    advertisers:
+      ads: Ads
+      advertisers: Advertisers
+      profile: Profile
+      sign_out: "Sign Out"
+    contact: Contact
+    policies: Policies
+    search: Search
   policies:
-    content_filtering_title: 'Content Filtering Policy'
-    cp: 'We are removing any domain that hosts child pornography.'
     contact: "Contact Me"
+    content_filtering_title: "Content Filtering Policy"
+    cp: "We are removing any domain that hosts child pornography."
+  search:
+    around: Around
+    pages_indexed: "pages indexed"
+    results_count:
+      one: "one result"
+      other: "%{count} results"
+    search_tor: "Search Tor"
+    try_this_on: "Try this search on"
+  views:
+    pagination:
+      first: "&laquo; First"
+      last: "Last &raquo;"
+      next: "Next &rsaquo;"
+      previous: "&lsaquo; Prev"
+      truncate: "&hellip;"
+  will_paginate:
+    next_label: "Next &#8594;"
+    page_entries_info:
+      multi_page: "Displaying %{model} %{from} - %{to} of %{count} in total"
+      multi_page_html: "Displaying %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> of <b>%{count}</b> in total"
+      single_page:
+        one: "Displaying 1 %{model}"
+        other: "Displaying all %{count} %{model}"
+        zero: "No %{model} found"
+      single_page_html:
+        one: "Displaying <b>1</b> %{model}"
+        other: "Displaying <b>all&nbsp;%{count}</b> %{model}"
+        zero: "No %{model} found"
+    page_gap: "&hellip;"
+    previous_label: "&#8592; Previous"
