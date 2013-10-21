@@ -1,0 +1,10 @@
+en:
+  search:
+    search_tor: "Search Tor"
+    around: 'Around'
+    pages_indexed: 'pages indexed'
+    results_count: {
+      one: 'one result',
+      other: '%{count} results'
+    }
+    try_this_on: 'Try this search on'

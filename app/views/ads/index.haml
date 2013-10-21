@@ -2,50 +2,31 @@
   =render partial: 'side_nav'
   .span10
     .row
-      %h2 Information
+      %h2= t('ads.information')
       %hr/
       %dl
-        %dt Balance
+        %dt= t('ads.balance')
         %dd
           = current_advertiser.balance
           BTC
-        %dt Apply Coupon
+        %dt= t('ads.apply_coupon')
         %dd
           =form_for :coupon, class: 'form-inline', url: credit_coupon_path do |f|
             .input-append
               =f.text_field :code, {placeholder: "Coupon Code", class: 'input-medium', id: "appendedInputButtons"}
               %button.btn{type: "submit"} Apply
     .row
-      %h2 Ads
-      -#
-        -@ads.in_groups_of(4) do |ad_group|
-          .row
-            -ad_group.each do |ad|
-              -next if ad.nil?
-              .span2
-                =render partial: 'ad', locals: {ad: ad, border:true}
-                .row
-                  .span2{style: 'margin-left: 80px;'}
-                    %dl
-                      %dt Approved?
-                      %dd= ad.approved ? "Yes" : "No"
-                      %dt Enabled?
-                      %dd
-                        = ad.disabled ? "No" : "Yes"
-                        = link_to "Toggle", toggle_ad_path(ad), method: :put
-                      %dt Views:
-                      %dd= ad.ad_views_count
-        =will_paginate(@ads)
+      %h2= t('ads.ads')
       %table.table.table-striped
         %thead
           %tr
-            %th Title
-            %th Status
-            %th Bid
-            %th Views
-            %th Clicks
-            %th CTR
-            %th Avg. Pos.
+            %th= t('ads.title')
+            %th= t('ads.status')
+            %th= t('ads.bid')
+            %th= t('ads.views')
+            %th= t('ads.clicks')
+            %th= t('ads.ctr')
+            %th= t('ads.avg_pos')
         %tbody
           -@ads.each do |ad|
             %tr
@@ -54,14 +35,22 @@
               %td
                 -if ad.approved?
                   -if ad.disabled?
-                    Paused
+                    =t 'ads.paused'
                   -else
-                    Active
-                  = link_to "Toggle", toggle_ad_path(ad), method: :put
+                    =t 'ads.active'
+                  = link_to t("ads.toggle"), toggle_ad_path(ad), method: :put
                 -else
-                  Pending
+                  = t 'ads.pending'
               %td= number_to_currency(ad.bid, precision: 6, unit: '&#x0e3f;', format: "%n%u")
-              %td= ad.ad_views_count
-              %td= ad.ad_clicks_count
-              %td= number_to_percentage(ad.ctr, precision: 2)
-              %td= number_with_precision(ad.avg_position, precision: 2)
+              %td
+                -if ad.approved?
+                  = ad.ad_views_count
+              %td
+                -if ad.approved?
+                  = ad.ad_clicks_count
+              %td
+                -unless !ad.approved? || ad.ad_views_count == 0
+                  =number_to_percentage(ad.ctr, precision: 2)
+              %td
+                -unless ad.avg_position.nil?
+                  = number_with_precision(ad.avg_position, precision: 2)

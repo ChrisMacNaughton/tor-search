@@ -3,3 +3,20 @@
 
 en:
   hello: "Hello world"
+  bitcoin_note: "Bitcoin Donations Accepted at "
+  submit_a_domain: "Submit a Domain"
+  nav:
+    search: "Search"
+    contact: "Contact"
+    policies: "Policies"
+    advertisers:
+      advertisers: "Advertisers"
+      sign_out: "Sign Out"
+      profile: "Profile"
+      ads: "Ads"
+  contact:
+    send_message: "Send Message"
+  policies:
+    content_filtering_title: 'Content Filtering Policy'
+    cp: 'We are removing any domain that hosts child pornography.'
+    contact: "Contact Me"

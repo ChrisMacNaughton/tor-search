@@ -1,9 +1,9 @@
-=f.label_with_error :title
+=f.label_with_error :title, t('.title')
 =f.text_field :title
-=f.label_with_error :path, "Target"
+=f.label_with_error :path, t('.target')
 =f.select "protocol_id",{"HTTP://"=>0,"HTTPS://"=>1}, {},{class: 'input-small'}
 =f.text_field :path
-=f.label_with_error :display_path, "Display Path"
+=f.label_with_error :display_path, t('.display_path')
 =f.text_field :display_path, style: 'color:#009933'
 %br/
 =f.text_field_with_error :line_1
@@ -11,7 +11,7 @@
 =f.text_field_with_error :line_2
 %br/
 %hr/
-=f.label_with_error :bid
+=f.label_with_error :bid, t('.bid')
 =f.number_field :bid
 
 %br

@@ -2,16 +2,16 @@
   Contact -
 .row.span16.well
   =form_for @message, builder: WithErrorFields do |f|
-    =f.label :name, "Name"
+    =f.label :name, t('contact.name')
     =f.text_field :name, class: 'span6', required: true
-    =f.label :contact_method, "Contact Method"
+    =f.label :contact_method,(t 'contact.contact_method')
     =f.text_field :contact_method, class: 'span6', placeholder: "Email: name@example.com", required: true
-    =f.label :text
+    =f.label :text, t('contact.text')
     =f.text_area :text, class: 'span6', rows: 6, required: true
     =textcaptcha_fields(f) do
       .field
-        =f.label :spam_answer, @message.spam_question
+        =f.label :spam_answer, t("spam.#{@message.spam_question}")
         =f.text_field_with_error :spam_answer, value: '', required: true
     %br/
     %br
-    =f.submit "Send Message"
+    %button{type: 'submit'}= t('contact.send_message')

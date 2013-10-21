@@ -58,6 +58,7 @@ end
 group :test do
   gem 'vcr', require: false
 end
+
 # Use unicorn as the app server
 gem 'unicorn'
 gem 'newrelic_rpm'
