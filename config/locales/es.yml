@@ -1,1 +1,4 @@
 es:
+  activerecord:
+    models:
+      advertiser: Anunciante

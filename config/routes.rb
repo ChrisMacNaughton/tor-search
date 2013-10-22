@@ -16,7 +16,7 @@ TorSearch::Application.routes.draw do
   get 'graphs/unique' => 'graphs#unique', as: :unique
 
   get 'r' => 'search#redirect', as: :redirect
-  scope "(:locale)", locale: /en|es/ do
+  scope "(:locale)", locale: /en/ do
     devise_for :advertisers
     get 'add-domain' => 'domain#new', as: :add_link
     post 'add-domain' => 'domain#submit', as: :post_new_link

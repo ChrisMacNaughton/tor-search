@@ -1,29 +1,29 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2><%=t('advertisers.edit')%> <%= Advertiser.model_name.human %></h2>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :username %><br />
+  <div><%= f.label :username, t('advertisers.username') %><br />
   <%= f.text_field :username, :autofocus => true %></div>
 
-  If you want to be able to recover your password or recieve notifications when your balance is running low, enter your email!
-  <div><%= f.label :email %><br />
+  <%= t('advertisers.password_recovery_note') %>
+  <div><%= f.label :email, t('advertisers.email') %><br />
   <%= f.email_field :email %></div>
 
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+  <div><%= f.label :password, t('advertisers.password') %> <i>(<%= t('advertisers.leave_blank') %>)</i><br />
   <%= f.password_field :password, :autocomplete => "off" %></div>
 
-  <div><%= f.label :password_confirmation %><br />
+  <div><%= f.label :password_confirmation, t('advertisers.password_confirmation') %><br />
   <%= f.password_field :password_confirmation %></div>
 
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+  <div><%= f.label :current_password, t('advertisers.current_password') %> <i>(<%= t('advertisers.need_current_password') %>)</i><br />
   <%= f.password_field :current_password %></div>
 
-  <div><%= f.submit "Update" %></div>
+  <div><%= f.submit t('advertisers.update') %></div>
 <% end %>
 
-<h3>Cancel my account</h3>
+<h3><%= t('advertisers.cancel_my_account') %></h3>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %></p>
+<p><%= t('advertisers.unhappy') %> <%= button_to t('advertisers.cancel_my_account'), registration_path(resource_name), :data => { :confirm => t('advertisers.are_you_sure') }, :method => :delete %></p>
 
-<%= link_to "Back", :back %>
+<%= link_to t('advertisers.back'), :back %>

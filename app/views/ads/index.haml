@@ -13,8 +13,8 @@
         %dd
           =form_for :coupon, class: 'form-inline', url: credit_coupon_path do |f|
             .input-append
-              =f.text_field :code, {placeholder: "Coupon Code", class: 'input-medium', id: "appendedInputButtons"}
-              %button.btn{type: "submit"} Apply
+              =f.text_field :code, {placeholder: t("ads.coupon_code"), class: 'input-medium', id: "appendedInputButtons"}
+              %button.btn{type: "submit"}= t('ads.apply')
     .row
       %h2= t('ads.ads')
       %table.table.table-striped
