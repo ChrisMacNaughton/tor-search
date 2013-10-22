@@ -1,6 +1,6 @@
 -content_for :title do
   Contact -
-.row.span16.well
+.row.span6.well
   =form_for @message, builder: WithErrorFields do |f|
     =f.label :name, t('contact.name')
     =f.text_field :name, class: 'span6', required: true
@@ -15,3 +15,6 @@
     %br/
     %br
     %button{type: 'submit'}= t('contact.send_message')
+.row.spam6
+    =t('contact.email_me')
+    chris.torsearch@gmail.com

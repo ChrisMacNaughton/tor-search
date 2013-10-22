@@ -58,6 +58,7 @@ en:
     name: "Name"
     contact_method: "Contact Method"
     text: "Text"
+    email_me: You can also email me at
   nav:
     advertisers:
       ads: Ads
