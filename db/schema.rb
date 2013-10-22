@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131021182054) do
+ActiveRecord::Schema.define(:version => 20131022144725) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -222,6 +222,13 @@ ActiveRecord::Schema.define(:version => 20131021182054) do
 
   add_index "images", ["path", "domain_id"], :name => "index_images_on_path_and_domain_id", :unique => true
   add_index "images", ["path"], :name => "index_images_on_path"
+
+  create_table "instant_results", :force => true do |t|
+    t.integer  "query_id"
+    t.string   "bang_match"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "keywords", :force => true do |t|
     t.text     "word"
