@@ -14,15 +14,16 @@ class Bang
   def amazon
     url = "http://www.amazon.com/gp/search?ie=UTF8&camp=1789&creative=9325&index=aps&keywords=#{term.gsub(/\s/, '+')}&linkCode=ur2&tag=tor-search-20"
   end
-  private
-  def term
-    query.gsub("@#{bang}", '').lstrip.rstrip
-  end
+
   def bang
     if @bang.nil?
       @bang = query.match(/\s{0,1}@(\w*)\s{0,1}/).to_a.select{|a| !a.include? '@' }.first
     end
     @bang
+  end
+  private
+  def term
+    query.gsub("@#{bang}", '').lstrip.rstrip
   end
 
 end

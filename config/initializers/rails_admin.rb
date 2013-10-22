@@ -32,7 +32,7 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['Ad', 'AdClick', 'AdKeyword', 'AdView', 'Admin', 'AdminSearch', 'Advertiser', 'BitcoinAddress', 'Click', 'Domain', 'Keyword', 'Message', 'Pageview', 'Payment', 'Query', 'Search']
 
   # Include specific models (exclude the others):
-  config.included_models = ['Ad', 'AdKeyword', 'Admin', 'Advertiser', 'BitcoinAddress', 'BannedDomain', 'Coupon', 'Domain', 'Keyword', 'Message', 'Payment', 'Query', 'Search']
+  config.included_models = ['Ad', 'AdKeyword', 'Admin', 'Advertiser', 'BitcoinAddress', 'BannedDomain', 'Coupon', 'Domain', 'InstantResult','Keyword', 'Message', 'Payment', 'Query', 'Search']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -721,7 +721,7 @@ RailsAdmin.config do |config|
 
   ###  Query  ###
 
-  # config.model 'Query' do
+  config.model 'Query' do
 
   #   # You can copy this to a 'rails_admin do ... end' block inside your query.rb model definition
 
@@ -739,7 +739,7 @@ RailsAdmin.config do |config|
 
   #   # Cross-section configuration:
 
-  #     # object_label_method :name     # Name of the method called for pretty printing an *instance* of ModelName
+  object_label_method :term     # Name of the method called for pretty printing an *instance* of ModelName
   #     # label 'My model'              # Name of ModelName (smartly defaults to ActiveRecord's I18n API)
   #     # label_plural 'My models'      # Same, plural
   #     # weight 0                      # Navigation priority. Bigger is higher.
@@ -760,7 +760,7 @@ RailsAdmin.config do |config|
   #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
   #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
-  # end
+  end
 
 
   ###  Search  ###

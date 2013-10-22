@@ -17,12 +17,18 @@ class SearchController < ApplicationController
     if params[:q].empty?
       render :index and return
     end
+
+    @query = Query.find_or_create_by_term(params[:q])
+
     if params[:q].include? "@"
       require "bang"
       bang = Bang.new(params[:q])
 
       s = OpenStruct.new(term: params[:q], total: 1)
-      track! s and redirect_to bang.redirect_target and return if bang.has_target?
+      if bang.has_target?
+        InstantResult.create(query: @query, bang_match: bang.bang)
+        track! s and redirect_to bang.redirect_target and return
+      end
     end
 
     page = params[:page] || 1
@@ -30,8 +36,6 @@ class SearchController < ApplicationController
     track! @search
     puts @search.errors
     if @search.errors.empty?
-      @query = Query.find_or_create_by_term(@search.term)
-
       s = Search.create(query: @query, results_count: @total, paginated: @paginated)
       @search_id = s.id
 
