@@ -6,16 +6,18 @@
   .row.span12.offset2
     -if @search.errors.empty?
       %p.muted
-        =number_with_precision @search.indexed, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true
-        pages indexed
+        =t 'search.around'
+        =number_with_precision @search.indexed, delimiter: ',', significant: true, precision: 2, strip_insignificant_zeros: true, separator: '.', locale: I18n.locale
+        =t 'search.pages_indexed'
     -else
       %p.muted Search is offline for the moment, we are looking into it
 -content_for(:footer) do
   #footer_home
     .row-fluid
       #footer_home_left
-        =link_to "Submit a Domain", add_link_path
+        =link_to t(:submit_a_domain), add_link_path
       #footer_home_right
       .span6.offset3
         %p
-          Bitcoin Donations Accepted at #{TorSearch::Application.config.tor_search.bitcoin_address}
+          =t(:bitcoin_note)
+          #{TorSearch::Application.config.tor_search.bitcoin_address}

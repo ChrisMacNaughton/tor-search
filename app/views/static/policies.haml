@@ -1,3 +1,5 @@
+%h2= t('policies.content_filtering_title')
+%p= t('policies.cp')
 %p
-  I have yet to officially decide on any policies for this search engine. If you would like to suggest something,
-  =link_to "drop me a line.", contact_path
+  = render partial: 'checking_for_banned'
+  =link_to t "policies.contact"

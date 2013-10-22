@@ -1,5 +1,81 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
+---
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      advertiser: Advertiser
+  bitcoin_note: "Bitcoin Donations Accepted at "
+  submit_a_domain: "Submit a Domain"
+  advertisers:
+    password_recovery_note: If you want to be able to recover your password or recieve notifications when your balance is running low, enter your email!
+    leave_blank: leave blank if you don't want to change it
+    need_current_password: we need your current password to confirm your changes
+    edit: Edit
+    username: Username
+    email: Email
+    password: Password
+    password_confirmation: Password Confirmation
+    current_password: Current Password
+    update: Update
+    cancel_my_account: Cancel my Account
+    unhappy: Unhappy?
+    back: Back
+    are_you_sure: Are you sure?
+  ads:
+    active: Active
+    ads: Ads
+    apply_coupon: "Apply Coupon"
+    avg_pos: "Avg. Pos."
+    balance: Balance
+    coupon_code: Coupon Code
+    apply: Apply
+    beta_access_requested: "Beta Access Requested"
+    bid: Bid
+    clicks: Clicks
+    ctr: CTR
+    you_have_requested_a_new_bitcoin_payment_address: You have requested a new Bitcoin payment address
+    your_new_bitcoin_address_is: your new Bitcoin address is
+    new_address_time: You can request a new address again in
+    all_addresses: All Addresses
+    fields:
+      bid: Bid
+      display_path: "Display Path"
+      target: Target
+      title: Title
+    information: Information
+    paused: Paused
+    pending: Pending
+    side_nav:
+      advertising: Advertising
+      create_ad: "Create Ad"
+      get_new_bitcoin_address: "Get New Bitcoin Address"
+      request_beta_access: "Request Beta Access"
+    status: Status
+    title: Title
+    toggle: Toggle
+    views: Views
+  contact:
+    send_message: "Send Message"
+    name: "Name"
+    contact_method: "Contact Method"
+    text: "Text"
+  nav:
+    advertisers:
+      ads: Ads
+      advertisers: Advertisers
+      profile: Profile
+      sign_out: "Sign Out"
+    contact: Contact
+    policies: Policies
+    search: Search
+  policies:
+    contact: "Contact Me"
+    content_filtering_title: "Content Filtering Policy"
+    cp: "We are removing any domain that hosts child pornography."
+  search:
+    around: Around
+    pages_indexed: "pages indexed"
+    results_count:
+      one: "one result"
+      other: "%{count} results"
+    search_tor: "Search Tor"
+    try_this_on: "Try this search on"
