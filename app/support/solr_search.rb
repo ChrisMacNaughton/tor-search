@@ -107,6 +107,7 @@ class SolrSearch
     @p
   end
   def without_banned_hosts(q)
+    return q
     unless banned_hosts.empty?
       banned_hosts.each do |h|
         base = h.split(/\.onion/).first
