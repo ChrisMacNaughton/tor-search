@@ -60,6 +60,7 @@ group :test do
   gem 'rspec-rails', require: false
   gem 'webmock'
   gem 'vcr'
+  gem 'simplecov', require: false
 end
 
 # Use unicorn as the app server

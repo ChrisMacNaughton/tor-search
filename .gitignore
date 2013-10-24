@@ -18,3 +18,4 @@
 /solr/data/*
 /solr/solr-*
 /public/assets
+coverage

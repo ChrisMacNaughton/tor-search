@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start 'rails'
+
 require 'bundler'
 require 'bundler/setup'
 Bundler.require :test
