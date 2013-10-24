@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-one:
-  query: MyString
-  results_count: 1
-
-two:
-  query: MyString
-  results_count: 1

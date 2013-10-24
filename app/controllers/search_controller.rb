@@ -63,7 +63,7 @@ class SearchController < ApplicationController
   end
 
   def track!(search)
-    return true if Rails.env.include? 'development'
+    return true unless Rails.env.include? 'production'
 
     Tracker.new(request, {term: search.term, count: search.total}, "Search").track!
   end

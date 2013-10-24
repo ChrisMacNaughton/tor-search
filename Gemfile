@@ -56,7 +56,10 @@ group :development do
   gem 'foreman'
 end
 group :test do
-  gem 'vcr', require: false
+  gem 'capybara', require: false
+  gem 'rspec-rails', require: false
+  gem 'webmock'
+  gem 'vcr'
 end
 
 # Use unicorn as the app server

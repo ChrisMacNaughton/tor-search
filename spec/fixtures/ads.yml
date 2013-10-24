@@ -1,0 +1,26 @@
+non_onion_ad:
+  bid: 0.005
+  title: This is an ad
+  disabled: false
+  protocol_id: 0
+  path: google.com
+  approved: true
+  ppc: true
+  display_path: google.com
+  line_1: This is an ad
+  line_2: for Google
+  advertiser: test_advertiser
+  onion: false
+ad:
+  bid: 0.005
+  title: This is an ad
+  disabled: false
+  protocol_id: 0
+  path: rtfhdyfgthrb4635.onion
+  approved: true
+  ppc: true
+  display_path: google.com
+  line_1: This is an ad
+  line_2: for Google
+  advertiser: test_advertiser
+  onion: true

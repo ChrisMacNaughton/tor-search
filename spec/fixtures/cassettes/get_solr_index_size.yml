@@ -1,0 +1,33 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8983/solr/admin/cores?wt=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: US-ASCII
+      string: ! '{"responseHeader":{"status":0,"QTime":19},"defaultCoreName":"collection1","initFailures":{},"status":{"collection1":{"name":"collection1","isDefaultCore":true,"instanceDir":"/Users/chris/ts/tor_search/solr/collection1/","dataDir":"/Users/chris/ts/tor_search/solr/data/development/","config":"solrconfig.xml","schema":"schema.xml","startTime":"2013-10-24T17:58:33.099Z","uptime":290983,"index":{"numDocs":134509,"maxDoc":166320,"deletedDocs":31811,"version":58565,"segmentCount":20,"current":true,"hasDeletions":true,"directory":"org.apache.lucene.store.NRTCachingDirectory:NRTCachingDirectory(org.apache.lucene.store.NIOFSDirectory@/Users/chris/ts/tor_search/solr/data/development/index
+        lockFactory=org.apache.lucene.store.NativeFSLockFactory@16ff6348; maxCacheMB=48.0
+        maxMergeSizeMB=4.0)","userData":{"commitTimeMSec":"1382276836530"},"lastModified":"2013-10-20T13:47:16.53Z","sizeInBytes":1162754768,"size":"1.08
+        GB"}}}}
+
+'
+    http_version: 
+  recorded_at: Thu, 24 Oct 2013 18:03:24 GMT
+recorded_with: VCR 2.5.0

@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-one:
-  term: MyText
-  searches_count: 1
-
-two:
-  term: MyText
-  searches_count: 1

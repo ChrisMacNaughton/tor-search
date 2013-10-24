@@ -1,0 +1,6 @@
+test:
+  word: test
+testing:
+  word: testing
+otherwise:
+  word: otherwise

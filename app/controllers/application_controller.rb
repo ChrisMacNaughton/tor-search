@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     I18n.locale = params[:locale] || I18n.default_locale
   end
   def track
-    return if Rails.env.include? 'development'
+    return true unless Rails.env.include? 'production'
     return if params[:q]
 
     Tracker.new(request).track!
