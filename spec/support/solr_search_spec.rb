@@ -22,4 +22,26 @@ describe SolrSearch do
       host2.should_not == host1
     end
   end
+
+  it "can have its query set after initialization"
+
+  it "can have its page set after initialization"
+
+  it "knows how many results it returned"
+
+  it "knows how many oages are in its result set"
+
+  it "highlights matches in the results"
+
+  it "gracefully handles Solr being offline"
+
+  it "shows 0 indexed when Solr is offline"
+
+  it "can search in the title attributes"
+
+  it "can search with a specific site"
+
+  it "can remove a specific site"
+
+  it "resets the arguments when an argument changes"
 end
