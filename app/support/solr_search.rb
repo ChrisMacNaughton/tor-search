@@ -5,7 +5,7 @@ class SolrSearch
   attr_accessor :page
   attr_reader :current_page, :query
 
-  alias_method :query, :term
+  alias_method :term, :query
 
   def initialize(query = '', page = 1)
     @query = query

@@ -29,7 +29,7 @@ class Admin < ActiveRecord::Base
     login = conditions.delete(:username)
     if login
       where(conditions) \
-        .where(['lower(username) = :value', { value: login.downcase }]) \
+        .where(['lower(email) = :value', { value: login.downcase }]) \
         .first
     else
       where(conditions).first
