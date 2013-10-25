@@ -12,7 +12,7 @@
         = hour_quantity ((@address.created_at + 6.hours).to_f - DateTime.now.to_f)
 
     .span10
-      %h2= t('all_addresses')
+      %h2= t('ads.all_addresses')
       %dl
         -@old_addresses.each do |address|
           %dt
