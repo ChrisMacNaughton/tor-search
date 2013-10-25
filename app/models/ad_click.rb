@@ -1,3 +1,5 @@
+# encoding: utf-8
+# AdClicks track clicks on ads
 class AdClick < ActiveRecord::Base
   belongs_to :ad, counter_cache: true
   belongs_to :query

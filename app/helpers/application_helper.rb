@@ -1,19 +1,26 @@
+# encoding: utf-8
+# global helper
 module ApplicationHelper
-  def nav_link(link_text, link_path, base_class = "")
+
+  def nav_link(link_text, link_path, base_class = ''""'')
     class_name = current_page?(link_path) ? 'active' : ''
     class_name = "#{base_class} #{class_name}"
-    content_tag(:li, :class => class_name) do
+    content_tag(:li, class: class_name) do
       link_to link_text, link_path
     end
   end
-  def hour_quantity duration
+
+  def hour_quantity(duration)
     unless duration.blank?
-      hours = (duration/60)/60
-      minutes = (duration/60) % 60
+      hours = (duration / 60) / 60
+      minutes = (duration / 60) % 60
       "#{hours.to_i.to_s} hours and #{minutes.to_i.to_s} minutes"
     end
   end
+
 end
+# form builder
+# rubocop:disable all
 class AppFormBuilder < ActionView::Helpers::FormBuilder
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::FormTagHelper
@@ -21,7 +28,7 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
   include ::ApplicationHelper
   alias :orig_label :label
 
-  def errors_for(object, wrap_in_div=true, use_full_messages=true)
+  def errors_for(object, wrap_in_div = true, use_full_messages = true)
     return "" if object.nil? || object.errors.blank?
 
     error_list = "".html_safe
@@ -38,7 +45,7 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
       end
     end
     if wrap_in_div
-      e_message = content_tag(:h5, pluralize_sentence(object.errors.count, "error_count"), class: 'title')
+      e_message = content_tag(:h5, pluralize_sentence(object.errors.count, 'error_count'), class: 'title')
       content_tag('div', e_message + error_list, class: 'formErrorList')
     else
       content_tag('div', error_list, class: 'error-class')
@@ -54,7 +61,7 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     # specify only the class 'required' or append 'required' to the list of specified class names
     if required_field?(method)
       text = raw "#{text} *"
-      options[:class] = options.has_key?(:class) ? "#{options[:class]} required" : "required"
+      options[:class] = options.has_key?(:class) ? "#{options[:class]} required" : 'required'
     end
 
     orig_label(method, text, options, &block)
@@ -63,21 +70,21 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
   # Because Ruby interprets %m/%d/%Y as %d/%m/%Y for ambiguous dates, we create a hidden field containing an acceptable
   # date format and a text field for the display value.
   def date_picker(method, options = {})
-    options[:class] ||= ""
-    options[:class] += " datePicker"
+    options[:class] ||= ''
+    options[:class] += ' datePicker'
     options[:data] ||= {}
-    options[:data][:action] = "bindDate"
+    options[:data][:action] = 'bindDate'
     options[:data][:target] = "##{object.class.to_s.underscore}_#{method}"
-    options[:data][:attr] = "value"
+    options[:data][:attr] = 'value'
 
     date = object.send(method)
     # We might have a date or a date/time. If it's a date/time, convert to UTC then convert to date.
     # Otherwise, if the time is midnight, it may appear later as the previous day.
-    if date.respond_to? :utc
-      date = object.send(method).utc.to_date
-    end
+
+    date = object.send(method).utc.to_date if date.respond_to? :utc
+
     hidden_field(method, value: date) + "\n" +
-        text_field_tag("_#{object.class.to_s.underscore}_#{method}", date.try(:strftime, "%m/%d/%Y"), options)
+        text_field_tag("_#{object.class.to_s.underscore}_#{method}", date.try(:strftime, '%m/%d/%Y'), options)
   end
 
   def current_nested_child_index(child_name)
@@ -86,10 +93,10 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
 
   def hours_select(method, options = {}, html_options = {})
     hours = [12, (1..11).to_a].flatten
-    minutes = [ 0, 30 ]
-    ampm = options.delete(:ampm) == false ? [""] : ["AM", "PM"]
+    minutes = [0, 30]
+    ampm = options.delete(:ampm) == false ? [''] : %w(AM PM)
     times = []
-    pad2 = "%02d"
+    pad2 = '%02d'
 
     ampm.each do |am_or_pm|
       hours.each do |hour|
@@ -110,39 +117,41 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 end
+# handle form fields with errors
 class WithErrorFields < AppFormBuilder
   def field_with_error(field, *args)
     if object.errors[args.first].present?
       send(field, *args) +
-        content_tag(:span, object.errors[args.first][0], class: "error_mesg")
+        content_tag(:span, object.errors[args.first][0], class: 'error_mesg')
     else
       send(field, *args)
     end
   end
 
-  def text_field_with_error(method, opts={})
+  def text_field_with_error(method, opts = {})
     field_with_error :text_field, method, opts
   end
-  def text_area_with_error(method, opts={})
+  def text_area_with_error(method, opts = {})
     field_with_error :text_area, method, opts
   end
-  def select_with_error(method, opts={})
+  def select_with_error(method, opts = {})
     field_with_error :select, method, opts
   end
 
-  def check_box_with_error(method, opts={})
+  def check_box_with_error(method, opts = {})
     field_with_error :check_box, method, opts
   end
 
-  def collection_chzn_with_error(method, collection, an_id, a_name, opts={})
-    field_with_error :collection_select, method, collection, an_id, a_name, opts, class: "chzn-select"
+  def collection_chzn_with_error(method, collection, an_id, a_name, opts = {})
+    field_with_error :collection_select, method, collection, an_id, a_name, opts, class: 'chzn-select'
   end
 
-  def collection_select_with_error(method, collection, an_id, a_name, opts={})
+  def collection_select_with_error(method, collection, an_id, a_name, opts = {})
     field_with_error :collection_select, method, collection, an_id, a_name, opts
   end
 
-  def label_with_error(method, opts={})
+  def label_with_error(method, opts = {})
     field_with_error :label, method, opts
   end
 end
+# rubocop:enable all

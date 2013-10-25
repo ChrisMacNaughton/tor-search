@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ContactController < ApplicationController
   before_filter :track
 
@@ -5,12 +6,13 @@ class ContactController < ApplicationController
     @message = Message.new
     @message.textcaptcha
   end
+
   def new_message
     @message = Message.create(params[:message])
 
     if @message.save
-      flash.notice = "Thank you, I will try to respond shortly!"
-      redirect_to search_path and return
+      flash.notice = 'Thank you, I will try to respond shortly!'
+      redirect_to search_path && return
     else
       render :contact
     end

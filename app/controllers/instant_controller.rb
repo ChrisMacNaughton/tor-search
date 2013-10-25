@@ -1,3 +1,4 @@
+# encoding: utf-8
 require "#{Rails.root}/lib/matcher/matcher"
 
 class InstantController < ApplicationController
@@ -5,7 +6,7 @@ class InstantController < ApplicationController
     term = params[:search]
 
     matches = Matcher.new(term, request).execute || []
-    hash = {meta: {searched: term}, matches: matches}
+    hash = { meta: { searched: term }, matches: matches }
 
     render json: hash
   end

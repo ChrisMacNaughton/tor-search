@@ -1,3 +1,5 @@
+# encoding: utf-8
+# tied to Coinbase wallet
 class BitcoinAddress < ActiveRecord::Base
   belongs_to :advertiser
   attr_accessible :address

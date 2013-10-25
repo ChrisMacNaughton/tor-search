@@ -1,13 +1,15 @@
+# encoding: utf-8
+
 describe AdFinder do
 
   fixtures :ads, :keywords
 
-  it "can find an ad with no keywords" do
+  it 'can find an ad with no keywords' do
     finder = AdFinder.new('test')
     finder.ads.should include ads(:ad)
   end
 
-  it "can find an ad by keyword" do
+  it 'can find an ad by keyword' do
     ad = ads(:ad)
     ad.keywords << keywords(:otherwise)
 
@@ -15,7 +17,7 @@ describe AdFinder do
     AdFinder.new('otherwise').ads.should include ad
   end
 
-  it "ranks ads appropriately" do
+  it 'ranks ads appropriately' do
     ads = AdFinder.new('whatever').ads
     ads.should == [ads(:ad), ads(:non_onion_ad)]
   end

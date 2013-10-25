@@ -1,3 +1,5 @@
+# encoding: utf-8
+# ME!
 class Admin < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -11,7 +13,7 @@ class Admin < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :rememberable,
-    :trackable
+         :trackable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
@@ -24,8 +26,11 @@ class Admin < ActiveRecord::Base
   end
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
-    if login = conditions.delete(:username)
-      where(conditions).where(["lower(email) = :value", { :value => login.downcase }]).first
+    login = conditions.delete(:username)
+    if login
+      where(conditions) \
+        .where(['lower(username) = :value', { value: login.downcase }]) \
+        .first
     else
       where(conditions).first
     end

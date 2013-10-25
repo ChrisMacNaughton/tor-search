@@ -1,21 +1,18 @@
+# encoding: utf-8
+# class built to track visits iin Piwik
 class Tracker
 
-  attr_accessor :piwik_url
   attr_reader :request, :site_id
-  @@auth_token = '3c5ab420b37daa3c643fca412a1f8da8'
-  @@piwik_url = "http://piwik.nuradu.com/piwik.php"
+  attr_writer :auth_token, :piwik_url
 
-  def self.piwik_url= url
-    @@piwik_url = url
+  def piwik_url
+    @piwik_url ||= 'http://piwik.nuradu.com/piwik.php'
   end
 
-  def self.auth_token= token
-    @@auth_token = token
+  def auth_token
+    @auth_token ||= '3c5ab420b37daa3c643fca412a1f8da8'
   end
 
-  def self.piwik_url
-    @@piwik_url
-  end
   def initialize(request, search = nil, action = nil, site_id = 5)
     @site_id = site_id
     @request = request
@@ -29,7 +26,7 @@ class Tracker
   end
 
   def track!
-    Rails.logger.info "Tracking a pageview!"
+    Rails.logger.debug 'Tracking a pageview!'
     Rails.logger.debug options
     Rails.logger.debug response.body
   end
@@ -42,7 +39,7 @@ class Tracker
 
   def http
     http = Net::HTTP.new(uri.host, uri.port)
-    if uri.scheme == "https"
+    if uri.scheme == 'https'
       http.use_ssl     = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
@@ -70,25 +67,29 @@ class Tracker
   end
 
   def options
-    {
+    default_opts.merge(
       idsite: site_id,
+      action_name: @action,
+      ua: user_agent,
+      search: @search.try('[]', :term),
+      search_count: @search.try('[]', :count),
+      cid: user_id,
+      cip: '',
+    ).delete_if { |k, v| v.nil? }
+  end
+
+  def default_opts
+    {
       rec: 1,
       apiv: 1,
       rand: SecureRandom.hex,
       url: url,
       urlref: referrer,
-      action_name: @action,
-      ua: user_agent,
-      search: @search.try('[]',:term),
-      search_count: @search.try('[]',:count),
-      token_auth: @@auth_token,
-      cid: user_id,
-      cip: '',
-    }.delete_if{|k,v| v.nil?}
+      token_auth: auth_token,
+    }
   end
 
   def uri
-    URI.parse(@@piwik_url)
+    URI.parse(piwik_url)
   end
 end
-

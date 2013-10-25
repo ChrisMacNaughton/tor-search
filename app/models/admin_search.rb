@@ -1,3 +1,6 @@
+# encoding: utf-8
+# used to track admin searches
+# TODO: DELETE THIS MODEL
 class AdminSearch < ActiveRecord::Base
   belongs_to :admin
 
@@ -6,7 +9,7 @@ class AdminSearch < ActiveRecord::Base
 
   validates :controller_class, :search_params, presence: true
 
-  scope :for_class, lambda { |c| where(controller_class: c.to_s).limit(1) }
+  scope :for_class, -> (c) { where(controller_class: c.to_s).limit(1) }
 end
 
 # == Schema Information
@@ -20,4 +23,3 @@ end
 #  search_params    :text
 #  sort_params      :text
 #
-

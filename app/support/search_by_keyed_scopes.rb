@@ -1,3 +1,5 @@
+# encoding: utf-8
+# rubocop:disable all
 # Adds class methods to AR::Base that allows for declaring and invoking
 # simple where/order scopes.
 #
@@ -61,12 +63,14 @@ module SearchByKeyedScopes
           if finder.is_a? Symbol
             scope scope_name, lambda { |term|
               term = term[0] if term.is_a?(Array) && term.size == 1
-              eval_scopes(scopes).includes(includes).joins(joins).where(finder => transform_value(transform, term))
+              eval_scopes(scopes).includes(includes).joins(joins) \
+                .where(finder => transform_value(transform, term))
             }
           elsif finder.is_a? String
             scope scope_name, lambda { |term|
               term = term[0] if term.is_a?(Array) && term.size == 1
-              eval_scopes(scopes).includes(includes).joins(joins).where(finder, transform_value(transform, term))
+              eval_scopes(scopes).includes(includes).joins(joins) \
+                .where(finder, transform_value(transform, term))
             }
           end
         end
@@ -75,7 +79,7 @@ module SearchByKeyedScopes
 
     def sortable_by_keys(keys = {})
       self.class_eval do
-        scope :order_by, lambda { |key, args_or_dir="asc"|
+        scope :order_by, lambda { |key, args_or_dir = 'asc'|
           if !key.nil? and respond_to? "order_by_#{key}"
             send("order_by_#{key}", args_or_dir)
           else
@@ -97,9 +101,12 @@ module SearchByKeyedScopes
           joins = stmt[:joins]
           scopes = stmt[:scopes]
         end
-        raise "Invalid sortable_by_keys field: #{field}, arguments #{stmt} no field can be found" if field.blank?
-        self.class_eval do
-          scope scope_name, lambda { |dir="asc"| eval_scopes(scopes).joins(joins).order("#{field} #{dir}") }
+        fail "Invalid sortable_by_keys field: #{field}, arguments
+        #{stmt} no field can be found" if field.blank?
+        class_eval do
+          scope scope_name, lambda do |dir = 'asc'|
+            eval_scopes(scopes).joins(joins).order("#{field} #{dir}")
+          end
         end
       end
     end
@@ -120,7 +127,7 @@ module SearchByKeyedScopes
     end
 
     def strip_nonnumerics(value)
-      value.gsub(/[^0-9]/, "")
+      value.gsub(/[^0-9]/, '')
     end
 
     def always_true(value)
@@ -137,7 +144,7 @@ module SearchByKeyedScopes
 
     def to_list(value)
       if value.is_a? String
-        value.split(",")
+        value.split(',')
       else
         value
       end
@@ -148,3 +155,4 @@ module SearchByKeyedScopes
     end
   end
 end
+# rubocop:enable all

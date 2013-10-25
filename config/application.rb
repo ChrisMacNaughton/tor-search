@@ -1,15 +1,18 @@
+# encoding: utf-8
+# rubocop:disable LineLength
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development test)))
+  Bundler.require(*Rails.groups(assets: %w(development test)))
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
 
 module TorSearch
+    # This is my app
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -33,7 +36,7 @@ module TorSearch
     config.i18n.default_locale = :en
 
     # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
@@ -78,7 +81,7 @@ module TorSearch
     config.tor_search.coinbase_key = 'bfc79be3dc1282001d8fc17f8f664d41af4194449968ce47c0e24d8eba825b18'
 
     config.tor_search.tor_url = 'http://kbhpodhnfxl3clb4.onion'
-    config.tor_search.bitcoin_address = "1MkH4pGzCtpyNUDuM9mZsftYCfWrsALprt"
+    config.tor_search.bitcoin_address = '1MkH4pGzCtpyNUDuM9mZsftYCfWrsALprt'
 
     config.tor_search.pub_nub = ActiveSupport::OrderedOptions.new
     config.tor_search.pub_nub.publish_key = 'pub-c-64274781-1ba5-4e0e-92fa-dde91017cfb6'
@@ -89,27 +92,28 @@ module TorSearch
 
     config.tor_search.captcha_questions = [
         # Math questions
-        {'question' => 'two + 12', 'answers' => '14,fourteen'},
-        {'question' => '3 plus five', 'answers' => '8,eight'},
-        {'question' => 'twelve - 6', 'answers' => '6,six'},
-        {'question' => '2 times two', 'answers' => '4,four'},
-        {'question' => 'one times 11', 'answers' => '11,eleven'},
-        {'question' => '42 plus one', 'answers' => '43,forty-three,forty three'},
-        {'question' => '40 - ten', 'answers' => '30,thirty'},
-        {'question' => 'two plus five', 'answers' => '7,seven'},
-        {'question' => 'six times 2', 'answers' => '12,twelve'},
-        {'question' => 'one + one', 'answers' => 'two,2'},
+        { 'question' => 'two + 12', 'answers' => '14,fourteen' },
+        { 'question' => '3 plus five', 'answers' => '8,eight' },
+        { 'question' => 'twelve - 6', 'answers' => '6,six' },
+        { 'question' => '2 times two', 'answers' => '4,four' },
+        { 'question' => 'one times 11', 'answers' => '11,eleven' },
+        { 'question' => '42 plus one', 'answers' => '43,forty-three,forty three' },
+        { 'question' => '40 - ten', 'answers' => '30,thirty' },
+        { 'question' => 'two plus five', 'answers' => '7,seven' },
+        { 'question' => 'six times 2', 'answers' => '12,twelve' },
+        { 'question' => 'one + one', 'answers' => 'two,2' },
         # Generic english questions
-        {'question' => 'Is a purple box green?', 'answers' => 'no'},
-        {'question' => 'If tomorrow is Saturday, what day is today?', 'answers'=>'friday,today'},
-        {'question' => 'If a duck is black, what kind of bird is it?', 'answers' => 'duck,a duck'},
-        {'question' => 'If a duck is black, what color is it?', 'answers' => 'black'},
-        {'question' => 'What color is the black house?', 'answers' => 'black'},
-        {'question' => 'What color is the red sky at sunset?', 'answers' => 'red'},
-        {'question' => 'What color is the white paper on the brown clipboard?', 'answers' => 'white'},
-        {'question' => 'Do cars need train tracks to drive?', 'answers' => 'no'},
-        {'question' => 'Is a square a rectangle?', 'answers' => 'yes'},
-        {'question' => 'Is a square a triangle?', 'answers' => 'no'}
+        { 'question' => 'Is a purple box green?', 'answers' => 'no' },
+        { 'question' => 'If tomorrow is Saturday, what day is today?', 'answers' => 'friday,today' },
+        { 'question' => 'If a duck is black, what kind of bird is it?', 'answers' => 'duck,a duck' },
+        { 'question' => 'If a duck is black, what color is it?', 'answers' => 'black' },
+        { 'question' => 'What color is the black house?', 'answers' => 'black' },
+        { 'question' => 'What color is the red sky at sunset?', 'answers' => 'red' },
+        { 'question' => 'What color is the white paper on the brown clipboard?', 'answers' => 'white' },
+        { 'question' => 'Do cars need train tracks to drive?', 'answers' => 'no' },
+        { 'question' => 'Is a square a rectangle?', 'answers' => 'yes' },
+        { 'question' => 'Is a square a triangle?', 'answers' => 'no' }
     ]
   end
 end
+# rubocop:enable LineLength

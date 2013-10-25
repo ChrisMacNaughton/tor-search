@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Payment do
@@ -10,32 +12,43 @@ describe Payment do
     @coupon = coupons(:half_btc)
   end
 
-  it "credits an advertiser when a bitcoin address receives a payment" do
-    @advertiser.balance.should == 0.5
+  it 'credits an advertiser when a bitcoin address receives a payment' do
+    @advertiser.balance.should eq 0.5
 
-    Payment.create(transaction_hash: '123456', bitcoin_address: @address, advertiser: @advertiser, amount: 0.5)
+    Payment.create(
+      transaction_hash: '123456',
+      bitcoin_address: @address,
+      advertiser: @advertiser,
+      amount: 0.5
+    )
 
-    @advertiser.balance.should == 1.0
+    @advertiser.balance.should  eq 1.0
   end
 
-  it "credits an advertiser when a coupon is applied" do
-    @advertiser.balance.should == 0.5
+  it 'credits an advertiser when a coupon is applied' do
+    @advertiser.balance.should eq 0.5
 
-    Payment.create(advertiser: @advertiser, coupon: @coupon, amount: @coupon.value)
+    Payment.create(
+      advertiser: @advertiser, coupon: @coupon, amount: @coupon.value
+    )
 
-    @advertiser.balance.should == 1.0
+    @advertiser.balance.should eq 1.0
   end
 
-  it "cannot receive the same coupon twice" do
-    @advertiser.balance.should == 0.5
+  it 'cannot receive the same coupon twice' do
+    @advertiser.balance.should eq 0.5
 
-    Payment.create(advertiser: @advertiser, coupon: @coupon, amount: @coupon.value)
+    Payment.create(
+      advertiser: @advertiser, coupon: @coupon, amount: @coupon.value
+    )
 
-    @advertiser.balance.should == 1.0
+    @advertiser.balance.should eq 1.0
 
-    Payment.create(advertiser: @advertiser, coupon: @coupon, amount: @coupon.value)
+    Payment.create(
+      advertiser: @advertiser, coupon: @coupon, amount: @coupon.value
+    )
 
-    @advertiser.balance.should == 1.0
+    @advertiser.balance.should eq 1.0
   end
 
 end

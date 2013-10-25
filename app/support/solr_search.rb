@@ -1,10 +1,16 @@
+# encoding: utf-8
+# Handle building and executing our Solr query
+# rubocop:disable ClassLength
 class SolrSearch
   attr_accessor :page
+  attr_reader :current_page, :query
 
-  def initialize(query = '', page=1)
+  alias_method :query, :term
+
+  def initialize(query = '', page = 1)
     @query = query
-    @solr = RSolr.connect :url => 'http://localhost:8983/solr'
-    @page = page.to_i
+    @solr = RSolr.connect url: 'http://localhost:8983/solr'
+    @current_page = page.to_i
     @errors = []
     true
   end
@@ -15,7 +21,7 @@ class SolrSearch
   end
 
   def page=(page)
-    @page = page
+    @current_page = page
     clear_args
   end
 
@@ -26,6 +32,7 @@ class SolrSearch
   def group_field
     param['group.field']
   end
+
   def records
     @records ||= grouped.try(:[], 'doclist').try(:[], 'docs') || []
   end
@@ -35,29 +42,15 @@ class SolrSearch
   end
 
   def total_pages
-    @total_pages ||= (-(total.to_f/10)).floor.abs
+    @total_pages ||= (-(total.to_f / 10)).floor.abs
   end
 
   def highlights
     @highlights ||= nutch.try(:highlighting) || []
   end
 
-  def term
-    @query
-  end
-
-  def current_page
-    @page
-  end
-
   def indexed
-    begin
-      get_solr_size
-    rescue
-      @errors = []
-      @errors << "Search offline"
-      0
-    end
+    get_solr_size || 0
   end
 
   def errors
@@ -67,17 +60,20 @@ class SolrSearch
   end
 
   private
+
   def grouped
     response.try(group_field.to_sym)
   end
+
   def nutch
     return {} if @query.nil?
     @result ||= begin
-      OpenStruct.new JSON.parse(@solr.get('nutch', :params => param).response[:body])
+      solr = @solr.get('nutch', params: param)
+      OpenStruct.new JSON.parse(solr.response[:body])
     rescue
-      Rails.logger.info $!
-      @errors << "Search offline"
-      OpenStruct.new(error: "Failure to communicate with the Solr server")
+      Rails.logger.info $ERROR_INFO
+      @errors << 'Search offline'
+      OpenStruct.new(error: 'Failure to communicate with the Solr server')
     end
   end
 
@@ -87,25 +83,26 @@ class SolrSearch
 
   def get_solr_size
     path = 'http://localhost:8983/solr/admin/cores?wt=json'
-    num_docs = read_through_cache('index_size', 24.hours) do
+    read_through_cache('index_size', 24.hours) do
       json = Net::HTTP.get(URI.parse(path))
       JSON.parse(json)['status']['collection1']['index']['numDocs']
     end
   end
+
   def read_through_cache(cache_key, expires_in, &block)
-    # Attempt to fetch the choice values from the cache, if not found then retrieve them and stuff the results into the cache.
+    # Attempt to fetch the choice values from the cache,
+    # if not found then retrieve them and stuff the results into the cache.
     if TorSearch::Application.config.action_controller.perform_caching
       Rails.cache.fetch(cache_key, expires_in: expires_in, &block)
     else
       yield
     end
   end
+
   def param
-    if @p.nil?
-      @p = with_title(with_site(without_banned_hosts(defaults)))
-    end
-    @p
+    @p ||= with_title(with_site(without_banned_hosts(defaults)))
   end
+
   def without_banned_hosts(q)
     unless banned_hosts.empty?
       banned_hosts.each do |h|
@@ -115,27 +112,26 @@ class SolrSearch
     end
     q
   end
+  # rubocop:disable MethodLength
   def with_title(q)
     if q[:q].include? 'title:'
       match = q[:q].match(/title:(\S+)/i)
       title = match[1]
       fq = "title:#{title}"
-      if q[:q].include? '-title:'
-        fq = "-#{fq}"
-      end
+      fq = "-#{fq}" if q[:q].include? '-title:'
       q[:q].gsub!(match[0], '')
       q[:fq] << fq
     end
     q
   end
+
   def with_site(q)
     if q[:q].include? 'site:'
-      site = q[:q].match(/site:\s*(https?:\/\/)?(.{16}.onion)/i).to_a.last.gsub(/\.onion\/?$/, '')
+      site = q[:q].match(%r(site:\s*(https?://)?(.{16}.onion))i) \
+        .to_a.last.gsub(/\.onion\/?$/, '')
       unless site.nil?
         fq = "id:onion.#{site}*"
-        if q[:q].include? '-site:'
-          fq = "-#{fq}"
-        end
+        fq = "-#{fq}" if q[:q].include? '-site:'
         q[:q].gsub!(/site:\s*(.{16}.onion)/i, '')
         q[:fq] << fq
         q['group.field'] = 'id'
@@ -143,22 +139,28 @@ class SolrSearch
     end
     q
   end
-
+  # rubocop:enable MethodLength
   def defaults
-    {
-      start: (@page - 1) * 10,
+    global_opts.merge(
+      start: (@current_page - 1) * 10,
       q: @query.dup,
-      rows: 10,
-      wt: 'json',
-      fq: [],
+      fq: []
+    )
+  end
+
+  def global_opts
+    {
       mm: '2<-1 6<70%',
       group: true,
-      'group.format'=>'simple',
+      'group.format' => 'simple',
       'group.field' => 'host',
       'group.ngroups' => true,
-      'group.limit' => 3
+      'group.limit' => 3,
+      rows: 10,
+      wt: 'json'
     }
   end
+
   def clear_args
     @result = nil
     @records = nil
@@ -166,7 +168,9 @@ class SolrSearch
     @total_pages = nil
     @highlights = nil
   end
+
   def banned_hosts
     BannedDomain.pluck(:hostname)
   end
 end
+# rubocop:enable ClassLength

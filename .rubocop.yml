@@ -1,0 +1,6 @@
+AllCops:
+  Excludes:
+    - db/*
+    - coverage/*
+Documentation:
+  Enabled: false

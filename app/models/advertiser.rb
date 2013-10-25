@@ -1,3 +1,5 @@
+# encoding: utf-8
+# advertisers create ads
 class Advertiser < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -7,26 +9,33 @@ class Advertiser < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation,
-    :remember_me, :balance, :username, :beta, :beta_requested
+                  :remember_me, :balance, :username, :beta,
+                  :beta_requested
   # attr_accessible :title, :body
   has_many :ads
   has_many :bitcoin_addresses
   has_many :payments
   validates :username,
-    :uniqueness => {
-      :case_sensitive => false
-    }, presence: true
+            uniqueness: {
+              case_sensitive: false
+            },
+            presence: true
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
-    if login = conditions.delete(:username)
-      where(conditions).where(["lower(username) = :value", { :value => login.downcase }]).first
+    login = conditions.delete(:username)
+    if login
+      where(conditions) \
+        .where(['lower(username) = :value', { value: login.downcase }]) \
+        .first
     else
       where(conditions).first
     end
   end
+
   def to_s
-    self.try(:email) || self.try(:username)
+    try(:email) || try(:username)
   end
+
   def email_required?
     false
   end

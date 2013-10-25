@@ -1,3 +1,5 @@
+# rubocop:disable all
+# AdFinder is used to find ads that match a query
 class AdFinder
   attr_accessor :query
   attr_accessor :limit
@@ -10,7 +12,7 @@ class AdFinder
   def ads
     if @selected_ads.nil?
       Rails.logger.info "Fetching ads for #{self.query}"
-      @selected_ads = (ads_by_keyword | generic_ads).uniq.sort do |s,f|
+      @selected_ads = (ads_by_keyword | generic_ads).uniq.sort do |s, f|
         (f.onion? ? s.bid : s.bid * 0.75 ) <=> (s.onion? ? f.bid : f.bid * 0.75 )
       end.map(&:reload).take(limit)
       Rails.logger.info "\tFound #{@selected_ads.count} ads"
@@ -22,10 +24,13 @@ class AdFinder
 
   def ads_by_keyword
     if @keyword_ads.nil?
-      @keyword_ads = Ad.select("ads.*").limit(limit).available.joins(:advertiser, ad_keywords: :keyword). \
-        where('advertisers.balance > ad_keywords.bid').where("keywords.word in (?)", query_words)
+      @keyword_ads = Ad.select("ads.*").limit(limit).available \
+        .joins(:advertiser, ad_keywords: :keyword). \
+        where('advertisers.balance > ad_keywords.bid') \
+        .where("keywords.word in (?)", query_words)
       @keyword_ads.map do |ad|
-        ad.keyword_id = ad.ad_keywords.joins(:keyword).where("keywords.word in (?)", query_words).first.id
+        ad.keyword_id = ad.ad_keywords.joins(:keyword) \
+        .where("keywords.word in (?)", query_words).first.id
       end
     end
     @keyword_ads
@@ -33,10 +38,13 @@ class AdFinder
 
   def generic_ads
     @generic_ads ||= Ad.limit(limit).available.joins(:advertiser). \
-      where('advertisers.balance > ads.bid').where("(select count(*) from ad_keywords where ad_id = ads.id) = 0").order(:bid, :created_at).map{|ad| ad.bid = ad.bid / 2; ad}
+      where('advertisers.balance > ads.bid') \
+      .where("(select count(*) from ad_keywords where ad_id = ads.id) = 0") \
+      .order(:bid, :created_at).map{|ad| ad.bid = ad.bid / 2; ad}
   end
 
   def query_words
     query.split(/\s/)
   end
 end
+# rubocop:disable all

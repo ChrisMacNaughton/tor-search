@@ -1,11 +1,17 @@
+# encoding: utf-8
+
+# a payment via coupon or bitcoin address
 class Payment < ActiveRecord::Base
   belongs_to :advertiser
   belongs_to :bitcoin_address
   belongs_to :coupon
-  attr_accessible :amount, :bitcoin_address, :advertiser, :coupon, :transaction_hash
+  attr_accessible :amount, :bitcoin_address, :advertiser,
+                  :coupon, :transaction_hash
 
   after_create :credit_advertiser
-  validates :coupon_id, uniqueness: {scope: [:advertiser_id, :bitcoin_address_id]}
+  validates :coupon_id, uniqueness: {
+    scope: [:advertiser_id, :bitcoin_address_id]
+  }
   validates :transaction_hash, uniqueness: true
   def credit_advertiser
     balance = advertiser.balance

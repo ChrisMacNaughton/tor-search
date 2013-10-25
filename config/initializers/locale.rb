@@ -1,3 +1,4 @@
+# encoding: utf-8
 I18n::Backend::Simple.send(:include, I18n::Backend::Memoize)
 I18n::Backend::Simple.send(:include, I18n::Backend::Pluralization)
 
