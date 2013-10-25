@@ -25,9 +25,13 @@ describe Matcher do
         btc[:weight].should == 10
       end
     end
+
+    it "can return values for a specific currency"
+
   end
 
   context "user agent matcher" do
+
     before(:all) do
       @request = OpenStruct.new(
         {
@@ -55,7 +59,9 @@ describe Matcher do
         }
       )
     end
+
     ['useragent', 'user agent', 'header','request header'].each do |name|
+
       it "matches #{name}" do
         matches = Matcher.new(name, @request).execute
         matches.length.should == 1
@@ -63,6 +69,9 @@ describe Matcher do
         agent[:name].should == "Request Headers"
         agent[:weight].should == 15
       end
+
     end
+
   end
+
 end

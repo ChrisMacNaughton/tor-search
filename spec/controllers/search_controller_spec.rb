@@ -2,6 +2,13 @@ require 'spec_helper'
 
 describe SearchController do
   fixtures :ads, :advertisers, :keywords
+
+  describe 'index' do
+    it "tracks a user"
+
+    it "gets the total indexed count from Solr"
+  end
+
   describe 'a search' do
     it "credits an ad with views" do
 

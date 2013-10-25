@@ -1,4 +1,5 @@
 describe AdFinder do
+
   fixtures :ads, :keywords
 
   it "can find an ad with no keywords" do
@@ -18,4 +19,5 @@ describe AdFinder do
     ads = AdFinder.new('whatever').ads
     ads.should == [ads(:ad), ads(:non_onion_ad)]
   end
+
 end

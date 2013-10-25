@@ -44,4 +44,5 @@ describe SolrSearch do
   it "can remove a specific site"
 
   it "resets the arguments when an argument changes"
+
 end
