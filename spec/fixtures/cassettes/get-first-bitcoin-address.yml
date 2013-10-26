@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://coinbase.com/api/v1/account/generate_receive_address
+    body:
+      encoding: US-ASCII
+      string: address[callback_url]=http%3A%2F%2Fts.chrismacnaughton.com%2Fpayments&api_key=bfc79be3dc1282001d8fc17f8f664d41af4194449968ce47c0e24d8eba825b18
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - cloudflare-nginx
+      Date:
+      - Sat, 26 Oct 2013 17:43:13 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d1501f7b3a9df9aac4d54bd22b3070dba1382809393447; expires=Mon, 23-Dec-2019
+        23:50:00 GMT; path=/; domain=.coinbase.com; HttpOnly
+      - request_method=POST; path=/; secure
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Etag:
+      - ! '"d491d6c1733cded3ad3737c5f682fac2"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 6d868297b766ab349669317006435c1b
+      X-Runtime:
+      - '0.165911'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      X-Rack-Cache:
+      - invalidate, pass
+      Vary:
+      - Accept-Encoding
+      Cf-Ray:
+      - c38f294b2f002b8
+    body:
+      encoding: US-ASCII
+      string: ! '{"success":true,"address":"1P7373Y9dcxpAwvzsNuckkETD5AXw139GD","callback_url":"http://ts.chrismacnaughton.com/payments"}'
+    http_version: 
+  recorded_at: Sat, 26 Oct 2013 17:43:13 GMT
+recorded_with: VCR 2.5.0
