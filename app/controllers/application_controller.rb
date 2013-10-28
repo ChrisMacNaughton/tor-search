@@ -79,6 +79,6 @@ class ApplicationController < ActionController::Base
       logger.warn error.message
       logger.warn error.backtrace.join("\n")
     end
-    render text: 'Improperly encoded request', status: 406 && return
+    render text: 'Improperly encoded request', status: 406 and return
   end
 end

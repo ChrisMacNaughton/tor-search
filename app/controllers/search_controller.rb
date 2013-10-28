@@ -16,7 +16,7 @@ class SearchController < ApplicationController
   end
   # rubocop:disable MethodLength
   def search
-    render :index && return if params[:q].empty?
+    render :index and return if params[:q].empty?
 
     @query = Query.find_or_create_by_term(params[:q])
 
@@ -27,7 +27,7 @@ class SearchController < ApplicationController
       s = OpenStruct.new(term: params[:q], total: 1)
       if bang.has_target?
         InstantResult.create(query: @query, bang_match: bang.bang)
-        track!(s) && redirect_to(bang.redirect_target) && return
+        track!(s) && redirect_to(bang.redirect_target) and return
       end
     end
 
@@ -79,7 +79,7 @@ class SearchController < ApplicationController
 
     Click.create(search: search, target: target)
     if params[:j]
-      render text: { status: 'ok' } && return
+      render text: { status: 'ok' } and return
     else
       redirect_to params[:p]
     end
