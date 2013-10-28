@@ -23,7 +23,7 @@ class GraphsController < ApplicationController
   private
 
   # rubocop:disable MethodLength
-  def build_graph_data_hash(title, searches_raw)
+  def build_graph(title, searches_raw)
 
     g = Gruff::Bar.new('500x150')
     g.title = title
