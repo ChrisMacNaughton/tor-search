@@ -16,7 +16,11 @@ class SearchController < ApplicationController
   end
   # rubocop:disable MethodLength
   def search
-    render :index and return if params[:q].empty?
+    if params[:q].empty?
+      track
+      @search = SolrSearch.new
+      render :index and return
+    end
 
     @query = Query.find_or_create_by_term(params[:q])
 
