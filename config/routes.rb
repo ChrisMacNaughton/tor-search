@@ -44,8 +44,8 @@ TorSearch::Application.routes.draw do
     post 'coupons' => 'coupon#create', as: :credit_coupon
   end
 
-  root to: 'search#index', as: :search
-  get '/' => 'search#index', as: :root
+  root to: 'search#index'
+
   match '/:locale' => 'search#index'
 
   match '*not_found', to: 'errors#error_404', as: 'not_found' \

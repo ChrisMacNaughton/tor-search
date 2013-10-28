@@ -30,4 +30,4 @@
       = url[0..60]
       = "..." if url.length > 60
       -#if include_more_links(@search_term)
-        =# link_to "More from #{domain}", search_path(q: "#{@search_term} site:#{domain}")
+        =# link_to "More from #{domain}", root_path(q: "#{@search_term} site:#{domain}")

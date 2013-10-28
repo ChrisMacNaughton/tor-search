@@ -71,6 +71,7 @@ class SolrSearch
       solr = @solr.get('nutch', params: param)
       OpenStruct.new JSON.parse(solr.response[:body])
     rescue
+      notify_airbrake(ex)
       Rails.logger.info $ERROR_INFO
       @errors << 'Search offline'
       OpenStruct.new(error: 'Failure to communicate with the Solr server')

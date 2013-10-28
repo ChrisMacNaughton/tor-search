@@ -144,3 +144,6 @@ namespace :log do
   end
 end
 # rubocop:enable LineLength,RescueModifier, ColonMethodCall
+
+        require './config/boot'
+        require 'airbrake/capistrano'

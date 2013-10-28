@@ -45,7 +45,7 @@
       .row.fluid.span2
         =t('search.try_this_on')
         %ul.unstyled
-          %li=link_to "Amazon", search_path(q: "@amazon #{@search.term}")
+          %li=link_to "Amazon", root_path(q: "@amazon #{@search.term}")
         %hr{style: 'margin: 10px 0'}
       -unless @ads.nil? || @ads.empty?
         - @ads.each do |ad|

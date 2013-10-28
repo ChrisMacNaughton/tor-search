@@ -12,7 +12,7 @@ class ContactController < ApplicationController
 
     if @message.save
       flash.notice = 'Thank you, I will try to respond shortly!'
-      redirect_to search_path and return
+      redirect_to root_path and return
     else
       render :contact
     end

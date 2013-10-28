@@ -23,7 +23,7 @@
     .container
       -unless defined?(@nav) && @nav == false
         %ul.nav.nav-tabs
-          =nav_link t('nav.search'), search_path
+          =nav_link t('nav.search'), root_path
           =nav_link t('nav.contact'), contact_path
           =nav_link t('nav.policies'), policies_path
           -if current_advertiser

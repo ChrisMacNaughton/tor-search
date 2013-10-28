@@ -67,6 +67,7 @@ end
 gem 'unicorn'
 gem 'newrelic_rpm'
 gem 'dotenv-rails' # Used to install environment variables
+gem 'airbrake'
 
 gem "acts_as_textcaptcha", "~> 3.0.10"
 # Use Capistrano for deployment
