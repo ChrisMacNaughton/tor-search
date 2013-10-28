@@ -22,7 +22,7 @@ TorSearch::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
-  # config.cache_store = :memory_store
+  config.cache_store = :file_store, "/var/rails/tor_search/tmp/cache"
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 
