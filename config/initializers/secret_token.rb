@@ -10,9 +10,10 @@ if ENV['SECRET_TOKEN'].blank?
   if /development|test/ =~ Rails.env
     ENV['SECRET_TOKEN'] = 'x' * 32
   else
-    fail "Environment variable 'SECRET_TOKEN' cannot be found.
-    Please make sure that there is a valid .env file and that the
-    dotenv gem is loaded"
+    ENV['SECRET_TOKEN'] = '95bb06cbe00543628e900f1aa22d3aba'
+    #fail "Environment variable 'SECRET_TOKEN' cannot be found.
+    #Please make sure that there is a valid .env file and that the
+    #dotenv gem is loaded"
   end
 end
 
