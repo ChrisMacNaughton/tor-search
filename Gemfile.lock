@@ -82,6 +82,8 @@ GEM
       warden (~> 1.2.1)
     diff-lcs (1.2.4)
     dotenv (0.8.0)
+    dotenv-rails (0.8.0)
+      dotenv (= 0.8.0)
     erubis (2.7.0)
     ethon (0.5.12)
       ffi (>= 1.3.0)
@@ -265,6 +267,7 @@ DEPENDENCIES
   coinbase
   debugger
   devise
+  dotenv-rails
   foreman
   gruff
   haml

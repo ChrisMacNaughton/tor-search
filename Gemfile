@@ -66,6 +66,8 @@ end
 # Use unicorn as the app server
 gem 'unicorn'
 gem 'newrelic_rpm'
+gem 'dotenv-rails' # Used to install environment variables
+
 gem "acts_as_textcaptcha", "~> 3.0.10"
 # Use Capistrano for deployment
 gem 'capistrano', group: :development
