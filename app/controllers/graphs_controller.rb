@@ -5,18 +5,20 @@ class GraphsController < ApplicationController
   end
 
   def daily
-    g = build_graph 'Searches By Day', Search \
-      .group("to_char(created_at, 'MM/DD/YYYY')") \
-      .where('created_at > ?', 31.days.ago).count
-
+    g = read_through_cache('searches_by_day', 1.hour) do
+      build_graph 'Searches By Day', Search \
+        .group("to_char(created_at, 'MM/DD/YYYY')") \
+        .where('created_at > ?', 31.days.ago.to_date).count
+    end
     send_data g.to_blob('PNG'), type: 'image/png', disposition: :inline
   end
 
   def unique
-    g = build_graph 'Unique Searches By Day', Search \
-      .group("to_char(created_at, 'MM/DD/YYYY')") \
-      .where('created_at > ?', 31.days.ago).count(select: 'distinct(query_id)')
-
+    g = read_through_cache('unique_searches_by_day', 1.hour) do
+      build_graph 'Unique Searches By Day', Search \
+        .group("to_char(created_at, 'MM/DD/YYYY')") \
+        .where('created_at > ?', 31.days.ago.to_date).count(select: 'distinct(query_id)')
+      end
     send_data g.to_blob('PNG'), type: 'image/png', disposition: :inline
   end
 
