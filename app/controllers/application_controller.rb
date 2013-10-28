@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
       logger.warn error.backtrace.join("\n")
     end
     respond_to do |format|
-      format.html { render template: 'errors/error_404', status: 404 }
+      format.html { render template: 'errors/error_404', status: 404, layout: 'errors' }
       format.all { render nothing: true, status: 404 }
     end
     true
@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
     end
     respond_to do |format|
       format.html do
-        render template: 'errors/error_500', status: 500
+        render template: 'errors/error_500', status: 500, layout: 'errors'
       end
     end
     true
