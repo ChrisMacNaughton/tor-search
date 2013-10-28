@@ -23,7 +23,7 @@ set :stages,                     %w(staging production)
 set :default_stage,              'production'
 
 set :scm,                        :git
-set :repository,                 'git@bitbucket.org:IceyEC/torsearch.git'
+set :repository,                 'git@bitbucket.org:TorSearch/torsearch.git'
 set :deploy_via,                 :remote_cache
 default_run_options[:pty]        = true
 
