@@ -17,7 +17,7 @@ class SolrSearch
 
   def config
     if @config.nil?
-      @config = YAML.load("#{Rails.root_path}/config/solr.yml")
+      @config = YAML.load Rails.root.join('config','solr.yml')
     end
     @config[Rails.env]
   end
