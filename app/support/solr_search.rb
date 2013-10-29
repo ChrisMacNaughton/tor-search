@@ -9,7 +9,7 @@ class SolrSearch
 
   def initialize(query = '', page = 1)
     @query = query
-    @solr = RSolr.connect url: 'http://localhost:8983/solr'
+    @solr = RSolr.connect url: "http://#{config[:hostname]}:#{config[:port]}/solr"
     @current_page = page.to_i
     @errors = []
     true

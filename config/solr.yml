@@ -1,24 +1,11 @@
 production:
-  solr:
-    solr:
-    hostname: localhost
-    port: 8983
-    solr_jar: solr/solr-4.4.0/example/start.jar
-    log_level: WARNING
-    max_memory: 1G
-    read_timeout: 2
-    # open_timeout: 0.5
+  hostname: localhost
+  port: 8983
 
 development:
-  solr:
-    hostname: localhost
-    port: 8983
-    solr_jar: solr/solr-4.4.0/example/start.jar
-    log_level: INFO
-    max_memory: 2G
+  hostname: localhost
+  port: 8983
 
 test:
-  solr:
-    hostname: localhost
-    port: 8983
-    log_level: WARNING
+  hostname: localhost
+  port: 8983
