@@ -19,3 +19,4 @@
 /solr/solr-*
 /public/assets
 coverage
+.env
