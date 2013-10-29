@@ -9,7 +9,6 @@ class SolrSearch
 
   def initialize(query = '', page = 1)
     @query = query
-    Rails.logger.info "trying to connect to Solr with #{config}"
     @solr = RSolr.connect url: solr_url
     @current_page = page.to_i
     @errors = []
