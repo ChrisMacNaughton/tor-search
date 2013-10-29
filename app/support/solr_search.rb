@@ -17,7 +17,7 @@ class SolrSearch
 
   def config
     if @config.nil?
-      @config = YAML.load Rails.root.join('config','solr.yml')
+      @config = HashWithIndifferentAccess.new(YAML.load_file Rails.root.join('config','solr.yml'))
     end
     @config[Rails.env]
   end
