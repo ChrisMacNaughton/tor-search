@@ -39,8 +39,8 @@ before 'deploy:migrations',      'deploy:web:disable'
 after  'deploy:update_code',     'deploy:symlink_shared'
 
 after 'deploy:create_symlink',   'deploy:chmod_unicorn', 'deploy:chmod_dj', 'deploy:chown_tor'
-after  'deploy',                 'newrelic:notice_deployment', 'deploy:cleanup', 'deploy:solr_restart'# , 'deploy:delayed_job:restart'
-after  'deploy:migrations',      'deploy:web:enable', 'newrelic:notice_deployment', 'deploy:cleanup'# , 'deploy:delayed_job:restart'
+after  'deploy',                 'newrelic:notice_deployment', 'deploy:cleanup'# , 'deploy:delayed_job:restart'
+after  'deploy:migrations',      'deploy:web:enable', 'newrelic:notice_deployment', 'deploy:cleanup', 'deploy:solr_restart'# , 'deploy:delayed_job:restart'
 
 namespace :deploy do
   task :solr_restart, roles: :app, except: { no_release: true } do
