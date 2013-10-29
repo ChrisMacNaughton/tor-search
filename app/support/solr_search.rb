@@ -128,8 +128,9 @@ class SolrSearch
 
   def with_site(q)
     if q[:q].include? 'site:'
-      site = q[:q].match(%r(site:\s*(https?://)?(.{16}.onion))i) \
-        .to_a.last.gsub(/\.onion\/?$/, '')
+      matches = q[:q].match(%r(site:\s*(https?://)?(.{16}.onion))i)
+      match = matches.to_a.try(:last)
+      site = match.gsub(/\.onion\/?$/, '') if match
       unless site.nil?
         fq = "id:onion.#{site}*"
         fq = "-#{fq}" if q[:q].include? '-site:'
