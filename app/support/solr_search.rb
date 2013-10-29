@@ -15,6 +15,13 @@ class SolrSearch
     true
   end
 
+  def config
+    if @config.nil?
+      @config = YAML.load("#{Rails.root_path}/config/solr.yml")
+    end
+    @config[Rails.env]
+  end
+
   def query=(arg)
     @query = arg
     clear_args
@@ -71,7 +78,7 @@ class SolrSearch
       solr = @solr.get('nutch', params: param)
       OpenStruct.new JSON.parse(solr.response[:body])
     rescue => ex
-      Airbrake.notify(ex)
+      #Airbrake.notify(ex)
       Rails.logger.info ex
       @errors << 'Search offline'
       OpenStruct.new(error: 'Failure to communicate with the Solr server')
