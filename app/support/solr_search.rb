@@ -9,7 +9,8 @@ class SolrSearch
 
   def initialize(query = '', page = 1)
     @query = query
-    @solr = RSolr.connect url: "http://#{config[:hostname]}:#{config[:port]}/solr"
+    Rails.logger.info "trying to connect to Solr with #{config}"
+    @solr = RSolr.connect url: solr_url
     @current_page = page.to_i
     @errors = []
     true
@@ -68,6 +69,10 @@ class SolrSearch
 
   private
 
+  def solr_url
+    "http://#{config[:hostname]}:#{config[:port]}/solr"
+  end
+
   def grouped
     response.try(group_field.to_sym)
   end
@@ -90,7 +95,7 @@ class SolrSearch
   end
 
   def get_solr_size
-    path = 'http://localhost:8983/solr/admin/cores?wt=json'
+    path = "#{solr_url}/admin/cores?wt=json"
     read_through_cache('index_size', 24.hours) do
       json = Net::HTTP.get(URI.parse(path))
       JSON.parse(json)['status']['collection1']['index']['numDocs']
