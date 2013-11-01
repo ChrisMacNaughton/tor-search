@@ -110,6 +110,7 @@ namespace :deploy do
       run "rm #{shared_path}/system/maintenance.html"
     end
   end
+=begin
   namespace :assets do
     task :precompile, roles: :web do
       from = source.next_revision(current_revision) rescue nil
@@ -125,8 +126,8 @@ namespace :deploy do
       end
     end
   end
+=end
 end
-
 namespace :log do
   desc 'A pinch of tail'
   task :tailf, roles: :app do
