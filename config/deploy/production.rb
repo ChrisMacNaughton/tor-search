@@ -5,7 +5,7 @@
 
 server 'dlweb02', \
       :app, :web, primary: true
-server 'dlweb01' \
+server 'dlweb01', \
       :db
 
 set :gateway, 'cmacnaughton@sub.gesty.net:9022'
