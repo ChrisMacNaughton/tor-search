@@ -43,13 +43,6 @@ after  'deploy',                 'newrelic:notice_deployment', 'deploy:cleanup'#
 after  'deploy:migrations',      'deploy:web:enable', 'newrelic:notice_deployment', 'deploy:cleanup'# , 'deploy:solr_restart'# , 'deploy:delayed_job:restart'
 
 namespace :deploy do
-  task :solr_restart, roles: :app, except: { no_release: true } do
-    run 'curl http://localhost:8983/solr/admin/cores?wt=json&action=RELOAD&core=collection1'
-  end
-  desc 'Restart the monit service.'
-  task :reload_monit, roles: :app, except: { no_release: true } do
-    run "#{try_sudo} monit restart unicorn"
-  end
   %w[start stop].each do |command|
     desc "#{command} unicorn server"
     task command, roles: :app, except: { no_release: true } do
