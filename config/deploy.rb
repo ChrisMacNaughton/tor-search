@@ -100,14 +100,14 @@ namespace :deploy do
   namespace :web do
     desc 'Maintenance start'
     task :disable, roles: :web do
-      on_rollback { run "rm #{shared_path}/system/maintenance.html" }
-      page = File.read('public/503.html')
-      put page, "#{shared_path}/system/maintenance.html", mode: 0644
+      #on_rollback { run "rm #{shared_path}/system/maintenance.html" }
+      #page = File.read('public/503.html')
+      #put page, "#{shared_path}/system/maintenance.html", mode: 0644
     end
 
     desc 'Maintenance stop'
     task :enable, roles: :web do
-      run "rm #{shared_path}/system/maintenance.html"
+      #run "rm #{shared_path}/system/maintenance.html"
     end
   end
 =begin
