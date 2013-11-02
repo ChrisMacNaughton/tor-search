@@ -15,10 +15,10 @@ class ApplicationController < ActionController::Base
   end
 
   def track
-    return true unless Rails.env.include? 'production'
+    #return true unless Rails.env.include? 'production'
     return if params[:q]
 
-    Tracker.new(request).track!
+    Tracker.new(request).track_later!
   end
 
   def after_sign_in_path_for(resource)

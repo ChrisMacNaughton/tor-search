@@ -31,6 +31,22 @@ class Tracker
     Rails.logger.debug response.body
   end
 
+  def track_later!
+    Tracker.delay.track!(options, uri)
+    true
+  end
+
+  def self.track!(options, uri)
+    http = Net::HTTP.new(uri.host, uri.port)
+
+    if uri.scheme == 'https'
+      http.use_ssl     = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
+
+    http.request(Net::HTTP::Get.new("#{uri.request_uri}?#{options.to_query}"))
+  end
+
   private
 
   def user_id
@@ -67,15 +83,19 @@ class Tracker
   end
 
   def options
-    default_opts.merge(
-      idsite: site_id,
-      action_name: @action,
-      ua: user_agent,
-      search: @search.try('[]', :term),
-      search_count: @search.try('[]', :count),
-      cid: user_id,
-      cip: '',
-    ).delete_if { |k, v| v.nil? }
+    if @options.nil?
+      @options = default_opts.merge(
+        cdt: DateTime.now.strftime('%Y-%m-%d %T'),
+        idsite: site_id,
+        action_name: @action,
+        ua: user_agent,
+        search: @search.try('[]', :term),
+        search_count: @search.try('[]', :count),
+        cid: user_id,
+        cip: '',
+      ).delete_if { |k, v| v.nil? }
+    end
+    @options
   end
 
   def default_opts
