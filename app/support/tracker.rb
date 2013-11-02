@@ -44,6 +44,7 @@ class Tracker
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
     Rails.logger.info "Tracking a visit:"
+    options.delete(:cdt)
     Rails.logger.info options
     Rails.logger.info "Received: " + http.request(Net::HTTP::Get.new("#{uri.request_uri}?#{options.to_query}")).body
   end
@@ -85,7 +86,6 @@ class Tracker
 
   def options
     default_opts.merge(
-      #cdt: DateTime.now.strftime('%Y-%m-%d %T'),
       idsite: site_id,
       action_name: @action,
       ua: user_agent,
