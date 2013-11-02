@@ -43,7 +43,8 @@ class Tracker
       http.use_ssl     = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
-
+    Rails.logger.info "Tracking a visit:"
+    Rails.logger.info options
     http.request(Net::HTTP::Get.new("#{uri.request_uri}?#{options.to_query}"))
   end
 
