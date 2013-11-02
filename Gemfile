@@ -25,7 +25,7 @@ gem 'haml-rails'
 gem 'coffee-rails'
 
 gem 'angularjs-rails-resource'
-
+gem "daemons"
 gem 'delayed_job_active_record'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

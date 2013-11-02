@@ -74,7 +74,7 @@ class SearchController < ApplicationController
 
     Tracker.new(
       request, { term: search.term, count: search.total }, 'Search'
-    ).track!
+    ).track_later!
   end
 
   def redirect
