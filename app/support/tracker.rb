@@ -84,19 +84,16 @@ class Tracker
   end
 
   def options
-    if @options.nil?
-      @options = default_opts.merge(
-        cdt: DateTime.now.strftime('%Y-%m-%d %T'),
-        idsite: site_id,
-        action_name: @action,
-        ua: user_agent,
-        search: @search.try('[]', :term),
-        search_count: @search.try('[]', :count),
-        cid: user_id,
-        cip: '',
-      ).delete_if { |k, v| v.nil? }
-    end
-    @options
+    default_opts.merge(
+      #cdt: DateTime.now.strftime('%Y-%m-%d %T'),
+      idsite: site_id,
+      action_name: @action,
+      ua: user_agent,
+      search: @search.try('[]', :term),
+      search_count: @search.try('[]', :count),
+      cid: user_id,
+      cip: '',
+    ).delete_if { |k, v| v.nil? }
   end
 
   def default_opts
