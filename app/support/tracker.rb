@@ -45,7 +45,7 @@ class Tracker
     end
     Rails.logger.info "Tracking a visit:"
     Rails.logger.info options
-    http.request(Net::HTTP::Get.new("#{uri.request_uri}?#{options.to_query}"))
+    Rails.logger.info "Received: " + http.request(Net::HTTP::Get.new("#{uri.request_uri}?#{options.to_query}"))
   end
 
   private
