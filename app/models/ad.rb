@@ -17,6 +17,7 @@ class Ad < ActiveRecord::Base
   attr_accessible :bid, :title, :disabled, :protocol_id, :path, :approved,
                   :ppc, :display_path, :line_1, :line_2, :include_path,
                   :advertiser
+  validates :advertiser_id, presence: true
   validates :path, presence: true
   validates :title, presence: true
   validates :bid, presence: true
