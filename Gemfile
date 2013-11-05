@@ -24,6 +24,8 @@ gem 'haml-rails'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails'
 
+gem 'active_model_serializers'
+
 gem 'angularjs-rails-resource'
 gem "daemons"
 gem 'delayed_job_active_record'

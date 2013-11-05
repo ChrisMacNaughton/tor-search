@@ -1,0 +1,10 @@
+/*
+ *= require bootstrap
+ *= require shadowbox
+ *= require_self
+ *= require base/main
+*/
+.path{
+  color: #093;
+  font-size: 0.8em;
+}

@@ -1,0 +1,21 @@
+=render partial: 'ads_common_nav'
+.span10
+  %table.table
+    %thead
+      %tr
+        %th Title
+        %th Status
+        %th Bid
+        %th Views
+        %th Clicks
+        %th CTR
+        %th Avg. Pos.
+    %tbody
+      %tr{ng_repeat: "record in searchParameters.records", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
+        %td <a ng-href="ads/{{record.id}}">{{record.title}}</a>
+        %td {{record.status}}
+        %td ฿{{record.bid}}
+        %td {{record.views|number}}
+        %td {{record.clicks|number}}
+        %td {{record.ctr|number:2}}%
+        %td {{record.avgPosition|number:2}}

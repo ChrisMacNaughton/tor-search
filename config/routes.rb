@@ -32,17 +32,22 @@ TorSearch::Application.routes.draw do
     get 'policies' => 'static#policies', as: :policies
 
     get '/keyword_tool' => 'keyword_tool#index'
-    get '/ads/new-address' => 'ads#get_payment_address', as: :new_btc_address
-
-    resources :ads do
-      resources :keywords
-      member do
-        put 'toggle' => 'ads#toggle', as: :toggle
-        put 'request_beta' => 'ads#request_beta', as: :request_beta
-      end
-    end
-    post 'coupons' => 'coupon#create', as: :credit_coupon
   end
+
+  resources :ads do
+    resources :keywords
+    member do
+      put 'toggle' => 'ads#toggle', as: :toggle
+      put 'request_beta' => 'ads#request_beta', as: :request_beta
+    end
+  end
+
+
+  get '/ads/new-address' => 'ads#get_payment_address', as: :new_btc_address
+
+  post 'coupons' => 'coupon#create', as: :credit_coupon
+
+  get 'partials/ads/:partial' => 'ads#partials'
 
   root to: 'search#index'
 

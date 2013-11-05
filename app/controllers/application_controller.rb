@@ -5,11 +5,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :set_locale
 
-  def default_url_options(options = {})
-    logger.debug "default_url_options is passed options: #{options.inspect}\n"
-    { locale: I18n.locale }
-  end
-
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
   end
@@ -17,7 +12,6 @@ class ApplicationController < ActionController::Base
   def track
     #return true unless Rails.env.include? 'production'
     return if params[:q]
-
     Tracker.new(request).track_later!
   end
 
