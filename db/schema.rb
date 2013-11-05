@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131025171246) do
+ActiveRecord::Schema.define(:version => 20131105145347) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -84,8 +84,8 @@ ActiveRecord::Schema.define(:version => 20131025171246) do
   add_index "ads", ["advertiser_id"], :name => "index_ads_on_advertiser_id"
 
   create_table "advertisers", :force => true do |t|
-    t.string   "email",                                                 :default => "",  :null => false
-    t.string   "encrypted_password",                                    :default => "",  :null => false
+    t.string   "email",                                                 :default => "",   :null => false
+    t.string   "encrypted_password",                                    :default => "",   :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -94,12 +94,13 @@ ActiveRecord::Schema.define(:version => 20131025171246) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                                             :null => false
-    t.datetime "updated_at",                                                             :null => false
+    t.datetime "created_at",                                                              :null => false
+    t.datetime "updated_at",                                                              :null => false
     t.decimal  "balance",                :precision => 16, :scale => 8, :default => 0.0
     t.string   "username"
     t.boolean  "beta"
     t.boolean  "wants_beta"
+    t.boolean  "wants_js",                                              :default => true
   end
 
   add_index "advertisers", ["reset_password_token"], :name => "index_advertisers_on_reset_password_token", :unique => true
@@ -200,17 +201,13 @@ ActiveRecord::Schema.define(:version => 20131025171246) do
     t.text     "path"
     t.string   "thumbnail_path"
     t.integer  "domain_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.string   "alt_text",           :default => ""
-    t.string   "unique_hash",        :default => ""
-    t.boolean  "no_crawl",           :default => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.string   "alt_text",       :default => ""
+    t.string   "unique_hash",    :default => ""
+    t.boolean  "no_crawl",       :default => false
     t.datetime "last_crawled"
-    t.boolean  "disabled",           :default => false
+    t.boolean  "disabled",       :default => false
   end
 
   add_index "images", ["path", "domain_id"], :name => "index_images_on_path_and_domain_id", :unique => true
@@ -292,16 +289,6 @@ ActiveRecord::Schema.define(:version => 20131025171246) do
     t.integer  "query_id"
     t.boolean  "paginated",     :default => false
     t.boolean  "js_enabled",    :default => false
-  end
-
-  create_table "translations", :force => true do |t|
-    t.string   "locale"
-    t.string   "key"
-    t.text     "value"
-    t.text     "interpolations"
-    t.boolean  "is_proc",        :default => false
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
   end
 
 end

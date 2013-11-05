@@ -19,6 +19,9 @@
   <div><%= f.label :current_password, t('advertisers.current_password') %> <i>(<%= t('advertisers.need_current_password') %>)</i><br />
   <%= f.password_field :current_password %></div>
 
+  <div><%= f.label :wants_js, t('advertisers.enable_js') %>
+  <%= f.check_box :wants_js %></div>
+
   <div><%= f.submit t('advertisers.update') %></div>
 <% end %>
 
