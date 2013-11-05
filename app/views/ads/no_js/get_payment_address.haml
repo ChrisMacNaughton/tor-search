@@ -1,0 +1,20 @@
+.row
+  =render partial: 'side_nav'
+  .row.span10
+    .span10
+      %h2= t('ads.you_have_requested_a_new_bitcoin_payment_address')
+
+      .span10.row
+        =t('ads.your_new_bitcoin_address_is')
+        %code= @address
+      .row.span10
+        =t('ads.new_address_time')
+        = hour_quantity ((@address.created_at + 6.hours).to_f - DateTime.now.to_f)
+
+    .span10
+      %h2= t('ads.all_addresses')
+      %dl
+        -@old_addresses.each do |address|
+          %dt
+            %code= address
+          %dd #{address.payments.sum(&:amount)} BTC

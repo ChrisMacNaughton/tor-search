@@ -106,4 +106,11 @@ class AdsController < ApplicationController
     end
     redirect_to :back
   end
+
+  private
+
+  def _process_options options
+    options[:template] = 'no_js/' + options[:template] unless current_advertiser.wants_js?
+    super options
+  end
 end

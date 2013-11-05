@@ -1,0 +1,9 @@
+.span2
+  %ul.nav.nav-list
+    =nav_link t('ads.side_nav.advertising'), ads_path
+    =nav_link t('ads.side_nav.create_ad'), new_ad_path
+    =nav_link t('ads.side_nav.get_new_bitcoin_address'), new_btc_address_path
+    -if current_advertiser.wants_beta?
+      %li= t('ads.beta_access_requested')
+    -else
+      =nav_link t('ads.side_nav.request_beta_access'), request_beta_ad_path(current_advertiser), method: :put
