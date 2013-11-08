@@ -3,7 +3,7 @@
 #
 # config/deploy/production.rb
 
-server 'app@sub.getsy.net:9024', \
+server 'sub.getsy.net:9024', \
       :app, :web, :db, primary: true
 
 #role :db, 'dlweb01'
