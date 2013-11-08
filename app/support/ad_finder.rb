@@ -25,10 +25,10 @@ class AdFinder
       @keyword_ads = Ad.select("ads.*").limit(limit).available \
         .joins(:advertiser, ad_keywords: :keyword) \
         .where('advertisers.balance > ad_keywords.bid') \
-        .where("keywords.word in (?)", query_words).order('bid desc, created_at asc')
+        .where("LOWER(keywords.word) in (?)", query_words).order('bid desc, created_at asc')
       @keyword_ads.map do |ad|
         ad.keyword_id = ad.ad_keywords.joins(:keyword) \
-          .where("keywords.word in (?)", query_words).first.id
+          .where("LOWER(keywords.word) in (?)", query_words).first.id
       end
     end
     @keyword_ads
@@ -42,7 +42,23 @@ class AdFinder
   end
 
   def query_words
-    query.split(/\s/)
+    tokenize(query)
+  end
+
+  private
+
+  def tokenize str1
+    str = str1.split(/\s/)
+
+    opts = []
+    opts << str.join(' ').downcase
+
+    (str.count - 1).times do |i|
+      combinations = str.combination(i+1).to_a.map{|a| a.join(' ').downcase}
+      opts << combinations
+    end
+
+    opts.flatten.compact.uniq
   end
 end
 # rubocop:disable all
