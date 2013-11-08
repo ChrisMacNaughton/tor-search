@@ -33,6 +33,11 @@ set :use_sudo,                   true
 set :user,                       'app'
 set :normalize_asset_timestamps, false
 
+
+# For running things with `sudo`
+default_run_options[:pty] = true
+ssh_options[:forward_agent] = true
+
 before 'deploy',                 'deploy:delayed_job:stop'
 before 'deploy:migrations',      'deploy:web:disable'
 
@@ -40,13 +45,13 @@ after  'deploy:update_code',     'deploy:symlink_shared'
 
 after 'deploy:create_symlink',   'deploy:chmod_dj'# , 'deploy:chmod_unicorn'
 after  'deploy',                 'newrelic:notice_deployment', 'deploy:cleanup', 'deploy:delayed_job:restart'
-after  'deploy:migrations',      'deploy:web:enable', 'newrelic:notice_deployment', 'deploy:cleanup'# , 'deploy:solr_restart'# , 'deploy:delayed_job:restart'
+after  'deploy:migrations',      'deploy:web:enable', 'newrelic:notice_deployment', 'deploy:cleanup', 'deploy:delayed_job:restart'# , 'deploy:solr_restart'# ,
 
 namespace :deploy do
   %w[start stop].each do |command|
     desc "#{command} unicorn server"
     task command, roles: :app, except: { no_release: true } do
-      run "#{current_path}/config/server/unicorn_init.sh #{command}"
+      run "god #{command} tor_search"
     end
   end
   desc 'make unicorn executable'
@@ -134,5 +139,5 @@ namespace :log do
 end
 # rubocop:enable LineLength,RescueModifier, ColonMethodCall
 
-        require './config/boot'
-        require 'airbrake/capistrano'
+require './config/boot'
+require 'airbrake/capistrano'
