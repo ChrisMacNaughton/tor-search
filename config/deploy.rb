@@ -33,13 +33,13 @@ set :use_sudo,                   true
 set :user,                       'app'
 set :normalize_asset_timestamps, false
 
-# before 'deploy',                 'deploy:delayed_job:stop'
+before 'deploy',                 'deploy:delayed_job:stop'
 before 'deploy:migrations',      'deploy:web:disable'
 
 after  'deploy:update_code',     'deploy:symlink_shared'
 
-after 'deploy:create_symlink',   'deploy:chmod_unicorn', 'deploy:chmod_dj'# , 'deploy:chown_tor'
-after  'deploy',                 'newrelic:notice_deployment', 'deploy:cleanup'# , 'deploy:delayed_job:restart'
+after 'deploy:create_symlink',   'deploy:chmod_dj'# , 'deploy:chmod_unicorn'
+after  'deploy',                 'newrelic:notice_deployment', 'deploy:cleanup', 'deploy:delayed_job:restart'
 after  'deploy:migrations',      'deploy:web:enable', 'newrelic:notice_deployment', 'deploy:cleanup'# , 'deploy:solr_restart'# , 'deploy:delayed_job:restart'
 
 namespace :deploy do
@@ -52,11 +52,6 @@ namespace :deploy do
   desc 'make unicorn executable'
   task :chmod_unicorn, roles: :app, except: { no_release: true } do
     run "chmod +x #{current_path}/config/server/unicorn_init.sh"
-  end
-
-  desc 'make root own tor'
-  task :chown_tor, roles: :app, except: { no_release: true } do
-    run "sudo chown -R root:root #{current_path}/config/tor"
   end
 
   desc 'make dj executable'
@@ -110,7 +105,7 @@ namespace :deploy do
       #run "rm #{shared_path}/system/maintenance.html"
     end
   end
-=begin
+
   namespace :assets do
     task :precompile, roles: :web do
       from = source.next_revision(current_revision) rescue nil
@@ -126,8 +121,8 @@ namespace :deploy do
       end
     end
   end
-=end
 end
+
 namespace :log do
   desc 'A pinch of tail'
   task :tailf, roles: :app do

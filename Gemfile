@@ -73,3 +73,4 @@ gem 'airbrake'
 gem "acts_as_textcaptcha", "~> 3.0.10"
 # Use Capistrano for deployment
 gem 'capistrano', group: :development
+gem 'capistrano-chef', group: :development
