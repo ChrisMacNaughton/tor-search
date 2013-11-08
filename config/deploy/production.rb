@@ -2,8 +2,9 @@
 # capistrano production config
 #
 # config/deploy/production.rb
+ssh_options[:port] = 9024
 
-server 'sub.getsy.net:9024', \
+server 'sub.gesty.net', \
       :app, :web, :db, primary: true
 
 #role :db, 'dlweb01'
