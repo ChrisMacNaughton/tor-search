@@ -3,10 +3,9 @@
 #
 # config/deploy/production.rb
 
-#server 'dlweb02', \
-#      :app, :web, :db, primary: true
+server 'dlweb02', \
+      :app, :web, :db, primary: true
 
-chef_role [:app, :web, :db], 'roles:web', primary: true
 #role :db, 'dlweb01'
 
 set :gateway, 'cmacnaughton@sub.gesty.net:9022'
