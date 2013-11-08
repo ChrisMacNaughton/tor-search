@@ -81,7 +81,7 @@ module TorSearch
     config.tor_search.coinbase_key = 'bfc79be3dc1282001d8fc17f8f664d41af4194449968ce47c0e24d8eba825b18'
 
     config.tor_search.tor_url = 'http://kbhpodhnfxl3clb4.onion'
-    config.tor_search.bitcoin_address = '1MkH4pGzCtpyNUDuM9mZsftYCfWrsALprt'
+    config.tor_search.bitcoin_address = '1PN1JwqftbqFWvpfoBCC2iJ4KBeY4xik6H'
 
     config.tor_search.pub_nub = ActiveSupport::OrderedOptions.new
     config.tor_search.pub_nub.publish_key = 'pub-c-64274781-1ba5-4e0e-92fa-dde91017cfb6'
