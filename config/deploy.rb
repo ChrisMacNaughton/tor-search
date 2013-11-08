@@ -114,7 +114,7 @@ namespace :deploy do
     task :precompile, roles: :web do
       from = source.next_revision(current_revision) rescue nil
       if from.nil? || capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ lib/assets/ app/assets/ | wc -l").to_i > 0
-        run 'rake assets:clean && rake assets:precompile'
+        run 'bundle exec rake assets:clean && bundle exec rake assets:precompile'
         # run_locally('rake assets:clean && rake assets:precompile')
         # run_locally 'cd public && tar -jcf assets.tar.bz2 assets'
         # top.upload "public/assets.tar.bz2', '#{shared_path}", via: :scp
