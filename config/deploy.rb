@@ -19,6 +19,7 @@ require 'bundler/capistrano'
 require 'capistrano/ext/multistage'
 require 'new_relic/recipes'
 require 'dotenv/capistrano'
+require 'capistrano/chef'
 
 set :stages,                     %w(staging production)
 set :default_stage,              'production'
