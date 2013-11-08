@@ -10,9 +10,11 @@ class Payment < ActiveRecord::Base
 
   after_create :credit_advertiser
   validates :coupon_id, uniqueness: {
+    scope: [:advertiser_id, :bitcoin_address_id]
+  }
+  validates :transaction_hash, uniqueness: {
     scope: [:advertiser_id, :coupon_id, :bitcoin_address_id]
   }
-  validates :transaction_hash, uniqueness: true
   def credit_advertiser
     balance = advertiser.balance
     balance += amount
