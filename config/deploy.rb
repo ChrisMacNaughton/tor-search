@@ -47,7 +47,7 @@ after  'deploy',                 'newrelic:notice_deployment', 'deploy:cleanup',
 after  'deploy:migrations',      'deploy:web:enable', 'newrelic:notice_deployment', 'deploy:cleanup', 'deploy:delayed_job:restart'# , 'deploy:solr_restart'# ,
 
 namespace :deploy do
-  %w[start stop].each do |command|
+  %w[start stop restart].each do |command|
     desc "#{command} unicorn server"
     task command, roles: :app, except: { no_release: true } do
       run "god #{command} tor_search"
@@ -61,11 +61,6 @@ namespace :deploy do
   desc 'make dj executable'
   task :chmod_dj do
     run "cd #{current_path}; chmod +x script/delayed_job"
-  end
-
-  desc 'restart unicorn server'
-  task :restart, roles: :app, except: { no_release: true } do
-    run "#{current_path}/config/server/unicorn_init.sh upgrade"
   end
 
   desc 'Link in the production database.yml and assets'
@@ -116,7 +111,7 @@ namespace :deploy do
       if from.nil? || capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ lib/assets/ app/assets/ | wc -l").to_i > 0
         run_locally('rake assets:clean && rake assets:precompile')
         run_locally 'cd public && tar -jcf assets.tar.bz2 assets'
-        top.upload "public/assets.tar.bz2', '#{shared_path}", via: :scp
+        top.upload 'public/assets.tar.bz2', "#{shared_path}", :via => :scp
         run "cd #{shared_path} && tar -jxf assets.tar.bz2 && rm assets.tar.bz2"
         run_locally 'rm public/assets.tar.bz2'
         run_locally('rake assets:clean')
