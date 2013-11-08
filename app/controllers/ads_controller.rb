@@ -121,8 +121,9 @@ class AdsController < ApplicationController
             path: opts[:path],
             display_path: opts[:display_path],
             line_1: opts[:line1],
-            line_2: opts[:line2]
-          }
+            line_2: opts[:line2],
+            disabled: opts[:disabled]
+          }.delete_if{|k,v| v.nil?}
           ad.update_attributes(ad_params)
 
           render json: ad

@@ -3,6 +3,7 @@
   %table.table
     %thead
       %tr
+        %th
         %th Title
         %th Status
         %th Bid
@@ -12,6 +13,7 @@
         %th Avg. Pos.
     %tbody
       %tr{ng_repeat: "record in searchParameters.records", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
+        %td <a ng-click="toggle(record)"><i class="{{record.disabled|play_or_pause}}"></a>
         %td <a ng-href="ads/{{record.id}}">{{record.title}}</a>
         %td {{record.status}}
         %td ฿{{record.bid}}
