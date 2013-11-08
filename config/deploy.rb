@@ -112,7 +112,7 @@ namespace :deploy do
       if from.nil? || capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ lib/assets/ app/assets/ | wc -l").to_i > 0
         run_locally('rake assets:clean && rake assets:precompile')
         run_locally 'cd public && tar -jcf assets.tar.bz2 assets'
-        top.upload "public/assets.tar.bz2', '#{shared_path}", via: :scp
+        top.upload "public/assets.tar.bz2', '#{shared_path}", via: :sftp
         run "cd #{shared_path} && tar -jxf assets.tar.bz2 && rm assets.tar.bz2"
         run_locally 'rm public/assets.tar.bz2'
         run_locally('rake assets:clean')
