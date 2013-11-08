@@ -4,7 +4,7 @@
     %title
       =yield(:title)
       TorSearch
-    = stylesheet_link_tag "ads", media: "all"
+    = stylesheet_link_tag    "application", media: "all"
     = #stylesheet_link_tag params[:controller], media: "all", "data-turbolinks-track" => true
     = csrf_meta_tags
     -if Rails.env == 'development'
@@ -41,5 +41,5 @@
           = yield
     .container
       =yield(:footer)
-    = javascript_include_tag "ads"
+    = javascript_include_tag "application"
     =yield(:javascripts)

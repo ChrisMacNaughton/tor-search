@@ -43,7 +43,7 @@ class AdsController < ApplicationController
           render :index
         }
         format.json {
-
+          render json: Ad.where(id: params[:id]).try(:first)
         }
       end
     else
@@ -113,7 +113,19 @@ class AdsController < ApplicationController
           render :index
         }
         format.json {
+          ad = Ad.find(params[:id])
+          opts = params[:ad]
+          ad_params = {
+            title: opts[:title],
+            protocol_id: opts[:protocol] == 'HTTP' ? 0 : 1,
+            path: opts[:path],
+            display_path: opts[:display_path],
+            line_1: opts[:line1],
+            line_2: opts[:line2]
+          }
+          ad.update_attributes(ad_params)
 
+          render json: ad
         }
       end
     else

@@ -1,0 +1,38 @@
+.span4
+  %form{name: 'form', novalidate: true}
+    .row
+      %fieldset.span4
+        %legend Ad Details
+        %div{class: "control-group {{form.title.$invalid && 'error' || ''}}"}
+          %input.input{type: :text, name: 'title', ng_model: 'ad.title', ng_required: 'true'}
+          %span.error{ng_show: "form.title.$dirty && form.title.$invalid"} Required!
+        .control-group
+          %select.input{type: :text, ng_model: 'ad.protocol'}
+            %option{value: 'HTTP', selected: true} HTTP
+            %option{value: 'HTTPS'} HTTPS
+        %div{class: "control-group {{form.path.$invalid && 'error' || ''}}"}
+          %input.input{type: :text, name: 'path', ng_model: 'ad.path', required: true}
+          %span.error{ng_show: "form.path.$dirty && form.path.$invalid"} Required!
+        %div{class: "control-group {{form.display_path.$invalid && 'error' || ''}}"}
+          %input.input{type: :text, name: 'display_path', ng_model: 'ad.displayPath', required: true}
+          %span.error{ng_show: "form.display_path.$dirty && form.display_path.$invalid"} Required!
+        .controls
+          %input.input{type: :text, ng_model: 'ad.line1'}
+        .controls
+          %input.input{type: :text, ng_model: 'ad.line2'}
+    .row
+      {{ad|json}}
+    .row
+      {{ad.title.$error|json}}
+    %a.btn.btn-primary{ng_click: 'save()'} Save
+.span3.offset1
+  .ad
+    .row-fluid{style: 'margin-bottom: 20px;', class: "well span4"}
+      .row-fluid
+        <a ng-href="{{ad.protocol + '://' + ad.path }}">{{ad.title}}</a>
+      .row-fluid.path
+        {{ad.displayPath}}
+      .row-fluid{style: 'height: 20px;'}
+        {{ad.line1}}
+      .row-fluid{style: 'height: 20px;'}
+        {{ad.line2}}
