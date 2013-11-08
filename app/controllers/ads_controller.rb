@@ -70,7 +70,7 @@ class AdsController < ApplicationController
       coinbase = Coinbase::Client.new(TorSearch::Application.config.tor_search.coinbase_key)
       options = {
         address: {
-          callback_url: 'http://ts.chrismacnaughton.com/payments'
+          callback_url: 'http://ts.chrismacnaughton.com:8080/payments'
         }
       }
       address = coinbase.generate_receive_address(options)
