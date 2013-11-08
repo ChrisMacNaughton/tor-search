@@ -33,11 +33,6 @@ set :use_sudo,                   true
 set :user,                       'app'
 set :normalize_asset_timestamps, false
 
-
-# For running things with `sudo`
-default_run_options[:pty] = true
-ssh_options[:forward_agent] = true
-
 before 'deploy',                 'deploy:delayed_job:stop'
 before 'deploy:migrations',      'deploy:web:disable'
 
