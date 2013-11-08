@@ -1,5 +1,5 @@
 non_onion_ad:
-  bid: 0.005
+  bid: 0.006
   title: This is an ad
   disabled: false
   protocol_id: 0
