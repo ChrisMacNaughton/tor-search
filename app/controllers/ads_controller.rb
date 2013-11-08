@@ -51,7 +51,9 @@ class AdsController < ApplicationController
       end
       redirect_to edit_ad_path(@ad)
     else
-      ad_attributes[:approved] = false if @ad.changes.empty?
+      require_approval = [:title, :path, :display_path, :line_1, :line_2]
+      approved = ad_attributes.select{ |k,v| require_approval.include? k.to_sym}.select{|k,v| @ad.send(k.to_sym) != v }.empty?
+      ad_attributes[:approved] = false unless approved
       if @ad.update_attributes(ad_attributes)
         flash.notice = 'Your ad has been successfully edited!'
         redirect_to ads_path
