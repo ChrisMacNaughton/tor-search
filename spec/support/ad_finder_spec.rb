@@ -19,7 +19,7 @@ describe AdFinder do
 
   it 'ranks ads appropriately' do
     ads = AdFinder.new('whatever').ads
-    ads.should == [ads(:ad), ads(:non_onion_ad)]
+    ads.should == [ads(:non_onion_ad), ads(:ad)]
   end
 
 end

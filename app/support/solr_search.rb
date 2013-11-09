@@ -82,6 +82,7 @@ class SolrSearch
       solr = @solr.get('nutch', params: param)
       OpenStruct.new JSON.parse(solr.response[:body])
     rescue => ex
+      @result = nil
       #Airbrake.notify(ex)
       Rails.logger.info ex
       @errors << 'Search offline'
@@ -95,7 +96,7 @@ class SolrSearch
 
   def get_solr_size
     path = "#{solr_url}/admin/cores?wt=json"
-    read_through_cache('index_size', 24.hours) do
+    read_through_cache('index_size', 1.hour) do
       json = Net::HTTP.get(URI.parse(path))
       JSON.parse(json)['status']['collection1']['index']['numDocs']
     end

@@ -26,27 +26,31 @@ set :default_stage,              'production'
 set :scm,                        :git
 set :repository,                 'git@bitbucket.org:TorSearch/torsearch.git'
 set :deploy_via,                 :remote_cache
-default_run_options[:pty]        = true
+set :keep_releases, 3
+
+# For running things with `sudo`
+default_run_options[:pty] = true
+ssh_options[:forward_agent] = true
 
 set :application,                'torsearch'
 set :use_sudo,                   true
 set :user,                       'app'
 set :normalize_asset_timestamps, false
 
-# before 'deploy',                 'deploy:delayed_job:stop'
+before 'deploy',                 'deploy:delayed_job:stop'
 before 'deploy:migrations',      'deploy:web:disable'
 
 after  'deploy:update_code',     'deploy:symlink_shared'
 
-after 'deploy:create_symlink',   'deploy:chmod_unicorn', 'deploy:chmod_dj'# , 'deploy:chown_tor'
-after  'deploy',                 'newrelic:notice_deployment', 'deploy:cleanup'# , 'deploy:delayed_job:restart'
-after  'deploy:migrations',      'deploy:web:enable', 'newrelic:notice_deployment', 'deploy:cleanup'# , 'deploy:solr_restart'# , 'deploy:delayed_job:restart'
+after 'deploy:create_symlink',   'deploy:chmod_dj'# , 'deploy:chmod_unicorn'
+after  'deploy',                 'newrelic:notice_deployment', 'deploy:cleanup', 'deploy:delayed_job:restart'
+after  'deploy:migrations',      'deploy:web:enable', 'newrelic:notice_deployment', 'deploy:cleanup', 'deploy:delayed_job:restart'# , 'deploy:solr_restart'# ,
 
 namespace :deploy do
-  %w[start stop].each do |command|
+  %w[start stop restart].each do |command|
     desc "#{command} unicorn server"
     task command, roles: :app, except: { no_release: true } do
-      run "#{current_path}/config/server/unicorn_init.sh #{command}"
+      run "sudo god #{command} tor_search"
     end
   end
   desc 'make unicorn executable'
@@ -54,24 +58,15 @@ namespace :deploy do
     run "chmod +x #{current_path}/config/server/unicorn_init.sh"
   end
 
-  desc 'make root own tor'
-  task :chown_tor, roles: :app, except: { no_release: true } do
-    run "sudo chown -R root:root #{current_path}/config/tor"
-  end
-
   desc 'make dj executable'
   task :chmod_dj do
     run "cd #{current_path}; chmod +x script/delayed_job"
   end
 
-  desc 'restart unicorn server'
-  task :restart, roles: :app, except: { no_release: true } do
-    run "#{current_path}/config/server/unicorn_init.sh upgrade"
-  end
-
   desc 'Link in the production database.yml and assets'
   task :symlink_shared do
     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{deploy_to}/shared/config/solr.yml #{release_path}/config/solr.yml"
   end
 
   namespace :delayed_job do
@@ -110,14 +105,14 @@ namespace :deploy do
       #run "rm #{shared_path}/system/maintenance.html"
     end
   end
-=begin
+
   namespace :assets do
     task :precompile, roles: :web do
       from = source.next_revision(current_revision) rescue nil
       if from.nil? || capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ lib/assets/ app/assets/ | wc -l").to_i > 0
         run_locally('rake assets:clean && rake assets:precompile')
         run_locally 'cd public && tar -jcf assets.tar.bz2 assets'
-        top.upload "public/assets.tar.bz2', '#{shared_path}", via: :scp
+        top.upload 'public/assets.tar.bz2', "#{shared_path}", :via => :scp
         run "cd #{shared_path} && tar -jxf assets.tar.bz2 && rm assets.tar.bz2"
         run_locally 'rm public/assets.tar.bz2'
         run_locally('rake assets:clean')
@@ -126,8 +121,8 @@ namespace :deploy do
       end
     end
   end
-=end
 end
+
 namespace :log do
   desc 'A pinch of tail'
   task :tailf, roles: :app do
@@ -139,5 +134,5 @@ namespace :log do
 end
 # rubocop:enable LineLength,RescueModifier, ColonMethodCall
 
-        require './config/boot'
-        require 'airbrake/capistrano'
+require './config/boot'
+require 'airbrake/capistrano'

@@ -46,7 +46,8 @@ class Tracker
     Rails.logger.info "Tracking a visit:"
     options.delete(:cdt)
     Rails.logger.info options
-    Rails.logger.info "Received: " + http.request(Net::HTTP::Get.new("#{uri.request_uri}?#{options.to_query}")).body
+    result = http.request(Net::HTTP::Get.new("#{uri.request_uri}?#{options.to_query}"))
+    Rails.logger.debug "Received: " + result.body
   end
 
   private

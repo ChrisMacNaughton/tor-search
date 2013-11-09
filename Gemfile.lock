@@ -274,7 +274,7 @@ DEPENDENCIES
   airbrake
   angularjs-rails-resource
   better_errors
-  capistrano
+  capistrano (~> 2.15.5)
   capybara
   coffee-rails
   coinbase
