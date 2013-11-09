@@ -8,7 +8,7 @@ class Api::AdController < ApplicationController
     respond_to do |format|
       format.json {
         page = (params[:page] || 1).to_i
-        per_page = (params[:per_age] || 20).to_i
+        per_page = (params[:per_page] || 20).to_i
 
         render json: paginated_results_hash(current_advertiser.ads.page(page) \
           .per_page(per_page).order(:created_at), {serializer: AdSerializer})
