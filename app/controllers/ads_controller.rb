@@ -4,7 +4,7 @@ class AdsController < ApplicationController
   before_filter :authenticate_advertiser!, except: [:advertising]
   before_filter :track
 
-  layout :choose_layout
+  # layout :choose_layout
 
   def index
     respond_to do |format|
