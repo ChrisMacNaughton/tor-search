@@ -2,9 +2,7 @@
 class AdsController < ApplicationController
   include Base::Behaviors::Angular
   before_filter :authenticate_advertiser!, except: [:advertising]
-  before_filter :track
-
-  # layout :choose_layout
+  before_filter :track, except: [:partials]
 
   def index
     respond_to do |format|
@@ -171,17 +169,8 @@ class AdsController < ApplicationController
 
   def track
     #return true unless Rails.env.include? 'production'
-    return if params[:partial]
 
     Tracker.new(request).track_later!
-  end
-
-  def choose_layout
-    if current_advertiser.wants_js?
-      return 'ads'
-    else
-      return 'application'
-    end
   end
 
   def _process_options options
