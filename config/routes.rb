@@ -33,7 +33,13 @@ TorSearch::Application.routes.draw do
 
     get '/keyword_tool' => 'keyword_tool#index'
   end
+  namespace 'api' do
+    resources :bitcoin_address
 
+    resources :ad
+  end
+  get '/ads/bitcoin-addresses' => 'ads#payment_addresses', as: :btc_address
+  post '/ads/bitcoin-addresses' => 'ads#get_payment_address', as: :new_address
   resources :ads do
     resources :keywords
     member do
@@ -41,9 +47,6 @@ TorSearch::Application.routes.draw do
       put 'request_beta' => 'ads#request_beta', as: :request_beta
     end
   end
-
-
-  get '/ads/new-address' => 'ads#get_payment_address', as: :new_btc_address
 
   post 'coupons' => 'coupon#create', as: :credit_coupon
 

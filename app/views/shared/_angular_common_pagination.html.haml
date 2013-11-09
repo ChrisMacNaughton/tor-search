@@ -1,0 +1,20 @@
+%ul.inline.form-inline.pagination
+  .span1.offset2
+    %li
+      %a.btn{"ng-hide"=>"searchParameters.currentPage <= 1", "ng-click"=>"searchParameters.currentPage = searchParameters.currentPage - 1"}
+        %i{title: "Previous", class: "icon-chevron-left"}
+  .span1
+    %li
+      %select.input-mini{"ng-model"=>'searchParameters.perPage'}
+        %option 5
+        %option 10
+        %option 25
+        %option 50
+        %option 100
+        %option 500
+        %option 1000
+    {{searchParameters.currentPage | number}} of {{searchParameters.totalPages | number}}
+  .span1
+    %li
+      %a.btn{"ng-hide"=>"searchParameters.currentPage >= searchParameters.totalPages", "ng-click"=>"searchParameters.currentPage = searchParameters.currentPage + 1"}
+        %i{title: "Next", class: "icon-chevron-right"}

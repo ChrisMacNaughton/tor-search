@@ -11,13 +11,6 @@ class AdsController < ApplicationController
       format.html{
         render :index
       }
-      format.json {
-        page = (params[:page] || 1).to_i
-        per_page = (params[:per_age] || 20).to_i
-
-        render json: paginated_results_hash(current_advertiser.ads.page(page) \
-          .per_page(per_page).order(:created_at), {serializer: AdSerializer})
-      }
     end
   end
 
@@ -26,9 +19,6 @@ class AdsController < ApplicationController
       respond_to do |format|
         format.html {
           render :index
-        }
-        format.json {
-
         }
       end
     else
@@ -42,9 +32,6 @@ class AdsController < ApplicationController
         format.html {
           render :index
         }
-        format.json {
-          render json: Ad.where(id: params[:id]).try(:first)
-        }
       end
     else
       redirect_to :edit_ad
@@ -57,9 +44,6 @@ class AdsController < ApplicationController
         format.html {
           render :index
         }
-        format.json {
-
-        }
       end
     else
       @ad = Ad.find(params[:id])
@@ -71,27 +55,6 @@ class AdsController < ApplicationController
       respond_to do |format|
         format.html {
           render :index
-        }
-        format.json {
-          ad = {
-            title: params[:ad][:title],
-            path: params[:ad][:path],
-            display_path: params[:ad][:display_path],
-            line_1: params[:ad][:line1],
-            line_2: params[:ad][:line2],
-          }
-
-          ad[:protocol_id] = if params[:ad][:protocol] == 'HTTP'
-            0
-          else
-            1
-          end
-
-          ad = Ad.new(ad)
-          ad.advertiser = current_advertiser
-          ad.save
-
-          render json: ad
         }
       end
     else
@@ -111,22 +74,6 @@ class AdsController < ApplicationController
       respond_to do |format|
         format.html {
           render :index
-        }
-        format.json {
-          ad = Ad.find(params[:id])
-          opts = params[:ad]
-          ad_params = {
-            title: opts[:title],
-            protocol_id: opts[:protocol] == 'HTTP' ? 0 : 1,
-            path: opts[:path],
-            display_path: opts[:display_path],
-            line_1: opts[:line1],
-            line_2: opts[:line2],
-            disabled: opts[:disabled]
-          }.delete_if{|k,v| v.nil?}
-          ad.update_attributes(ad_params)
-
-          render json: ad
         }
       end
     else
@@ -158,35 +105,36 @@ class AdsController < ApplicationController
     end
   end
 
-  def get_payment_address
+  def payment_addresses
     if current_advertiser.wants_js?
       respond_to do |format|
         format.html {
           render :index
         }
-        format.json {
-
-        }
       end
     else
-      address = current_advertiser.bitcoin_addresses.order('created_at desc').first
-
-      if address.nil? || address.created_at < 6.hours.ago
-        coinbase = Coinbase::Client.new(TorSearch::Application.config.tor_search.coinbase_key)
-        options = {
-          address: {
-            callback_url: 'http://ts.chrismacnaughton.com/payments'
-          }
-        }
-        address = coinbase.generate_receive_address(options)
-        @address = BitcoinAddress.new(address: address.address)
-        @address.advertiser = current_advertiser
-        @address.save
-      else
-        @address = address
-      end
-      @old_addresses = current_advertiser.bitcoin_addresses
+      get_payment_address
     end
+  end
+
+  def get_payment_address
+    address = current_advertiser.bitcoin_addresses.order('created_at desc').first
+
+    if address.nil? || address.created_at < 6.hours.ago
+      coinbase = Coinbase::Client.new(TorSearch::Application.config.tor_search.coinbase_key)
+      options = {
+        address: {
+          callback_url: 'http://ts.chrismacnaughton.com/payments'
+        }
+      }
+      address = coinbase.generate_receive_address(options)
+      @address = BitcoinAddress.new(address: address.address)
+      @address.advertiser = current_advertiser
+      @address.save
+    else
+      @address = address
+    end
+    @old_addresses = current_advertiser.bitcoin_addresses
   end
 
   def advertising # expressing interest page
@@ -194,25 +142,14 @@ class AdsController < ApplicationController
   end
 
   def toggle
-    if current_advertiser.wants_js?
-      respond_to do |format|
-        format.html {
-          render :index
-        }
-        format.json {
-
-        }
-      end
+    ad = Ad.find(params[:id])
+    ad.disabled = !ad.disabled
+    if ad.save
+      flash.notice = 'Ad Toggled'
     else
-      ad = Ad.find(params[:id])
-      ad.disabled = !ad.disabled
-      if ad.save
-        flash.notice = 'Ad Toggled'
-      else
-        flash.error = 'There was a problem, try again soon!'
-      end
-      redirect_to :ads
+      flash.error = 'There was a problem, try again soon!'
     end
+    redirect_to :ads
   end
 
   def request_beta

@@ -47,9 +47,9 @@ en:
     paused: Paused
     pending: Pending
     side_nav:
-      advertising: Advertising
+      ads: Ads
       create_ad: "Create Ad"
-      get_new_bitcoin_address: "Get New Bitcoin Address"
+      bitcoin_addresses: Bitcoin Addresses
       request_beta_access: "Request Beta Access"
     status: Status
     title: Title

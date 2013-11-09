@@ -21,8 +21,6 @@
         .controls
           %input.input{type: :text, ng_model: 'ad.line2'}
     .row
-      {{ad|json}}
-    .row
       {{ad.title.$error|json}}
     %a.btn.btn-primary{ng_click: 'save()'} Save
 .span3.offset1

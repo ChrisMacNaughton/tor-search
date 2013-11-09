@@ -1,7 +1,7 @@
 angular.module('TorSearch').controller('EditAdCtrl',
 ['$scope', '$window','railsResourceFactory', 'searchResourceFactory', '$route', '$location',
 ($scope, $window, railsResourceFactory, searchResourceFactory, $route, $location) ->
-  Ad = railsResourceFactory({url: '/ads', name: 'ad'})
+  Ad = railsResourceFactory({url: '/api/ad', name: 'ad'})
   # Configure search to use the basic CRUD Service
   $scope.active = $route.current.$$route.controller
 

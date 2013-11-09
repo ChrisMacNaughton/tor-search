@@ -1,0 +1,14 @@
+=render partial: 'ads_common_nav'
+.row.span10
+%button{ng_click: 'new_address()'} New Address
+.row.span10
+  %table.table
+    %thead
+      %tr
+        %th Code
+        %th Balance
+    %tbody
+      %tr{ng_repeat: "record in searchParameters.records", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
+        %td {{record.address}}
+        %td {{record.balance}}
+=render partial: 'shared/angular_common_pagination'

@@ -2,7 +2,7 @@ class SearchParameters
   constructor: () ->
     @totalPages = 1
     @currentPage = 1
-    @perPage = 25
+    @perPage = 10
 
     @sort = {
       key: '',
