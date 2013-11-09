@@ -43,7 +43,11 @@ class Ad < ActiveRecord::Base
   end
 
   def ctr
-    ad_clicks_count / ad_views_count.to_f * 100
+    if ad_views_count > 0
+      ad_clicks_count / ad_views_count.to_f * 100
+    else
+      0
+    end
   end
 
   def avg_position

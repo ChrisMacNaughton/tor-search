@@ -1,0 +1,1 @@
+angular.module('TorSearch').filter 'encodeURIComponent', () -> window.encodeURIComponent

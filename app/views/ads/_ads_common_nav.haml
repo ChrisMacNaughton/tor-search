@@ -1,0 +1,9 @@
+.span2
+  %ul.nav.nav-list
+    %li{class: "{{active == 'AdsCtrl' && 'active' || ''}}"}=link_to t('ads.side_nav.ads'), ads_path
+    %li{class: "{{active == 'NewAdCtrl' && 'active' || ''}}"}=link_to t('ads.side_nav.create_ad'), new_ad_path
+    %li{class: "{{active == 'BitcoinAddressCtrl' && 'active' || ''}}"}=link_to t('ads.side_nav.bitcoin_addresses'), btc_address_path
+    -if current_advertiser.wants_beta?
+      %li= t('ads.beta_access_requested')
+    -else
+      %li=link_to t('ads.side_nav.request_beta_access'), request_beta_ad_path(current_advertiser), method: :put
