@@ -1,3 +1,4 @@
 test_advertiser:
   username: test_user
   balance: 0.5
+  wants_js: false
