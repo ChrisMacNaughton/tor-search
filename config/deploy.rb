@@ -72,11 +72,11 @@ namespace :deploy do
   namespace :delayed_job do
     desc 'Restart the delayed_job process'
     task :restart, roles: :app, except: { no_release: true } do
-      run "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec script/delayed_job restart" rescue nil
+      run "cd #{current_path}; sudo bundle exec RAILS_ENV=#{rails_env} script/delayed_job restart" rescue nil
     end
     desc 'Stop the delayed_job process'
     task :stop, roles: :app, except: { no_release: true } do
-      run "cd #{current_path}; RAILS_ENV=#{rails_env} bundle exec script/delayed_job stop" rescue nil
+      run "cd #{current_path}; sudo bundle exec RAILS_ENV=#{rails_env} script/delayed_job stop" rescue nil
     end
   end
 

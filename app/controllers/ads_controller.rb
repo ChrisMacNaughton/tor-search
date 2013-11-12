@@ -146,7 +146,7 @@ class AdsController < ApplicationController
   end
 
   def advertising # expressing interest page
-    render 'ads/interested'
+    render 'ads/no_js/interested'
   end
 
   def toggle
