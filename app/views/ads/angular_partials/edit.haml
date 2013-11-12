@@ -1,2 +1,16 @@
 =render partial: 'ads_common_nav'
 =render partial: 'angular_fields'
+
+%table.table
+  %thead
+    %tr
+      %th Keyword
+      %th Bid
+      %th
+  %tbody
+    %tr{ng_repeat: "record in ad.keywords", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
+      %td {{record.word}}
+      %td ฿{{record.bid}}
+      %td
+        %a.btn.btn-danger{ng_click: 'remove_keyword(record)'} Remove
+=render partial: 'shared/angular_common_pagination'

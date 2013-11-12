@@ -1,14 +1,23 @@
 # encoding: utf-8
-class KeywordsController < ApplicationController
-  before_filter :track, :authenticate_advertiser!
+class KeywordsController < AngularController
+  before_filter :track, except: [:partials]
+  before_filter :authenticate_advertiser!
 
   def new
-    @ad = Ad.find(params[:ad_id])
+    if current_advertiser.wants_js?
+      super
+    else
+      @ad = Ad.find(params[:ad_id])
+    end
   end
 
   def edit
-    @ad = Ad.find(params[:ad_id])
-    @ad_keyword = AdKeyword.find(params[:id])
+    if current_advertiser.wants_js?
+      super
+    else
+      @ad = Ad.find(params[:ad_id])
+      @ad_keyword = AdKeyword.find(params[:id])
+    end
   end
   # rubocop:disable MethodLength
   def create
@@ -42,5 +51,17 @@ class KeywordsController < ApplicationController
     ak.destroy
     flash.notice = "You have deleted the keyword '#{w}'"
     redirect_to edit_ad_path(params[:ad_id])
+  end
+
+  def partials
+    render "keywords/angular_partials/#{params[:partial]}", layout: false
+  end
+
+  private
+
+  def track
+    #return true unless Rails.env.include? 'production'
+
+    Tracker.new(request).track_later!
   end
 end

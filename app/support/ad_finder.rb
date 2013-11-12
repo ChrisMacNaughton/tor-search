@@ -25,7 +25,9 @@ class AdFinder
       @keyword_ads = Ad.select("ads.*").limit(limit).available \
         .joins(:advertiser, ad_keywords: :keyword) \
         .where('advertisers.balance > ad_keywords.bid') \
-        .where("LOWER(keywords.word) in (?)", query_words).order('bid desc, created_at asc')
+        .where("LOWER(keywords.word) in (?)", query_words) \
+        .where('keywords.bid > 0') \
+        .order('bid desc, created_at asc')
       @keyword_ads.map do |ad|
         ad.keyword_id = ad.ad_keywords.joins(:keyword) \
           .where("LOWER(keywords.word) in (?)", query_words).first.id
@@ -38,6 +40,7 @@ class AdFinder
     @generic_ads ||= Ad.limit(limit).available.joins(:advertiser). \
       where('advertisers.balance > ads.bid') \
       .where("(select count(*) from ad_keywords where ad_id = ads.id) = 0") \
+      .where('ads.bid > 0') \
       .order('bid desc, created_at asc').map{|ad| ad.bid = ad.bid * 0.8; ad}
   end
 

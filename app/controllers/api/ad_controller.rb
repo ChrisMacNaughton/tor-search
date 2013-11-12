@@ -11,7 +11,7 @@ class Api::AdController < ApplicationController
         per_page = (params[:per_page] || 20).to_i
 
         render json: paginated_results_hash(current_advertiser.ads.page(page) \
-          .per_page(per_page).order(:created_at), {serializer: AdSerializer})
+          .per_page(per_page).order(:created_at).includes(:ad_keywords), {serializer: AdSerializer})
       }
     end
   end

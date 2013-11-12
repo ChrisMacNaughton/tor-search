@@ -1,7 +1,10 @@
 class AdSerializer < ActiveModel::Serializer
   self.root = false
+
   attributes :id, :title, :bid, :status, :views, :clicks, :ctr, :avg_position, :protocol,
              :path, :display_path, :line_1, :line_2, :errors, :disabled, :approved
+
+  has_many :ad_keywords, key: :keywords
 
   def views
     object.ad_views_count

@@ -12,5 +12,11 @@ angular.module('TorSearch', ['rails']).config ['$routeProvider', '$locationProvi
   ).when('/ads/:id',
     templateUrl: '/partials/ads/edit',
     controller: 'EditAdCtrl'
+  ).when('/payments',
+    templateUrl: '/partials/payments/index',
+    controller: 'PaymentsCtrl'
+  ).when('/keywords',
+    templateUrl: '/partials/keywords/index',
+    controller: 'KeywordsCtrl'
   )
 ]

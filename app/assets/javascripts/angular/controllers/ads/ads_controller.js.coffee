@@ -3,6 +3,7 @@ angular.module('TorSearch').controller('AdsCtrl',
 ($scope, $window, railsResourceFactory, searchResourceFactory, $route) ->
   $scope.active = $route.current.$$route.controller
   Ad = railsResourceFactory({url: '/api/ad', name: 'ad'})
+
   # Configure search to use the basic CRUD Service
   searchResource = searchResourceFactory($scope, Ad)
   $scope.searchParameters.sort = {key: 'created_at', direction: 'desc'}

@@ -17,7 +17,7 @@
 //= require shadowbox
 //= require instant
 //= require search
-//= require 'ads'
+//= require 'angular'
 
 String.prototype.titleize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);

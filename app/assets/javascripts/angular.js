@@ -3,4 +3,4 @@
 //= require bootstrap
 //= require angular.min
 //= require angularjs/rails/resource
-//= require_tree ./ads
+//= require_tree ./angular

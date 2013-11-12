@@ -7,8 +7,6 @@ TorSearch::Application.routes.draw do
 
   get 'a/r' => 'search#ad_redirect', as: :ad_redirect
 
-  post '/payment' => 'payment#index'
-
   get 'errors/error_404'
   get 'errors/error_500'
 
@@ -35,9 +33,11 @@ TorSearch::Application.routes.draw do
   end
   namespace 'api' do
     resources :bitcoin_address
-
+    resources :payment
     resources :ad
+    resources :keyword
   end
+  resources :keywords
   get '/ads/bitcoin-addresses' => 'ads#payment_addresses', as: :btc_address
   post '/ads/bitcoin-addresses' => 'ads#get_payment_address', as: :new_address
   resources :ads do
@@ -48,10 +48,13 @@ TorSearch::Application.routes.draw do
     end
   end
 
+  resources :payments
+
   post 'coupons' => 'coupon#create', as: :credit_coupon
 
   get 'partials/ads/:partial' => 'ads#partials'
-
+  get 'partials/keywords/:partial' => 'keywords#partials'
+  get 'partials/payments/:partial' => 'payments#partials'
   root to: 'search#index'
 
   match '/:locale' => 'search#index'

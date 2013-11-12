@@ -47,7 +47,7 @@ gem 'rails_admin'
 gem 'coinbase'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+# gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 #gem 'jbuilder', '~> 1.2'
@@ -59,7 +59,7 @@ group :development do
   gem 'foreman'
 end
 group :test do
-  gem 'capybara', require: false
+  #gem 'capybara', require: false
   gem 'rspec-rails', require: false
   gem 'webmock'
   gem 'vcr'

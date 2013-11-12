@@ -3,8 +3,8 @@ en:
   activerecord:
     models:
       advertiser: Advertiser
-  bitcoin_note: "Bitcoin Donations Accepted at "
-  submit_a_domain: "Submit a Domain"
+  bitcoin_note: Bitcoin Donations Accepted at
+  submit_a_domain: Submit a Domain
   advertisers:
     password_recovery_note: If you want to be able to recover your password or recieve notifications when your balance is running low, enter your email!
     leave_blank: leave blank if you don't want to change it
@@ -24,13 +24,13 @@ en:
   ads:
     active: Active
     ads: Ads
-    apply_coupon: "Apply Coupon"
-    all_addresses: "All Addresses"
-    avg_pos: "Avg. Pos."
+    apply_coupon: Apply Coupon
+    all_addresses: All Addresses
+    avg_pos: Avg. Pos.
     balance: Balance
     coupon_code: Coupon Code
     apply: Apply
-    beta_access_requested: "Beta Access Requested"
+    beta_access_requested: Beta Access Requested
     bid: Bid
     clicks: Clicks
     ctr: CTR
@@ -40,7 +40,7 @@ en:
     all_addresses: All Addresses
     fields:
       bid: Bid
-      display_path: "Display Path"
+      display_path: Display Path
       target: Target
       title: Title
     information: Information
@@ -48,37 +48,39 @@ en:
     pending: Pending
     side_nav:
       ads: Ads
-      create_ad: "Create Ad"
+      keywords: Keywords
+      create_ad: Create Ad
       bitcoin_addresses: Bitcoin Addresses
-      request_beta_access: "Request Beta Access"
+      payments: Payments
+      request_beta_access: Request Beta Access
     status: Status
     title: Title
     toggle: Toggle
     views: Views
   contact:
-    send_message: "Send Message"
-    name: "Name"
-    contact_method: "Contact Method"
-    text: "Text"
+    send_message: Send Message
+    name: Name
+    contact_method: Contact Method
+    text: Text
     email_me: You can also email me at
   nav:
     advertisers:
       ads: Ads
       advertisers: Advertisers
       profile: Profile
-      sign_out: "Sign Out"
+      sign_out: Sign Out
     contact: Contact
     policies: Policies
     search: Search
   policies:
-    contact: "Contact Me"
-    content_filtering_title: "Content Filtering Policy"
-    cp: "We are removing any domain that hosts child pornography."
+    contact: Contact Me
+    content_filtering_title: Content Filtering Policy
+    cp: We are removing any domain that hosts child pornography.
   search:
     around: Around
-    pages_indexed: "pages indexed"
+    pages_indexed: pages indexed
     results_count:
-      one: "one result"
+      one: one result
       other: "%{count} results"
-    search_tor: "Search Tor"
-    try_this_on: "Try this search on"
+    search_tor: Search To
+    try_this_on: Try this search on
