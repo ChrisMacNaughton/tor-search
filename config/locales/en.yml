@@ -3,6 +3,7 @@ en:
   activerecord:
     models:
       advertiser: Advertiser
+  profile: profile
   bitcoin_note: Bitcoin Donations Accepted at
   submit_a_domain: Submit a Domain
   advertisers:
@@ -22,6 +23,7 @@ en:
     back: Back
     are_you_sure: Are you sure?
   ads:
+    better_experience_managing_ads: You will have a better experience managing your ads if you enable javascript in your browser and
     active: Active
     ads: Ads
     apply_coupon: Apply Coupon

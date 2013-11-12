@@ -2,6 +2,10 @@
   =render partial: 'side_nav'
   .span10
     .row
+      .alert
+        =t('ads.better_experience_managing_ads')
+        #{link_to t("profile"), edit_advertiser_registration_path}!
+    .row
       %h2= t('ads.information')
       %hr/
       %dl
