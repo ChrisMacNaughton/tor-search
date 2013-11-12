@@ -58,6 +58,7 @@ class ApplicationController < ActionController::Base
     unless error.nil?
       logger.error error.message
       logger.error error.backtrace.join("\n")
+      notify_airbrake(error)
     end
     respond_to do |format|
       format.html do
