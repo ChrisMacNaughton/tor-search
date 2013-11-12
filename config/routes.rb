@@ -57,7 +57,7 @@ TorSearch::Application.routes.draw do
   get 'partials/payments/:partial' => 'payments#partials'
   root to: 'search#index'
 
-  match '/:locale' => 'search#index'
+  match '/:locale' => 'search#index', constraints: {locale: /en/}
 
   match '*not_found', to: 'errors#error_404', as: 'not_found' \
     unless Rails.application.config.consider_all_requests_local

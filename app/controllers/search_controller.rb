@@ -6,6 +6,7 @@ class SearchController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
+    wtf type
     if params[:q]
       search
     else

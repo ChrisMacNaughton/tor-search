@@ -2,6 +2,7 @@
 class ErrorsController < ApplicationController
 
   def error_404
+    @nav = false
     @not_found_path = params[:not_found]
 
     respond_to do |format|
@@ -10,7 +11,7 @@ class ErrorsController < ApplicationController
   end
 
   def error_500
-    @force_category_banner = '500 Internal Server Error'
-    render status: 500
+    @nav = false
+    render status: 500, layout: false
   end
 end
