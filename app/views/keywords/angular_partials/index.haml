@@ -39,7 +39,7 @@
             %button.btn.btn-success{ng_hide: 'record.editMode', ng_click: 'record.editMode = !record.editMode'}
               %i.icon-edit
             %button.btn.btn-info{ng_show: 'record.editMode', ng_click: 'update(record)'}
-              %i.icon-ok
+              %i.icon-save
             %button.btn.btn-warning{ng_hide: 'record.editMode', ng_click: 'remove(record)'}
               %i.icon-remove-sign
   =render partial: 'shared/angular_common_pagination'
