@@ -184,7 +184,7 @@ class AdsController < ApplicationController
   end
 
   def _process_options options
-    options[:template] = 'no_js/' + options[:template] unless current_advertiser.wants_js?
+    options[:template] = 'no_js/' + options[:template] unless current_advertiser.nil? || current_advertiser.wants_js?
     super options
   end
 end
