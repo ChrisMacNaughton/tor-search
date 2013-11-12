@@ -26,7 +26,7 @@ class AdFinder
         .joins(:advertiser, ad_keywords: :keyword) \
         .where('advertisers.balance > ad_keywords.bid') \
         .where("LOWER(keywords.word) in (?)", query_words) \
-        .where('keywords.bid > 0') \
+        .where('ad_keywords.bid > 0') \
         .order('bid desc, created_at asc')
       @keyword_ads.map do |ad|
         ad.keyword_id = ad.ad_keywords.joins(:keyword) \
