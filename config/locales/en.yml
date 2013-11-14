@@ -84,5 +84,5 @@ en:
     results_count:
       one: one result
       other: "%{count} results"
-    search_tor: Search To
+    search_tor: Search Tor
     try_this_on: Try this search on
