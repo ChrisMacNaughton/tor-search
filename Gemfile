@@ -5,7 +5,7 @@ gem 'rails', '3.2.13'
 
 # Use sqlite3 as the database for Active Record
 gem 'pg'
-
+gem 'syslogger'
 # Use SCSS for stylesheets
 gem 'sass-rails'
 
