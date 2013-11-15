@@ -43,9 +43,9 @@ class Tracker
       http.use_ssl     = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
-    Rails.logger.info "Tracking a visit:"
+    Rails.logger.debug "Tracking a visit:"
     options.delete(:cdt)
-    Rails.logger.info options
+    Rails.logger.debug options
     result = http.request(Net::HTTP::Get.new("#{uri.request_uri}?#{options.to_query}"))
     Rails.logger.debug "Received: " + result.body
   end
