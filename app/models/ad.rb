@@ -22,6 +22,13 @@ class Ad < ActiveRecord::Base
   validates :title, presence: true
   validates :bid, presence: true
   validates :protocol_id, inclusion: { in: PROTOCOL_IDS }
+
+  # ad display validations
+  validates :title, length: { miniumu: 5, maximum: 25 }
+  validates :line_1, length: { maximum: 35 }
+  validates :line_2, length: { maximum: 35 }
+  validates :display_path, length: { maximum: 35 }
+
   before_save :check_onion
   scope :available, lambda {
     where(approved: true).where(disabled: false)

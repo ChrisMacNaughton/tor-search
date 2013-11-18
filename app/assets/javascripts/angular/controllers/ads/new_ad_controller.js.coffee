@@ -10,5 +10,9 @@ angular.module('TorSearch').controller('NewAdCtrl',
   $scope.save = () =>
     if $scope.ad.title && $scope.ad.path && $scope.ad.displayPath
       $scope.ad.create().then (result) ->
-        $location.path('/ads/'+result.id)
+        if result.errors?
+          debugger
+          $scope.errors = result.errors
+        else
+          $location.path('/ads/'+result.id)
 ])

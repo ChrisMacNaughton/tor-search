@@ -1,27 +1,44 @@
 .span4
+  .alert.alert-error{ng_show: 'errors'}
+    %a.close{data: {dismiss: 'alert'}} &times;
+    {{errors}}
+    %dl
+
   %form{name: 'form', novalidate: true}
     .row
       %fieldset.span4
         %legend Ad Details
         %div{class: "control-group {{form.title.$invalid && 'error' || ''}}"}
-          %input.input{type: :text, name: 'title', ng_model: 'ad.title', ng_required: 'true'}
-          %span.error{ng_show: "form.title.$dirty && form.title.$invalid"} Required!
-        .control-group
+          .row.span4
+            %input.input{type: :text, name: 'title', ng_model: 'ad.title', ng_required: 'true', ng_maxlength: '25'}
+          .row.span4
+            %span.help-inline{ng_show: "form.title.$error.required"} Required!
+            %span.help-inline{ng_show: "form.title.$error.maxlength"} Title is too long!
+        .row.span4.control-group
           %select.input{type: :text, ng_model: 'ad.protocol'}
             %option{value: 'HTTP', selected: true} HTTP
             %option{value: 'HTTPS'} HTTPS
         %div{class: "control-group {{form.path.$invalid && 'error' || ''}}"}
-          %input.input{type: :text, name: 'path', ng_model: 'ad.path', required: true}
-          %span.error{ng_show: "form.path.$dirty && form.path.$invalid"} Required!
+          .row.span4
+            %input.input{type: :text, name: 'path', ng_model: 'ad.path', required: true}
+          .row.span4
+            %span.help-inline{ng_show: "form.path.$error.required"} Required!
         %div{class: "control-group {{form.display_path.$invalid && 'error' || ''}}"}
-          %input.input{type: :text, name: 'display_path', ng_model: 'ad.displayPath', required: true}
-          %span.error{ng_show: "form.display_path.$dirty && form.display_path.$invalid"} Required!
-        .controls
-          %input.input{type: :text, ng_model: 'ad.line1'}
-        .controls
-          %input.input{type: :text, ng_model: 'ad.line2'}
-    .row
-      {{ad.title.$error|json}}
+          .row.span4
+            %input.input{type: :text, name: 'display_path', ng_model: 'ad.displayPath', required: true, ng_maxlength: '35'}
+          .row.span4
+            %span.help-inline{ng_show: "form.display_path.$error.required"} Required!
+            %span.help-inline{ng_show: "form.display_path.$error.maxlength"} Line is too long!
+        %div{class: "control-group {{form.line1.$invalid && 'error' || ''}}"}
+          .row.span4
+            %input.input{type: :text, name: 'line1', ng_model: 'ad.line1', ng_maxlength: '35'}
+          .row.span4
+            %span.help-inline{ng_show: "form.line1.$error.maxlength"} Line is too long!
+        %div{class: "control-group {{form.line2.$invalid && 'error' || ''}}"}
+          .row.span4
+            %input.input{type: :text, name: 'line2', ng_model: 'ad.line2', ng_maxlength: '35'}
+          .row.span4
+            %span.help-inline{ng_show: "form.line2.$error.maxlength"} Line is too long!
     %a.btn.btn-primary{ng_click: 'save()'} Save
 .span3.offset1
   .ad
