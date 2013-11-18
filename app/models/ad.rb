@@ -24,7 +24,7 @@ class Ad < ActiveRecord::Base
   validates :protocol_id, inclusion: { in: PROTOCOL_IDS }
 
   # ad display validations
-  validates :title, length: { miniumu: 5, maximum: 25 }
+  validates :title, length: { minimum: 5, maximum: 25 }
   validates :line_1, length: { maximum: 35 }
   validates :line_2, length: { maximum: 35 }
   validates :display_path, length: { maximum: 35 }
