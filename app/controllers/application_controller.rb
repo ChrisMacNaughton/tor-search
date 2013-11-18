@@ -4,11 +4,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_filter :set_locale
-  before_filter :log_headers
-
-  def log_headers
-    Rails.logger.info request.headers.select{ |k,v| k =~ /^X/} if ENV['LOG_HEADERS']
-  end
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
