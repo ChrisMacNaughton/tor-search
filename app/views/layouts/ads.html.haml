@@ -1,48 +1,11 @@
-!!! 5
-%html
-  %head
-    %title
-      =yield(:title)
-      TorSearch
-    = stylesheet_link_tag    "application", media: "all"
-    = #stylesheet_link_tag params[:controller], media: "all", "data-turbolinks-track" => true
-    = csrf_meta_tags
-    -if Rails.env == 'development'
-      :css
-        .translation_missing::before {
-          content: "[missing: ";
-        }
-        .translation_missing::after {
-          content: " ]";
-        }
-        .translation_missing {
-          display: inline-block;
-          background: yellow;
-        }
-  %body
-    .container
-      -unless defined?(@nav) && @nav == false
-        %ul.nav.nav-tabs
-          =nav_link t('nav.search'), root_path
-          =nav_link t('nav.contact'), contact_path
-          =nav_link t('nav.policies'), policies_path
-          =nav_link t('nav.advertisers.sign_out'), destroy_advertiser_session_path, 'pull-right'
-          =nav_link t('nav.advertisers.profile'), edit_advertiser_registration_path, 'pull-right'
-          =nav_link t('nav.advertisers.ads'), ads_path, 'pull-right'
-      -unless notice.nil? && alert.nil?
-        .row.span12
-          - if flash[:alert]
-            .alert
-              %a.close{data: {dismiss: 'alert'}} &times;
-              = flash[:alert]
-          - if flash[:notice]
-            .alert.alert-info
-              %a.close{data: {dismiss: 'alert'}} &times;
-              = flash[:notice]
-      .row
-        .span12{"ng-app" => 'TorSearch'}
-          = yield
-    .container
-      =yield(:footer)
-    = javascript_include_tag "application"
-    =yield(:javascripts)
+=render partial: 'application_header'
+%body
+  .container
+    =render partial: 'application_nav'
+    =render partial: 'application_alerts'
+    .row
+      .span12{"ng-app" => 'TorSearch'}
+        = yield
+  =render partial: 'application_footer'
+  = javascript_include_tag "application"
+  =yield(:javascripts)

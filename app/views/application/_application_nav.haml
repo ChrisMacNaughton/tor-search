@@ -1,0 +1,11 @@
+-unless defined?(@nav) && @nav == false
+  %ul.nav.nav-tabs
+    =nav_link t('nav.search'), root_path
+    =nav_link t('nav.contact'), contact_path
+    =nav_link t('nav.policies'), policies_path
+    -if current_advertiser
+      =nav_link t('nav.advertisers.sign_out'), destroy_advertiser_session_path, 'pull-right'
+      =nav_link t('nav.advertisers.profile'), edit_advertiser_registration_path, 'pull-right'
+      =nav_link t('nav.advertisers.ads'), ads_path, 'pull-right'
+    -else
+      =nav_link t('nav.advertisers.advertisers'), advertising_path, "pull-right"
