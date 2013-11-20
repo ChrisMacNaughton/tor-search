@@ -11,6 +11,15 @@ class KeywordsController < AngularController
     end
   end
 
+  def show
+    if params[:_destroy]
+      AdKeyword.joins(:ad).where(id: params[:id], ads: {advertiser_id: current_advertiser.id}).first.destroy
+      redirect_to ad_path(params[:ad_id])
+    else
+      redirect_to edit_keyword_path(params[:id])
+    end
+  end
+
   def edit
     if current_advertiser.wants_js?
       super

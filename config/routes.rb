@@ -44,7 +44,9 @@ TorSearch::Application.routes.draw do
     resources :keywords
     member do
       get 'toggle' => 'ads#toggle', as: :toggle
+      put 'toggle' => 'ads#toggle', as: :toggle
       put 'request_beta' => 'ads#request_beta', as: :request_beta
+      get 'request_beta' => 'ads#request_beta', as: :request_beta
     end
   end
 

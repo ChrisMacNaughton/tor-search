@@ -15,4 +15,4 @@
         %td= k.keyword.word
         %td= k.bid
         %td= link_to "Edit", edit_ad_keyword_path(@ad, k)
-        %td= link_to "Delete", ad_keyword_path(@ad, k), method: :delete
+        %td= link_to "Delete", ad_keyword_path(@ad, k, _destroy: true), method: :delete
