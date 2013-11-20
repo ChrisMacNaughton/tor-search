@@ -9,11 +9,6 @@
     %spam.help-block You only need to fill this out with a contact method if you want me to respond
     =f.label :text, t('contact.text')
     =f.text_area :text, class: 'span6', rows: 6, required: true
-    =textcaptcha_fields(f) do
-      .field
-        =f.label :spam_answer, t("spam.#{@message.spam_question}")
-        =f.text_field_with_error :spam_answer, value: '', required: true
-    %br/
     %br
     %button{type: 'submit'}= t('contact.send_message')
 .row.spam6

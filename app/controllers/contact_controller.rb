@@ -4,7 +4,7 @@ class ContactController < ApplicationController
 
   def contact
     @message = Message.new
-    @message.textcaptcha
+    #@message.textcaptcha
   end
 
   def new_message
