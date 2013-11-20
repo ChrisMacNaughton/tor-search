@@ -128,12 +128,14 @@ class SolrSearch
   # rubocop:disable MethodLength
   def with_title(q)
     if q[:q].include? 'title:'
-      match = q[:q].match(/title:(\S+)/i)
-      title = match[1]
-      fq = "title:#{title}"
-      fq = "-#{fq}" if q[:q].include? '-title:'
-      q[:q].gsub!(match[0], '')
-      q[:fq] << fq
+      match = q[:q].match(/title:\s*(\S+)/i)
+      unless match.nil?
+        title = match[1]
+        fq = "title:#{title}"
+        fq = "-#{fq}" if q[:q].include? '-title:'
+        q[:q].gsub!(match[0], '')
+        q[:fq] << fq
+      end
     end
     q
   end
