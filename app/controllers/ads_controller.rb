@@ -106,7 +106,7 @@ class AdsController < ApplicationController
           flash.notice = 'Your ad has been successfully edited!'
           redirect_to ads_path
         else
-          render :new
+          render :edit
         end
       end
     end
