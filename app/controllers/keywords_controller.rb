@@ -39,7 +39,7 @@ class KeywordsController < AngularController
         .find_or_initialize_by_ad_id_and_keyword_id(
           @ad.id, Keyword.find_or_create_by_word(k[:keyword]).id
         )
-      ad_keyword.bid =  k[:bid]
+      ad_keyword.bid = k[:bid] || @ad.bid
       ad_keyword.save
       @ad.ad_keywords << ad_keyword
     end

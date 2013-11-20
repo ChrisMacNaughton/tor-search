@@ -6,6 +6,7 @@ class AdKeyword < ActiveRecord::Base
   attr_accessible :bid, :ad_id, :keyword_id, :keyword, :ad
 
   validates :keyword_id, uniqueness: { scope: :ad_id }
+  validates :bid, presence: true
 
   delegate :word, to: :keyword
 end
