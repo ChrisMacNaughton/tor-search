@@ -42,7 +42,7 @@
           =will_paginate @search
 
     .span4{style: 'margin-top: 20px'}
-      .row.fluid.span2
+      .row.span2
         =t('search.try_this_on')
         %ul.unstyled
           %li=link_to "Amazon", root_path(q: "@amazon #{@search.term}")
@@ -50,6 +50,9 @@
       -unless @ads.nil? || @ads.empty?
         - @ads.each do |ad|
           =render partial: 'ad', locals: {ad: ad, search: true, span:4}
+      -unless @ads.present? && @ads.count > 2
+        .row.span2
+          =render partial: 'adwords_sidebar'
   -if @instant
     -content_for :javascripts do
       :javascript
