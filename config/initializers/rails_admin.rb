@@ -12,8 +12,12 @@ RailsAdmin.config do |config|  config.main_app_name = ['Tor Search', 'Admin']
   config.included_models = %w(
     Ad AdKeyword Admin Advertiser
     BitcoinAddress BannedDomain Coupon Domain InstantResult
-    Keyword Message Payment Query Search
+    Keyword Message Payment Query Search FlagReason Flag
     )
+
+  config.model 'FlagReason' do
+    object_label_method :name
+  end
 
   config.model 'Query' do
     object_label_method :term
