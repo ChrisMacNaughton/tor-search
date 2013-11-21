@@ -1,16 +1,17 @@
 -content_for :title do
   Contact -
-.row.span6.well
-  =form_for @message, builder: WithErrorFields do |f|
-    =f.label :name, t('contact.name')
-    =f.text_field :name, class: 'span6', required: true
-    =f.label :contact_method,(t 'contact.contact_method')
-    =f.text_field :contact_method, class: 'span6', placeholder: "Email: name@example.com"
-    %spam.help-block You only need to fill this out with a contact method if you want me to respond
-    =f.label :text, t('contact.text')
-    =f.text_area :text, class: 'span6', rows: 6, required: true
-    %br
-    %button{type: 'submit'}= t('contact.send_message')
+.row.span12
+  .span6.well
+    =form_for @message, builder: WithErrorFields do |f|
+      =f.label :name, t('contact.name')
+      =f.text_field :name, class: 'span6', required: true
+      =f.label :contact_method,(t 'contact.contact_method')
+      =f.text_field :contact_method, class: 'span6', placeholder: "Email: name@example.com"
+      %spam.help-block You only need to fill this out with a contact method if you want me to respond
+      =f.label :text, t('contact.text')
+      =f.text_area :text, class: 'span6', rows: 6, required: true
+      %br
+      %button{type: 'submit'}= t('contact.send_message')
 .row.spam6
   =t('contact.email_me')
-  chris.torsearch@gmail.com
+  TorSearch@riseup.net
