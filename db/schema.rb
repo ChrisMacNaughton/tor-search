@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131121181948) do
+ActiveRecord::Schema.define(:version => 20131121182415) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -162,6 +162,25 @@ ActiveRecord::Schema.define(:version => 20131121181948) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "flag_reasons", :force => true do |t|
+    t.text     "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "flags", :force => true do |t|
+    t.integer  "query_id"
+    t.integer  "flag_reason_id"
+    t.text     "path"
+    t.text     "title"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "flags", ["flag_reason_id"], :name => "index_flags_on_flag_reason_id"
+  add_index "flags", ["query_id"], :name => "index_flags_on_query_id"
 
   create_table "instant_results", :force => true do |t|
     t.integer  "query_id"
