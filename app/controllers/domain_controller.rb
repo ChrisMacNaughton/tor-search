@@ -28,4 +28,18 @@ class DomainController < ApplicationController
     end
   end
   # rubocop:enable MethodLength
+
+  def flag_page
+    @flag = Flag.new(path: params[:path], query_id: Search.find(params[:search_id]).query_id)
+  end
+
+  def create_flag
+    @flag = Flag.new(params[:flag])
+    if @flag.save
+      flash[:notice] = "Thank you for helping identify bad pages!"
+      redirect_to root_path({q: @flag.query.term})
+    else
+      render :flag_page
+    end
+  end
 end
