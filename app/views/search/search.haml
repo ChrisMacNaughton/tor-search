@@ -50,7 +50,7 @@
       -unless @ads.nil? || @ads.empty?
         - @ads.each do |ad|
           =render partial: 'ad', locals: {ad: ad, search: true, span:4}
-      -unless @ads.present? && @ads.count > 2
+      -unless @ads.present? && @ads.count > 3
         .row.span2
           =render partial: 'adwords_sidebar'
   -if @instant
