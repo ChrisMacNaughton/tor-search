@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131105145347) do
+ActiveRecord::Schema.define(:version => 20131121181948) do
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -131,29 +131,11 @@ ActiveRecord::Schema.define(:version => 20131105145347) do
 
   add_index "clicks", ["search_id"], :name => "index_clicks_on_search_id"
 
-  create_table "content_flags", :force => true do |t|
-    t.text     "reason"
-    t.string   "content_type"
-    t.integer  "content_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "flag_reason_id"
-  end
-
   create_table "coupons", :force => true do |t|
     t.string   "code"
     t.decimal  "value",      :precision => 16, :scale => 8, :default => 0.0
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
-  end
-
-  create_table "crawler_log_entries", :force => true do |t|
-    t.string   "type_str"
-    t.string   "action"
-    t.string   "reason"
-    t.integer  "page_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -174,44 +156,12 @@ ActiveRecord::Schema.define(:version => 20131105145347) do
   add_index "delayed_jobs", ["handler_hash"], :name => "index_delayed_jobs_on_handler_hash"
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
-  create_table "documents", :force => true do |t|
-    t.text     "path"
-    t.integer  "domain_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "documents", ["path", "domain_id"], :name => "index_documents_on_path_and_domain_id", :unique => true
-  add_index "documents", ["path"], :name => "index_documents_on_path"
-
   create_table "domains", :force => true do |t|
     t.string   "path"
     t.boolean  "pending"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  create_table "flag_reasons", :force => true do |t|
-    t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "images", :force => true do |t|
-    t.text     "path"
-    t.string   "thumbnail_path"
-    t.integer  "domain_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.string   "alt_text",       :default => ""
-    t.string   "unique_hash",    :default => ""
-    t.boolean  "no_crawl",       :default => false
-    t.datetime "last_crawled"
-    t.boolean  "disabled",       :default => false
-  end
-
-  add_index "images", ["path", "domain_id"], :name => "index_images_on_path_and_domain_id", :unique => true
-  add_index "images", ["path"], :name => "index_images_on_path"
 
   create_table "instant_results", :force => true do |t|
     t.integer  "query_id"
@@ -225,19 +175,6 @@ ActiveRecord::Schema.define(:version => 20131105145347) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  create_table "links", :force => true do |t|
-    t.integer  "from_target_id"
-    t.integer  "to_target_id"
-    t.text     "anchor_text"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.string   "from_target_type", :default => "Page"
-    t.string   "to_target_type",   :default => "Page"
-  end
-
-  add_index "links", ["from_target_id"], :name => "index_links_on_from_target_id"
-  add_index "links", ["to_target_id"], :name => "index_links_on_to_target_id"
 
   create_table "messages", :force => true do |t|
     t.string   "name"
