@@ -10,6 +10,8 @@
     .row.span12.error=err
 -else
   .row
+    .span10.offset1.ad{style: 'padding-top: 10px'}
+      =render partial: 'adwords_row'
     .span8
       %p.muted#totals
         = t('search.around')
