@@ -1,6 +1,6 @@
 -domain = page['host']
 -highlights = OpenStruct.new(@search.highlights[page['id']])
--url = "/r?s=#{@search_id}&p=#{page['url']}"
+-url = "/r?s=#{@search_id}&p=#{CGI::escape page['url']}"
 -url = page['url'] if @instant
 -title = highlights.try(:title).try(:first)
 -if title.nil? || title.empty?
