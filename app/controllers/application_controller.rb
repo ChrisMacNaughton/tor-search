@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
     end
     respond_to do |format|
       @layout = false
-      format.html { render template: 'errors/error_404', status: 404 }
+      format.html { render template: 'error_404', status: 404 }
       format.all { render nothing: true, status: 404 }
     end
     true
@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html do
         @nav = false
-        render template: 'errors/error_500', status: 500
+        render template: 'error_500', status: 500
       end
     end
     true
