@@ -1,13 +1,17 @@
 .span4
-  .alert.alert-error{ng_show: 'errors'}
+  .alert.alert-error.ng-cloak{ng_show: 'errors'}
     %a.close{data: {dismiss: 'alert'}} &times;
     {{errors}}
-    %dl
+  .alert.alert-success.ng-cloak{ng_show: 'new_record'}
+    %a.close{data: {dismiss: 'alert'}} &times;
+    Ad has been created!
 
-  %form{name: 'form', novalidate: true}
+  %form.ng-cloak{name: 'form', novalidate: true}
     .row
       %fieldset.span4
-        %legend Ad Details
+        %legend
+          = type
+          Ad Details
         %div{class: "control-group {{form.title.$invalid && 'error' || ''}}"}
           .row.span4
             %input.input{type: :text, name: 'title', ng_model: 'ad.title', ng_required: 'true', ng_maxlength: '25'}
