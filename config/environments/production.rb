@@ -41,8 +41,8 @@ TorSearch::Application.configure do
     :port => 587,
     :domain => "torsearch.es",
     :authentication => :plain,
-    :user_name => '',
-    :password => ''
+    :user_name => 'TorSearch',
+    :password => 'fM9ZT@aQ3*y%hwu&BeJO9kSeVTN2#zAm2m&dCJKp!0GUg%ABsf'
   }
 
   # See everything in the log (default is :info)
