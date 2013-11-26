@@ -3,7 +3,7 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
 
-  config.mailer_sender = 'chris.torsearch@gmail.com'
+  config.mailer_sender = 'admin@torsearch.es'
   require 'devise/orm/active_record'
   config.authentication_keys = [:username]
   config.case_insensitive_keys = [:email, :username]
