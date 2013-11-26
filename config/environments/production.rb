@@ -34,6 +34,17 @@ TorSearch::Application.configure do
   # use secure cookies.
   # config.force_ssl = true
 
+  config.action_mailer.default_url_options = { :host => 'torsearch.es' }
+
+  ActionMailer::Base.smtp_settings = {
+    :address => "smtp.sendgrid.net",
+    :port => 587,
+    :domain => "torsearch.es",
+    :authentication => :plain,
+    :user_name => '',
+    :password => ''
+  }
+
   # See everything in the log (default is :info)
   # config.log_level = :debug
 
