@@ -19,7 +19,7 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    if params[:hash] && params[:transaction_hash] && params[:amount]
+    if params[:address] && params[:transaction_hash] && params[:amount]
       new_bitcoin_payment && return
     else
 
@@ -32,7 +32,7 @@ class PaymentsController < ApplicationController
 
   def new_bitcoin_payment
     address = BitcoinAddress.find_by_address(params[:address])
-    if Payment.where(transaction_hash: params[:hash]).empty?
+    if Payment.where(transaction_hash: params[:transaction][:hash]).empty?
       Payment.create(
         transaction_hash: params[:transaction][:hash],
         bitcoin_address: params[:address],
