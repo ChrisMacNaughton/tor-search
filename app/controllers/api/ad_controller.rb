@@ -33,6 +33,7 @@ class Api::AdController < ApplicationController
           display_path: params[:ad][:display_path],
           line_1: params[:ad][:line1],
           line_2: params[:ad][:line2],
+          bid: params[:ad][:bid]
         }
 
         ad[:protocol_id] = if params[:ad][:protocol] == 'HTTP'
@@ -62,7 +63,8 @@ class Api::AdController < ApplicationController
           display_path: opts[:display_path],
           line_1: opts[:line1],
           line_2: opts[:line2],
-          disabled: opts[:disabled]
+          disabled: opts[:disabled],
+          bid: opts[:bid]
         }.delete_if{|k,v| v.nil?}
         ad.update_attributes(ad_params)
 

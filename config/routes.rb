@@ -36,7 +36,9 @@ TorSearch::Application.routes.draw do
   namespace 'api' do
     resources :bitcoin_address
     resources :payment
-    resources :ad
+    resources :ad do
+      resources :keyword
+    end
     resources :keyword
   end
   resources :keywords

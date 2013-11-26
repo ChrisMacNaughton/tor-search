@@ -43,6 +43,9 @@
             %input.input{type: :text, name: 'line2', ng_model: 'ad.line2', ng_maxlength: '35'}
           .row.span4
             %span.help-inline{ng_show: "form.line2.$error.maxlength"} Line is too long!
+        .control-group
+          .row.span4
+            %input.input{type: :text, name: 'bid', ng_model: 'ad.bid'}
     %a.btn.btn-primary{ng_click: 'save()'} Save
 .span3.offset1
   .ad

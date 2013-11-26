@@ -18,15 +18,12 @@
     %table.table
       %thead
         %tr
-          %th
           %th Ad
           %th Word
           %th Bid
           %th
       %tbody
         %tr{ng_repeat: "record in searchParameters.records", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
-          %td <a ng-click="toggle(record)" ng-show='record.approved' class='toggle-button'><i class="{{record.disabled|play_or_pause}}"></a>
-          %td <a ng-href="ads/{{record.adId}}">{{record.adTitle}}</a>
           %td
             %span{'ng-hide'=>'record.editMode'} {{record.word}}
             %span{'ng-show'=>'record.editMode'}
@@ -39,7 +36,7 @@
             %button.btn.btn-success{ng_hide: 'record.editMode', ng_click: 'record.editMode = !record.editMode'}
               %i.icon-edit
             %button.btn.btn-info{ng_show: 'record.editMode', ng_click: 'update(record)'}
-              %i.icon-save
+              %i.icon-lock
             %button.btn.btn-warning{ng_hide: 'record.editMode', ng_click: 'remove(record)'}
               %i.icon-remove-sign
   =render partial: 'shared/angular_common_pagination'
