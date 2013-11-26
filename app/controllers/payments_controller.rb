@@ -19,7 +19,7 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    if params[:address] && params[:transaction_hash] && params[:amount]
+    if params[:address] && params[:transaction] && params[:amount]
       new_bitcoin_payment && return
     else
 
