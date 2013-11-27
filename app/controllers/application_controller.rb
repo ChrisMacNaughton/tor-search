@@ -12,10 +12,10 @@ class ApplicationController < ActionController::Base
       if is_tor2web?
         request[:oniony] = 'tor2web'
       else
-        request[:oniony] = true
+        request[:oniony] = 'direct'
       end
     else
-      request[:oniony] = false
+      request[:oniony] = 'clear'
     end
   end
 
