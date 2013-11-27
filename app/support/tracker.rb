@@ -100,7 +100,7 @@ class Tracker
 
   def custom_variables
     {
-      1: [:onion_level, request[:oniony]]
+      '1' => [:onion_level, request[:oniony]]
     }
   end
 
