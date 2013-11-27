@@ -94,7 +94,14 @@ class Tracker
       search_count: @search.try('[]', :count),
       cid: user_id,
       cip: '',
+      _cvar: custom_variables.to_json
     ).delete_if { |k, v| v.nil? }
+  end
+
+  def custom_variables
+    {
+      1: [:onion_level, request[:oniony]]
+    }
   end
 
   def default_opts

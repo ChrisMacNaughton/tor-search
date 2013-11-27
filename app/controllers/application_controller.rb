@@ -8,6 +8,19 @@ class ApplicationController < ActionController::Base
 
   def check_is_onion
     @request_is_onion = !!(request.host =~ /onion/)
+    if @request_is_onion
+      if is_tor2web?
+        request[:oniony] = 'tor2web'
+      else
+        request[:oniony] = true
+      end
+    else
+      request[:oniony] = false
+    end
+  end
+
+  def is_tor2web?
+    request.headers['X_TOR2WEB'] == 'encrypted'
   end
 
   def set_locale
