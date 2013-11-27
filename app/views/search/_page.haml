@@ -19,7 +19,7 @@
 .row
   .page-listing.span8
     .title
-      %a{href: url}
+      %a{href: convert_to_proxy(url)}
         = title.html_safe
       %a{href: content_flag_path(path: page['url'], search_id: @search_id)}
         %i.icon-flag

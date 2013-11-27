@@ -4,6 +4,11 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_filter :set_locale
+  before_filter :check_is_onion
+
+  def check_is_onion
+    @request_is_onion = !!(request.host =~ /onion/)
+  end
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
