@@ -93,7 +93,7 @@ class Tracker
       search: @search.try('[]', :term),
       search_count: @search.try('[]', :count),
       cid: user_id,
-      cip: '',
+      cip: ip_address,
       _cvar: custom_variables.to_json
     ).delete_if { |k, v| v.nil? }
   end
@@ -102,6 +102,14 @@ class Tracker
     {
       '1' => [:onion_level, request[:oniony]]
     }
+  end
+
+  def ip_address
+    if request[:oniony] == 'clear'
+      request.ip
+    else
+      ''
+    end
   end
 
   def default_opts
