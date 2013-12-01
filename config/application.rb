@@ -32,6 +32,9 @@ module TorSearch
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
+
+    config.mixpanel_token = 'd724eedaeaa2f225b3fc03d6d98207f2'
+
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.i18n.default_locale = :en
 

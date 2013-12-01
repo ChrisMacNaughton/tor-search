@@ -3,6 +3,8 @@ TorSearch::Application.configure do
   # Settings specified here will take precedence over those in
   # config/application.rb
 
+  config.mixpanel_token = '1b7927e3673abb6f39279e74b3348fbf'
+
   # Code is not reloaded between requests
   config.cache_classes = true
 
