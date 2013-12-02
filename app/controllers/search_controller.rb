@@ -21,7 +21,8 @@ class SearchController < ApplicationController
       @search = SolrSearch.new
       render :index and return
     end
-
+    @mixpanel_tracker.track(current_advertiser.id, 'searched', {term: params[:q]}, visitor_ip_address) \
+      if current_advertiser
     @query = Query.find_or_create_by_term(params[:q])
 
     if params[:q].include? '@'

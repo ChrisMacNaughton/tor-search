@@ -58,6 +58,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def visitor_ip_address
+    if request[:oniony] == 'clear'
+      request.remote_ip
+    else
+      '127.0.0.1'
+    end
+  end
+
   protected
 
   def self.custom_exception_handling

@@ -18,7 +18,7 @@ class Api::BitcoinAddressController < ApplicationController
   def create
     respond_to do |format|
       format.json {
-        @mixpanel_tracker.track(current_advertiser.id, 'requested bitcoin address')
+        @mixpanel_tracker.track(current_advertiser.id, 'requested bitcoin address', visitor_ip_address)
         coinbase = Coinbase::Client.new(TorSearch::Application.config.tor_search.coinbase_key)
         options = {
           address: {
