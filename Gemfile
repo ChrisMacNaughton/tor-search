@@ -34,7 +34,7 @@ gem 'delayed_job_active_record'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-
+gem 'mixpanel-ruby'
 #gem 'delayed_job_active_record'
 #gem 'daemons'
 

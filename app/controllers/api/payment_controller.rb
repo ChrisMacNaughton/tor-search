@@ -35,6 +35,7 @@ class Api::PaymentController < ApplicationController
               amount: coupon.value
             )
             result = {value: coupon.value}
+            @mixpanel_tracker.track(current_advertiser.id, 'applied a coupon', {value: coupon.value})
           else
             result = {error: "You've already redeemed this code"}
           end

@@ -27,6 +27,7 @@ class AdsController < ApplicationController
         }
       end
     else
+      @mixpanel_tracker.track(current_advertiser.id, 'create ad page')
       @ad = Ad.new(advertiser: current_advertiser)
     end
   end
@@ -66,9 +67,11 @@ class AdsController < ApplicationController
       @ad = Ad.new(params[:ad])
       @ad.advertiser = current_advertiser
       if @ad.save
+        @mixpanel_tracker.track(current_advertiser.id, 'created an ad',  {ad: {id: ad.id, title: ad.title}})
         flash.notice = 'Your new ad has been successfully created'
         redirect_to ads_path
       else
+        @mixpanel_tracker.track(current_advertiser.id, 'error creating ad', {error: @ad.errors})
         render :new
       end
     end
@@ -103,9 +106,11 @@ class AdsController < ApplicationController
         approved = ad_attributes.select{ |k,v| require_approval.include? k.to_sym}.select{|k,v| @ad.send(k.to_sym) != v }.empty?
         ad_attributes[:approved] = false unless approved
         if @ad.update_attributes(ad_attributes)
+          @mixpanel_tracker.track(current_advertiser.id, 'updated ad', {ad: {id: ad.id, title: ad.title}})
           flash.notice = 'Your ad has been successfully edited!'
           redirect_to ads_path
         else
+          @mixpanel_tracker.track(current_advertiser.id, 'error editing ad', {error: @ad.errors})
           render :edit
         end
       end
@@ -127,7 +132,7 @@ class AdsController < ApplicationController
 
   def get_payment_address
     address = current_advertiser.bitcoin_addresses.order('created_at desc').first
-
+    @mixpanel_tracker.track(current_advertiser.id, 'requested bitcoin address')
     if address.nil? || address.created_at < 6.hours.ago
       coinbase = Coinbase::Client.new(TorSearch::Application.config.tor_search.coinbase_key)
       options = {
@@ -153,6 +158,7 @@ class AdsController < ApplicationController
     ad = Ad.find(params[:id])
     ad.disabled = !ad.disabled
     if ad.save
+      @mixpanel_tracker.track(current_advertiser.id, 'toggled an ad', {ad: {id: ad.id, title: ad.title}})
       flash.notice = 'Ad Toggled'
     else
       flash.error = 'There was a problem, try again soon!'
@@ -161,7 +167,8 @@ class AdsController < ApplicationController
   end
 
   def request_beta
-    advertiser = Advertiser.find(params[:id])
+    @mixpanel_tracker.track(current_advertiser.id, 'requested beta access')
+    advertiser = current_advertiser
     advertiser.wants_beta = true
     if advertiser.save
       flash.notice = 'Beta access requested'

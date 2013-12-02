@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
   before_filter :check_is_onion
   before_filter :add_user_to_request
+  before_filter :setup_mixpanel_tracker
 
   def check_is_onion
     @request_is_onion = !!(request.host =~ /onion/)
@@ -24,6 +25,15 @@ class ApplicationController < ActionController::Base
     if current_advertiser
       request[:current_advertiser] = current_advertiser
     end
+  end
+
+  def setup_mixpanel_tracker
+    require 'mixpanel-ruby'
+    @mixpanel_tracker = Mixpanel::Tracker.new(TorSearch::Application.config.mixpanel_token)
+    @mixpanel_tracker.people.set(current_advertiser.id, {
+      '$email' => current_advertiser.email,
+      'wants js' => current_advertiser.wants_js
+    }) if current_advertiser
   end
 
   def is_tor2web?

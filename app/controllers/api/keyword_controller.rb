@@ -34,13 +34,16 @@ class Api::KeywordController < ApplicationController
 
       keywords.each do |word|
         unless words.include? word
+          @mixpanel_tracker.track(current_advertiser.id, 'added a keyword to an ad', { keyword: params[:keyword][:word], ad: {id: ad.id, title: ad.title}})
           AdKeyword.create(bid: ad.bid, ad: ad, keyword: Keyword.find_or_create_by_word(word))
         end
 
       end
     else
-      AdKeyword.create(bid: params[:keyword][:bid] || ad.bid, ad: ad, keyword: Keyword.find_or_create_by_word(params[:keyword][:word])) \
-        unless words.include? params[:keyword][:word]
+      unless words.include? params[:keyword][:word]
+        @mixpanel_tracker.track(current_advertiser.id, 'added a keyword to an ad', {keyword: params[:keyword][:word], ad: {id: ad.id, title: ad.title}})
+        AdKeyword.create(bid: params[:keyword][:bid] || ad.bid, ad: ad, keyword: Keyword.find_or_create_by_word(params[:keyword][:word])) \
+      end
     end
 
     render json: {status: "OK"}
@@ -64,8 +67,10 @@ class Api::KeywordController < ApplicationController
 
   def destroy
     keyword = AdKeyword.where(id: params[:id], ads: {advertiser_id: current_advertiser.id}).joins(:ad).first
-
+    word = keyword.word
+    ad_id = keyword.ad_id
     if keyword.destroy
+      @mixpanel_tracker.track(current_advertiser.id, 'removed a keyword from an ad', {keyword: word, ad: {id: ad_id}})
       render json: {status: "OK"}
     else
       render json: {error: keyword.errors}

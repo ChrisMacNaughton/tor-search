@@ -18,8 +18,9 @@ class Api::AdController < ApplicationController
 
   def show
     respond_to do |format|
+      ad = Ad.where(id: params[:id]).try(:first)
       format.json {
-        render json: Ad.where(id: params[:id]).try(:first)
+        render json: ad
       }
     end
   end
@@ -45,7 +46,7 @@ class Api::AdController < ApplicationController
         ad = Ad.new(ad)
         ad.advertiser = current_advertiser
         ad.save
-
+        @mixpanel_tracker.track(current_advertiser.id, 'created an ad', {ad: {id: ad.id, title: ad.title}})
         render json: ad
       }
     end
@@ -67,7 +68,7 @@ class Api::AdController < ApplicationController
           bid: opts[:bid]
         }.delete_if{|k,v| v.nil?}
         ad.update_attributes(ad_params)
-
+        @mixpanel_tracker.track(current_advertiser.id, 'updated an ad', {ad: {id: ad.id, title: ad.title}})
         render json: ad
       }
     end
