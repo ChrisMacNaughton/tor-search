@@ -121,7 +121,7 @@ class Tracker
       apiv: 1,
       rand: SecureRandom.hex,
       url: url,
-      cdt: DateTime.now.strftime('%Y-%m-%d %H:%M:%S'),
+      cdt: DateTime.now.in_time_zone('UTC').strftime('%Y-%m-%d %H:%M:%S'),
       urlref: referrer,
       token_auth: auth_token,
     }
