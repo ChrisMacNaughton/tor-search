@@ -44,7 +44,6 @@ class Tracker
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
     Rails.logger.debug "Tracking a visit:"
-    options.delete(:cdt)
     Rails.logger.debug options
     result = http.request(Net::HTTP::Get.new("#{uri.request_uri}?#{options.to_query}"))
     Rails.logger.debug "Received: " + result.body
@@ -53,7 +52,11 @@ class Tracker
   private
 
   def user_id
-    session[:piwik_session_id] ||= SecureRandom.hex[0...16]
+    session[:piwik_session_id] ||= if request[:current_advertiser].nil?
+      SecureRandom.hex[0...16]
+    else
+      Digest::SHA1.hexdigest("#{request[:current_advertiser].id}")[0...16]
+    end
   end
 
   def http
@@ -108,7 +111,7 @@ class Tracker
     if request[:oniony] == 'clear'
       request.ip
     else
-      ''
+      '127.0.0.1'
     end
   end
 
@@ -118,6 +121,7 @@ class Tracker
       apiv: 1,
       rand: SecureRandom.hex,
       url: url,
+      cdt: DateTime.now.strftime('%Y-%m-%d %H:%M:%S'),
       urlref: referrer,
       token_auth: auth_token,
     }

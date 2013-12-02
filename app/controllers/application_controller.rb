@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :set_locale
   before_filter :check_is_onion
+  before_filter :add_user_to_request
 
   def check_is_onion
     @request_is_onion = !!(request.host =~ /onion/)
@@ -16,6 +17,12 @@ class ApplicationController < ActionController::Base
       end
     else
       request[:oniony] = 'clear'
+    end
+  end
+
+  def add_user_to_request
+    if current_advertiser
+      request[:current_advertiser] = current_advertiser
     end
   end
 
