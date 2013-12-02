@@ -33,7 +33,7 @@ module TorSearch
     # config.time_zone = 'Central Time (US & Canada)'
 
 
-    config.mixpanel_token = 'd724eedaeaa2f225b3fc03d6d98207f2'
+    config.mixpanel_token = '0ae5b6c02ed62994748ef62674d29d9e'
 
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.i18n.default_locale = :en

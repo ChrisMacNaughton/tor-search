@@ -17,6 +17,7 @@
       #footer_home_left
         =link_to t(:submit_a_domain), add_link_path
       #footer_home_right
+        =render partial: 'mixpanel_badge'
       .span6.offset3
         %p
           =t(:bitcoin_note)
