@@ -30,6 +30,7 @@ class Ad < ActiveRecord::Base
   validates :display_path, length: { maximum: 35 }
 
   before_save :check_onion
+  before_save :trim_off_http
   scope :available, lambda {
     where(approved: true).where(disabled: false)
   }
@@ -38,6 +39,11 @@ class Ad < ActiveRecord::Base
   def check_onion
     check_path = path.gsub(%r(https?://), '')
     self.onion = !!(check_path =~ /^[2-7a-zA-Z]{16}\.onion/)
+    true
+  end
+
+  def trim_off_http
+    self.path = path.gsub(/https?:\/\//, '')
     true
   end
 
