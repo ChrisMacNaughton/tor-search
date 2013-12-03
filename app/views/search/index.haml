@@ -11,6 +11,10 @@
         =t 'search.pages_indexed'
     -else
       %p.muted Search is offline for the moment, we are looking into it
+  .row.span10.offset1
+    %a.thumbnail{href: 'mailto:sales@torsearch.es'}
+      =image_tag asset_path 'advertise-banner.png'
+    %br/
 -content_for(:footer) do
   #footer_home
     .row-fluid
