@@ -10,8 +10,6 @@
     .row.span12.error=err
 -else
   .row
-    .span10.offset1{style: 'padding-top: 10px'}
-      =render partial: 'adwords_row'
     .span8
       %p.muted#totals
         = t('search.around')
@@ -52,9 +50,6 @@
       -unless @ads.nil? || @ads.empty?
         - @ads.each do |ad|
           =render partial: 'ad', locals: {ad: ad, search: true, span:4}
-      -unless @ads.present? && @ads.count > 3
-        .row.span2
-          =render partial: 'adwords_sidebar'
   -if @instant
     -content_for :javascripts do
       :javascript
