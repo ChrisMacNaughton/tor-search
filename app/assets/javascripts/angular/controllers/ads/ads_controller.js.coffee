@@ -15,7 +15,8 @@ angular.module('TorSearch').controller('AdsCtrl',
     searchResource.search()
 
   $scope.toggle = (record) ->
-    record.disabled = !record.disabled
-    new Ad({id: record.id, disabled: !record.disabled}).save().then (rec) ->
+    active = !record.disabled
+    record.disabled = active
+    new Ad({id: record.id, disabled: active}).save().then (rec) ->
       $scope.refresh()
 ])
