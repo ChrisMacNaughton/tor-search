@@ -17,6 +17,7 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
   end
 
   def check_is_onion
+    debugger
     @request_is_onion = !!(request.host =~ /onion/)
     if @request_is_onion
       if is_tor2web?
@@ -25,7 +26,11 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
         request[:oniony] = 'tor'
       end
     else
-      request[:oniony] = 'clear'
+      if request_ip_is_exit?
+        request[:oniony] = 'tor_over_clear'
+      else
+        request[:oniony] = 'clear'
+      end
     end
   end
 
@@ -42,6 +47,18 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
       '$email' => current_advertiser.email,
       'wants js' => current_advertiser.wants_js
     }) if current_advertiser
+  end
+
+  def request_ip_is_exit?
+    ips = read_through_cache('exit_ips', 24.hours) do
+      url = URI('https://check.torproject.org/cgi-bin/TorBulkExitList.py?ip=173.49.88.241&port=443')
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
+      r = Net::HTTP::Get.new(url.request_uri)
+      response = http.start {|http| http.request(r)}
+      response.body.split("\n").reject{|w| w[0] == '#'}
+    end
+    ips.include? request.ip
   end
 
   def is_tor2web?
