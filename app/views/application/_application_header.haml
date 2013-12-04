@@ -4,6 +4,12 @@
     %title
       =yield(:title)
       TorSearch
+    %meta{property: 'og:image', content: "#{request.protocol}#{request.host_with_port}#{ asset_path 'logo-large.png' }"}
+    %meta{property: 'og:title', content: 'TorSearch | Search Hidden Services'}
+    %meta{property: 'og:type', content: 'company'}
+    %meta{property: 'og:url', content: "#{request.protocol}#{request.host_with_port}"}
+
+
     = stylesheet_link_tag    "application", media: "all"
     = #stylesheet_link_tag params[:controller], media: "all", "data-turbolinks-track" => true
     = csrf_meta_tags
