@@ -1,2 +1,9 @@
 %footer.container
   =yield(:footer)
+  .row
+    .offset2
+      %p.muted
+        Available over Tor at
+        =link_to 'kbhpodhnfxl3clb4.onion', 'http://kbhpodhnfxl3clb4.onion'
+        or available over the clear internet at
+        =link_to 'TorSearch.es', 'https://torsearch.es'

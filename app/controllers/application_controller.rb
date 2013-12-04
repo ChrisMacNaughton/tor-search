@@ -7,6 +7,14 @@ class ApplicationController < ActionController::Base
   before_filter :check_is_onion
   before_filter :add_user_to_request
   before_filter :setup_mixpanel_tracker
+  before_filter :notify_about_other_domain_for_tor_to_web
+
+  def notify_about_other_domain_for_tor_to_web
+    if is_tor2web?
+      flash.now[:notice] = "You can improve your experience with TorSearch by browsing directly to <a href='https://torsearch.es'>TorSearch.es</a><br/>
+Because you are using Tor2Web, you have already traded anonymity for convenience and now you can use TorSearch even faster!".html_safe
+    end
+  end
 
   def check_is_onion
     @request_is_onion = !!(request.host =~ /onion/)
