@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
     if is_tor2web?
       flash.now[:notice] = "You can improve your experience with TorSearch by browsing directly to <a href='https://torsearch.es'>TorSearch.es</a><br/>
 Because you are using Tor2Web, you have already traded anonymity for convenience and now you can use TorSearch even faster!".html_safe
+    elsif request_ip_is_exit?
+      flash.now[:notice] = "You can access this site as a hidden service and use Tor's encryption by using <a href='http://kbhpodhnfxl3clb4.onion'>kbhpodhnfxl3clb4.onion</a>".html_safe
     end
   end
 
