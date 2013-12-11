@@ -56,7 +56,7 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
       r = Net::HTTP::Get.new(url.request_uri)
-      response = http.start { |http| http.request(r) }
+      response = http.start { |h| h.request(r) }
       response.body.split("\n").reject{|w| w[0] == '#'}
     end
     ips.include? request.ip
