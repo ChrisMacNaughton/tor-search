@@ -61,8 +61,11 @@ class BitcoinMatcher < GenericMatcher
     http.use_ssl = true
 
     resp = http.get '/api/v1/currencies/exchange_rates'
-
-    JSON.parse(resp.body)
+    begin
+      JSON.parse(resp.body)
+    rescue
+      nil
+    end
   end
 
   def get_prices
