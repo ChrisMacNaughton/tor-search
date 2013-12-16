@@ -17,7 +17,7 @@ class Matcher
     if matches?
       res = []
       matches.each do |m|
-        res << m
+        res << m unless m.empty?
       end
       res = res.sort_by { |m| m[:weight] }
     else
