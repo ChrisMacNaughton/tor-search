@@ -1,6 +1,7 @@
 %h1 Submit a new URL
 
 =form_for @domain, builder: WithErrorFields, url: post_new_link_path do |f|
+  = form_authenticity_token
   =f.label :path, "URL"
   =f.text_field_with_error :path, placeholder: "xxx.onion", required: true
   %br/
