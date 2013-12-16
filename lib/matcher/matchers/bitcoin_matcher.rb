@@ -17,7 +17,7 @@ class BitcoinMatcher < GenericMatcher
   def execute
     prices = get_prices
 
-    return nil if prices.nil?
+    return [] if prices.nil?
     {
       name: 'Bitcoin Prices',
       method: 'upper',
