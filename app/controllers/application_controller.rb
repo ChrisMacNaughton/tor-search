@@ -1,10 +1,12 @@
 # encoding: utf-8
+
 class ApplicationController < ActionController::Base
+  include TorMethods
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_filter :set_locale
-  before_filter :check_is_onion
+
   before_filter :add_user_to_request
   before_filter :setup_mixpanel_tracker
   before_filter :notify_about_other_domain_for_tor_to_web
@@ -15,23 +17,6 @@ class ApplicationController < ActionController::Base
 Because you are using Tor2Web, you have already traded anonymity for convenience and now you can use TorSearch even faster!".html_safe
     elsif request_ip_is_exit?
       flash.now[:notice] = "You can access this site as a hidden service and use Tor's encryption by using <a href='http://kbhpodhnfxl3clb4.onion'>kbhpodhnfxl3clb4.onion</a>".html_safe
-    end
-  end
-
-  def check_is_onion
-    @request_is_onion = !!(request.host =~ /onion/)
-    if @request_is_onion
-      if is_tor2web?
-        request[:oniony] = 'tor2web'
-      else
-        request[:oniony] = 'tor'
-      end
-    else
-      if request_ip_is_exit?
-        request[:oniony] = 'tor_over_clear'
-      else
-        request[:oniony] = 'clear'
-      end
     end
   end
 
@@ -48,22 +33,6 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
       '$email' => current_advertiser.email,
       'wants js' => current_advertiser.wants_js
     }) if current_advertiser
-  end
-
-  def request_ip_is_exit?
-    ips = read_through_cache('exit_ips', 24.hours) do
-      url = URI('https://check.torproject.org/cgi-bin/TorBulkExitList.py?ip=173.49.88.241&port=443')
-      http = Net::HTTP.new(url.host, url.port)
-      http.use_ssl = true
-      r = Net::HTTP::Get.new(url.request_uri)
-      response = http.start { |h| h.request(r) }
-      response.body.split("\n").reject{|w| w[0] == '#'}
-    end
-    ips.include? request.ip
-  end
-
-  def is_tor2web?
-    request.headers['X_TOR2WEB'] == 'encrypted'
   end
 
   def set_locale
@@ -85,7 +54,7 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
   end
 
   def visitor_ip_address
-    if request[:oniony] == 'clear'
+    if request_is_oniony == 'clear'
       request.remote_ip
     else
       '127.0.0.1'

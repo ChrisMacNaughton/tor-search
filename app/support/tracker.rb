@@ -1,7 +1,7 @@
 # encoding: utf-8
 # class built to track visits iin Piwik
 class Tracker
-
+  include TorMethods
   attr_reader :request, :site_id
   attr_writer :auth_token, :piwik_url
 
@@ -103,12 +103,12 @@ class Tracker
 
   def custom_variables
     {
-      '1' => [:onion_level, request[:oniony]]
+      '1' => [:onion_level, request_is_oniony]
     }
   end
 
   def ip_address
-    if request[:oniony] == 'clear'
+    if request_is_oniony == 'clear'
       request.ip
     else
       '127.0.0.1'
