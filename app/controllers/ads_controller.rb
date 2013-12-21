@@ -67,7 +67,7 @@ class AdsController < ApplicationController
       @ad = Ad.new(params[:ad])
       @ad.advertiser = current_advertiser
       if @ad.save
-        @mixpanel_tracker.track(current_advertiser.id, 'created an ad',  {ad: {id: ad.id, title: ad.title}}, visitor_ip_address)
+        @mixpanel_tracker.track(current_advertiser.id, 'created an ad',  {ad: {id: @ad.id, title: @ad.title}}, visitor_ip_address)
         flash.notice = 'Your new ad has been successfully created'
         redirect_to ads_path
       else
