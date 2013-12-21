@@ -106,7 +106,7 @@ class AdsController < ApplicationController
         approved = ad_attributes.select{ |k,v| require_approval.include? k.to_sym}.select{|k,v| @ad.send(k.to_sym) != v }.empty?
         ad_attributes[:approved] = false unless approved
         if @ad.update_attributes(ad_attributes)
-          @mixpanel_tracker.track(current_advertiser.id, 'updated ad', {ad: {id: ad.id, title: ad.title}}, visitor_ip_address)
+          @mixpanel_tracker.track(current_advertiser.id, 'updated ad', {ad: {id: @ad.id, title: @ad.title}}, visitor_ip_address)
           flash.notice = 'Your ad has been successfully edited!'
           redirect_to ads_path
         else
