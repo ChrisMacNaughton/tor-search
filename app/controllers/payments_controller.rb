@@ -35,7 +35,7 @@ class PaymentsController < ApplicationController
     if Payment.where(transaction_hash: params[:transaction][:hash]).empty?
       Payment.create(
         transaction_hash: params[:transaction][:hash],
-        bitcoin_address: params[:address],
+        bitcoin_address: address,
         advertiser: address.advertiser,
         amount: params[:amount]
       )
