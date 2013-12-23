@@ -2,7 +2,7 @@
 class Api::AdController < ApplicationController
   include Base::Behaviors::Angular
   before_filter :authenticate_advertiser!
-  before_filter :track
+  #before_filter :track
 
   def index
     respond_to do |format|
