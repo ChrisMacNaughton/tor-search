@@ -1,7 +1,7 @@
 .span2
   %ul.nav.nav-list
     %li{class: "{{active == 'AdsCtrl' && 'active' || ''}}"}=link_to t('ads.side_nav.ads'), ads_path
-    %li{class: "{{active == 'KeywordCtrl' && 'active' || ''}}"}=link_to t('ads.side_nav.keywords'), keywords_path
+    -#%li{class: "{{active == 'KeywordsCtrl' && 'active' || ''}}"}=link_to t('ads.side_nav.keywords'), keywords_path
     %li{class: "{{active == 'NewAdCtrl' && 'active' || ''}}"}=link_to t('ads.side_nav.create_ad'), new_ad_path
     %li{class: "{{active == 'PaymentsCtrl' && 'active' || ''}}"}=link_to t('ads.side_nav.payments'), payments_path
     %li{class: "{{active == 'BitcoinAddressCtrl' && 'active' || ''}}"}=link_to t('ads.side_nav.bitcoin_addresses'), btc_address_path
