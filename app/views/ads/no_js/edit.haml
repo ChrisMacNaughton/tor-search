@@ -1,8 +1,9 @@
 .row
-  .span6
+  =render partial: 'side_nav'
+  .span5
     =form_for @ad, builder: WithErrorFields do |f|
       =render partial: 'fields', locals: { f: f }
-  .span6
+  .span5
     .row
       =render partial: 'ad', locals: {search: false, ad: @ad}
 .row

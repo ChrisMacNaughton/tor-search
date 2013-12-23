@@ -6,7 +6,39 @@
     %a.close{data: {dismiss: 'alert'}} &times;
     Ad has been created!
 
-  %form.ng-cloak{name: 'form', novalidate: true}
+  %form.ng-cloak{name: 'form', novalidate: true, ng_hide: 'ad.title'}
+    .row
+      %fieldset.span4
+        %legend
+          = type
+          Ad Details
+        .control-group
+          .row.span4
+            %input.input{type: :text, name: 'title', ng_model: 'ad.title', ng_required: 'true', ng_maxlength: '25', disabled: true}
+        .row.span4.control-group
+          %select.input{type: :text, ng_model: 'ad.protocol', disabled: true}
+            %option{value: 'HTTP', selected: true} HTTP
+            %option{value: 'HTTPS'} HTTPS
+        .control-group
+          .row.span4
+            %input.input{type: :text, name: 'display_path', ng_model: 'ad.displayPath', required: true, ng_maxlength: '35', disabled: true}
+        .control-group
+          .row.span4
+            %input.input{type: :text, name: 'line1', ng_model: 'ad.line1', ng_maxlength: '35', disabled: true}
+        .control-group
+          .row.span4
+            %input.input{type: :text, name: 'line2', ng_model: 'ad.line2', ng_maxlength: '35', disabled: true}
+        %hr/
+        .control-group
+          .row.span4
+            %label{for: 'path'} Path
+            %input.input{type: :text, name: 'path', ng_model: 'ad.path', required: true, disabled: true}
+        .control-group
+          .row.span4
+            %label{for: 'bid'} Bid
+            %input.input{type: :text, name: 'bid', ng_model: 'ad.bid', disabled: true}
+    %a.btn.btn-primary{ng_click: ''} Save
+  %form.ng-cloak{name: 'form', novalidate: true, ng_show: 'ad.title'}
     .row
       %fieldset.span4
         %legend
@@ -22,11 +54,6 @@
           %select.input{type: :text, ng_model: 'ad.protocol'}
             %option{value: 'HTTP', selected: true} HTTP
             %option{value: 'HTTPS'} HTTPS
-        %div{class: "control-group {{form.path.$invalid && 'error' || ''}}"}
-          .row.span4
-            %input.input{type: :text, name: 'path', ng_model: 'ad.path', required: true}
-          .row.span4
-            %span.help-inline{ng_show: "form.path.$error.required"} Required!
         %div{class: "control-group {{form.display_path.$invalid && 'error' || ''}}"}
           .row.span4
             %input.input{type: :text, name: 'display_path', ng_model: 'ad.displayPath', required: true, ng_maxlength: '35'}
@@ -43,8 +70,16 @@
             %input.input{type: :text, name: 'line2', ng_model: 'ad.line2', ng_maxlength: '35'}
           .row.span4
             %span.help-inline{ng_show: "form.line2.$error.maxlength"} Line is too long!
+        %hr/
+        %div{class: "control-group {{form.path.$invalid && 'error' || ''}}"}
+          .row.span4
+            %label{for: 'path'} Path
+            %input.input{type: :text, name: 'path', ng_model: 'ad.path', required: true}
+          .row.span4
+            %span.help-inline{ng_show: "form.path.$error.required"} Required!
         .control-group
           .row.span4
+            %label{for: 'bid'} Bid
             %input.input{type: :text, name: 'bid', ng_model: 'ad.bid'}
     %a.btn.btn-primary{ng_click: 'save()'} Save
 .span3.offset1

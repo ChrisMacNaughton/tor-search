@@ -28,7 +28,7 @@ class AdsController < ApplicationController
       end
     else
       @mixpanel_tracker.track(current_advertiser.id, 'create ad page')
-      @ad = Ad.new(advertiser: current_advertiser)
+      @ad = Ad.new(advertiser: current_advertiser, title: 'Example Title', protocol_id: 0, path: 'www.example.com?rel=ts', display_path: 'www.example.com', line_1: 'this is an', line_2: 'example ad', bid: 0.0001)
     end
   end
 
