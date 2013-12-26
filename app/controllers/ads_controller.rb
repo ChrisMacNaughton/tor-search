@@ -66,6 +66,9 @@ class AdsController < ApplicationController
     else
       @ad = Ad.new(params[:ad])
       @ad.advertiser = current_advertiser
+      if current_advertiser.is_auto_approved?
+        @ad.approved = true
+      end
       if @ad.save
         @mixpanel_tracker.track(current_advertiser.id, 'created an ad',  {ad: {id: @ad.id, title: @ad.title}}, visitor_ip_address)
         flash.notice = 'Your new ad has been successfully created'
@@ -104,10 +107,12 @@ class AdsController < ApplicationController
       else
         require_approval = [:title, :path, :display_path, :line_1, :line_2]
         approved = ad_attributes.select{ |k,v| require_approval.include? k.to_sym}.select{|k,v| @ad.send(k.to_sym) != v }.empty?
-        ad_attributes[:approved] = false unless approved
+        ad_attributes[:approved] = false unless approved || current_advertiser.is_auto_approved?
         if @ad.update_attributes(ad_attributes)
           @mixpanel_tracker.track(current_advertiser.id, 'updated ad', {ad: {id: @ad.id, title: @ad.title}}, visitor_ip_address)
-          flash.notice = 'Your ad has been successfully edited!'
+          flash.notice = 'Your ad has been successfully edited'
+          flash.notice += ' and will be approved soon' if ad.approved = false
+          flash.notice += '!'
           redirect_to ads_path
         else
           @mixpanel_tracker.track(current_advertiser.id, 'error editing ad', {error: @ad.errors}, visitor_ip_address)

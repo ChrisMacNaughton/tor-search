@@ -42,7 +42,9 @@ class Api::AdController < ApplicationController
         else
           1
         end
-
+        if current_advertiser.is_auto_approved?
+          ad[:approved] = true
+        end
         ad = Ad.new(ad)
         ad.advertiser = current_advertiser
         ad.save
@@ -67,6 +69,11 @@ class Api::AdController < ApplicationController
           disabled: opts[:disabled],
           bid: opts[:bid]
         }.delete_if{|k,v| v.nil?}
+
+        require_approval = [:title, :path, :display_path, :line_1, :line_2]
+        approved = ad_params.select{ |k,v| require_approval.include? k.to_sym}.select{|k,v| ad.send(k.to_sym) != v }.empty?
+        ad_params[:approved] = false unless approved || current_advertiser.is_auto_approved?
+
         ad.update_attributes(ad_params)
         @mixpanel_tracker.track(current_advertiser.id, 'updated an ad', {ad: {id: ad.id, title: ad.title}}, visitor_ip_address)
         render json: ad
