@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include TorMethods
+  include CacheSupport
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -115,15 +116,5 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
       logger.warn error.backtrace.join("\n")
     end
     render text: 'Improperly encoded request', status: 406 and return
-  end
-
-  def read_through_cache(cache_key, expires_in, &block)
-    # Attempt to fetch the choice values from the cache,
-    # if not found then retrieve them and stuff the results into the cache.
-    if TorSearch::Application.config.action_controller.perform_caching
-      Rails.cache.fetch(cache_key, expires_in: expires_in, &block)
-    else
-      yield
-    end
   end
 end

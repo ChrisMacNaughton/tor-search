@@ -1,18 +1,22 @@
 module TorMethods
+  include CacheSupport
   def request_is_oniony
-    if !!(request.host =~ /onion/)
-      if is_tor2web?
-        'tor2web'
+    if @request_is_oniony.nil?
+      @request_is_oniony = if !!(request.host =~ /onion/)
+        if is_tor2web?
+          'tor2web'
+        else
+          'tor'
+        end
       else
-        'tor'
-      end
-    else
-      if request_ip_is_exit?
-        'tor_over_clear'
-      else
-        'clear'
+        if request_ip_is_exit?
+          'tor_over_clear'
+        else
+          'clear'
+        end
       end
     end
+    @request_is_oniony
   end
 
   def request_ip_is_exit?
@@ -29,15 +33,5 @@ module TorMethods
 
   def is_tor2web?
     request.headers['X_TOR2WEB'] == 'encrypted'
-  end
-
-  def read_through_cache(cache_key, expires_in, &block)
-    # Attempt to fetch the choice values from the cache,
-    # if not found then retrieve them and stuff the results into the cache.
-    if TorSearch::Application.config.action_controller.perform_caching
-      Rails.cache.fetch(cache_key, expires_in: expires_in, &block)
-    else
-      yield
-    end
   end
 end

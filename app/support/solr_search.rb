@@ -2,6 +2,8 @@
 # Handle building and executing our Solr query
 # rubocop:disable ClassLength
 class SolrSearch
+  include CacheSupport
+
   attr_accessor :page
   attr_reader :current_page, :query
 
@@ -99,16 +101,6 @@ class SolrSearch
     read_through_cache('index_size', 1.hour) do
       json = Net::HTTP.get(URI.parse(path))
       JSON.parse(json)['status']['collection1']['index']['numDocs']
-    end
-  end
-
-  def read_through_cache(cache_key, expires_in, &block)
-    # Attempt to fetch the choice values from the cache,
-    # if not found then retrieve them and stuff the results into the cache.
-    if TorSearch::Application.config.action_controller.perform_caching
-      Rails.cache.fetch(cache_key, expires_in: expires_in, &block)
-    else
-      yield
     end
   end
 
