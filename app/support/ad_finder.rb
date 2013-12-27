@@ -37,11 +37,18 @@ class AdFinder
   end
 
   def generic_ads
-    @generic_ads ||= Ad.limit(limit).available.joins(:advertiser). \
-      where('advertisers.balance >= ads.bid') \
-      .where("(select count(*) from ad_keywords where ad_id = ads.id) = 0") \
-      .where('ads.bid > 0') \
-      .order('bid desc, created_at asc').map{|ad| ad.bid = ad.bid * 0.8; ad}
+    if @generic_ads.nil?
+      if ads_by_keyword.count >= limit
+        @generic_ads = []
+      else
+        @generic_ads ||= Ad.limit(limit - ads_by_keyword.count).available.joins(:advertiser). \
+          where('advertisers.balance >= ads.bid') \
+          .where("(select count(*) from ad_keywords where ad_id = ads.id) = 0") \
+          .where('ads.bid > 0') \
+          .order('bid desc, created_at asc').map{|ad| ad.bid = ad.bid * 0.8; ad}
+      end
+    end
+    @generic_ads
   end
 
   def query_words
