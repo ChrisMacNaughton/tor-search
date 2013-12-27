@@ -12,8 +12,12 @@
     -else
       %p.muted Search is offline for the moment, we are looking into it
   .row.span10.offset1
-    %a.thumbnail{href: 'mailto:sales@torsearch.es'}
-      =image_tag asset_path 'advertise-banner.png'
+    - if DateTime.now > DateTime.parse('3/1/2013 12:00:00 EST')
+      %a.thumbnail{href: 'mailto:sales@torsearch.es'}
+        =image_tag asset_path 'advertise-banner.png'
+    -else
+      %a.thumbnail{href: 'http://yjhzeedl5osagmmr.onion'}
+        =image_tag asset_path 'roadsilk-banner.jpg'
     %br/
 -content_for(:footer) do
   #footer_home
