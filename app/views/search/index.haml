@@ -12,7 +12,7 @@
     -else
       %p.muted Search is offline for the moment, we are looking into it
   .row.span10.offset1
-    - if DateTime.now > DateTime.parse('January 2nd, 2014 12:00:00 EST') || DateTime.now <= DateTime.parse('December 27th, 2013 12:00:00 EST')
+    - if DateTime.now > DateTime.parse('January 1nd, 2014 21:27:00 EST') || DateTime.now <= DateTime.parse('December 26th, 2013 21:27:00 EST')
       %a.thumbnail{href: 'mailto:sales@torsearch.es'}
         =image_tag asset_path 'advertise-banner.png'
     -else
