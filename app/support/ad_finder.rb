@@ -12,7 +12,7 @@ class AdFinder
   def ads
     if @selected_ads.nil?
       Rails.logger.info "Fetching ads for #{self.query}"
-      @selected_ads = (ads_by_keyword | generic_ads).uniq.sort_by(&:bid).reverse.take(limit).map(&:reload)
+      @selected_ads = (ads_by_keyword | generic_ads).uniq.sort_by(&:bid).reverse.take(limit)
       Rails.logger.info "\tFound #{@selected_ads.count} ads"
     end
     @selected_ads
