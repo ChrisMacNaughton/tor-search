@@ -30,7 +30,7 @@ TorSearch::Application.routes.draw do
     get 'contact' => 'contact#contact', as: :contact
     post '/contact' => 'contact#new_message', as: :messages
     get 'policies' => 'static#policies', as: :policies
-
+    get '/humans.txt' => 'static#humans'
     get '/keyword_tool' => 'keyword_tool#index'
   end
   namespace 'api' do

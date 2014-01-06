@@ -1,0 +1,3 @@
+TorSearch was built and designed by Chris MacNaughton (http://chrismacnaughton.com).
+
+He has handled everything from the spider used to crawl Tor hidden services to building the web interface that you can use at https://TorSearch.es and everything in between!
