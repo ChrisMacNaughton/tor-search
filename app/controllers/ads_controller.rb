@@ -12,6 +12,7 @@ class AdsController < ApplicationController
         }
       end
     else
+      raise Exception.new
       page = (params[:page] || 1).to_i
       per_page = (params[:per_age] || 20).to_i
       @ads = current_advertiser.ads.page(page) \
@@ -196,7 +197,7 @@ class AdsController < ApplicationController
   end
 
   def _process_options options
-    options[:template] = 'no_js/' + options[:template] unless current_advertiser.nil? || current_advertiser.wants_js?
+    options[:template] = 'no_js/' + options[:template] unless current_advertiser.nil? || current_advertiser.wants_js? || options[:template] =~ /error/
     super options
   end
 end
