@@ -5,23 +5,34 @@ class GraphsController < ApplicationController
   end
 
   def daily
-    rel = read_through_cache('searches_by_day', 2.hours) do
-      Search \
-      .group("to_char(created_at, 'MM/DD/YYYY')") \
-      .where('created_at > ?', 31.days.ago.to_date).count
+    days = {}
+    (0..31).each do |i|
+      rel = read_through_cache("searches_by_day_#{i.days.ago.strftime('%m/%d/%Y')}", (32 - i).days) do
+        Search.group("to_char(created_at, 'MM/DD/YYYY')").where("to_char(created_at, 'YYYY-MM-DD') = ?", i.days.ago.to_date).count
+      end
+      days[i.days.ago.strftime('%m/%d/%Y')] = if rel && rel.first
+        rel.first[-1]
+      end
     end
-    g = build_graph 'Searches By Day', rel
+    g = build_graph 'Searches By Day', days.reject{|k,v| v.nil? }
 
     send_data g.to_blob('PNG'), type: 'image/png', disposition: :inline
   end
 
   def unique
-    rel = read_through_cache('unique_searches_by_day', 2.hours) do
-      Search \
-      .group("to_char(created_at, 'MM/DD/YYYY')") \
-      .where('created_at > ?', 31.days.ago.to_date).count(select: 'distinct(query_id)')
+    days = {}
+    (0..31).each do |i|
+      rel = read_through_cache("unique_searches_by_day_#{i.days.ago.strftime('%m/%d/%Y')}", (32 - i).days) do
+        Search \
+          .group("to_char(created_at, 'MM/DD/YYYY')") \
+          .where("to_char(created_at, 'YYYY-MM-DD') = ?", i.days.ago.to_date) \
+          .count(select: 'distinct(query_id)')
+      end
+      days[i.days.ago.strftime('%m/%d/%Y')] = if rel && rel.first
+        rel.first[-1]
+      end
     end
-    g = build_graph 'Unique Searches By Day', rel
+    g = build_graph 'Searches By Day', days.reject{|k,v| v.nil? }
 
     send_data g.to_blob('PNG'), type: 'image/png', disposition: :inline
   end
