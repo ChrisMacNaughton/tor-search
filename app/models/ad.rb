@@ -29,12 +29,17 @@ class Ad < ActiveRecord::Base
   validates :line_2, length: { maximum: 35 }
   validates :display_path, length: { maximum: 35 }
 
+  before_create :disable_ad
   before_save :check_onion
   before_save :trim_off_http
   scope :available, lambda {
     where(approved: true).where(disabled: false)
   }
   attr_accessor :include_path, :keyword_id
+
+  def disable_ad
+    disabled = true
+  end
 
   def check_onion
     check_path = path.gsub(%r(https?://), '')
