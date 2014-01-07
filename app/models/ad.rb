@@ -38,7 +38,7 @@ class Ad < ActiveRecord::Base
   attr_accessor :include_path, :keyword_id
 
   def disable_ad
-    disabled = true
+    self.disabled = true
   end
 
   def check_onion
