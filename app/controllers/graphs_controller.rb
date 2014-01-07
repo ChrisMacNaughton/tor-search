@@ -32,7 +32,7 @@ class GraphsController < ApplicationController
         rel.first[-1]
       end
     end
-    g = build_graph 'Searches By Day', days.reject{|k,v| v.nil? }
+    g = build_graph 'Unique Searches By Day', days.reject{|k,v| v.nil? }
 
     send_data g.to_blob('PNG'), type: 'image/png', disposition: :inline
   end
