@@ -32,7 +32,7 @@ class AdFinder
         keyword = ad.ad_keywords.joins(:keyword) \
           .where("LOWER(keywords.word) in (?)", query_words).first
         ad.keyword_id = keyword.id
-        ad.bid = keyword.bid
+        ad.bid = keyword.bid * 1.2
       end
     end
     @keyword_ads
