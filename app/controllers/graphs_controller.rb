@@ -6,7 +6,7 @@ class GraphsController < ApplicationController
 
   def daily
     days = {}
-    (0..31).each do |i|
+    (1..31).each do |i|
       rel = read_through_cache("searches_by_day_#{i.days.ago.strftime('%m/%d/%Y')}", (32 - i).days) do
         Search.group("to_char(created_at, 'MM/DD/YYYY')").where("to_char(created_at, 'YYYY-MM-DD') = ?", i.days.ago.to_date).count
       end
@@ -21,7 +21,7 @@ class GraphsController < ApplicationController
 
   def unique
     days = {}
-    (0..31).each do |i|
+    (1..31).each do |i|
       rel = read_through_cache("unique_searches_by_day_#{i.days.ago.strftime('%m/%d/%Y')}", (32 - i).days) do
         Search \
           .group("to_char(created_at, 'MM/DD/YYYY')") \
