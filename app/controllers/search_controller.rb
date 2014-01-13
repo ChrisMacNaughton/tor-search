@@ -40,12 +40,7 @@ class SearchController < ApplicationController
     @search = SolrSearch.new(params[:q], page)
     track! @search
     if @search.errors.empty?
-      s = Search.create(
-        query: @query,
-        results_count: @total,
-        paginated: @paginated
-      )
-      @search_id = s.id
+
 
       if page == 1
         @paginated = false
@@ -57,6 +52,12 @@ class SearchController < ApplicationController
         @paginated = true
         @ads = []
       end
+      s = Search.create(
+        query: @query,
+        results_count: @total,
+        paginated: @paginated
+      )
+      @search_id = s.id
       @instant = true
       if params[:j] != 't'
         s.update_attribute(:js_enabled, false)
@@ -95,6 +96,7 @@ class SearchController < ApplicationController
   def ad_redirect
     ad = Ad.where(id: params[:id]).first
     if ad.nil?
+      index && return if parms[:path].nil?
       path = Base64.decode64(params[:path])
     else
       ad_click = AdClick \
