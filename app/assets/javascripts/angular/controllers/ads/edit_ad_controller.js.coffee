@@ -7,9 +7,12 @@ angular.module('TorSearch').controller('EditAdCtrl',
   # Configure search to use the basic CRUD Service
   $scope.active = $route.current.$$route.controller
   $scope.refresh = () ->
-    Ad.get($route.current.params.id).then (result) ->
+    Ad.get($route.current.params.id).then ((result) ->
       $scope.ad = result
       $scope.new_record = $location.search()['new']
+    ),(error) ->
+      if error.status == 403
+        $location.path('/ads').search('unauthorized=true')
 
   $scope.create_keyword = (object) =>
     new Keyword(object).create().then (result) =>

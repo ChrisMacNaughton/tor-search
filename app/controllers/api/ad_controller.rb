@@ -4,6 +4,12 @@ class Api::AdController < ApplicationController
   before_filter :authenticate_advertiser!
   #before_filter :track
 
+  def advertiser_balance
+    respond_to do |format|
+      format.json{ render json: {balance: current_advertiser.balance } }
+    end
+  end
+
   def index
     respond_to do |format|
       format.json {
@@ -18,10 +24,16 @@ class Api::AdController < ApplicationController
 
   def show
     respond_to do |format|
-      ad = Ad.where(id: params[:id]).try(:first)
-      format.json {
-        render json: ad
-      }
+      ad = current_advertiser.ads.where(id: params[:id]).try(:first)
+      if ad
+        format.json {
+          render json: ad
+        }
+      else
+        format.json {
+          render json: {}, status: 403
+        }
+      end
     end
   end
 
@@ -57,7 +69,8 @@ class Api::AdController < ApplicationController
   def update
     respond_to do |format|
       format.json {
-        ad = Ad.find(params[:id])
+        ad = current_advertiser.ads.where(id: params[:id]).try(:first)
+        render json: {} unless ad
         opts = params[:ad]
         ad_params = {
           title: opts[:title],

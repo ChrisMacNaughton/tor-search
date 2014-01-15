@@ -1,5 +1,11 @@
 =render partial: 'ads_common_nav'
 .span10
+  .alert.alert-error.ng-cloak{ng_show: 'unauthorized'}
+    %a.close{data: {dismiss: 'alert'}} &times;
+    You are not authorized to view that ad
+.span10.ng-cloak{ng_show: 'advertiser_balance.balance'}
+  Balance: {{advertiser_balance.balance}} BTC
+.span10
   %table.table
     %thead
       %tr

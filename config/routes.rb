@@ -34,6 +34,7 @@ TorSearch::Application.routes.draw do
     get '/keyword_tool' => 'keyword_tool#index'
   end
   namespace 'api' do
+    get 'advertiser_balance' => 'ad#advertiser_balance'
     resources :bitcoin_address
     resources :payment
     resources :ad do
