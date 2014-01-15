@@ -1,4 +1,7 @@
 .span4
+  .alert.alert-success.ng-cloak{ng_show: 'alert'}
+    %a.close{data: {dismiss: 'alert'}} &times;
+    {{alert}}
   .alert.alert-error.ng-cloak{ng_show: 'errors'}
     %a.close{data: {dismiss: 'alert'}} &times;
     {{errors}}
@@ -6,7 +9,7 @@
     %a.close{data: {dismiss: 'alert'}} &times;
     Ad has been created!
 
-  %form.ng-cloak{name: 'form', novalidate: true, ng_hide: 'ad.title'}
+  %form.ng-cloak{name: 'form', novalidate: true, ng_hide: 'ad'}
     .row
       %fieldset.span4
         %legend
@@ -38,7 +41,7 @@
             %label{for: 'bid'} Bid
             %input.input{type: :text, name: 'bid', ng_model: 'ad.bid', disabled: true}
     %a.btn.btn-primary{ng_click: ''} Save
-  %form.ng-cloak{name: 'form', novalidate: true, ng_show: 'ad.title'}
+  %form.ng-cloak{name: 'form', novalidate: true, ng_show: 'ad'}
     .row
       %fieldset.span4
         %legend

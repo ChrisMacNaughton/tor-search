@@ -37,6 +37,7 @@ angular.module('TorSearch').controller('EditAdCtrl',
   $scope.save = () =>
     if $scope.ad.title && $scope.ad.path && $scope.ad.displayPath
       $scope.ad.save().then (result) ->
-        $location.path('/ads/'+result.id)
+        $scope.ad = result
+        $scope.alert = "Saved!"
   $scope.refresh()
 ])
