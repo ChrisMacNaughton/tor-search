@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe SearchController do
-
+  include Devise::TestHelpers
   fixtures :ads, :advertisers, :keywords
 
   describe 'index' do

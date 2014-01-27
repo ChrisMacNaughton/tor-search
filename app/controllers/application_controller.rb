@@ -28,6 +28,14 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
   end
 
   def setup_mixpanel_tracker
+    if Rails.env.test?
+
+      @mixpanel_tracker = Class.new do
+        def track(str1, str2 = 'action', hash = {}, ip = ''); end
+      end.new if current_advertiser
+
+      return
+    end
     require 'mixpanel-ruby'
     @mixpanel_tracker = Mixpanel::Tracker.new(TorSearch::Application.config.mixpanel_token)
     @mixpanel_tracker.people.set(current_advertiser.id, {

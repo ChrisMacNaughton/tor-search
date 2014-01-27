@@ -111,7 +111,7 @@ class AdsController < ApplicationController
         if @ad.update_attributes(ad_attributes)
           @mixpanel_tracker.track(current_advertiser.id, 'updated ad', {ad: {id: @ad.id, title: @ad.title}}, visitor_ip_address)
           flash.notice = 'Your ad has been successfully edited'
-          flash.notice += ' and will be approved soon' if ad.approved = false
+          flash.notice += ' and will be approved soon' if @ad.approved = false
           flash.notice += '!'
           redirect_to ads_path
         else
