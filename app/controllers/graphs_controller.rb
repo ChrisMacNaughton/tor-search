@@ -5,36 +5,22 @@ class GraphsController < ApplicationController
   end
 
   def daily
-    days = {}
-    (1..31).each do |i|
-      rel = read_through_cache("searches_by_day_#{i.days.ago.strftime('%m/%d/%Y')}", (32 - i).days) do
-        Search.group("to_char(created_at, 'MM/DD/YYYY')").where("to_char(created_at, 'YYYY-MM-DD') = ?", i.days.ago.to_date).count
+    data = read_through_cache("weekly_searches", 1.day) do
+      days = {}
+      weeks = (DateTime.now - DateTime.parse('2013-09-12 15:25:27 UTC')).to_i / 7
+      (1..weeks).each do |i|
+        rel = read_through_cache("searches_by_day_#{i.weeks.ago.strftime('%m/%d/%Y')}", 100.years) do
+          Search \
+            .where(created_at: (i.weeks.ago.. (i.weeks.ago + 7.days) )) \
+            .count(:id) / 7.0
+        end
+        days[i.weeks.ago.strftime('%m/%d/%Y')] = rel
       end
-      days[i.days.ago.strftime('%m/%d/%Y')] = if rel && rel.first
-        rel.first[-1]
-      end
+      g = build_graph 'Searches By Week', days.reject{|k,v| v.nil? }
+
+      g.to_blob('PNG')
     end
-    g = build_graph 'Searches By Day', days.reject{|k,v| v.nil? }
-
-    send_data g.to_blob('PNG'), type: 'image/png', disposition: :inline
-  end
-
-  def unique
-    days = {}
-    (1..31).each do |i|
-      rel = read_through_cache("unique_searches_by_day_#{i.days.ago.strftime('%m/%d/%Y')}", (32 - i).days) do
-        Search \
-          .group("to_char(created_at, 'MM/DD/YYYY')") \
-          .where("to_char(created_at, 'YYYY-MM-DD') = ?", i.days.ago.to_date) \
-          .count(select: 'distinct(query_id)')
-      end
-      days[i.days.ago.strftime('%m/%d/%Y')] = if rel && rel.first
-        rel.first[-1]
-      end
-    end
-    g = build_graph 'Unique Searches By Day', days.reject{|k,v| v.nil? }
-
-    send_data g.to_blob('PNG'), type: 'image/png', disposition: :inline
+    send_data data, type: 'image/png', disposition: :inline
   end
 
   private
@@ -49,12 +35,14 @@ class GraphsController < ApplicationController
     g.labels = {}
     g.hide_legend = true
     searches = []
+    i = 0
+    weeks = (DateTime.now - DateTime.parse('2013-09-12 15:25:27 UTC')).to_i / 7
 
-    30.times do |i|
-      date = (i + 1).days.ago
-      g.labels[29 - i] = date.to_datetime.strftime('%m/%d') if i % 3 == 0
-     s = searches_raw[date.strftime('%m/%d/%Y')]
-     s ||= 0
+    weeks.times do |i|
+      date = (i + 1).weeks.ago
+      g.labels[weeks - i] = date.to_datetime.strftime('%m/%Y') if i % 4 == 0
+       s = searches_raw[date.strftime('%m/%d/%Y')]
+       s ||= 0
       searches << s
     end
     g.hide_title = true
