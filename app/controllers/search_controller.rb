@@ -50,14 +50,14 @@ class SearchController < ApplicationController
         @paginated = true
         @ads = []
       end
-      s = Search.where("created_at > ?", 10.minutes.ago).where(query_id: @query.id).last
-      if s.nil?
-        s = Search.create(
+      s = read_through_cache("#{@query.id}+#{@search.total}", 10.minutes) do
+        Search.create(
           query: @query,
           results_count: @search.total,
           paginated: @paginated
         )
       end
+
       @search_id = s.id
       @instant = true
       if params[:j] != 't'
