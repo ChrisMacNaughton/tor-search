@@ -50,9 +50,8 @@ class SearchController < ApplicationController
         @paginated = true
         @ads = []
       end
-      if Search.where(query_id: @query.id).where("created_at < ?", 10.minutes.ago).any?
-        s = Search.where(query_id: @query.id).order(:created_at).last
-      else
+      s = Search.where("created_at > ?", 10.minutes.ago).where(query_id: @query.id).last
+      if s.nil?
         s = Search.create(
           query: @query,
           results_count: @search.total,
