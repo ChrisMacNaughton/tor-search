@@ -53,7 +53,7 @@ gem 'turbolinks'
 #gem 'jbuilder', '~> 1.2'
 
 group :development do
-  gem 'debugger'
+  gem 'pry'
   gem 'meta_request'
   gem 'better_errors'
   gem 'foreman'
