@@ -81,12 +81,15 @@ class SolrSearch
   def nutch
     return {} if @query.nil?
     @result ||= begin
-      solr = @solr.get('nutch', params: param)
+      solr = read_through_cache( Digest::SHA1.hexdigest(param.to_json), 10.minutes ) do
+        @solr.get('nutch', params: param)
+      end
       OpenStruct.new JSON.parse(solr.response[:body])
     rescue => ex
       @result = nil
       #Airbrake.notify(ex)
       Rails.logger.info ex
+      Rails.logger.info ex.backtrace.join("\n")
       @errors << 'Search offline'
       OpenStruct.new(error: 'Failure to communicate with the Solr server')
     end
