@@ -41,7 +41,6 @@ class SearchController < ApplicationController
     track! @search
     if @search.errors.empty?
 
-
       if page == 1
         @paginated = false
         @ads = AdFinder.new(@search.term).ads
@@ -52,11 +51,15 @@ class SearchController < ApplicationController
         @paginated = true
         @ads = []
       end
-      s = Search.create(
-        query: @query,
-        results_count: @search.total,
-        paginated: @paginated
-      )
+      if Search.where(query_id: @query.id).where("created_at < ?", 10.minutes.ago).any?
+        s = Search.where(query_id: @query.id).order(:created_at).last
+      else
+        s = Search.create(
+          query: @query,
+          results_count: @search.total,
+          paginated: @paginated
+        )
+      end
       @search_id = s.id
       @instant = true
       if params[:j] != 't'
@@ -64,8 +67,8 @@ class SearchController < ApplicationController
         @instant = false
         @instant_matches = Matcher.new(@search.term, request).execute || []
       end
-      Rails.logger.info @search.errors unless @search.errors.empty?
     end
+    Rails.logger.info { @search.errors } unless @search.errors.empty?
 
     render :search
   end
