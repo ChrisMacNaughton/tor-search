@@ -36,11 +36,11 @@ class SearchController < ApplicationController
       end
     end
 
-    page = params[:page] || 1
+    page = (params[:page] || 1).to_i
     @search = SolrSearch.new(params[:q], page)
     track! @search
     if @search.errors.empty?
-
+      puts "#{page == 1}"
       if page == 1
         @paginated = false
         @ads = AdFinder.new(@search.term).ads
