@@ -54,7 +54,7 @@ class SearchController < ApplicationController
       end
       s = Search.create(
         query: @query,
-        results_count: @total,
+        results_count: @search.total,
         paginated: @paginated
       )
       @search_id = s.id
