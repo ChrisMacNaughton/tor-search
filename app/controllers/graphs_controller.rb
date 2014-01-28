@@ -49,6 +49,8 @@ class GraphsController < ApplicationController
     g.data :Searches, searches.reverse
     g.minimum_value = 0
     g.hide_dots = true
+
+    g.reference_lines[1] = {index: 100}
     g
   end
   # rubocop:enable MethodLength
