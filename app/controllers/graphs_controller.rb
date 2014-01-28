@@ -59,7 +59,7 @@ class GraphsController < ApplicationController
     end
     g.hide_title = true
     g.data :Searches, searches.reverse
-
+    g.minimum_value = 0
     g
   end
   # rubocop:enable MethodLength
