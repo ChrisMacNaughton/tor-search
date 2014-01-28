@@ -35,7 +35,7 @@ class GraphsController < ApplicationController
     g.labels = {}
     g.hide_legend = true
     searches = []
-    i = 0
+
     weeks = (DateTime.now - DateTime.parse('2013-09-12 15:25:27 UTC')).to_i / 7
 
     weeks.times do |i|
@@ -50,7 +50,6 @@ class GraphsController < ApplicationController
     g.minimum_value = 0
     g.hide_dots = true
 
-    g.reference_lines[1] = {index: 100}
     g
   end
   # rubocop:enable MethodLength
