@@ -42,7 +42,7 @@ class GraphsController < ApplicationController
   # rubocop:disable MethodLength
   def build_graph(title, searches_raw)
 
-    g = Gruff::Bar.new('500x150')
+    g = Gruff::Line.new('500x150')
     g.title = title
 
     g.theme_greyscale
@@ -60,6 +60,7 @@ class GraphsController < ApplicationController
     g.hide_title = true
     g.data :Searches, searches.reverse
     g.minimum_value = 0
+    g.hide_dots = true
     g
   end
   # rubocop:enable MethodLength
