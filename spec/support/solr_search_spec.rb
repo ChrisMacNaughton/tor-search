@@ -58,18 +58,26 @@ describe SolrSearch do
     end
   end
 
-  it 'highlights matches in the results'
+  it 'can search in the title attributes' do
+    solr = SolrSearch.new('title: test')
+    VCR.use_cassette('test solr title searches') do
+      solr.records.first['title'].downcase.should include 'test'
+    end
+  end
 
-  it 'gracefully handles Solr being offline'
+  it 'can search with a specific site' do
+    solr = SolrSearch.new('test site: nope7beergoa64ih.onion')
+    VCR.use_cassette('solr searches a single site') do
+      solr.records.map{|r| r['host'] }.should == (['nope7beergoa64ih.onion'] * 10)
+    end
+  end
 
-  it 'shows 0 indexed when Solr is offline'
 
-  it 'can search in the title attributes'
-
-  it 'can search with a specific site'
-
-  it 'can remove a specific site'
-
-  it 'resets the arguments when an argument changes'
+  it 'can remove a specific site' do
+    solr = SolrSearch.new('title: test -site: jppcxclcwvkbh3xi.onion')
+    VCR.use_cassette('solr searches a without single site') do
+      solr.records.first['host'].should_not eq 'jppcxclcwvkbh3xi.onion'
+    end
+  end
 
 end

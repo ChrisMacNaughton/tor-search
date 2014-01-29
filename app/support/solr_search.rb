@@ -144,8 +144,12 @@ class SolrSearch
       site = match.gsub(/\.onion\/?$/, '') if match
       unless site.nil?
         fq = "id:onion.#{site}*"
-        fq = "-#{fq}" if q[:q].include? '-site:'
-        q[:q].gsub!(/site:\s*(.{16}.onion)/i, '')
+        if q[:q].include? '-site:'
+          fq = "-#{fq}"
+        else
+          q.delete(:'group.ngroups')
+        end
+        q[:q].gsub!(/-?site:\s*(.{16}.onion)/i, '')
         q[:fq] << fq
         q['group.field'] = 'id'
       end
