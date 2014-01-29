@@ -70,9 +70,8 @@ class BitcoinMatcher < GenericMatcher
   def get_coinbase_data
     http = Net::HTTP.new 'coinbase.com', 443
     http.use_ssl = true
-
-    resp = http.get '/api/v1/currencies/exchange_rates'
     begin
+      resp = http.get '/api/v1/currencies/exchange_rates'
       JSON.parse(resp.body)
     rescue
       nil

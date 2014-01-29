@@ -46,4 +46,9 @@ describe Ad do
     @ad.reload
     @ad.avg_position.should eq 2.0
   end
+
+  it 'returns 0 when there are no views' do
+    @ad.ad_views_count.should eq 0
+    @ad.ctr.should eq 0
+  end
 end

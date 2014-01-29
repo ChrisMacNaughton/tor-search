@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'spec_helper'
 require 'matcher/matcher'
+require 'webmock/rspec'
 describe Matcher do
   context 'bitcoin matcher' do
 
@@ -31,7 +32,7 @@ describe Matcher do
     it 'can return values for a specific currency' do
       VCR.use_cassette('get_bitcoin_prices') do
         matches = Matcher.new('btc eur', OpenStruct.new({})).execute
-        matches.length.should == 1
+        matches.length.should eq 1
 
         btc = matches.first
 
@@ -42,6 +43,11 @@ describe Matcher do
       end
     end
 
+    it 'does not explode when we cannot communicate with coinbase' do
+      stub_request(:get, 'https://coinbase.com/api/v1/currencies/exchange_rates').to_raise(Errno::ECONNREFUSED)
+      matches = Matcher.new('btc', OpenStruct.new({})).execute
+      matches.length.should eq 0
+    end
   end
 
   context 'user agent matcher' do

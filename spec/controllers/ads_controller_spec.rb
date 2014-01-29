@@ -42,11 +42,11 @@ describe AdsController do
   describe 'managing ads' do
 
     it 'can create a new ad' do
-      @advertiser.ads.count.should eq 2
-      post :create, {ad: {title: 'test ad', path: 'google.com', bid: 0.05, protocol_id: 1}}
-      response.status.should == 302
-      #@advertiser.reload
       @advertiser.ads.count.should eq 3
+      post :create, {ad: {title: 'test ad', path: 'google.com', bid: 0.05, protocol_id: 1}}
+      response.status.should eq 302
+      #@advertiser.reload
+      @advertiser.ads.count.should eq 4
     end
 
     it 'can edit an ad' do

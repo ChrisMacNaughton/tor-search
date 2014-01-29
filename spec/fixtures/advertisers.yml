@@ -2,3 +2,7 @@ test_advertiser:
   username: test_user
   balance: 0.5
   wants_js: false
+test_advertiser_2:
+  username: test_user2
+  balance: 0.5
+  wants_js: false
