@@ -1,5 +1,6 @@
 # encoding: utf-8
-
+require 'spec_helper'
+require 'webmock/rspec'
 describe SolrSearch do
 
   it 'can get the number of indexed docs' do
@@ -77,6 +78,28 @@ describe SolrSearch do
     solr = SolrSearch.new('title: test -site: jppcxclcwvkbh3xi.onion')
     VCR.use_cassette('solr searches a without single site') do
       solr.records.first['host'].should_not eq 'jppcxclcwvkbh3xi.onion'
+    end
+  end
+
+  it 'gracefully handles Solr being offline' do
+    solr = SolrSearch.new('offline')
+    stub_request(:get, solr.send(:solr_url)).to_raise(Errno::ECONNREFUSED)
+    solr.records.should be_empty
+    solr.errors.should == ["Search offline"]
+  end
+
+  it 'highlights matches' do
+    solr = SolrSearch.new('test data')
+    VCR.use_cassette('test-solr-totals') do
+      url = solr.records.first['id']
+      solr.highlights[url]['title'].first.should eq "About the BlackMarket <span class=\"highlight\">Data</span> Board"
+    end
+  end
+
+  it 'responds to search or records' do
+    solr = SolrSearch.new('test data')
+    VCR.use_cassette('test-solr-totals') do
+      solr.records.should eq solr.search
     end
   end
 
