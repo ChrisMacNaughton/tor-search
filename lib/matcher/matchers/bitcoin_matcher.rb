@@ -32,7 +32,7 @@ class BitcoinMatcher < GenericMatcher
 
   def currencies
     %w(aed afn all amd ang aoa ars aud awg azn bam bbd bdt bgn
-       bhd bif bmd bnd bob brl bsd btc btn bwp byr bzd cad cdf
+       bhd bif bmd bnd bob brl bsd btn bwp byr bzd cad cdf
        chf clp cny cop crc cup cve czk djf dkk dop dzd eek egp
        ern etb eur fjd fkp gbp gel ghs gip gmd gnf gtq gyd hkd
        hnl hrk htg huf idr ils inr iqd irr isk jmd jod jpy kes
