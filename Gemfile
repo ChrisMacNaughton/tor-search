@@ -53,7 +53,6 @@ gem 'turbolinks'
 #gem 'jbuilder', '~> 1.2'
 
 group :development do
-  gem 'pry'
   gem 'meta_request'
   gem 'better_errors'
   gem 'foreman'
@@ -66,6 +65,7 @@ group :test do
   gem 'simplecov', require: false
 end
 
+gem 'pry', group: [:development, :test]
 # Use unicorn as the app server
 gem 'unicorn'
 gem 'newrelic_rpm'

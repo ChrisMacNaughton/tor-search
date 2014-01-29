@@ -113,10 +113,12 @@ class SolrSearch
 
   def without_banned_hosts(q)
     unless banned_hosts.empty?
+      banned = ""
       banned_hosts.each do |h|
         base = h.split(/\.onion/).first
-        q[:fq] << "-id:onion.#{base}\\:http/*"
+        banned << "id:onion.#{base}\\:http/* OR "
       end
+      q[:fq] << "-(#{banned.gsub(/\sOR\s$/, '')})"
     end
     q
   end

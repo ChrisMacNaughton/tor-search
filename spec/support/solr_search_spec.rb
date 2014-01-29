@@ -30,7 +30,7 @@ describe SolrSearch do
 
   it 'knows how many results it returned'
 
-  it 'knows how many oages are in its result set'
+  it 'knows how many pages are in its result set'
 
   it 'highlights matches in the results'
 

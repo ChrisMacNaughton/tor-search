@@ -1,5 +1,5 @@
 # encoding: utf-8
-
+require 'spec_helper'
 require 'matcher/matcher'
 describe Matcher do
   context 'bitcoin matcher' do
@@ -11,7 +11,7 @@ describe Matcher do
         btc = matches.first
 
         btc[:name].should eq 'Bitcoin Prices'
-        btc[:data][:usd].should eq '196.9272'
+        btc[:data][:usd].should eq '797.4766799999999'
         btc[:weight].should eq 10
       end
     end
@@ -23,7 +23,7 @@ describe Matcher do
         btc = matches.first
 
         btc[:name].should eq 'Bitcoin Prices'
-        btc[:data][:usd].should eq '196.9272'
+        btc[:data][:usd].should eq '797.4766799999999'
         btc[:weight].should eq 10
       end
     end

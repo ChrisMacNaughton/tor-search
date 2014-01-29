@@ -10,199 +10,53 @@ http_interactions:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
   response:
     status:
       code: 200
-      message: !binary |-
-        T0s=
+      message: OK
     headers:
-      !binary "U2VydmVy":
-      - !binary |-
-        Y2xvdWRmbGFyZS1uZ2lueA==
-      !binary "RGF0ZQ==":
-      - !binary |-
-        VGh1LCAyNCBPY3QgMjAxMyAxOToxNzo1MyBHTVQ=
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOA==
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
-      !binary "Q29ubmVjdGlvbg==":
-      - !binary |-
-        a2VlcC1hbGl2ZQ==
-      !binary "U2V0LUNvb2tpZQ==":
-      - !binary |-
-        X19jZmR1aWQ9ZGJlMzBjOTFjZjFlZTkxMGQyMGJiYTU3ZGQ2MmJiODJlMTM4
-        MjY0MjI3MzczMzsgZXhwaXJlcz1Nb24sIDIzLURlYy0yMDE5IDIzOjUwOjAw
-        IEdNVDsgcGF0aD0vOyBkb21haW49LmNvaW5iYXNlLmNvbTsgSHR0cE9ubHk=
-      - !binary |-
-        cmVxdWVzdF9tZXRob2Q9R0VUOyBwYXRoPS87IHNlY3VyZQ==
-      !binary "U3RhdHVz":
-      - !binary |-
-        MjAwIE9L
-      !binary "U3RyaWN0LVRyYW5zcG9ydC1TZWN1cml0eQ==":
-      - !binary |-
-        bWF4LWFnZT0zMTUzNjAwMA==
-      !binary "WC1VYS1Db21wYXRpYmxl":
-      - !binary |-
-        SUU9RWRnZSxjaHJvbWU9MQ==
-      !binary "Q2FjaGUtQ29udHJvbA==":
-      - !binary |-
-        bWF4LWFnZT0wLCBwcml2YXRlLCBtdXN0LXJldmFsaWRhdGU=
-      !binary "WC1SZXF1ZXN0LUlk":
-      - !binary |-
-        MTg1ZjFiMjk0MWFhMmE1M2E4ZjM3MmRlYWI0YjY5OWM=
-      !binary "WC1SdW50aW1l":
-      - !binary |-
-        MC4wMzA2NjQ=
-      !binary "WC1GcmFtZS1PcHRpb25z":
-      - !binary |-
-        U0FNRU9SSUdJTg==
-      !binary "WC1Db250ZW50LVR5cGUtT3B0aW9ucw==":
-      - !binary |-
-        bm9zbmlmZg==
-      !binary "WC1SYWNrLUNhY2hl":
-      - !binary |-
-        bWlzcw==
-      !binary "VmFyeQ==":
-      - !binary |-
-        QWNjZXB0LUVuY29kaW5n
-      !binary "Q2YtUmF5":
-      - !binary |-
-        YzI5MDI4MmQwNWIwNDAw
-      !binary "Q29udGVudC1FbmNvZGluZw==":
-      - !binary |-
-        Z3ppcA==
+      Server:
+      - cloudflare-nginx
+      Date:
+      - Wed, 29 Jan 2014 13:20:35 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d378e9902b796ae6cbf1a0803fe1281291391001635804; expires=Mon, 23-Dec-2019
+        23:50:00 GMT; path=/; domain=.coinbase.com; HttpOnly
+      - request_method=GET; path=/; secure
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rack-Cache:
+      - miss
+      X-Request-Id:
+      - 343076ec-fea7-4163-930c-ac36490c3720
+      X-Runtime:
+      - '0.031080'
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Cf-Ray:
+      - f46387fc4ae01ed
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        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
-        QW8+ippotmApl7//AAAA//8DAD07peJ0PAAA
+      encoding: UTF-8
+      string: '{"gbp_to_usd":"1.633667","usd_to_bwp":"8.62852","usd_to_azn":"0.784167","eur_to_usd":"1.35924","usd_to_czk":"20.11621","czk_to_btc":"6.2e-05","btc_to_mga":"1793942.399183","btc_to_djf":"141875.885435","idr_to_btc":"0.0","mnt_to_usd":"0.00058","usd_to_ngn":"158.682199","usd_to_gbp":"0.61212","irr_to_btc":"0.0","ils_to_usd":"0.282751","ars_to_usd":"0.163763","usd_to_uyu":"21.16168","uyu_to_btc":"5.9e-05","pyg_to_btc":"0.0","usd_to_yer":"215.006099","pgk_to_usd":"0.387254","xcd_to_btc":"0.000464","usd_to_fjd":"1.870015","dop_to_btc":"3.0e-05","mvr_to_usd":"0.06503","eek_to_usd":"0.085636","nzd_to_btc":"0.001023","gnf_to_btc":"0.0","usd_to_gtq":"7.88508","bmd_to_usd":"1.0","btc_to_lbp":"1200533.356222","usd_to_omr":"0.385012","usd_to_sos":"1207.4067","usd_to_thb":"32.11708","srd_to_btc":"0.000382","btc_to_all":"82434.366935","usd_to_vnd":"21106.95","htg_to_usd":"0.025083","btc_to_bmd":"797.47668","kpw_to_usd":"0.0","lyd_to_usd":"0.804161","tzs_to_btc":"1.0e-06","lak_to_usd":"0.000125","usd_to_idr":"11907.583333","btc_to_bzd":"1588.063161","usd_to_gel":"1.6904","usd_to_kzt":"153.658001","uah_to_usd":"0.121707","usd_to_lkr":"131.201499","btc_to_zwl":"257070.599966","php_to_btc":"2.9e-05","ron_to_usd":"0.306263","btc_to_kyd":"659.200604","btc_to_cad":"843.506236","hkd_to_btc":"0.000162","usd_to_btc":"0.001254","nok_to_btc":"0.000206","top_to_usd":"0.548145","btc_to_xpf":"70088.630452","usd_to_kgs":"48.862875","usd_to_bnd":"1.25468","dzd_to_usd":"0.012516","vef_to_btc":"0.000199","usd_to_ars":"6.106376","syp_to_btc":"9.0e-06","ngn_to_btc":"8.0e-06","bgn_to_btc":"0.000871","lak_to_btc":"0.0","btc_to_cve":"64571.678805","mga_to_btc":"1.0e-06","idr_to_usd":"8.4e-05","btc_to_htg":"31793.390375","btc_to_ils":"2820.415837","mad_to_btc":"0.000152","usd_to_hnl":"20.52386","svc_to_btc":"0.000143","btc_to_ang":"1426.653881","hkd_to_usd":"0.12899","usd_to_nad":"10.20123","szl_to_btc":"0.000123","etb_to_usd":"0.052406","pkr_to_btc":"1.2e-05","usd_to_khr":"4003.966833","gnf_to_usd":"0.000144","btc_to_myr":"2575.262734","btc_to_top":"1454.864619","nad_to_btc":"0.000123","huf_to_usd":"0.004546","mkd_to_btc":"2.8e-05","lkr_to_btc":"1.0e-05","svc_to_usd":"0.114311","btc_to_lyd":"991.687771","usd_to_bam":"1.440026","usd_to_svc":"8.74805","usd_to_tzs":"1609.666667","gbp_to_btc":"0.002049","btc_to_mop":"6367.484451","btc_to_jod":"564.656553","clp_to_usd":"0.001896","cad_to_usd":"0.945431","cny_to_btc":"0.000206","jod_to_btc":"0.001771","syp_to_usd":"0.007141","lvl_to_btc":"0.002425","btc_to_cny":"4864.516038","shp_to_btc":"0.002049","vef_to_usd":"0.158944","php_to_usd":"0.022869","mro_to_usd":"0.003427","tjs_to_btc":"0.000263","fkp_to_btc":"0.002049","bdt_to_usd":"0.012869","mkd_to_usd":"0.021979","lrd_to_usd":"0.012418","usd_to_kes":"87.034389","btc_to_ars":"4869.692459","usd_to_chf":"0.906341","usd_to_lak":"7987.781667","usd_to_bzd":"1.99136","usd_to_nzd":"1.225977","mvr_to_btc":"8.2e-05","usd_to_wst":"2.344837","nok_to_usd":"0.164135","tjs_to_usd":"0.209516","bob_to_usd":"0.144729","btc_to_cup":"18089.068633","afn_to_btc":"2.2e-05","vnd_to_btc":"0.0","bnd_to_usd":"0.797016","byr_to_btc":"0.0","aed_to_btc":"0.000341","hnl_to_btc":"6.1e-05","mmk_to_usd":"0.001018","zmk_to_btc":"0.0","usd_to_myr":"3.229264","usd_to_ils":"3.536675","usd_to_mdl":"13.1323","djf_to_usd":"0.005621","mnt_to_btc":"1.0e-06","usd_to_sbd":"7.143096","lbp_to_usd":"0.000664","aoa_to_btc":"1.3e-05","btc_to_vnd":"16832300.410926","btc_to_lak":"6370069.604364","dkk_to_usd":"0.182213","inr_to_btc":"2.0e-05","lrd_to_btc":"1.6e-05","pab_to_btc":"0.001254","usd_to_mga":"2249.523333","btc_to_awg":"1427.363636","usd_to_try":"2.015658","usd_to_qar":"3.641038","usd_to_lvl":"0.517161","bmd_to_btc":"0.001254","vuv_to_btc":"1.3e-05","usd_to_pen":"2.80238","usd_to_zmk":"5253.075255","usd_to_ttd":"6.41373","mwk_to_btc":"3.0e-06","btc_to_scr":"9631.891442","egp_to_btc":"0.000182","bam_to_btc":"0.000871","usd_to_kmf":"362.286958","btc_to_aed":"2929.005047","usd_to_shp":"0.61212","bbd_to_btc":"0.0","kes_to_usd":"0.01149","jpy_to_btc":"1.2e-05","wst_to_usd":"0.426469","gyd_to_usd":"0.004843","kgs_to_btc":"2.6e-05","btc_to_eek":"9312.394372","usd_to_php":"43.72676","sdg_to_usd":"0.225802","usd_to_isk":"120.165","scr_to_btc":"0.000104","cup_to_usd":"0.044086","std_to_btc":"0.0","usd_to_gip":"0.61212","usd_to_aud":"1.0963","usd_to_dzd":"79.89655","usd_to_xaf":"483.051199","usd_to_mro":"291.7967","clp_to_btc":"2.0e-06","bbd_to_usd":"0.0","mdl_to_btc":"9.5e-05","btc_to_pyg":"3524796.460478","xof_to_btc":"3.0e-06","kzt_to_btc":"8.0e-06","usd_to_irr":"24785.667967","usd_to_vuv":"96.5375","bif_to_btc":"1.0e-06","btc_to_gtq":"6288.16742","usd_to_bif":"1551.3184","btc_to_xof":"385729.899598","btc_to_ghs":"1812.983484","btc_to_kes":"69407.895586","usd_to_bbd":"2","usd_to_afn":"57.430025","usd_to_sdg":"4.428657","uzs_to_usd":"0.00046","btc_to_dzd":"63715.635437","btc_to_uyu":"16875.94631","usd_to_mnt":"1725.083333","egp_to_usd":"0.145211","btc_to_nio":"20077.001754","usd_to_mur":"30.35621","usd_to_fkp":"0.61212","twd_to_usd":"0.033739","btc_to_bif":"1237140.247255","nio_to_btc":"5.0e-05","bhd_to_usd":"2.652604","aoa_to_usd":"0.010273","tmm_to_usd":"0.350652","btc_to_bhd":"300.639139","kyd_to_btc":"0.001517","usd_to_mzn":"29.89945","jmd_to_btc":"1.2e-05","lbp_to_btc":"1.0e-06","btc_to_ngn":"126545.353234","sek_to_btc":"0.000191","try_to_usd":"0.496116","btc_to_mkd":"36283.282971","btc_to_gbp":"488.151425","aud_to_btc":"0.001144","xpf_to_usd":"0.011378","bzd_to_btc":"0.00063","usd_to_cdf":"921.303003","btc_to_bdt":"61968.659098","cup_to_btc":"5.5e-05","usd_to_lsl":"10.19269","btc_to_tnd":"1329.495703","btc_to_pln":"2462.167781","usd_to_btn":"62.405663","zar_to_btc":"0.000123","bob_to_btc":"0.000181","usd_to_top":"1.824335","amd_to_btc":"3.0e-06","btc_to_syp":"111668.665011","szl_to_usd":"0.098101","gip_to_usd":"1.633667","usd_to_mvr":"15.37749","thb_to_usd":"0.031136","bgn_to_usd":"0.694751","btc_to_gnf":"5531332.809537","rwf_to_btc":"2.0e-06","cny_to_usd":"0.163938","btc_to_mzn":"23844.11412","btc_to_bob":"5510.141196","btc_to_etb":"15217.162916","ern_to_usd":"0.066235","mmk_to_btc":"1.0e-06","btc_to_uzs":"1733166.888808","usd_to_kwd":"0.282781","btc_to_twd":"23636.913729","usd_to_clp":"527.4221","ghs_to_usd":"0.43987","brl_to_btc":"0.000541","btc_to_try":"1607.44025","usd_to_dkk":"5.488097","myr_to_btc":"0.000388","btc_to_svc":"6976.36587","kmf_to_btc":"3.0e-06","mxn_to_btc":"9.6e-05","nio_to_usd":"0.039721","uah_to_btc":"0.000153","ttd_to_btc":"0.000196","usd_to_sgd":"1.254902","usd_to_hrk":"5.615268","btc_to_thb":"25612.62233","mwk_to_usd":"0.002446","btc_to_aud":"874.273684","btc_to_vuv":"76986.404995","btc_to_php":"34871.071392","pyg_to_usd":"0.000226","scr_to_usd":"0.082795","btc_to_kwd":"225.511253","ugx_to_usd":"0.000396","btc_to_gmd":"30135.016885","zwl_to_btc":"4.0e-06","btc_to_zar":"8136.096332","btc_to_hkd":"6182.49219","btc_to_afn":"45799.105669","btc_to_fkp":"488.151425","xaf_to_btc":"3.0e-06","usd_to_nok":"6.092554","btc_to_kzt":"122538.672493","btc_to_btn":"49767.060942","amd_to_usd":"0.002449","usd_to_syp":"140.027499","usd_to_jpy":"102.181201","usd_to_sek":"6.570703","btc_to_clp":"420606.825267","sgd_to_usd":"0.796875","btc_to_qar":"2903.642896","czk_to_usd":"0.049711","usd_to_aoa":"97.343626","krw_to_usd":"0.000942","sar_to_usd":"0.266627","hnl_to_usd":"0.048724","bwp_to_usd":"0.115895","usd_to_brl":"2.319796","btc_to_bbd":"1594.95336","ngn_to_usd":"0.006302","azn_to_usd":"1.275239","btc_to_mnt":"1375713.729124","usd_to_rub":"33.12431","btc_to_lvl":"412.423837","usd_to_ron":"3.265171","btc_to_azn":"625.354896","sll_to_usd":"0.000232","usd_to_dop":"42.3681","pab_to_usd":"1.0","pkr_to_usd":"0.009223","usd_to_scr":"12.07796","usd_to_huf":"219.952799","bdt_to_btc":"1.6e-05","btc_to_crc":"394522.079198","std_to_usd":"5.5e-05","mzn_to_usd":"0.033445","mzn_to_btc":"4.2e-05","nzd_to_usd":"0.815676","btc_to_npr":"79534.343786","btc_to_bwp":"6881.043483","kwd_to_usd":"3.536305","omr_to_usd":"2.597322","btc_to_rwf":"538590.405863","kgs_to_usd":"0.020465","afn_to_usd":"0.017412","btc_to_egp":"5491.842296","aud_to_usd":"0.912159","usd_to_mwk":"408.8331","usd_to_cny":"6.099885","rwf_to_usd":"0.001481","usd_to_zwl":"322.355006","btc_to_cdf":"734717.660106","usd_to_tjs":"4.7729","usd_to_all":"103.369","bhd_to_btc":"0.003326","kpw_to_btc":"0.0","bam_to_usd":"0.694432","btc_to_szl":"8129.134361","usd_to_pyg":"4419.936719","gel_to_btc":"0.000742","xcd_to_usd":"0.370165","usd_to_lrd":"80.528251","sos_to_usd":"0.000828","usd_to_uzs":"2173.313568","btc_to_fjd":"1491.293354","btc_to_iqd":"928215.046793","usd_to_bsd":"1","cve_to_btc":"1.5e-05","rub_to_btc":"3.8e-05","usd_to_rsd":"83.906211","sar_to_btc":"0.000334","eek_to_btc":"0.000107","btc_to_ugx":"2013788.125096","awg_to_btc":"0.000701","btc_to_mwk":"326034.863262","huf_to_btc":"6.0e-06","ang_to_usd":"0.558984","usd_to_djf":"177.905999","usd_to_cad":"1.057719","btc_to_brl":"1849.983212","usd_to_ern":"15.097825","iqd_to_btc":"1.0e-06","btc_to_pgk":"2059.310474","usd_to_xcd":"2.7015","btn_to_btc":"2.0e-05","myr_to_usd":"0.309668","lsl_to_usd":"0.09811","crc_to_usd":"0.002021","usd_to_egp":"6.886524","btc_to_rsd":"66913.24658","gel_to_usd":"0.591576","jmd_to_usd":"0.009719","btc_to_ltl":"2026.030974","lyd_to_btc":"0.001008","nad_to_usd":"0.098027","usd_to_kyd":"0.826608","btc_to_bsd":"797.47668","ltl_to_btc":"0.000494","usd_to_srd":"3.283333","usd_to_awg":"1.78985","usd_to_szl":"10.19357","chf_to_btc":"0.001384","zwl_to_usd":"0.003102","sll_to_btc":"0.0","usd_to_cop":"1927.433333","usd_to_tmm":"2.851833","btc_to_tjs":"3806.276446","sbd_to_btc":"0.000176","ern_to_btc":"8.3e-05","btc_to_bam":"1148.387154","btc_to_gip":"488.151425","sbd_to_usd":"0.139995","mad_to_usd":"0.121088","btc_to_ern":"12040.163356","usd_to_ltl":"2.540552","qar_to_usd":"0.274647","usd_to_kpw":"900","usd_to_crc":"494.712998","usd_to_xpf":"87.888","yer_to_btc":"6.0e-06","chf_to_usd":"1.103337","jpy_to_usd":"0.009787","ars_to_btc":"0.000205","usd_to_pgk":"2.582283","gyd_to_btc":"6.0e-06","aed_to_usd":"0.272269","usd_to_mop":"7.98454","usd_to_aed":"3.672841","qar_to_btc":"0.000344","btc_to_sll":"3442972.786033","btc_to_dkk":"4376.629375","gtq_to_usd":"0.126822","sos_to_btc":"1.0e-06","dop_to_usd":"0.023603","awg_to_usd":"0.558706","btc_to_gel":"1348.05458","btc_to_lkr":"104630.135834","btc_to_lrd":"64219.402254","khr_to_usd":"0.00025","btc_to_hrk":"4478.045282","usd_to_etb":"19.08164","btc_to_sos":"962878.686526","btc_to_eur":"586.707581","usd_to_krw":"1061.26498","btc_to_dop":"33787.571726","usd_to_bob":"6.90947","btc_to_kgs":"38967.00333","cve_to_usd":"0.01235","fjd_to_usd":"0.534755","btc_to_jpy":"81487.124932","btc_to_omr":"307.038092","usd_to_gyd":"206.501249","pen_to_btc":"0.000447","btc_to_jmd":"82054.768035","npr_to_usd":"0.010027","usd_to_tnd":"1.667128","usd_to_twd":"29.63963","btc_to_nad":"8135.243032","azn_to_btc":"0.001599","btc_to_sgd":"1000.755081","twd_to_btc":"4.2e-05","btc_to_sek":"5239.982414","inr_to_usd":"0.016031","crc_to_btc":"3.0e-06","usd_to_mxn":"13.10359","xaf_to_usd":"0.00207","btc_to_idr":"9496020.023224","btc_to_hnl":"16367.299734","eur_to_btc":"0.001704","btc_to_sbd":"5696.452483","hrk_to_usd":"0.178086","pln_to_btc":"0.000406","gtq_to_btc":"0.000159","zmk_to_usd":"0.00019","thb_to_btc":"3.9e-05","btc_to_mvr":"12263.189672","ghs_to_btc":"0.000552","usd_to_gmd":"37.78796","usd_to_mkd":"45.49761","usd_to_eur":"0.735705","cop_to_btc":"1.0e-06","btc_to_xcd":"2154.383251","sdg_to_btc":"0.000283","btc_to_nzd":"977.688068","usd_to_uah":"8.21647","rsd_to_btc":"1.5e-05","cdf_to_btc":"1.0e-06","btn_to_usd":"0.016024","krw_to_btc":"1.0e-06","tzs_to_usd":"0.000621","pgk_to_btc":"0.000486","btc_to_byr":"7449096.754834","bsd_to_usd":"1.0","irr_to_usd":"4.0e-05","uyu_to_usd":"0.047255","mop_to_btc":"0.000157","usd_to_ghs":"2.2734","btc_to_khr":"3193070.176811","kyd_to_usd":"1.209763","btc_to_zmk":"4189205.014148","cop_to_usd":"0.000519","btc_to_mad":"6585.944415","try_to_btc":"0.000622","xpf_to_btc":"1.4e-05","kzt_to_usd":"0.006508","usd_to_bhd":"0.376988","top_to_btc":"0.000687","ugx_to_btc":"0.0","usd_to_mmk":"982.69002","usd_to_jod":"0.708054","btc_to_vef":"5017.332507","gip_to_btc":"0.002049","btc_to_mmk":"783672.374619","usd_to_xof":"483.687999","wst_to_btc":"0.000535","mdl_to_usd":"0.076148","ltl_to_usd":"0.393615","bnd_to_btc":"0.000999","usd_to_sll":"4317.3335","usd_to_nio":"25.17566","btc_to_mro":"232701.063551","srd_to_usd":"0.304569","usd_to_lbp":"1505.415","btc_to_pkr":"86464.24069","rsd_to_usd":"0.011918","sgd_to_btc":"0.000999","yer_to_usd":"0.004651","lvl_to_usd":"1.933634","usd_to_ang":"1.78896","usd_to_sar":"3.750561","usd_to_iqd":"1163.94005","btc_to_kmf":"288915.400473","usd_to_bmd":"1","kes_to_btc":"1.4e-05","btc_to_irr":"19765992.201906","btc_to_aoa":"77629.271682","btc_to_shp":"488.151425","btc_to_sdg":"3531.750681","kmf_to_usd":"0.00276","btc_to_krw":"846334.072851","btc_to_srd":"2618.3815","usd_to_bdt":"77.70592","usd_to_zar":"10.2023","bwp_to_btc":"0.000145","byr_to_usd":"0.000107","vnd_to_usd":"4.7e-05","usd_to_cve":"80.96999","btc_to_btc":"1.000036","btc_to_pen":"2234.832698","usd_to_hkd":"7.752568","isk_to_btc":"1.0e-05","pen_to_usd":"0.35684","btc_to_kpw":"717729.012","btc_to_tmm":"0.0","bzd_to_usd":"0.502169","npr_to_btc":"1.3e-05","btc_to_chf":"722.785812","btc_to_bgn":"1147.860022","btc_to_uah":"6552.443217","pln_to_usd":"0.323892","btc_to_inr":"49744.968446","htg_to_btc":"3.1e-05","btc_to_wst":"1869.952826","btc_to_ron":"2603.897729","xof_to_usd":"0.002067","btc_to_mur":"24208.369568","usd_to_rwf":"675.36822","usd_to_pab":"1","btc_to_mxn":"10449.807449","all_to_btc":"1.2e-05","dkk_to_btc":"0.000228","usd_to_ugx":"2525.200016","tnd_to_usd":"0.599834","usd_to_lyd":"1.243532","usd_to_pkr":"108.422281","omr_to_btc":"0.003257","mga_to_usd":"0.000445","mur_to_btc":"4.1e-05","usd_to_amd":"408.364003","jod_to_usd":"1.412322","tnd_to_btc":"0.000752","shp_to_usd":"1.633667","vuv_to_usd":"0.010359","khr_to_btc":"0.0","usd_to_htg":"39.867486","iqd_to_usd":"0.000859","btc_to_sar":"2990.984934","mur_to_usd":"0.032942","lsl_to_btc":"0.000123","usd_to_jmd":"102.893","ils_to_btc":"0.000355","zar_to_usd":"0.098017","usd_to_pln":"3.087448","bsd_to_btc":"0.001254","btc_to_rub":"26415.864766","usd_to_mad":"8.258479","usd_to_inr":"62.37796","btc_to_czk":"16042.208365","isk_to_usd":"0.008322","rub_to_usd":"0.030189","usd_to_usd":"1.0","fkp_to_usd":"1.633667","all_to_usd":"0.009674","mop_to_usd":"0.125242","usd_to_cup":"22.682881","mro_to_btc":"4.0e-06","tmm_to_btc":"0.0","fjd_to_btc":"0.000671","usd_to_gnf":"6936.043333","btc_to_huf":"175407.227903","usd_to_byr":"9340.833333","usd_to_bgn":"1.439365","ang_to_btc":"0.000701","gmd_to_usd":"0.026463","bif_to_usd":"0.000645","etb_to_btc":"6.6e-05","usd_to_std":"18145.400667","btc_to_std":"14470533.881189","btc_to_ttd":"5114.800107","ron_to_btc":"0.000384","gmd_to_btc":"3.3e-05","kwd_to_btc":"0.004435","btc_to_amd":"325660.769344","btc_to_gyd":"164679.930468","btc_to_nok":"4858.669737","btc_to_yer":"171462.35001","cdf_to_usd":"0.001085","btc_to_usd":"797.4766799999999","hrk_to_btc":"0.000223","btc_to_xaf":"385222.066449","btc_to_bnd":"1000.578041","btc_to_lsl":"8128.432581","usd_to_eek":"11.677325","brl_to_usd":"0.431072","lkr_to_usd":"0.007622","btc_to_pab":"797.47668","ttd_to_usd":"0.155916","btc_to_cop":"1537083.135322","btc_to_isk":"95828.785252","uzs_to_btc":"1.0e-06","mxn_to_usd":"0.076315","btc_to_mdl":"10472.703005","djf_to_btc":"7.0e-06","usd_to_npr":"99.732501","btc_to_tzs":"1283671.629506","usd_to_vef":"6.29151","cad_to_btc":"0.001186","dzd_to_btc":"1.6e-05","sek_to_usd":"0.152191"}'
     http_version: 
-  recorded_at: Thu, 24 Oct 2013 19:17:53 GMT
+  recorded_at: Wed, 29 Jan 2014 13:20:35 GMT
 recorded_with: VCR 2.5.0
