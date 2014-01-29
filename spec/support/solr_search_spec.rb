@@ -24,7 +24,15 @@ describe SolrSearch do
     end
   end
 
-  it 'can have its query set after initialization'
+  it 'can have its query set after initialization' do
+    solr1 = SolrSearch.new
+    solr2 = SolrSearch.new('test')
+
+    solr1.query = 'test'
+    VCR.use_cassette('test_multiple_solr_initializations') do
+      solr1.records.should eq(solr2.records)
+    end
+  end
 
   it 'can have its page set after initialization'
 

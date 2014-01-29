@@ -28,7 +28,19 @@ describe Matcher do
       end
     end
 
-    it 'can return values for a specific currency'
+    it 'can return values for a specific currency' do
+      VCR.use_cassette('get_bitcoin_prices') do
+        matches = Matcher.new('btc eur', OpenStruct.new({})).execute
+        matches.length.should == 1
+
+        btc = matches.first
+
+        btc[:name].should eq 'Bitcoin Prices'
+        btc[:data][:usd].should eq nil
+        btc[:data][:eur].should eq '586.707581'
+        btc[:weight].should eq 10
+      end
+    end
 
   end
 
