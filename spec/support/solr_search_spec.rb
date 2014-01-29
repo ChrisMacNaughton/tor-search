@@ -34,7 +34,15 @@ describe SolrSearch do
     end
   end
 
-  it 'can have its page set after initialization'
+  it 'can have its page set after initialization' do
+    solr1 = SolrSearch.new('test')
+    solr2 = SolrSearch.new('test', 2)
+
+    solr1.page = 2
+    VCR.use_cassette('test_multiple_solr_initialization_pagination') do
+      solr1.records.should eq(solr2.records)
+    end
+  end
 
   it 'knows how many results it returned'
 
