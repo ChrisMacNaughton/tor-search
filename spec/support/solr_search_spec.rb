@@ -44,9 +44,19 @@ describe SolrSearch do
     end
   end
 
-  it 'knows how many results it returned'
+  it 'knows how many results it returned' do
+    solr = SolrSearch.new('test data')
+    VCR.use_cassette('test-solr-totals') do
+      solr.total.should eq(52)
+    end
+  end
 
-  it 'knows how many pages are in its result set'
+  it 'knows how many pages are in its result set' do
+    solr = SolrSearch.new('test data')
+    VCR.use_cassette('test-solr-pagination') do
+      solr.total_pages.should eq(6)
+    end
+  end
 
   it 'highlights matches in the results'
 
