@@ -8,16 +8,16 @@ class GraphsController < ApplicationController
     data = read_through_cache("weekly_searches", 1.day) do
       days = {}
 
-      beginning = DateTime.parse('2013-09-12 15:25:27 UTC')
-      weeks = (DateTime.now - beginning).to_i / 7
-      weeks.times do |i|
-        wk = beginning + i.weeks
-        rel = read_through_cache("searches_by_week_#{wk.strftime('%m/%d/%Y')}", 100.years) do
+      beginning = DateTime.parse('2013-09-12 00:00:00 UTC')
+
+      ((DateTime.now - beginning).to_i).times do |i|
+        wk = beginning + i.days
+        rel = read_through_cache("searches_by_day_#{wk.strftime('%m/%d/%Y')}", 100.years) do
           Search \
-            .where(created_at: (wk.. (wk + 1.week) )) \
+            .where(created_at: ((wk-3.day).. (wk + 3.day) )) \
             .count(:id) / 7.0
         end
-        days[(beginning + i.weeks).strftime('%m/%d/%Y')] = rel
+        days[(beginning + i.days).strftime('%m/%d/%Y')] = rel
       end
 
       #binding.pry
@@ -42,9 +42,10 @@ class GraphsController < ApplicationController
     searches = []
 
     beginning = DateTime.parse('2013-09-12 00:00:00 UTC')
-    weeks = (DateTime.now - beginning).to_i / 7
+    weeks = (DateTime.now - beginning).to_i
     searches_raw.keys.each_with_index do |date, index|
-      g.labels[index] = date if index % 4 == 0
+      puts index
+      g.labels[index] = date if index % 28 == 0
       searches << searches_raw[date]
     end
 
