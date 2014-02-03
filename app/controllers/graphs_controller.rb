@@ -10,7 +10,7 @@ class GraphsController < ApplicationController
 
       beginning = DateTime.parse('2013-09-12 00:00:00 UTC')
 
-      ((DateTime.now - beginning).to_i).times do |i|
+      ((3.days.ago - beginning).to_i).times do |i|
         wk = beginning + i.days
         rel = read_through_cache("searches_by_day_#{wk.strftime('%m/%d/%Y')}", 100.years) do
           Search \
@@ -42,7 +42,7 @@ class GraphsController < ApplicationController
     searches = []
 
     beginning = DateTime.parse('2013-09-12 00:00:00 UTC')
-    weeks = (DateTime.now - beginning).to_i
+    weeks = (3.days.ago - beginning).to_i
     searches_raw.keys.each_with_index do |date, index|
       puts index
       g.labels[index] = date if index % 28 == 0
