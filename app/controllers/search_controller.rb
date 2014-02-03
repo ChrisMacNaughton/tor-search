@@ -50,13 +50,11 @@ class SearchController < ApplicationController
         @paginated = true
         @ads = []
       end
-      s = read_through_cache("#{@query.id}+#{@search.total}", 10.minutes) do
-        Search.create(
+      s = Search.create(
           query: @query,
           results_count: @search.total,
           paginated: @paginated
         )
-      end
 
       @search_id = s.id
       @instant = true
