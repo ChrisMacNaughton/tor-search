@@ -7,15 +7,20 @@ class GraphsController < ApplicationController
   def daily
     data = read_through_cache("weekly_searches", 1.day) do
       days = {}
-      weeks = (DateTime.now - DateTime.parse('2013-09-12 15:25:27 UTC')).to_i / 7
-      (1..weeks).each do |i|
-        rel = read_through_cache("searches_by_day_#{i.weeks.ago.strftime('%m/%d/%Y')}", 100.years) do
+
+      beginning = DateTime.parse('2013-09-12 15:25:27 UTC')
+      weeks = (DateTime.now - beginning).to_i / 7
+      weeks.times do |i|
+        wk = beginning + i.weeks
+        rel = read_through_cache("searches_by_week_#{wk.strftime('%m/%d/%Y')}", 100.years) do
           Search \
-            .where(created_at: (i.weeks.ago.. (i.weeks.ago + 7.days) )) \
+            .where(created_at: (wk.. (wk + 1.week) )) \
             .count(:id) / 7.0
         end
-        days[i.weeks.ago.strftime('%m/%d/%Y')] = rel
+        days[(beginning + i.weeks).strftime('%m/%d/%Y')] = rel
       end
+
+      #binding.pry
       g = build_graph 'Searches By Week', days.reject{|k,v| v.nil? }
 
       g.to_blob('PNG')
@@ -36,15 +41,13 @@ class GraphsController < ApplicationController
     g.hide_legend = true
     searches = []
 
-    weeks = (DateTime.now - DateTime.parse('2013-09-12 15:25:27 UTC')).to_i / 7
-
-    weeks.times do |i|
-      date = (i + 1).weeks.ago
-      g.labels[weeks - i] = date.to_datetime.strftime('%m/%Y') if i % 4 == 0
-       s = searches_raw[date.strftime('%m/%d/%Y')]
-       s ||= 0
-      searches << s
+    beginning = DateTime.parse('2013-09-12 00:00:00 UTC')
+    weeks = (DateTime.now - beginning).to_i / 7
+    searches_raw.keys.each_with_index do |date, index|
+      g.labels[index] = date if index % 4 == 0
+      searches << searches_raw[date]
     end
+
     g.hide_title = true
     g.data :Searches, searches.reverse
     g.minimum_value = 0
