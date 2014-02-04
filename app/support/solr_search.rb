@@ -81,7 +81,7 @@ class SolrSearch
   def nutch
     return {} if @query.nil?
     @result ||= begin
-      solr = read_through_cache( Digest::SHA1.hexdigest(param.to_json), 30.minutes ) do
+      solr = read_through_cache( cache_key , 30.minutes ) do
         @solr.get('nutch', params: param)
       end
       OpenStruct.new JSON.parse(solr.response[:body])
@@ -93,6 +93,11 @@ class SolrSearch
       @errors << 'Search offline'
       OpenStruct.new(error: 'Failure to communicate with the Solr server')
     end
+  end
+
+  def cache_key
+    key_param = {q: param[:q], fq: param[:fq], start: param[:start]}
+    Digest::SHA1.hexdigest(key_param.to_json)
   end
 
   def response
