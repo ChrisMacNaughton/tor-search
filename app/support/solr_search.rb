@@ -81,7 +81,7 @@ class SolrSearch
   def nutch
     return {} if @query.nil?
     @result ||= begin
-      solr = read_through_cache( Digest::SHA1.hexdigest(param.to_json), 10.minutes ) do
+      solr = read_through_cache( Digest::SHA1.hexdigest(param.to_json), 30.minutes ) do
         @solr.get('nutch', params: param)
       end
       OpenStruct.new JSON.parse(solr.response[:body])
