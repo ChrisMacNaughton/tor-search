@@ -1,6 +1,6 @@
 -domain = page['host']
 -highlights = OpenStruct.new(@search.highlights[page['id']])
--url = "/r?s=#{@search_id}&p=#{CGI::escape page['url']}"
+-url = "/r?s=#{@search_id}&p=#{convert_to_proxy(page['url'])}"
 -url = page['url'] if @instant
 -title = highlights.try(:title).try(:first)
 -if title.nil? || title.empty?
@@ -19,9 +19,9 @@
 .row
   .page-listing.span8
     .title
-      %a{href: convert_to_proxy(url)}
+      %a{href: url}
         = title.html_safe
-      %a{href: content_flag_path(path: Base64.encode64(page['url']), search_id: @search_id)}
+      %a{href: content_flag_path(path: url, search_id: @search_id)}
         %i.icon-flag
     .description
       -if content.nil?
