@@ -79,17 +79,13 @@ class SearchController < ApplicationController
 
   def redirect
     search = Search.where(id: params[:s]).first
-    target = Base64.decode64 params[:p]
+    target = params[:p]
     if target.nil?
       index && return
     end
 
     Click.create(search: search, target: target)
-    if params[:j]
-      render text: { status: 'ok' } and return
-    else
-      redirect_to target
-    end
+    redirect_to target
   end
 
   def ad_redirect

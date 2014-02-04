@@ -50,59 +50,55 @@
       -unless @ads.nil? || @ads.empty?
         - @ads.each do |ad|
           =render partial: 'ad', locals: {ad: ad, search: true, span:4}
-  -if @instant
-    -content_for :javascripts do
-      :javascript
-        var search = "#{@search.term.gsub(/\s+/, '+')}";
-        var keep_space = false; // One day It'll be #{@search.term.split(/s+/).count <= 2}!
-        $(document).ready(function(){
-          paginated = #{@paginated};
-          if (!paginated){
-            if(keep_space){
-              $('#instant_results').show()
-            }
-            $.getJSON("#{instant_path}?search="+search, null,function(res){
-              if(res['matches'] != null && res['matches'].length > 0) {
-                matches = res['matches'];
-                $.each(matches, function(k,e){
-                  str =  "<div class='instant-result'><h4>"+e.name+"</h4><hr/><dl class='"+e.type+"'>"
-                  method = e.method
-                  if(method == null){
-                    method = "title";
-                  }
-                  $.each(e.data, function(k,v){
-                    value = k.toLowerCase();
-                    if(method == "upper"){
-                      value = value.toUpperCase();
-                    } else if(method == "title"){
-                      value = value.titleize();
-                    }
-                    str += "<dt>"+value+"</dt>";
-                    str += "<dd>"+v+"</dd>";
-                  });
-                  str += "</dl>"
-                  if(e.link != undefined){
-                    str += "<p>"+e.link+"</p>"
-                  }
-                  str += "</div><br />";
-                  $('#instant_results').append(str);
-                });
-                $('#instant_results').show();
-              } else {
-              $('#instant_results').hide();
-              }
-            }).fail(function(){ $('#instant_results').hide(); });
-          }
-          $('.search-results title a').on('mousedown', function(e){
-            target = $(e.target)[0]
+  -content_for :javascripts do
+    :javascript
+      var search = "#{@search.term.gsub(/\s+/, '+')}";
+      var keep_space = false; // One day It'll be #{@search.term.split(/s+/).count <= 2}!
+      $(document).ready(function(){
+        $('.page-url').on('mousedown', function(e){
+          target = $(e.target)[0]
+          href = target.getAttribute('href')
+          target.setAttribute('href','/r?s=#{@search_id}&j=true&p='+href)
+        });
+      })
 
-            href = target.getAttribute('href')
-            $.get('/r?s=#{@search_id}&j=true&p='+href);
-            wait_for = 200;
-            wait_for += (new Date).getTime();
-            _results = [];
-            while ((new Date).getTime() < wait_for) {
-              _results.push(i = wait_for);
+    :javascript
+      $(document).ready(function(){
+        paginated = #{@paginated};
+        if (!paginated){
+          if(keep_space){
+            $('#instant_results').show()
+          }
+          $.getJSON("#{instant_path}?search="+search, null,function(res){
+            if(res['matches'] != null && res['matches'].length > 0) {
+              matches = res['matches'];
+              $.each(matches, function(k,e){
+                str =  "<div class='instant-result'><h4>"+e.name+"</h4><hr/><dl class='"+e.type+"'>"
+                method = e.method
+                if(method == null){
+                  method = "title";
+                }
+                $.each(e.data, function(k,v){
+                  value = k.toLowerCase();
+                  if(method == "upper"){
+                    value = value.toUpperCase();
+                  } else if(method == "title"){
+                    value = value.titleize();
+                  }
+                  str += "<dt>"+value+"</dt>";
+                  str += "<dd>"+v+"</dd>";
+                });
+                str += "</dl>"
+                if(e.link != undefined){
+                  str += "<p>"+e.link+"</p>"
+                }
+                str += "</div><br />";
+                $('#instant_results').append(str);
+              });
+              $('#instant_results').show();
+            } else {
+            $('#instant_results').hide();
             }
-          });
-        })
+          }).fail(function(){ $('#instant_results').hide(); });
+        }
+      })
