@@ -44,7 +44,8 @@ class SearchController < ApplicationController
         @paginated = false
         @ads = AdFinder.new(@search.term).ads
         @ads.each_with_index do |ad, idx|
-          AdView.create(ad_id: ad.id, query_id: @query.id, position: idx + 1)
+          res = AdView.create(ad_id: ad.id, query_id: @query.id, position: idx + 1)
+          Rails.logger.warn {"An ad view wasn't created?! (ad: #{ad.id}, query: #{query.id}"}
         end
       else
         @paginated = true
