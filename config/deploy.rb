@@ -123,10 +123,11 @@ namespace :deploy do
   end
 end
 
-namespace :log do
-  desc 'A pinch of tail'
-  task :tailf, roles: :app do
-    run "tail -n 10000 -f #{shared_path}/log/#{rails_env}.log" do |channel, stream, data|
+namespace :logs do
+  desc "tail rails logs"
+  task :tail_rails, :roles => :app do
+    trap("INT") { puts 'Interupted'; exit 0; }
+    run "sudo tail -f /var/log/syslog" do |channel, stream, data|
       puts "#{data}"
       break if stream == :err
     end

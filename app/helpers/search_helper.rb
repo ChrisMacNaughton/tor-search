@@ -7,10 +7,11 @@ module SearchHelper
   end
 
   def convert_to_proxy(url)
-    if request_is_oniony != 'clear'
+    u = if request_is_oniony != 'clear'
       url
     else
       url.gsub(/([2-7a-zA-Z]{16})\.onion/, '\1.onion.to')
     end
+    Base64.encode64 u
   end
 end

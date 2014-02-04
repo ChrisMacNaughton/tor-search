@@ -21,7 +21,7 @@
     .title
       %a{href: convert_to_proxy(url)}
         = title.html_safe
-      %a{href: content_flag_path(path: page['url'], search_id: @search_id)}
+      %a{href: content_flag_path(path: Base64.encode64(page['url']), search_id: @search_id)}
         %i.icon-flag
     .description
       -if content.nil?

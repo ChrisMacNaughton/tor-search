@@ -79,7 +79,7 @@ class SearchController < ApplicationController
 
   def redirect
     search = Search.where(id: params[:s]).first
-    target = params[:p]
+    target = Base64.decode64 params[:p]
     if target.nil?
       index && return
     end
