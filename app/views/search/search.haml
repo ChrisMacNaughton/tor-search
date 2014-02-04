@@ -58,7 +58,7 @@
         $('.page-url').on('mousedown', function(e){
           target = $(e.target)[0]
           href = target.getAttribute('href')
-          target.setAttribute('href','/r?s=#{@search_id}&j=true&p='+href)
+          target.setAttribute('href','/r?s=#{@search_id}&p='+href)
         });
       })
 
