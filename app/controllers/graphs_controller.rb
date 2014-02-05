@@ -14,7 +14,7 @@ class GraphsController < ApplicationController
         wk = beginning + i.days
         rel = read_through_cache("searches_by_day_#{wk.strftime('%m/%d/%Y')}", 100.years) do
           Search \
-            .where(created_at: ((wk-3.day).. (wk + 3.day) )) \
+            .where(created_at: ((wk-3.days).. (wk + 3.days) )) \
             .count(:id) / 7.0
         end
         days[(beginning + i.days).strftime('%m/%d/%Y')] = rel
