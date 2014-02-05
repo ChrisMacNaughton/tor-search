@@ -82,7 +82,7 @@ class SearchController < ApplicationController
   def redirect
     target = params[:p]
     if target.nil?
-      index && return
+      index and return
     end
 
     Click.create(search_id: params[:s], target: target)
