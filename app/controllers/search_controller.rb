@@ -86,7 +86,7 @@ class SearchController < ApplicationController
     end
 
     Click.create(search_id: params[:s], target: target)
-    target = URI.encode(target, "[]").gsub(/ /, '+=')
+    target = CGI.escape(target).gsub("%3A", ":").gsub("%2F", "/")
     redirect_to target, status: 302
   end
 
@@ -121,7 +121,7 @@ class SearchController < ApplicationController
       end
       path = ad.protocol + ad.path
     end
-    path = URI.encode(path, "[]").gsub(/ /, '+=')
+    path = CGI.escape(path).gsub("%3A", ":").gsub("%2F", "/")
     redirect_to path, status: 302
   end
   # rubocop:enable  MethodLength
