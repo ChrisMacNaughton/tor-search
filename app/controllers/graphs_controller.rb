@@ -5,7 +5,7 @@ class GraphsController < ApplicationController
   end
 
   def daily
-    data = read_through_cache("weekly_searches", 1.day) do
+    data = read_through_cache("daily_searches", 2.hours) do
       days = {}
 
       beginning = DateTime.parse('2013-09-12 00:00:00 UTC')
