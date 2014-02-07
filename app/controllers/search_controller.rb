@@ -86,7 +86,8 @@ class SearchController < ApplicationController
     end
 
     Click.create(search_id: params[:s], target: target)
-    redirect_to CGI::escape(target), status: 302
+    target = URI.parse(URI.encode(target, "[]"))
+    redirect_to target, status: 302
   end
 
   def ad_redirect
@@ -120,7 +121,8 @@ class SearchController < ApplicationController
       end
       path = ad.protocol + ad.path
     end
-    redirect_to CGI::escape(path), status: 302
+    path = URI.parse(URI.encode(path, "[]"))
+    redirect_to path, status: 302
   end
   # rubocop:enable  MethodLength
 end
