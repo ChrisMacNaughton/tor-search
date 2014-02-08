@@ -20,7 +20,7 @@ module TorMethods
   end
 
   def request_ip_is_exit?
-    return false if Rails.env.test?
+    return false if Rails.env.test? || Rails.env.development?
     ips = read_through_cache('exit_ips', 24.hours) do
       url = URI('https://check.torproject.org/cgi-bin/TorBulkExitList.py?ip=173.49.88.241&port=443')
       http = Net::HTTP.new(url.host, url.port)

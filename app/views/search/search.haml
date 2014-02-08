@@ -52,7 +52,7 @@
           =render partial: 'ad', locals: {ad: ad, search: true, span:4}
   -content_for :javascripts do
     :javascript
-      var search = "#{@search.term.gsub(/\s+/, '+')}";
+      var search = "#{CGI::escape @search.term.gsub(/\s+/, '+')}";
       var keep_space = false; // One day It'll be #{@search.term.split(/s+/).count <= 2}!
       $(document).ready(function(){
         $('.page-url').on('mousedown', function(e){
