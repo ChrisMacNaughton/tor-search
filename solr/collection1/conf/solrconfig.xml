@@ -813,8 +813,8 @@
       <str name="defType">dismax</str>
       <str name="echoParams">explicit</str>
       <float name="tie">0.01</float>
-      <str name="qf">content^0.5 anchor^1.5 title^1.2 url^0.2</str>
-      <str name="pf">content^0.5 anchor^1.5 title^1.2 url^0.2</str>
+      <str name="qf">content^0.9 anchor^1.3 title^1.2 url^0.4</str>
+      <str name="pf">content^1.3 anchor^1.4 title^1.2 url^0.4</str>
       <str name="wt">json</str>
       <str name="fl">id content url title host</str>
       <int name="ps">100</int>
