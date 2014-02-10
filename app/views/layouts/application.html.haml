@@ -10,3 +10,4 @@
   -if current_advertiser.nil? || current_advertiser.wants_js
     = javascript_include_tag "application"
   =yield(:javascripts)
+  =render partial: 'day_we_fight_back'
