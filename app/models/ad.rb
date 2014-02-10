@@ -4,8 +4,10 @@ class Ad < ActiveRecord::Base
   PROTOCOL_ID_HTTP = 0
   PROTOCOL_ID_HTTPS = 1
   PROTOCOL_IDS = [PROTOCOL_ID_HTTPS , PROTOCOL_ID_HTTP]
-
+  belongs_to :ad_group
   belongs_to :advertiser
+  has_one :ad_campaign, through: :ad_group
+
   has_many :ad_views
   has_many :ad_clicks
   has_many :ad_keywords

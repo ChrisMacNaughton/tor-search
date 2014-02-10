@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131226171226) do
+ActiveRecord::Schema.define(:version => 20140210171438) do
+
+  create_table "ad_campaigns", :force => true do |t|
+    t.integer  "advertiser_id"
+    t.text     "name"
+    t.boolean  "paused",        :default => true
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "ad_campaigns", ["advertiser_id"], :name => "index_ad_campaigns_on_advertiser_id"
 
   create_table "ad_clicks", :force => true do |t|
     t.integer  "ad_id"
@@ -21,6 +31,18 @@ ActiveRecord::Schema.define(:version => 20131226171226) do
     t.datetime "updated_at",                                                   :null => false
     t.integer  "search_id"
   end
+
+  create_table "ad_groups", :force => true do |t|
+    t.integer  "ad_campaign_id"
+    t.integer  "advertiser_id"
+    t.boolean  "paused",         :default => true
+    t.text     "name"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+  end
+
+  add_index "ad_groups", ["ad_campaign_id"], :name => "index_ad_groups_on_ad_campaign_id"
+  add_index "ad_groups", ["advertiser_id"], :name => "index_ad_groups_on_advertiser_id"
 
   create_table "ad_keywords", :force => true do |t|
     t.integer  "ad_id"
@@ -79,8 +101,10 @@ ActiveRecord::Schema.define(:version => 20131226171226) do
     t.string   "line_1",          :limit => 35,                                :default => ""
     t.string   "line_2",          :limit => 35,                                :default => ""
     t.integer  "protocol_id",                                                  :default => 0
+    t.integer  "ad_group_id"
   end
 
+  add_index "ads", ["ad_group_id"], :name => "index_ads_on_ad_group_id"
   add_index "ads", ["advertiser_id"], :name => "index_ads_on_advertiser_id"
 
   create_table "advertisers", :force => true do |t|
