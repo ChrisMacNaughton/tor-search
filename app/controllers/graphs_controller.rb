@@ -8,8 +8,8 @@ class GraphsController < ApplicationController
     #data = read_through_cache("daily_searches", 2.hours) do
     days = {}
 
-    #beginning = DateTime.parse('2013-09-12 00:00:00 UTC')
-    beginning = DateTime.parse('2014-01-01 00:00:00 UTC')
+    beginning = DateTime.parse('2013-09-12 00:00:00 UTC')
+
     ((3.days.ago - beginning) / 60 / 60/ 24).to_i.times do |i|
       wk = beginning + i.days
       count = read_through_cache("searches_by_day_#{wk.strftime('%m/%d/%Y')}", 100.years) do
