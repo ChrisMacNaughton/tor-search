@@ -12,12 +12,12 @@ class GraphsController < ApplicationController
 
       ((3.days.ago - beginning) / 60 / 60/ 24).to_i.times do |i|
         wk = beginning + i.days
-        rel = read_through_cache("searches_by_day_#{wk.strftime('%m/%d/%Y')}", 100.years) do
+        count = read_through_cache("searches_by_day_#{wk.strftime('%m/%d/%Y')}", 100.years) do
           Search \
             .where(created_at: ((wk-3.days)..(wk + 3.days) )) \
             .count(:id) / 7.0
         end
-        days[(beginning + i.days).strftime('%m/%d/%Y')] = rel
+        days[wk.strftime('%m/%d/%Y')] = count
       end
 
       #binding.pry
@@ -42,9 +42,9 @@ class GraphsController < ApplicationController
     searches = []
 
     beginning = DateTime.parse('2013-09-12 00:00:00 UTC')
-    weeks = (3.days.ago - beginning).to_i
+    #weeks = (3.days.ago - beginning).to_i
     searches_raw.keys.each_with_index do |date, index|
-      puts index
+      #puts index
       g.labels[index] = date if index % 28 == 0
       searches << searches_raw[date]
     end
