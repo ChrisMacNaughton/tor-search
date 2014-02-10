@@ -42,7 +42,7 @@ class GraphsController < ApplicationController
     searches = []
 
     searches_raw.keys.each_with_index do |date, index|
-      g.labels[index] = if index % 7 == 0
+      g.labels[index] = if index % 28 == 0
         date
       else
         nil
