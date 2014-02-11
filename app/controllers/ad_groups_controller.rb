@@ -6,10 +6,17 @@ class AdGroupsController < ApplicationController
   def index
     @ad_groups = current_advertiser.ad_groups
 
-    if params[:ad_campaign_id]
-      @campaign = current_advertiser.ad_campaigns.where(id: params[:ad_campaign_id]).first
-      @ad_groups = @ad_groups.where(ad_campaign_id: params[:ad_campaign_id])
+    if params[:campaign_id]
+      @campaign = current_advertiser.ad_campaigns.where(id: params[:campaign_id]).first
+      @ad_groups = @ad_groups.where(ad_campaign_id: params[:campaign_id])
     end
+  end
+
+  def show
+    @ad_group = current_advertiser.ad_groups.where(id: params[:id]).first
+    @campaign = @ad_group.ad_campaign
+
+    @ads = @ad_group.ads
   end
 
   def set_campaigns_up

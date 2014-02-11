@@ -146,7 +146,7 @@ class Ad < ActiveRecord::Base
   end
 
   def legacy?
-    created_at < DateTime.parse('February 10, 2014')
+    created_at.present? && created_at < DateTime.parse('February 10, 2014')
   end
 
   def valid?

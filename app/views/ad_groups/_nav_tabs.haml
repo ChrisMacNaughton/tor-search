@@ -1,0 +1,3 @@
+%ul.nav.nav-tabs
+  %li{class: (params[:controller] == 'ad_groups' && params[:action] == 'show') ? 'active' : '' }= link_to 'Ads', ad_group_ads_path(@ad_group)
+  %li= link_to 'Keywords', '#'#_path

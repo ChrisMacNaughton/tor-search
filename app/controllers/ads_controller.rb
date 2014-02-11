@@ -11,10 +11,10 @@ class AdsController < ApplicationController
     @ads = current_advertiser.ads.page(page) \
       .per_page(per_page).order(:created_at)
 
-    if params[:ad_campaign_id]
-      @ads = @ads.joins(:ad_groups) \
-        .where(ad_groups: {ad_campaign_id: params[:ad_campaign_id]})
-      @campaign = current_advertiser.ad_campaigns.where(id: params[:ad_campaign_id]).first
+    if params[:campaign_id]
+      @ads = @ads.joins(ad_group: :ad_campaign) \
+        .where(ad_groups: {ad_campaign_id: params[:campaign_id]})
+      @campaign = current_advertiser.ad_campaigns.where(id: params[:campaign_id]).first
     end
 
     if params[:ad_group_id]
