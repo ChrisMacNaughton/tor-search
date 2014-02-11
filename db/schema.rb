@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20140211015411) do
   create_table "ad_group_keywords", :force => true do |t|
     t.integer  "ad_group_id"
     t.integer  "keyword_id"
-    t.decimal  "bid",         :precision => 16, :scale => 2
+    t.decimal  "bid",         :precision => 16, :scale => 8
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
   end

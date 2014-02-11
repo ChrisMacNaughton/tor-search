@@ -20,5 +20,5 @@
           %td= group.paused? ? "Paused" : "Active"
           %td= group.clicks_count
           %td= group.views_count
-          %td= group.ctr
-          %td= group.avg_position
+          %td= number_to_percentage(group.ctr, precision: 4)
+          %td= number_with_precision(group.avg_position, precision: 2)

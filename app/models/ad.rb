@@ -42,6 +42,24 @@ class Ad < ActiveRecord::Base
     where(approved: true, disabled: false, ad_groups: {paused: false}, ad_campaigns: {paused: false}) \
     .joins(ad_group: :ad_campaign)
 
+  def self.without_keywords
+    ad_groups = AdGroup.without_keywords
+    return [] if ad_groups.nil?
+    ad_group_ads = ad_groups.map(&:ads)
+    return [] if ad_group_ads.nil?
+
+    ads = []
+    ad_group_ads.map do |ad_group|
+      ad_options = ad_group.select do |ad|
+        ad.approved? && !ad.disabled? && ad.valid?
+      end.compact
+      next if ad_options.empty?
+      ads << ad_options.sample
+    end
+
+    ads
+  end
+
   def self.with_keywords(keywords = [])
     keywords = [*keywords]
     keyword_ids = Keyword.where('LOWER(word) in (?)', keywords).pluck(:id)
@@ -58,8 +76,17 @@ class Ad < ActiveRecord::Base
 
     ads = []
     ad_group_ads.map do |ad_group|
-      ads << ad_group.sample
+      ad_options = ad_group.select do |ad|
+        ad.approved? && !ad.disabled?
+      end.compact
+      next if ad_options.empty?
+      ad = ad_options.sample
+      keyword = ad_group_keywords.detect{|k| k.ad_group_id == ad.ad_group_id}
+      ad.keyword_id = keyword.id
+      ad.bid = keyword.bid
+      ads << ad
     end
+
     ads
   end
 
@@ -120,5 +147,9 @@ class Ad < ActiveRecord::Base
 
   def legacy?
     created_at < DateTime.parse('February 10, 2014')
+  end
+
+  def valid?
+    bid <= advertiser.balance
   end
 end

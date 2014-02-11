@@ -3,7 +3,7 @@ class ShiftAdKeywordsToAdGroupKeywords < ActiveRecord::Migration
     create_table :ad_group_keywords do |t|
       t.references :ad_group
       t.references :keyword
-      t.decimal :bid, scale: 2, precision: 16
+      t.decimal :bid, scale: 8, precision: 16
 
       t.timestamps
     end
@@ -11,7 +11,7 @@ class ShiftAdKeywordsToAdGroupKeywords < ActiveRecord::Migration
     add_index :ad_group_keywords, :keyword_id
     add_index :ad_group_keywords, [:ad_group_id, :keyword_id], unique: true
     AdKeyword.all.each do |k|
-      AdGroupKeyword.create(ad_group_id: k.ad.ad_group.id, keyword_id: k.keyword_id, bid: k.bid)
+      AdGroupKeyword.create!(ad_group_id: k.ad.ad_group.id, keyword_id: k.keyword_id, bid: k.bid)
     end
     drop_table :ad_keywords
   end
