@@ -33,10 +33,35 @@ class Ad < ActiveRecord::Base
   before_create :disable_ad
   before_save :check_onion
   before_save :trim_off_http
-  scope :available, lambda {
-    where(approved: true).where(disabled: false)
-  }
+  # scope :available, lambda {
+  #   where(approved: true).where(disabled: false)
+  # }
   attr_accessor :include_path, :keyword_id
+
+  scope :enabled,
+    where(approved: true, disabled: false, ad_groups: {paused: false}, ad_campaigns: {paused: false}) \
+    .joins(ad_group: :ad_campaign)
+
+  def self.with_keywords(keywords = [])
+    keywords = [*keywords]
+    keyword_ids = Keyword.where('LOWER(word) in (?)', keywords).pluck(:id)
+    return [] if keyword_ids.nil?
+
+    ad_group_keywords = AdGroupKeyword.valid.where(keyword_id: keyword_ids)
+    return [] if ad_group_keywords.nil?
+
+    ad_groups = AdGroup.where(id: ad_group_keywords.map(&:ad_group_id).uniq)
+    return [] if ad_groups.nil?
+
+    ad_group_ads = ad_groups.map(&:ads)
+    return [] if ad_group_ads.nil?
+
+    ads = []
+    ad_group_ads.map do |ad_group|
+      ads << ad_group.sample
+    end
+    ads
+  end
 
   def disable_ad
     self.disabled = true
