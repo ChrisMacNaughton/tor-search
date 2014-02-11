@@ -33,35 +33,51 @@ TorSearch::Application.routes.draw do
     get '/humans.txt' => 'static#humans'
     get '/keyword_tool' => 'keyword_tool#index'
   end
-  namespace 'api' do
-    get 'advertiser_balance' => 'ad#advertiser_balance'
-    resources :bitcoin_address
-    resources :payment
-    resources :ad do
-      resources :keyword
+
+  #
+  scope 'ads' do
+    # resources :ads do
+    #   member do
+    #     get 'toggle' => 'ads#toggle', as: :toggle
+    #     put 'toggle' => 'ads#toggle', as: :toggle
+    #     put 'request_beta' => 'ads#request_beta', as: :request_beta
+    #     get 'request_beta' => 'ads#request_beta', as: :request_beta
+    #   end
+    # end
+    #resources :ad_groups
+    #get '/ad_campaigns/ad_groups/(:id)' => 'ad_campaigns#ad_groups', as: :ad_campaigns_ad_groups
+    resources :ad_campaigns do
+      resources :ad_groups
+      resources :ads
     end
-    resources :keyword
-  end
-  resources :keywords
-  get '/ads/bitcoin-addresses' => 'ads#payment_addresses', as: :btc_address
-  post '/ads/bitcoin-addresses' => 'ads#get_payment_address', as: :new_address
-  resources :ads do
-    resources :keywords
-    member do
-      get 'toggle' => 'ads#toggle', as: :toggle
-      put 'toggle' => 'ads#toggle', as: :toggle
-      put 'request_beta' => 'ads#request_beta', as: :request_beta
-      get 'request_beta' => 'ads#request_beta', as: :request_beta
+    resources :ad_groups do
+      resources :ads
     end
+    resources :ads
+
   end
+  get '/ads' => 'ad_campaigns#index'
+  # namespace 'api' do
+  #   get 'advertiser_balance' => 'ad#advertiser_balance'
+  #   resources :bitcoin_address
+  #   resources :payment
+  #   resources :ad do
+  #     resources :keyword
+  #   end
+  #   resources :keyword
+  # end
+  # resources :keywords
+  # get '/ads/bitcoin-addresses' => 'ads#payment_addresses', as: :btc_address
+  # post '/ads/bitcoin-addresses' => 'ads#get_payment_address', as: :new_address
+
 
   resources :payments
 
   post 'coupons' => 'coupon#create', as: :credit_coupon
 
-  get 'partials/ads/:partial' => 'ads#partials'
-  get 'partials/keywords/:partial' => 'keywords#partials'
-  get 'partials/payments/:partial' => 'payments#partials'
+  # get 'partials/ads/:partial' => 'ads#partials'
+  # get 'partials/keywords/:partial' => 'keywords#partials'
+  # get 'partials/payments/:partial' => 'payments#partials'
   root to: 'search#index'
 
   match '/:locale' => 'search#index', constraints: {locale: /en/}

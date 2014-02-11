@@ -1,0 +1,17 @@
+%h4 All Online Campaigns
+
+=render partial: 'nav_tabs'
+%button=link_to "+ Campaign", "#"
+.row
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Status
+        %th Campaign
+        %th Campaign Start Date
+    %tbody
+      -@campaigns.each do |campaign|
+        %tr
+          %td= campaign.paused? ? "Paused" : "Active"
+          %td= link_to campaign.name, ad_campaign_ad_groups_path(campaign.try(:id))
+          %td= campaign.created_at

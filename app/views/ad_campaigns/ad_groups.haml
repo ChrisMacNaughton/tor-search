@@ -1,0 +1,24 @@
+=render partial: 'campaign_name'
+
+=render partial: 'nav_tabs'
+
+%button=link_to "+ Ad Group", "#"
+.row
+  %table.table
+    %thead
+      %tr
+        %th Ad Group
+        %th Status
+        %th Clicks
+        %th Impr.
+        %th CTR
+        %th Avg. Pos.
+    %tbody
+      -@ad_groups.each do |group|
+        %tr
+          %td= group.name
+          %td= group.paused? ? "Paused" : "Active"
+          %td= group.clicks_count
+          %td= group.views_count
+          %td= group.ctr
+          %td= group.avg_position

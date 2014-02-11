@@ -73,4 +73,16 @@ class Ad < ActiveRecord::Base
   def avg_position
     @sum ||= ad_views.average(:position)
   end
+
+  def status
+    if approved?
+      if disabled?
+        "Paused"
+      else
+        "Active"
+      end
+    else
+      "Pending"
+    end
+  end
 end

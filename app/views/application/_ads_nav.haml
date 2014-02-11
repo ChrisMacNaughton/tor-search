@@ -1,0 +1,11 @@
+- advertiser_campaigns ||= current_advertiser.ad_campaigns
+- advertiser_ad_groups ||= current_advertiser.ad_groups.group(:ad_campaign_id)
+%ul.nav.nav-list
+  %li.nav-header= link_to "All Campaigns", ad_campaigns_path
+  %hr/
+  -advertiser_campaigns.each do |campaign|
+    %li.nav-header
+      = link_to campaign.name, ad_campaign_ad_groups_path(campaign.id)
+    -ad_groups[campaign.id].each do |group|
+      = link_to group.name, group
+    %hr/
