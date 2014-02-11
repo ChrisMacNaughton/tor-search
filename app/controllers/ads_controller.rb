@@ -121,7 +121,7 @@ class AdsController < ApplicationController
   end
 
   def toggle
-    ad = Ad.find(params[:id])
+    ad = Ad.find(params[:id] || params[:ad_id])
     ad.disabled = !ad.disabled
     if ad.save
       @mixpanel_tracker.track(current_advertiser.id, 'toggled an ad', {ad: {id: ad.id, title: ad.title}}, visitor_ip_address)

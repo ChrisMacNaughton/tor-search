@@ -2,10 +2,11 @@
 
 =render partial: 'ad_campaigns/nav_tabs'
 
-%button=link_to "+ Ad", "#"
+%a.btn.btn-primary{href: new_ad_path} + Ad
 .row
   %table.table.table-striped
     %thead
+      %th
       %th Ad
       %th Campaign
       %th Ad Group
@@ -18,14 +19,24 @@
         %br/
         Pos.
     %tbody
+      -edit_icon = "<i class='icon-edit'></i>".html_safe
+      -pause_icon = "<i class='icon-pause'></i>".html_safe
+      -play_icon = "<i class='icon-play'></i>".html_safe
       -@ads.each do |ad|
         %tr
-          %td= render partial: 'ad', locals: {ad: ad}
-          %td= link_to ad.ad_campaign.name, ad.ad_campaign
-          %td= link_to ad.ad_group.name, ad.ad_group
           %td
-          %td= ad.ad_clicks.count
+            =link_to edit_icon, edit_ad_path(ad)
+            -unless ad.pending?
+              -if ad.paused?
+                =link_to play_icon, ad_toggle_path(ad)
+              -else
+                =link_to pause_icon, ad_toggle_path(ad)
+          %td= render partial: 'ad', locals: {ad: ad}
+          %td= link_to ad.ad_campaign.name, campaign_path(ad.ad_campaign)
+          %td= link_to ad.ad_group.name, ad.ad_group
           %td= ad.status
+          %td= ad.ad_clicks.count
           %td= ad.ad_views.count
-          %td= ad.ctr
-          %td= ad.avg_position
+          %td= number_to_percentage(ad.ctr, precision: 2)
+          %td= number_with_precision(ad.avg_position, precision: 2)
+

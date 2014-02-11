@@ -10,15 +10,14 @@ class Ad < ActiveRecord::Base
 
   has_many :ad_views
   has_many :ad_clicks
-  has_many :ad_keywords
-  accepts_nested_attributes_for :ad_keywords
-  has_many :keywords, through: :ad_keywords
+
+  has_many :keywords, through: :ad_group
 
   # keyword_id is for tracking an ad selected from a keyword
   # include_path is for auto generated ads to know their path with the redirect
   attr_accessible :bid, :title, :disabled, :protocol_id, :path, :approved,
                   :ppc, :display_path, :line_1, :line_2, :include_path,
-                  :advertiser
+                  :advertiser, :ad_group_id
   validates :advertiser_id, presence: true
   validates :path, presence: true
   validates :title, presence: true
@@ -84,5 +83,17 @@ class Ad < ActiveRecord::Base
     else
       "Pending"
     end
+  end
+
+  def pending?
+    !approved?
+  end
+
+  def paused?
+    approved? && disabled?
+  end
+
+  def legacy?
+    created_at < DateTime.parse('February 10, 2014')
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140210171438) do
+ActiveRecord::Schema.define(:version => 20140211015411) do
 
   create_table "ad_campaigns", :force => true do |t|
     t.integer  "advertiser_id"
@@ -32,6 +32,18 @@ ActiveRecord::Schema.define(:version => 20140210171438) do
     t.integer  "search_id"
   end
 
+  create_table "ad_group_keywords", :force => true do |t|
+    t.integer  "ad_group_id"
+    t.integer  "keyword_id"
+    t.decimal  "bid",         :precision => 16, :scale => 2
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+  end
+
+  add_index "ad_group_keywords", ["ad_group_id", "keyword_id"], :name => "index_ad_group_keywords_on_ad_group_id_and_keyword_id", :unique => true
+  add_index "ad_group_keywords", ["ad_group_id"], :name => "index_ad_group_keywords_on_ad_group_id"
+  add_index "ad_group_keywords", ["keyword_id"], :name => "index_ad_group_keywords_on_keyword_id"
+
   create_table "ad_groups", :force => true do |t|
     t.integer  "ad_campaign_id"
     t.integer  "advertiser_id"
@@ -43,17 +55,6 @@ ActiveRecord::Schema.define(:version => 20140210171438) do
 
   add_index "ad_groups", ["ad_campaign_id"], :name => "index_ad_groups_on_ad_campaign_id"
   add_index "ad_groups", ["advertiser_id"], :name => "index_ad_groups_on_advertiser_id"
-
-  create_table "ad_keywords", :force => true do |t|
-    t.integer  "ad_id"
-    t.integer  "keyword_id"
-    t.decimal  "bid",        :precision => 16, :scale => 8, :default => 0.0001
-    t.datetime "created_at",                                                    :null => false
-    t.datetime "updated_at",                                                    :null => false
-  end
-
-  add_index "ad_keywords", ["ad_id"], :name => "index_ad_keywords_on_ad_id"
-  add_index "ad_keywords", ["keyword_id"], :name => "index_ad_keywords_on_keyword_id"
 
   create_table "ad_views", :force => true do |t|
     t.integer  "ad_id"
@@ -89,7 +90,7 @@ ActiveRecord::Schema.define(:version => 20140210171438) do
     t.string   "title",           :limit => 25,                                :default => ""
     t.text     "path",                                                         :default => ""
     t.boolean  "disabled",                                                     :default => false
-    t.decimal  "bid",                           :precision => 16, :scale => 8, :default => 0.005
+    t.decimal  "bid",                           :precision => 16, :scale => 8, :default => 0.0
     t.datetime "created_at",                                                                      :null => false
     t.datetime "updated_at",                                                                      :null => false
     t.boolean  "approved",                                                     :default => false

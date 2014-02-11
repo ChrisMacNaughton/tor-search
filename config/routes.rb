@@ -46,15 +46,17 @@ TorSearch::Application.routes.draw do
     # end
     #resources :ad_groups
     #get '/ad_campaigns/ad_groups/(:id)' => 'ad_campaigns#ad_groups', as: :ad_campaigns_ad_groups
-    resources :ad_campaigns do
+    resources :campaigns, controller: :ad_campaigns do
       resources :ad_groups
       resources :ads
     end
     resources :ad_groups do
       resources :ads
     end
-    resources :ads
-
+    resources :ads do
+      get 'toggle' => 'ads#toggle', as: :toggle
+      put 'toggle' => 'ads#toggle', as: :toggle
+    end
   end
   get '/ads' => 'ad_campaigns#index'
   # namespace 'api' do
