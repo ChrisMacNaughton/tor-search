@@ -33,4 +33,8 @@ class AdGroupKeyword < ActiveRecord::Base
       0
     end * 100
   end
+
+  def word
+    keyword.word
+  end
 end

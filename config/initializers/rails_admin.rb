@@ -10,7 +10,7 @@ RailsAdmin.config do |config|  config.main_app_name = ['Tor Search', 'Admin']
   config.current_user_method { current_admin } # auto-generated
   config.audit_with :history, 'Admin'
   config.included_models = %w(
-    Ad AdGroupKeyword Admin Advertiser
+    Ad AdGroup AdCampaign AdGroupKeyword Admin Advertiser
     BitcoinAddress BannedDomain Coupon Domain InstantResult
     Keyword Message Payment Query Search FlagReason Flag
     )
