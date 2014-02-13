@@ -20,7 +20,7 @@ class AdGroupKeywordsController < ApplicationController
       keywords = keywords.where(ad_group_id: ad_group_ids)
     end
 
-    @keywords = keywords
+    @keywords = keywords.joins(:keyword).order(:word)
   end
 
   def edit
@@ -34,7 +34,7 @@ class AdGroupKeywordsController < ApplicationController
     @keyword.keyword_id = key.id
     @keyword.bid = params[:ad_group_keyword][:bid]
     if current_advertiser.ad_group_keywords.where(keyword_id: key.id, ad_group_id: @keyword.ad_group_id) \
-        .where( 'advertiser_id <> ?', @keyword.id).present?
+        .where( 'ad_group_keywords.id <> ?', @keyword.id).present?
       flash.alert = "You already have this keyword on this ad group"
       redirect_to :back and return
     end

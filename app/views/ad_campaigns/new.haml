@@ -2,7 +2,7 @@
   =f.label :name, "Campaign Name"
   =f.text_field :name
   =f.label :default_bid
-  =f.number_field :default_bid, minimum: 0, maximum: 100_000_000
+  =f.number_field :default_bid
   %p.muted
     %small This bid applies to the first ad group in this campaign, which you'll create in the next step.
   =f.submit "Save and Continue", class: 'btn btn-success'
