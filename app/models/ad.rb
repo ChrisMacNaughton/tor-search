@@ -62,10 +62,10 @@ class Ad < ActiveRecord::Base
 
   def self.with_keywords(keywords = [])
     keywords = [*keywords]
-    keyword_ids = Keyword.where('LOWER(word) in (?)', keywords).where('bid > 0').pluck(:id)
+    keyword_ids = Keyword.where('LOWER(word) in (?)', keywords).pluck(:id)
     return [] if keyword_ids.nil?
 
-    ad_group_keywords = AdGroupKeyword.valid.where(keyword_id: keyword_ids)
+    ad_group_keywords = AdGroupKeyword.valid.where(keyword_id: keyword_ids).where('bid > 0')
     return [] if ad_group_keywords.nil?
 
     ad_groups = AdGroup.where(id: ad_group_keywords.map(&:ad_group_id).uniq, paused: false)
