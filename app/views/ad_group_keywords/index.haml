@@ -1,0 +1,39 @@
+=render partial: 'ad_campaigns/campaign_name'
+-if @ad_group
+  =render partial: 'ad_groups/nav_tabs'
+-elsif @campaign
+  =render partial: 'ad_campaigns/nav_tabs'
+
+%a.btn.btn-primary{href: (defined?(@ad_group)) ? new_keyword_path(ad_group_id: @ad_group.id) : new_keyword_path} + Keyword
+.row
+  %table.table.table-striped
+    %thead
+      %th
+      %th Word
+      %th Campaign
+      %th Ad Group
+      %th Status
+      %th Clicks
+      %th Impr.
+      %th CTR
+      %th Current Bid
+    %tbody
+      -edit_icon = "<i class='icon-edit'></i>".html_safe
+      -pause_icon = "<i class='icon-pause'></i>".html_safe
+      -play_icon = "<i class='icon-play'></i>".html_safe
+      -@keywords.each do |keyword|
+        %tr
+          %td
+            =link_to edit_icon, edit_keyword_path(keyword)
+            -if keyword.paused?
+              =link_to play_icon, keyword_toggle_path(keyword)
+            -else
+              =link_to pause_icon, keyword_toggle_path(keyword)
+          %td= keyword.keyword.word
+          %td= link_to keyword.ad_group.ad_campaign.name, campaign_path(keyword.ad_group.ad_campaign)
+          %td= link_to keyword.ad_group.name, keyword.ad_group
+          %td= keyword.status
+          %td= keyword.clicks
+          %td= keyword.views
+          %td= number_to_percentage(keyword.ctr, precision: 2)
+          %td= number_to_currency(keyword.bid, precision: 6, unit: '&#x0e3f;', format: "%n%u")

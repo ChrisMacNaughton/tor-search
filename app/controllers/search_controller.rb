@@ -44,7 +44,8 @@ class SearchController < ApplicationController
         @paginated = false
         @ads = AdFinder.new(@search.term).ads
         @ads.each_with_index do |ad, idx|
-          res = AdView.create(ad_id: ad.id, query_id: @query.id, position: idx + 1)
+          keyword_id = (ad.keyword_id.nil?) ? nil : AdGroupKeyword.find(ad.keyword_id).keyword_id
+          res = AdView.create(ad_id: ad.id, query_id: @query.id, position: idx + 1, keyword_id: keyword_id)
           Rails.logger.warn {"An ad view wasn't created?! (ad: #{ad.id}, query: #{query.id}"} \
               unless res
         end
@@ -106,7 +107,8 @@ class SearchController < ApplicationController
           cost = ad.bid
           bid_source = 'ad'
         else
-          cost = AdKeyword.where(id: params[:k]).first.bid || ad.bid
+          ad_click.keyword_id = AdGroupKeyword.find(params[:k]).keyword_id
+          cost = AdGroupKeyword.where(id: params[:k]).first.bid || ad.bid
           bid_source = 'keyword'
         end
         ad_click.save

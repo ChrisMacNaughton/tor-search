@@ -21,36 +21,11 @@ class AdFinder
   protected
 
   def ads_by_keyword
-    if @keyword_ads.nil?
-      @keyword_ads = Ad.select("ads.*").limit(limit).available \
-        .joins(:advertiser, ad_keywords: :keyword) \
-        .where('advertisers.balance >= ad_keywords.bid') \
-        .where("LOWER(keywords.word) in (?)", query_words) \
-        .where('ad_keywords.bid > 0') \
-        .order('bid desc, created_at asc')
-      @keyword_ads.map do |ad|
-        keyword = ad.ad_keywords.joins(:keyword) \
-          .where("LOWER(keywords.word) in (?)", query_words).first
-        ad.keyword_id = keyword.id
-        ad.bid = keyword.bid * 1.2
-      end
-    end
-    @keyword_ads
+    @keyword_ads ||= Ad.with_keywords(query_words)
   end
 
   def generic_ads
-    if @generic_ads.nil?
-      if ads_by_keyword.count >= limit
-        @generic_ads = []
-      else
-        @generic_ads ||= Ad.limit(limit - ads_by_keyword.count).available.joins(:advertiser). \
-          where('advertisers.balance >= ads.bid') \
-          .where("(select count(*) from ad_keywords where ad_id = ads.id) = 0") \
-          .where('ads.bid > 0') \
-          .order('bid desc, created_at asc').map{|ad| ad.bid = ad.bid * 0.8; ad}
-      end
-    end
-    @generic_ads
+    @generic_ads ||= Ad.without_keywords
   end
 
   def query_words
@@ -63,7 +38,7 @@ class AdFinder
     str = str1.split(/\s/)
 
     opts = []
-    opts << str.join(' ').downcase
+    opts << str.join(' ').downcase.singularize
 
     (str.count - 1).times do |i|
       combinations = str.combination(i+1).to_a.map{|a| a.join(' ').downcase}

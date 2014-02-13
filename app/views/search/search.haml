@@ -49,7 +49,7 @@
         %hr{style: 'margin: 10px 0'}
       -unless @ads.nil? || @ads.empty?
         - @ads.each do |ad|
-          =render partial: 'ad', locals: {ad: ad, search: true, span:4}
+          =render partial: 'ad', locals: {ad: ad, search: true}
   -content_for :javascripts do
     :javascript
       var search = "#{CGI::escape @search.term.gsub(/\s+/, '+')}";

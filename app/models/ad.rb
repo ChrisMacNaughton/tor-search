@@ -10,15 +10,14 @@ class Ad < ActiveRecord::Base
 
   has_many :ad_views
   has_many :ad_clicks
-  has_many :ad_keywords
-  accepts_nested_attributes_for :ad_keywords
-  has_many :keywords, through: :ad_keywords
+
+  has_many :ad_group_keywords, through: :ad_group
 
   # keyword_id is for tracking an ad selected from a keyword
   # include_path is for auto generated ads to know their path with the redirect
   attr_accessible :bid, :title, :disabled, :protocol_id, :path, :approved,
                   :ppc, :display_path, :line_1, :line_2, :include_path,
-                  :advertiser
+                  :advertiser, :ad_group_id
   validates :advertiser_id, presence: true
   validates :path, presence: true
   validates :title, presence: true
@@ -34,10 +33,62 @@ class Ad < ActiveRecord::Base
   before_create :disable_ad
   before_save :check_onion
   before_save :trim_off_http
-  scope :available, lambda {
-    where(approved: true).where(disabled: false)
-  }
+  # scope :available, lambda {
+  #   where(approved: true).where(disabled: false)
+  # }
   attr_accessor :include_path, :keyword_id
+
+  scope :enabled,
+    where(approved: true, disabled: false, ad_groups: {paused: false}, ad_campaigns: {paused: false}) \
+    .joins(ad_group: :ad_campaign)
+
+  def self.without_keywords
+    ad_groups = AdGroup.without_keywords
+    return [] if ad_groups.nil?
+    ad_group_ads = ad_groups.map(&:ads)
+    return [] if ad_group_ads.nil?
+
+    ads = []
+    ad_group_ads.map do |ad_group|
+      ad_options = ad_group.select do |ad|
+        ad.approved? && !ad.disabled? && ad.valid_bid?
+      end.compact
+      next if ad_options.empty?
+      ads << ad_options.sample
+    end
+
+    ads
+  end
+
+  def self.with_keywords(keywords = [])
+    keywords = [*keywords]
+    keyword_ids = Keyword.where('LOWER(word) in (?)', keywords).pluck(:id)
+    return [] if keyword_ids.nil?
+
+    ad_group_keywords = AdGroupKeyword.valid.where(keyword_id: keyword_ids)
+    return [] if ad_group_keywords.nil?
+
+    ad_groups = AdGroup.where(id: ad_group_keywords.map(&:ad_group_id).uniq, paused: false)
+    return [] if ad_groups.nil?
+
+    ad_group_ads = ad_groups.map(&:ads)
+    return [] if ad_group_ads.nil?
+
+    ads = []
+    ad_group_ads.map do |ad_group|
+      ad_options = ad_group.select do |ad|
+        ad.approved? && !ad.disabled? && !ad.ad_group.ad_campaign.paused?
+      end.compact
+      next if ad_options.empty?
+      ad = ad_options.sample
+      keyword = ad_group_keywords.detect{|k| k.ad_group_id == ad.ad_group_id}
+      ad.keyword_id = keyword.id
+      ad.bid = keyword.bid
+      ads << ad
+    end
+
+    ads
+  end
 
   def disable_ad
     self.disabled = true
@@ -72,5 +123,33 @@ class Ad < ActiveRecord::Base
 
   def avg_position
     @sum ||= ad_views.average(:position)
+  end
+
+  def status
+    if approved?
+      if disabled?
+        "Paused"
+      else
+        "Active"
+      end
+    else
+      "Pending"
+    end
+  end
+
+  def pending?
+    !approved?
+  end
+
+  def paused?
+    approved? && disabled?
+  end
+
+  def legacy?
+    created_at.present? && created_at < DateTime.parse('February 10, 2014')
+  end
+
+  def valid_bid?
+    bid <= advertiser.balance
   end
 end

@@ -1,0 +1,18 @@
+=form_for @ad_group, builder: WithErrorFields do |f|
+  %h5 Name this ad Group
+  %hr/
+  =f.label :ad_group_name
+  =f.text_field :name
+  -if @ad_group.ad_campaign_id
+    =f.hidden_field :ad_campaign_id
+  -else
+    =f.label :ad_campaign, "Select a Campaign"
+    =f.select_tag 'ad_group[ad_campaign_id]', options_from_collection_for_select(current_advertiser.ad_campaigns, 'id', 'name'), include_blank: true
+  %h5 Create an ad
+  %hr/
+  %p To get started, write your first ad below. Remember, you can always create more ads later.
+  .span4
+    =form_for @ad,builder: WithErrorFields do |ff|
+      =render partial: 'ads/fields', locals: {f: ff, ad_group: true}
+  .span4
+    =render partial: 'ad', locals: {search: false, ad: @ad}
