@@ -1,3 +1,6 @@
+-if @ad_group
+  .row
+    %p Ads within an ad group will be randomly selected for display to allow you to determine higher click-through-rate
 %a.btn.btn-primary{href: (defined?(@ad_group)) ? new_ad_path(ad_group_id: @ad_group.id) : new_ad_path} + Ad
 .row
   %table.table.table-bordered

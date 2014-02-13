@@ -11,7 +11,7 @@ class Ad < ActiveRecord::Base
   has_many :ad_views
   has_many :ad_clicks
 
-  has_many :keywords, through: :ad_group
+  has_many :ad_group_keywords, through: :ad_group
 
   # keyword_id is for tracking an ad selected from a keyword
   # include_path is for auto generated ads to know their path with the redirect
@@ -68,7 +68,7 @@ class Ad < ActiveRecord::Base
     ad_group_keywords = AdGroupKeyword.valid.where(keyword_id: keyword_ids)
     return [] if ad_group_keywords.nil?
 
-    ad_groups = AdGroup.where(id: ad_group_keywords.map(&:ad_group_id).uniq)
+    ad_groups = AdGroup.where(id: ad_group_keywords.map(&:ad_group_id).uniq, paused: false)
     return [] if ad_groups.nil?
 
     ad_group_ads = ad_groups.map(&:ads)
@@ -77,7 +77,7 @@ class Ad < ActiveRecord::Base
     ads = []
     ad_group_ads.map do |ad_group|
       ad_options = ad_group.select do |ad|
-        ad.approved? && !ad.disabled?
+        ad.approved? && !ad.disabled? && !ad.ad_group.ad_campaign.paused?
       end.compact
       next if ad_options.empty?
       ad = ad_options.sample

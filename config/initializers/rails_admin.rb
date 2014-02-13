@@ -23,7 +23,7 @@ RailsAdmin.config do |config|  config.main_app_name = ['Tor Search', 'Admin']
     object_label_method :term
   end
 
-  config.model "Keyword" do
+  config.model "AdGroupKeyword" do
     object_label_method :word
   end
 
