@@ -33,8 +33,12 @@ class AdGroupKeywordsController < ApplicationController
     key = Keyword.find_or_create_by_word(word)
     @keyword.keyword_id = key.id
     @keyword.bid = params[:ad_group_keyword][:bid]
-    if current_advertiser.ad_group_keywords.where(keyword_id: key.id, ad_group_id: @keyword.ad_group_id) \
-        .where( 'ad_group_keywords.id <> ?', @keyword.id).present?
+    existing_keywords = current_advertiser \
+        .ad_group_keywords \
+        .where(keyword_id: key.id, ad_group_id: @keyword.ad_group_id) \
+        .where( 'ad_group_keywords.id <> ?', @keyword.id)
+
+    if existing_keywords.any?
       flash.alert = "You already have this keyword on this ad group"
       redirect_to :back and return
     end
