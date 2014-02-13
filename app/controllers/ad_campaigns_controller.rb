@@ -5,16 +5,10 @@ class AdCampaignsController < ApplicationController
   before_filter :set_campaigns_up
 
   def index
-    @campaigns = @advertiser_campaigns
-  end
-
-  def ad_groups
-    @campaign = AdCampaign.find(params[:id]) if params[:id]
-    render :error_404 unless @campaign.advertiser == current_advertiser
-    @ad_groups = current_advertiser.ad_groups
-    if @campaign
-      @ad_groups = @ad_groups.where(ad_campaign_id: @campaign.id)
-    end
+    page = (params[:page] || 1).to_i
+    per_page = (10).to_i
+    @campaigns = @advertiser_campaigns \
+      .page(page).per_page(per_page)
   end
 
   def show
@@ -36,8 +30,24 @@ class AdCampaignsController < ApplicationController
     end
   end
 
+  def toggle
+    model_name = current_advertiser.ad_campaigns.where(id: params[:id] || params[:campaign_id]).first
+    if model_name.nil?
+      flash.alert = 'There was a problem, try again soon!'
+      redirect_to :back and return
+    end
+    model_name.paused = !model_name.paused
+    if model_name.save
+      @mixpanel_tracker.track(current_advertiser.id, 'toggled a Campaign', {keyword: {id: model_name.id}}, visitor_ip_address)
+      flash.notice = 'Campaign Toggled'
+    else
+      flash.alert = 'There was a problem, try again soon!'
+    end
+    redirect_to :back
+  end
+
   def set_campaigns_up
-    @advertiser_campaigns = current_advertiser.ad_campaigns
-    @advertiser_ad_groups = current_advertiser.ad_groups.group_by(&:ad_campaign_id)
+    @advertiser_campaigns = current_advertiser.ad_campaigns.order(:name)
+    @advertiser_ad_groups = current_advertiser.ad_groups.order(:name).group_by(&:ad_campaign_id)
   end
 end

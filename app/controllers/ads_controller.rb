@@ -7,9 +7,9 @@ class AdsController < ApplicationController
   def index
 
     page = (params[:page] || 1).to_i
-    per_page = (params[:per_age] || 20).to_i
+    per_page = (20).to_i
     @ads = current_advertiser.ads.page(page) \
-      .per_page(per_page).order(:created_at)
+      .per_page(per_page)
 
     if params[:campaign_id]
       @ads = @ads.joins(ad_group: :ad_campaign) \
@@ -21,6 +21,7 @@ class AdsController < ApplicationController
       @ads = @ads.where(ad_group_id: params[:ad_group_id])
       @ad_group = current_advertiser.ad_groups.where(id: params[:ad_group_id]).first
     end
+    @ads = @ads.order('approved desc').order(:title).includes(:ad_group, :ad_campaign)
   end
 
   def new
@@ -135,7 +136,7 @@ class AdsController < ApplicationController
     else
       flash.alert = 'There was a problem, try again soon!'
     end
-    redirect_to :ads
+    redirect_to :back
   end
 
   def request_beta

@@ -3,6 +3,14 @@
   -if @campaign.nil?
     %li{class: (params[:controller] == 'ad_campaigns' && params[:action] == 'index') ? 'active' : '' }= link_to 'Campaigns', campaigns_path
   -if @ad_group.nil?
-    %li{class: (params[:controller] == 'ad_groups' && params[:action] == 'index') ? 'active' : '' }= link_to 'Ad Groups', campaign_ad_groups_path
+    -if @campaign.nil?
+      %li{class: (params[:controller] == 'ad_groups' && params[:action] == 'index') ? 'active' : '' }= link_to 'Ad Groups', ad_groups_path
+    -else
+      %li{class: (params[:controller] == 'ad_groups' && params[:action] == 'index') ? 'active' : '' }= link_to 'Ad Groups', campaign_ad_groups_path
   %li{class: (params[:controller] == 'ads' && params[:action] == 'index') ? 'active' : '' }= link_to 'Ads', @campaign.nil? ? ads_path : campaign_ads_path(@campaign)
-  %li{class: (params[:controller] == 'ad_group_keywords' && params[:action] == 'index') ? 'active' : ''}= link_to 'Keywords', campaign_keywords_path(@campaign)
+  -if @ad_group.present?
+    %li{class: (params[:controller] == 'ad_group_keywords' && params[:action] == 'index') ? 'active' : ''}= link_to 'Keywords', ad_group_keywords_path
+  -if @campaign.present?
+    %li{class: (params[:controller] == 'ad_group_keywords' && params[:action] == 'index') ? 'active' : ''}= link_to 'Keywords', campaign_keywords_path(@campaign)
+  -else
+    %li{class: (params[:controller] == 'ad_group_keywords' && params[:action] == 'index') ? 'active' : ''}= link_to 'Keywords', keywords_path

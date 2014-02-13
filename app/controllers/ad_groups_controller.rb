@@ -5,12 +5,17 @@ class AdGroupsController < ApplicationController
   before_filter :set_campaigns_up
 
   def index
-    @ad_groups = current_advertiser.ad_groups
+    page = (params[:page] || 1).to_i
+    per_page = (5).to_i
+    @ad_groups = current_advertiser.ad_groups \
+      .page(page).per_page(per_page)
 
     if params[:campaign_id]
       @campaign = current_advertiser.ad_campaigns.where(id: params[:campaign_id]).first
       @ad_groups = @ad_groups.where(ad_campaign_id: params[:campaign_id])
     end
+
+    @ad_groups = @ad_groups.order(:name)
   end
 
   def show
@@ -36,13 +41,30 @@ class AdGroupsController < ApplicationController
       @ad.ad_group_id = @ad_group.id
       @ad.advertiser_id = current_advertiser.id
       if @ad.save
-        redirect_to ad_group_path(@ad_group)
+        redirect_to ad_group_keywords_path(@ad_group)
       else
         render "new"
       end
     else
       render "new"
     end
+  end
+
+  def toggle
+    model_name = current_advertiser.ad_groups.where(id: params[:id] || params[:ad_group_id]).first
+    if model_name.nil?
+      flash.alert = 'There was a problem, try again soon (2)!'
+      redirect_to :back and return
+    end
+    model_name.paused = !model_name.paused
+    if model_name.save
+      @mixpanel_tracker.track(current_advertiser.id, 'toggled an Ad Group', {keyword: {id: model_name.id}}, visitor_ip_address)
+      flash.notice = 'Ad Group Toggled'
+    else
+      Rails.logger.info { model_name.errors }
+      flash.alert = 'There was a problem, try again soon!'
+    end
+    redirect_to :back
   end
 
   private

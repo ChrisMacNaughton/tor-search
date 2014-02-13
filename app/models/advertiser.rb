@@ -15,6 +15,7 @@ class Advertiser < ActiveRecord::Base
   has_many :ads
   has_many :ad_campaigns
   has_many :ad_groups
+  has_many :ad_group_keywords, through: :ad_groups
   has_many :bitcoin_addresses
   has_many :payments
   validates :username,

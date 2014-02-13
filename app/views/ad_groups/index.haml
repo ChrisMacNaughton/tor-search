@@ -1,12 +1,15 @@
 =render partial: 'ad_campaigns/campaign_name'
 
 =render partial: 'ad_campaigns/nav_tabs'
-
-%a.btn.btn-primary{href: new_ad_group_path} + Ad Group
+-if @campaign.nil?
+  %a.btn.btn-primary{href: new_ad_group_path} + Ad Group
+-else
+  %a.btn.btn-primary{href: new_campaign_ad_group_path(@campaign)} + Ad Group
 .row
   %table.table.table-striped
     %thead
       %tr
+        %th
         %th Ad Group
         %th Status
         %th Clicks
@@ -14,11 +17,20 @@
         %th CTR
         %th Avg. Pos.
     %tbody
+      -pause_icon = "<i class='icon-pause'></i>".html_safe
+      -play_icon = "<i class='icon-play'></i>".html_safe
       -@ad_groups.each do |group|
         %tr
+          %td
+            -if group.paused?
+              =link_to play_icon, ad_group_toggle_path(group)
+            -else
+              =link_to pause_icon, ad_group_toggle_path(group)
           %td= group.name
           %td= group.paused? ? "Paused" : "Active"
           %td= group.clicks_count
           %td= group.views_count
           %td= number_to_percentage(group.ctr, precision: 4)
           %td= number_with_precision(group.avg_position, precision: 2)
+.row
+  =will_paginate(@ad_groups)

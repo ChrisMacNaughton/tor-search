@@ -1,0 +1,7 @@
+=form_for @keyword, builder: WithErrorFields do |f|
+  =f.label :word
+  =f.text_field :keyword, value: @keyword.keyword.word
+  =f.label :bid
+  =f.text_field :bid
+  =f.submit "Save", class: 'btn btn-success'
+  %a.btn.btn-warning{href: campaigns_path} Cancel

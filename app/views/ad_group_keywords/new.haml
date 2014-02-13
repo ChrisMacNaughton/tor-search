@@ -1,0 +1,29 @@
+-if @keywords
+  =form_tag '/ads/keywords', novalidate: true, class: 'form form-inline' do
+    =hidden_field_tag :ad_group_id, @keywords.first.ad_group_id
+    -@keywords.each do |keyword|
+      -word = keyword.keyword.word
+      =label_tag word
+      =text_field_tag "keyword[#{word}]", keyword.bid
+      %br/
+    =submit_tag "Save", class: 'btn btn-success'
+    %a.btn{href: campaigns_path} Cancel
+-else
+  =form_tag '/ads/keywords', novalidate: true do
+    .row
+      -if @ad_group.nil?
+        =label_tag :ad_group, "Select an Ad Group"
+        =collection_select(:ad, :ad_group_id, current_advertiser.ad_groups, :id, :name, {prompt: true})
+      -else
+        =hidden_field_tag :ad_group_id, @ad_group.id
+    .row
+      %p Add keywords
+
+      %p
+        Choose phrases that customers would use to search for your products and services.
+
+      Enter one keyword per line.
+    .row
+      =text_area_tag :keywords,'', {rows: 3, class: 'input-xxlarge', placeholder: 'Add your keywords here'}
+    =submit_tag "Save", class: 'btn btn-success'
+    %a.btn{href: campaigns_path} Cancel

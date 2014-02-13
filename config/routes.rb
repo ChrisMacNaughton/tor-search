@@ -59,6 +59,18 @@ TorSearch::Application.routes.draw do
       get 'toggle' => 'ads#toggle', as: :toggle
       put 'toggle' => 'ads#toggle', as: :toggle
     end
+    resources :keywords, controller: :ad_group_keywords do
+      get 'toggle' => 'ad_group_keywords#toggle', as: :toggle
+      put 'toggle' => 'ad_group_keywords#toggle', as: :toggle
+    end
+    resources :campaigns do
+      get 'toggle' => 'ad_campaigns#toggle', as: :toggle
+      put 'toggle' => 'ad_campaigns#toggle', as: :toggle
+    end
+    resources :ad_groups do
+      get 'toggle' => 'ad_groups#toggle', as: :toggle
+      put 'toggle' => 'ad_groups#toggle', as: :toggle
+    end
   end
   get '/ads' => 'ad_campaigns#index'
   # namespace 'api' do

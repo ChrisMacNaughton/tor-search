@@ -1,6 +1,6 @@
 %a.btn.btn-primary{href: (defined?(@ad_group)) ? new_ad_path(ad_group_id: @ad_group.id) : new_ad_path} + Ad
 .row
-  %table.table.table-striped
+  %table.table.table-bordered
     %thead
       %th
       %th Ad
@@ -19,7 +19,7 @@
       -pause_icon = "<i class='icon-pause'></i>".html_safe
       -play_icon = "<i class='icon-play'></i>".html_safe
       -@ads.each do |ad|
-        %tr
+        %tr{class: ad.pending? ? 'alert' : ''}
           %td
             =link_to edit_icon, edit_ad_path(ad)
             -unless ad.pending?
@@ -31,7 +31,7 @@
           %td= link_to ad.ad_campaign.name, campaign_path(ad.ad_campaign)
           %td= link_to ad.ad_group.name, ad.ad_group
           %td= ad.status
-          %td= ad.ad_clicks.count
-          %td= ad.ad_views.count
+          %td= ad.ad_clicks_count
+          %td= ad.ad_views_count
           %td= number_to_percentage(ad.ctr, precision: 2)
           %td= number_with_precision(ad.avg_position, precision: 2)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140213142048) do
+ActiveRecord::Schema.define(:version => 20140213185444) do
 
   create_table "ad_campaigns", :force => true do |t|
     t.integer  "advertiser_id"
@@ -31,14 +31,16 @@ ActiveRecord::Schema.define(:version => 20140213142048) do
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
     t.integer  "search_id"
+    t.integer  "keyword_id"
   end
 
   create_table "ad_group_keywords", :force => true do |t|
     t.integer  "ad_group_id"
     t.integer  "keyword_id"
     t.decimal  "bid",         :precision => 16, :scale => 8
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at",                                                    :null => false
+    t.datetime "updated_at",                                                    :null => false
+    t.boolean  "paused",                                     :default => false
   end
 
   add_index "ad_group_keywords", ["ad_group_id", "keyword_id"], :name => "index_ad_group_keywords_on_ad_group_id_and_keyword_id", :unique => true
@@ -63,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20140213142048) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "position"
+    t.integer  "keyword_id"
   end
 
   add_index "ad_views", ["ad_id"], :name => "index_ad_views_on_ad_id"
