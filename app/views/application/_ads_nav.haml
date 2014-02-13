@@ -6,6 +6,7 @@
   -advertiser_campaigns.each do |campaign|
     %li.nav-header
       = link_to campaign.name, campaign_ad_groups_path(campaign.id)
-    -ad_groups[campaign.id].each do |group|
-      %li= link_to group.name, group
+    -if ad_groups[campaign.id]
+      -ad_groups[campaign.id].each do |group|
+        %li= link_to group.name, group
     %hr/

@@ -51,7 +51,7 @@ class Ad < ActiveRecord::Base
     ads = []
     ad_group_ads.map do |ad_group|
       ad_options = ad_group.select do |ad|
-        ad.approved? && !ad.disabled? && ad.valid?
+        ad.approved? && !ad.disabled? && ad.valid_bid?
       end.compact
       next if ad_options.empty?
       ads << ad_options.sample
@@ -149,7 +149,7 @@ class Ad < ActiveRecord::Base
     created_at.present? && created_at < DateTime.parse('February 10, 2014')
   end
 
-  def valid?
+  def valid_bid?
     bid <= advertiser.balance
   end
 end

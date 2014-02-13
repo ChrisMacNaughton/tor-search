@@ -49,9 +49,11 @@ TorSearch::Application.routes.draw do
     resources :campaigns, controller: :ad_campaigns do
       resources :ad_groups
       resources :ads
+      resources :keywords, controller: :ad_group_keywords
     end
     resources :ad_groups do
       resources :ads
+      resources :keywords, controller: :ad_group_keywords
     end
     resources :ads do
       get 'toggle' => 'ads#toggle', as: :toggle
@@ -80,6 +82,7 @@ TorSearch::Application.routes.draw do
   # get 'partials/ads/:partial' => 'ads#partials'
   # get 'partials/keywords/:partial' => 'keywords#partials'
   # get 'partials/payments/:partial' => 'payments#partials'
+  get '/ads/campaigns' => 'ad_campaigns#index', as: 'advertiser_root'
   root to: 'search#index'
 
   match '/:locale' => 'search#index', constraints: {locale: /en/}

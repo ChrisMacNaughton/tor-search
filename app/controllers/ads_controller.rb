@@ -26,6 +26,12 @@ class AdsController < ApplicationController
   def new
     @mixpanel_tracker.track(current_advertiser.id, 'create ad page')
     @ad = Ad.new(advertiser: current_advertiser, title: 'Example Title', protocol_id: 0, path: 'www.example.com?rel=ts', display_path: 'www.example.com', line_1: 'this is an', line_2: 'example ad', bid: 0.0001)
+    if params[:ad_group_id]
+      ad_group = AdGroup.find(params[:ad_group_id])
+      if ad_group.advertiser_id == current_advertiser.id
+        @ad.ad_group_id = params[:ad_group_id]
+      end
+    end
   end
 
   def show

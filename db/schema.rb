@@ -11,14 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140211015411) do
+ActiveRecord::Schema.define(:version => 20140213142048) do
 
   create_table "ad_campaigns", :force => true do |t|
     t.integer  "advertiser_id"
     t.text     "name"
-    t.boolean  "paused",        :default => true
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.boolean  "paused",                                       :default => true
+    t.datetime "created_at",                                                     :null => false
+    t.datetime "updated_at",                                                     :null => false
+    t.decimal  "default_bid",   :precision => 16, :scale => 8, :default => 0.0
   end
 
   add_index "ad_campaigns", ["advertiser_id"], :name => "index_ad_campaigns_on_advertiser_id"

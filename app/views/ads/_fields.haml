@@ -1,6 +1,8 @@
+-ad_group ||= false
 -if @ad.new_record?
-  =f.label :ad_group, "Select an Ad Group"
-  =f.select_tag 'ad[ad_group_id]', options_from_collection_for_select(current_advertiser.ad_groups, 'id', 'name'), include_blank: true
+  -unless ad_group
+    =f.label :ad_group, "Select an Ad Group"
+    =collection_select(:ad, :ad_group_id, current_advertiser.ad_groups, :id, :name, {prompt: true})
 =f.label_with_error :title, t('.title')
 =f.text_field :title
 =f.label_with_error :path, t('.target')

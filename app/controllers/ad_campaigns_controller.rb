@@ -1,6 +1,7 @@
 # encoding: utf-8
 class AdCampaignsController < ApplicationController
   layout 'ads'
+  before_filter :authenticate_advertiser!
   before_filter :set_campaigns_up
 
   def index
@@ -18,6 +19,21 @@ class AdCampaignsController < ApplicationController
 
   def show
     @campaign = AdCampaign.find(params[:id])
+  end
+
+  def new
+    @campaign = AdCampaign.new
+  end
+
+  def create
+    @campaign = AdCampaign.new(params[:ad_campaign])
+    @campaign.advertiser = current_advertiser
+    if @campaign.save
+      flash.notice = "Your campaign has been created successfully!"
+      redirect_to new_ad_group_path({campaign_id: @campaign.id})
+    else
+      render 'new'
+    end
   end
 
   def set_campaigns_up
