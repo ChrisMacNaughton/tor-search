@@ -26,7 +26,7 @@
               =link_to play_icon, ad_group_toggle_path(group)
             -else
               =link_to pause_icon, ad_group_toggle_path(group)
-          %td= group.name
+          %td= link_to group.name, ad_group_path(group)
           %td= group.paused? ? "Paused" : "Active"
           %td= group.clicks_count
           %td= group.views_count
