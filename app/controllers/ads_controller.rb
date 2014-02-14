@@ -160,7 +160,9 @@ class AdsController < ApplicationController
   end
 
    def set_campaigns_up
-    @advertiser_campaigns = current_advertiser.ad_campaigns.order(:name)
-    @advertiser_ad_groups = current_advertiser.ad_groups.order(:name).group_by(&:ad_campaign_id)
+    unless current_advertiser.nil?
+      @advertiser_campaigns = current_advertiser.ad_campaigns.order(:name)
+      @advertiser_ad_groups = current_advertiser.ad_groups.order(:name).group_by(&:ad_campaign_id)
+    end
   end
 end
