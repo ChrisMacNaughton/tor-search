@@ -1,15 +1,19 @@
 -border ||= false
 -search ||= false
 -span ||= 4
+-if search
+  -h = {id: ad.id, q: @query.id, s: @search_id, k: ad.keyword_id}
+  -h.merge!({path: Base64.encode64(ad.path)}) if ad.include_path
+  -ad_path = ad_redirect_path(h)
+-else
+  -ad_path = ad.protocol + ad.path.gsub("{{app_path}}", request.env['HTTP_HOST'])
 %div{class: "span#{span}"}
   .row-fluid{style: 'margin-bottom: 20px;', class: "#{border ? "well" : ""}"}
     .row-fluid
       -if search
-        -h = {id: ad.id, q: @query.id, s: @search_id, k: ad.keyword_id}
-        -h.merge!({path: Base64.encode64(ad.path)}) if ad.include_path
-        =link_to ad.title, ad_redirect_path(h)
+        =link_to ad.title, ad_path
       -else
-        =link_to ad.title, ad.protocol + ad.path
+        =link_to ad.title, ad_path
     .row-fluid.path
       =ad.display_path
     .row-fluid{style: 'height: 20px;'}

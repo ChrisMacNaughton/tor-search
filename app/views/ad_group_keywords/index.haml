@@ -21,14 +21,25 @@
       -edit_icon = "<i class='icon-edit'></i>".html_safe
       -pause_icon = "<i class='icon-pause'></i>".html_safe
       -play_icon = "<i class='icon-play'></i>".html_safe
+      -delete_icon = "<i class='icon-remove'></i>".html_safe
       -@keywords.each do |keyword|
         %tr
           %td
-            =link_to edit_icon, edit_keyword_path(keyword)
-            -if keyword.paused?
-              =link_to play_icon, keyword_toggle_path(keyword)
-            -else
-              =link_to pause_icon, keyword_toggle_path(keyword)
+            %ul.unstyled
+              %li
+                =link_to edit_icon, edit_keyword_path(keyword), class: 'btn btn-info'
+              %li
+                -if keyword.paused?
+                  =link_to play_icon, keyword_toggle_path(keyword), class: 'btn btn-info'
+                -else
+                  =link_to pause_icon, keyword_toggle_path(keyword), class: 'btn'
+              %li
+                =form_for keyword, as: :keyword, url: keyword_delete_path(keyword) do |f|
+                  =f.hidden_field :delete, value: true
+                  =f.hidden_field :id
+                  %button{type: 'submit', class: 'btn btn-warning'}
+                    = delete_icon
+
           %td= keyword.keyword.word
           %td= link_to keyword.ad_group.ad_campaign.name, campaign_path(keyword.ad_group.ad_campaign)
           %td= link_to keyword.ad_group.name, keyword.ad_group

@@ -123,7 +123,18 @@ class SearchController < ApplicationController
       end
       path = ad.protocol + ad.path
     end
-    path = CGI.escape(path).gsub("%3A", ":").gsub("%2F", "/")
+    path = path.gsub("{{app_path}}", request.env['HTTP_HOST'])
+    if path.include? request.env['HTTP_HOST']
+      path = CGI.escape(path).gsub("%3A", ":").gsub("%2F", "/")
+      if request.ssl?
+        replace = 'https'
+      else
+        replace = 'http'
+      end
+      path.gsub!(/https?/, replace)
+    else
+      path = CGI.escape(path).gsub("%3A", ":").gsub("%2F", "/")
+    end
     redirect_to path, status: 302
   end
   # rubocop:enable  MethodLength

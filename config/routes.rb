@@ -36,16 +36,6 @@ TorSearch::Application.routes.draw do
 
   #
   scope 'ads' do
-    # resources :ads do
-    #   member do
-    #     get 'toggle' => 'ads#toggle', as: :toggle
-    #     put 'toggle' => 'ads#toggle', as: :toggle
-    #     put 'request_beta' => 'ads#request_beta', as: :request_beta
-    #     get 'request_beta' => 'ads#request_beta', as: :request_beta
-    #   end
-    # end
-    #resources :ad_groups
-    #get '/ad_campaigns/ad_groups/(:id)' => 'ad_campaigns#ad_groups', as: :ad_campaigns_ad_groups
     resources :campaigns, controller: :ad_campaigns do
       resources :ad_groups
       resources :ads
@@ -60,6 +50,7 @@ TorSearch::Application.routes.draw do
       put 'toggle' => 'ads#toggle', as: :toggle
     end
     resources :keywords, controller: :ad_group_keywords do
+      put 'delete' => 'ad_group_keywords#delete', as: :delete
       get 'toggle' => 'ad_group_keywords#toggle', as: :toggle
       put 'toggle' => 'ad_group_keywords#toggle', as: :toggle
     end

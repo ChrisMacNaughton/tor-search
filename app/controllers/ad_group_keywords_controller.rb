@@ -58,12 +58,12 @@ class AdGroupKeywordsController < ApplicationController
 
   def create
     if params[:ad_group_id].nil?
-      flash[:error] = "There was a problem handling your request, please try again"
+      flash[:alert] = "There was a problem handling your request, please try again"
       redirect_to :ad_group_keywords
     end
     ad_group = current_advertiser.ad_groups.where(id: params[:ad_group_id]).first
     if ad_group.nil?
-      flash[:error] = "There was a problem handling your request, please try again"
+      flash[:alert] = "There was a problem handling your request, please try again"
       redirect_to :ad_group_keywords
     end
     if params[:keywords].is_a? String
@@ -83,6 +83,17 @@ class AdGroupKeywordsController < ApplicationController
       end
       redirect_to ad_group_keywords_path(ad_group) and return
     end
+  end
+
+  def delete
+    keyword = current_advertiser.ad_group_keywords.where(id: params[:keyword_id]).first
+    kw = keyword.keyword.word
+    if keyword.destroy
+      flash.notice = "Successfully removed #{kw}"
+    else
+      flash.alert = "Something went wrong, please try again later"
+    end
+    redirect_to :back
   end
 
   def toggle
