@@ -15,7 +15,7 @@
 %br/
 =f.text_field_with_error :line_2
 %br/
--unless !@ad.legacy? || @ad.new_record? || @ad.ad_group.ad_group_keywords.present?
+-unless @ad.legacy? || @ad.new_record? || @ad.ad_group.ad_group_keywords.any?
   %hr/
   .span.well
     You should probably evaluate using
