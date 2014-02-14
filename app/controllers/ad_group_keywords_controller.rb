@@ -5,6 +5,8 @@ class AdGroupKeywordsController < ApplicationController
   before_filter :set_campaigns_up
 
   def index
+    page = (params[:page] || 1).to_i
+    per_page = 5
     if params[:ad_group_id]
       @ad_group = current_advertiser.ad_groups.where(id: params[:ad_group_id]).first
       @campaign = @ad_group.ad_campaign
@@ -20,7 +22,7 @@ class AdGroupKeywordsController < ApplicationController
       keywords = keywords.where(ad_group_id: ad_group_ids)
     end
 
-    @keywords = keywords.joins(:keyword).order(:word)
+    @keywords = keywords.joins(:keyword).order(:word).page(page).per_page(per_page)
   end
 
   def edit

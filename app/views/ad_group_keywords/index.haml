@@ -1,7 +1,7 @@
 =render partial: 'ad_campaigns/campaign_name'
 -if @ad_group
   =render partial: 'ad_groups/nav_tabs'
--elsif @campaign
+-else
   =render partial: 'ad_campaigns/nav_tabs'
 
 %a.btn.btn-primary{href: (defined?(@ad_group)) ? new_keyword_path(ad_group_id: @ad_group.id) : new_keyword_path} + Keyword
@@ -48,3 +48,5 @@
           %td= keyword.views
           %td= number_to_percentage(keyword.ctr, precision: 2)
           %td= number_to_currency(keyword.bid, precision: 8, unit: '&#x0e3f;', format: "%n%u")
+.row
+  =will_paginate(@keywords)
