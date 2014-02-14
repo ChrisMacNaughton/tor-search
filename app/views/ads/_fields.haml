@@ -15,8 +15,12 @@
 %br/
 =f.text_field_with_error :line_2
 %br/
--unless !@ad.legacy? || @ad.new_record?
+-unless !@ad.legacy? || @ad.new_record? || @ad.ad_group.ad_group_keywords.present?
   %hr/
+  .span.well
+    You should probably evaluate using
+    =link_to 'keyword bidding', ad_group_keywords_path(@ad.ad_group_id)
+    instead of general ad click based bidding to improve the targeting of your advertisements
   =f.label_with_error :bid, t('.bid')
   =f.number_field :bid
 
