@@ -1,0 +1,20 @@
+<h2>Sign in</h2>
+
+<%= form_for(Advertiser.new, :as => 'advertiser', :url => session_path('advertiser')) do |f| %>
+
+  <div><%= f.label :username %><br />
+  <%= f.text_field :username, :autofocus => true %></div>
+
+  <div><%= f.label :password %><br />
+  <%= f.password_field :password %></div>
+  <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+
+  <div><%= f.submit "Sign in" %></div>
+<% end %>
+
+<%= link_to "Sign in", new_session_path('advertiser') %>
+| <%= link_to "Sign up", new_registration_path('advertiser') %><br />
+
+<%- if controller_name != 'passwords' %>
+  <%= link_to "Forgot your password?", new_password_path('advertiser') %><br />
+<% end -%>

@@ -1,10 +1,28 @@
-%h1 Advertising
+-content_for :title do
+  Advertise on
+.row
+  .span8
+    %h1 TorSearch Ads
+    %h3 Grow your business with TorSearch
 
-%p
-  Advertising on TorSearch is accomplished by
-  =link_to "registering", new_advertiser_registration_path
-  or
-  =link_to "logging in", new_advertiser_session_path
-  , creating an ad, and adding Bitcoin to your account.
+    %p Advertising on TorSearch works with any advertising budget because you only pay when people click on your ads.
 
-%p As soon as the ad is approved by an administrator and your account is funded, your ad will begin to be served.  For each click on your ad, your account will be charged based on your bid per click.  You can supply more bitcoin to keep your ads showing or you can disable your ads to stop them showing.
+    %h3 How It Works
+    .row
+      .span5
+        %h4 Create your own ads
+        %p You can create ads that you believe will grab people's attention and select keywords that people looking for your product or service will search for.
+        %h4 Your ads show up in TorSearch's search results
+        %p When people search, your ad will be displayed if the query matches the keywords you selected and if your bid is in the top 5 for the ad slot. Now your ad is being shown to people looking for what you're selling.
+      .span3
+        .thumbnail
+          =image_tag asset_path('/ad.png')
+        %p Your ad is shown to visitors next to relevant results
+        %br/
+        =link_to "Sign up now", new_registration_path('advertiser'), class: 'btn btn-success'
+    %h4 You get more customers
+    %p We're only successful when you are so we want you to do well!
+
+  .span4
+    .well
+      =render 'interested_sign_in'

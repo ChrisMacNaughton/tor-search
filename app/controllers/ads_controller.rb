@@ -41,7 +41,6 @@ class AdsController < ApplicationController
 
   def edit
     @ad = Ad.find(params[:id])
-    #binding.pry
   end
 
   def create
