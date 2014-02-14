@@ -22,7 +22,7 @@ class AdGroupsController < ApplicationController
     @ad_group = current_advertiser.ad_groups.where(id: params[:id]).first
     @campaign = @ad_group.ad_campaign
 
-    @ads = @ad_group.ads
+    @ads = @ad_group.ads.order('approved desc').order(:title)
   end
 
   def new
