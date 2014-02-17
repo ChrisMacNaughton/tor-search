@@ -26,6 +26,7 @@ class AdGroupsController < ApplicationController
   end
 
   def new
+    redirect_to new_campaign_path and return if current_advertiser.ad_campaigns.empty?
     @ad_group = AdGroup.new
     @ad_group.ad_campaign_id = params[:campaign_id] if params[:campaign_id]
 

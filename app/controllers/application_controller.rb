@@ -58,7 +58,7 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
     if resource.is_a? Admin
       rails_admin_path
     else
-      ads_path
+      campaigns_path
     end
   end
 

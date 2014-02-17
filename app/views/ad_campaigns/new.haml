@@ -1,3 +1,4 @@
+%h1 Create a new Campaign
 =form_for @campaign, builder: WithErrorFields, url: {controller: "ad_campaigns"}, html: {novalidate: true } do |f|
   =f.label :name, "Campaign Name"
   =f.text_field :name

@@ -25,6 +25,8 @@ class AdsController < ApplicationController
   end
 
   def new
+    redirect_to new_campaign_path and return if current_advertiser.ad_campaigns.empty?
+    redirect_to new_ad_group_path and return if current_advertiser.ad_groups.empty?
     @mixpanel_tracker.track(current_advertiser.id, 'create ad page')
     @ad = Ad.new(advertiser: current_advertiser, title: 'Example Title', protocol_id: 0, path: 'www.example.com?rel=ts', display_path: 'www.example.com', line_1: 'this is an', line_2: 'example ad', bid: 0.0001)
     if params[:ad_group_id]
