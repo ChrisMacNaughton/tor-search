@@ -2,7 +2,7 @@
 -if @ad.new_record?
   -unless ad_group
     =f.label :ad_group, "Select an Ad Group"
-    =collection_select(:ad, :ad_group_id, current_advertiser.ad_groups, :id, :name, {prompt: true})
+    =collection_select(:ad, :ad_group_id, current_advertiser.ad_groups, :id, :name, {prompt: false})
 =f.label_with_error :title, t('.title')
 =f.text_field :title
 =f.label_with_error :path, t('.target')

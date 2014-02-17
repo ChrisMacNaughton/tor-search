@@ -7,7 +7,7 @@
     =f.hidden_field :ad_campaign_id
   -else
     =f.label :ad_campaign, "Select a Campaign"
-    =f.select_tag 'ad_group[ad_campaign_id]', options_from_collection_for_select(current_advertiser.ad_campaigns, 'id', 'name'), include_blank: true
+    =f.select_tag 'ad_group[ad_campaign_id]', options_from_collection_for_select(current_advertiser.ad_campaigns, 'id', 'name'), include_blank: false
   %h5 Create an ad
   %hr/
   %p To get started, write your first ad below. Remember, you can always create more ads later.
