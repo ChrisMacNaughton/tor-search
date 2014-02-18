@@ -5,12 +5,9 @@ class PaymentsController < ApplicationController
   def new_bitcoin_payment
     address = BitcoinAddress.find_by_address(params[:address])
     if Payment.where(transaction_hash: params[:transaction][:hash]).empty?
-      Payment.create(
-        transaction_hash: params[:transaction][:hash],
-        bitcoin_address: address,
-        advertiser: address.advertiser,
-        amount: params[:amount]
-      )
+      if BitcoinAddress.validate_payment(params[:transaction][:id], params[:amount])
+        address.create_payment!(params)
+      end
     end
     render json: { status: 'ok' }
   end
