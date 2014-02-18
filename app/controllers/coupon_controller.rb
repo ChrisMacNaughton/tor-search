@@ -23,7 +23,7 @@ class CouponController < ApplicationController
         flash.alert = 'You have already redeemed this coupon!'
       end
     end
-    redirect_to ads_path
+    redirect_to :back
   end
   # rubocop:enable MethodLength
 end

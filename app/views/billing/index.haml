@@ -1,0 +1,71 @@
+%h4 Billing
+
+.row
+  .span4
+    %h5 Current Balance
+    =number_to_currency(current_advertiser.balance, precision: 8, unit: '&#x0e3f;', format: "%u%n")
+    =form_for :coupon, class: 'form-inline', url: credit_coupon_path do |f|
+      .input-append
+        =f.text_field :code, {placeholder: t("ads.coupon_code"), class: 'input-medium', id: "appendedInputButtons"}
+        %button.btn{type: "submit"}= t('ads.apply')
+  .span4
+    %h5 Newest Bitcoin Address
+    -address = current_advertiser.bitcoin_addresses.order(:created_at).last
+    =address
+    =form_tag(new_address_path) do |f|
+      %button.btn.btn-info{type: 'submit', disabled: (address.created_at > 1.hour.ago ) ? true : false} Request a new Bitcoin Address
+
+  .row
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Date
+          %th Coupon Code
+          %th Bitcoin Address
+          %th Amount
+      %tbody
+        %tr.info
+          %td{colspan: 4}
+            =DateTime.now.beginning_of_month.strftime('%b %e, %Y')
+            ='-'
+            =DateTime.now.strftime('%b %e, %Y')
+        -if @transactions[:this_month].any?
+          -@transactions[:this_month].each do |t|
+            %tr
+              %td= t.created_at.strftime('%b %e, %Y')
+              %td= t.coupon.try(:code)
+              %td= t.bitcoin_address.try(:address)
+              %td= t.amount
+        -else
+          %tr
+            %td{colspan: 4} No transactions for this date range
+        %tr.info
+          %td{colspan: 4}
+            =1.month.ago.beginning_of_month.strftime('%b %e, %Y')
+            ='-'
+            =1.month.ago.end_of_month.strftime('%b %e, %Y')
+        -if @transactions[:last_month].any?
+          -@transactions[:last_month].each do |t|
+            %tr
+              %td= t.created_at.strftime('%b %e, %Y')
+              %td= t.coupon.try(:code)
+              %td= t.bitcoin_address.try(:address)
+              %td= t.amount
+        -else
+          %tr
+            %td{colspan: 4} No transactions for this date range
+        %tr.info
+          %td{colspan: 4}
+            =2.months.ago.beginning_of_month.strftime('%b %e, %Y')
+            ='-'
+            =2.months.ago.end_of_month.strftime('%b %e, %Y')
+        -if @transactions[:months_ago].any?
+          -@transactions[:months_ago].each do |t|
+            %tr
+              %td= t.created_at.strftime('%b %e, %Y')
+              %td= t.coupon.try(:code)
+              %td= t.bitcoin_address.try(:address)
+              %td= t.amount
+        -else
+          %tr
+            %td{colspan: 4} No transactions for this date range

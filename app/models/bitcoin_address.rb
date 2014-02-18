@@ -7,4 +7,19 @@ class BitcoinAddress < ActiveRecord::Base
   def to_s
     address
   end
+
+  def self.generate_new_address(advertiser)
+    coinbase = Coinbase::Client.new(TorSearch::Application.config.tor_search.coinbase_key)
+    options = {
+      address: {
+        callback_url: 'https://torsearch.es/payments'
+      }
+    }
+    address = coinbase.generate_receive_address(options)
+    address = BitcoinAddress.new(address: address.address)
+    address.advertiser = advertiser
+    address.save
+
+    address
+  end
 end

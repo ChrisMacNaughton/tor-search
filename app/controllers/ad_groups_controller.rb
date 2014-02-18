@@ -1,8 +1,5 @@
 # encoding: utf-8
-class AdGroupsController < ApplicationController
-  layout 'ads'
-  before_filter :authenticate_advertiser!
-  before_filter :set_campaigns_up
+class AdGroupsController < AdsCommonController
 
   def index
     page = (params[:page] || 1).to_i
@@ -68,10 +65,4 @@ class AdGroupsController < ApplicationController
     redirect_to :back
   end
 
-  private
-
-  def set_campaigns_up
-    @advertiser_campaigns = current_advertiser.ad_campaigns.order(:name)
-    @advertiser_ad_groups = current_advertiser.ad_groups.order(:name).group_by(&:ad_campaign_id)
-  end
 end

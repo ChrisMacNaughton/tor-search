@@ -47,6 +47,6 @@
           %td= keyword.clicks
           %td= keyword.views
           %td= number_to_percentage(keyword.ctr, precision: 2)
-          %td= number_to_currency(keyword.bid, precision: 8, unit: '&#x0e3f;', format: "%n%u")
+          %td= number_to_currency(keyword.bid, precision: 8, unit: '&#x0e3f;', format: "%u%n")
 .row
   =will_paginate(@keywords)

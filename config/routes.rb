@@ -62,6 +62,7 @@ TorSearch::Application.routes.draw do
       get 'toggle' => 'ad_groups#toggle', as: :toggle
       put 'toggle' => 'ad_groups#toggle', as: :toggle
     end
+    get 'billing' => 'billing#index', as: :billing
   end
   get '/ads' => 'ad_campaigns#index'
   # namespace 'api' do
@@ -75,7 +76,7 @@ TorSearch::Application.routes.draw do
   # end
   # resources :keywords
   # get '/ads/bitcoin-addresses' => 'ads#payment_addresses', as: :btc_address
-  # post '/ads/bitcoin-addresses' => 'ads#get_payment_address', as: :new_address
+  post '/ads/bitcoin-address' => 'ads#get_payment_address', as: :new_address
 
 
   resources :payments

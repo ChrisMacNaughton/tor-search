@@ -6,6 +6,12 @@
     -if current_advertiser
       =nav_link t('nav.advertisers.sign_out'), destroy_advertiser_session_path, 'pull-right'
       =nav_link t('nav.advertisers.profile'), edit_advertiser_registration_path, 'pull-right'
-      =nav_link t('nav.advertisers.ads'), ads_path, 'pull-right'
+      =nav_link t('nav.advertisers.billing'), billing_path, 'pull-right'
+      -if ['ads','ad_groups','ad_campaigns'].include? params[:controller]
+        %li.pull-right.active
+          =link_to t('nav.advertisers.advertising'), campaigns_path
+      -else
+        %li.pull-right
+          =link_to t('nav.advertisers.advertising'), campaigns_path
     -else
       =nav_link t('nav.advertisers.advertisers'), advertising_path, "pull-right"

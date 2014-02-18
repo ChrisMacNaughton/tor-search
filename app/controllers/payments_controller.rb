@@ -2,34 +2,6 @@
 class PaymentsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
-  def index
-    respond_to do |format|
-      format.html{
-        render :index
-      }
-    end
-  end
-
-  def show
-    respond_to do |format|
-      format.html{
-        render :index
-      }
-    end
-  end
-
-  def create
-    if params[:address] && params[:transaction] && params[:amount]
-      new_bitcoin_payment && return
-    else
-
-    end
-  end
-
-  def partials
-    render "payments/angular_partials/#{params[:partial]}", layout: false
-  end
-
   def new_bitcoin_payment
     address = BitcoinAddress.find_by_address(params[:address])
     if Payment.where(transaction_hash: params[:transaction][:hash]).empty?

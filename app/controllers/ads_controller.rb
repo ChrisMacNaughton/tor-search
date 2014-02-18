@@ -1,8 +1,6 @@
 # encoding: utf-8
-class AdsController < ApplicationController
+class AdsController < AdsCommonController
   before_filter :authenticate_advertiser!, except: [:advertising]
-  before_filter :track
-  before_filter :set_campaigns_up
 
   def index
 
@@ -106,23 +104,13 @@ class AdsController < ApplicationController
     address = current_advertiser.bitcoin_addresses.order('created_at desc').first
     @mixpanel_tracker.track(current_advertiser.id, 'requested bitcoin address', {}, visitor_ip_address)
     if address.nil? || address.created_at < 1.hour.ago
-      coinbase = Coinbase::Client.new(TorSearch::Application.config.tor_search.coinbase_key)
-      options = {
-        address: {
-          callback_url: 'https://torsearch.es/payments'
-        }
-      }
-      address = coinbase.generate_receive_address(options)
-      @address = BitcoinAddress.new(address: address.address)
-      @address.advertiser = current_advertiser
-      @address.save
-
+      @address = BitcoinAddress.generate_new_address(current_advertiser)
       flash.notice = "Created a new address for you!"
     else
-      flash.alert = "You've already created an address in the last hour"
+      flash.alert = "You can only create a new address once an hour"
       @address = address
     end
-    redirect_to :btc_address
+    redirect_to :billing
   end
 
   def advertising # expressing interest page
@@ -153,18 +141,4 @@ class AdsController < ApplicationController
     redirect_to :back
   end
 
-  private
-
-  def track
-    #return true unless Rails.env.include? 'production'
-
-    Tracker.new(request).track_later!
-  end
-
-   def set_campaigns_up
-    unless current_advertiser.nil?
-      @advertiser_campaigns = current_advertiser.ad_campaigns.order(:name)
-      @advertiser_ad_groups = current_advertiser.ad_groups.order(:name).group_by(&:ad_campaign_id)
-    end
-  end
 end
