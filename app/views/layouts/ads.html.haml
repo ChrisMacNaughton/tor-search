@@ -5,7 +5,7 @@
     =render partial: 'application_alerts'
     .row
       .span3
-        =render partial: 'ads_nav', locals: {campaigns: @advertiser_campaigns, ad_groups: @advertiser_ad_groups}
+        =render partial: 'ads_nav', locals: {advertiser_campaigns: @advertiser_campaigns, advertiser_ad_groups: @advertiser_ad_groups}
       .span9
         = yield
   =render partial: 'application_footer'
