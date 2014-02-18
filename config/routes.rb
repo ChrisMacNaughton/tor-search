@@ -79,13 +79,9 @@ TorSearch::Application.routes.draw do
   post '/ads/bitcoin-address' => 'ads#get_payment_address', as: :new_address
 
 
-  post 'payments', 'payments#new_bitcoin_payment'
+  post 'payments' => 'payments#new_bitcoin_payment'
 
   post 'coupons' => 'coupon#create', as: :credit_coupon
-
-  # get 'partials/ads/:partial' => 'ads#partials'
-  # get 'partials/keywords/:partial' => 'keywords#partials'
-  # get 'partials/payments/:partial' => 'payments#partials'
   get '/ads/campaigns' => 'ad_campaigns#index', as: 'advertiser_root'
   root to: 'search#index'
 
