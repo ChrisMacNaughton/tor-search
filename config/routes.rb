@@ -79,7 +79,7 @@ TorSearch::Application.routes.draw do
   post '/ads/bitcoin-address' => 'ads#get_payment_address', as: :new_address
 
 
-  resources :payments
+  post 'payments', 'payments#new_bitcoin_payment'
 
   post 'coupons' => 'coupon#create', as: :credit_coupon
 
