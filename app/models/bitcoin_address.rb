@@ -9,11 +9,22 @@ class BitcoinAddress < ActiveRecord::Base
   end
 
   def create_payment!(param)
+    begin
+      res = Net::HTTP.get(URI "https://coinbase.com/api/v1/transactions/#{param[:transaction][:id]}?api_key=#{TorSearch::Application.config.tor_search.coinbase_key}")
+      transaction = JSON.parse(res)['transaction']
+    rescue => e
+      Airbrake.notify(e)
+      false
+    end
+    return false if transaction.nil?
+
+    amount = transaction['amount']['amount'].to_f
+    hash = transaction['hsh']
     Payment.create(
-      transaction_hash: param[:transaction][:hash],
+      transaction_hash: hash,
       bitcoin_address: self,
       advertiser: advertiser,
-      amount: param[:amount]
+      amount: amount
     )
   end
 
@@ -30,16 +41,5 @@ class BitcoinAddress < ActiveRecord::Base
     address.save
 
     address
-  end
-
-  def self.validate_payment(coinbase_id, amount)
-    begin
-      res = Net::HTTP.get(URI "https://coinbase.com/api/v1/transactions/#{coinbase_id}?api_key=#{TorSearch::Application.config.tor_search.coinbase_key}")
-      transaction = JSON.parse(res)
-      amount == transaction['transaction']['amount']['amount'].to_f
-    rescue => e
-      Airbrake.notify(e)
-      false
-    end
   end
 end
