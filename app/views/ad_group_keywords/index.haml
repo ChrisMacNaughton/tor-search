@@ -12,6 +12,10 @@
       %th Word
       %th Campaign
       %th Ad Group
+      %th
+        Searches Last
+        %br/
+        30 Days
       %th Status
       %th Clicks
       %th Impr.
@@ -22,6 +26,9 @@
       -pause_icon = "<i class='icon-pause'></i>".html_safe
       -play_icon = "<i class='icon-play'></i>".html_safe
       -delete_icon = "<i class='icon-remove'></i>".html_safe
+      -up_icon = "<i class='icon-chevron-up'></i>".html_safe
+      -down_icon = "<i class='icon-chevron-down'></i>".html_safe
+      -still_icon = "<i class='icon-minus'></i>".html_safe
       -@keywords.each do |keyword|
         %tr
           %td
@@ -43,6 +50,17 @@
           %td= keyword.keyword.word
           %td= link_to keyword.ad_group.ad_campaign.name, campaign_path(keyword.ad_group.ad_campaign)
           %td= link_to keyword.ad_group.name, keyword.ad_group
+          %td
+            -if keyword.keyword.searches_counts.nil?
+              Pending
+            -else
+              -if keyword.keyword.status_id == 0
+                =down_icon
+              -elsif keyword.keyword.status_id == 1
+                =still_icon
+              -else
+                =up_icon
+              = keyword.keyword.searches_counts unless keyword.keyword.searches_counts == 0
           %td= keyword.status
           %td= keyword.clicks
           %td= keyword.views
