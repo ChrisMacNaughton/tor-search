@@ -12,6 +12,9 @@ class ApplicationController < ActionController::Base
   before_filter :setup_mixpanel_tracker
   before_filter :notify_about_other_domain_for_tor_to_web
 
+  before_filter :notify_about_promotions
+
+
   def notify_about_other_domain_for_tor_to_web
     if is_tor2web?
       flash.now[:notice] = "You can improve your experience with TorSearch by browsing directly to <a href='https://torsearch.es'>TorSearch.es</a><br/>
@@ -125,4 +128,19 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
     end
     render text: 'Improperly encoded request', status: 406 and return
   end
+
+  private
+
+  def notify_about_promotions(skip = false)
+    return unless (skip || current_advertiser)
+    promotion_end = Date.parse('March 1st, 2014').beginning_of_day
+    if DateTime.now.end_of_day < promotion_end
+      message = "Any payments made before #{promotion_end.strftime('%b %e, %Y')} will have a bonus applied to them!"
+      message += "<ul><li>If your payment is less than 0.5 BTC, you will get a 10% bonus.</li>"
+      message += "<li>If your payment is between 0.5 and 1 BTC, you will get a 12% bonus.</li>"
+      message += "<li>If it is greater than or equal to 1 BTC, you will get a 15% bonus!</li></ul>"
+      flash.now[:notice] = message.html_safe
+    end
+  end
+
 end

@@ -6,8 +6,6 @@ class AdsCommonController < ApplicationController
   before_filter :track
   before_filter :notify_about_balance
 
-  private
-
   def notify_about_balance
     return if current_advertiser.nil?
     if current_advertiser.balance <= 0

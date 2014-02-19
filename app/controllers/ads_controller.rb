@@ -114,6 +114,7 @@ class AdsController < AdsCommonController
   end
 
   def advertising # expressing interest page
+    notify_about_promotions(true)
     render 'ads/interested', layout: 'application'
   end
 
