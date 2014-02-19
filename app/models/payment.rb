@@ -6,7 +6,7 @@ class Payment < ActiveRecord::Base
   belongs_to :bitcoin_address
   belongs_to :coupon
 
-  has_one :parent, class_name: 'Payment', foreign_key: 'parent_id'
+  belongs_to :parent, class_name: 'Payment', foreign_key: 'parent_id'
   attr_accessible :amount, :bitcoin_address, :advertiser,
                   :coupon, :transaction_hash, :parent, :parent_id
 

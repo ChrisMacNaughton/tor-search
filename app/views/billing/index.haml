@@ -23,9 +23,10 @@
           %th Coupon Code
           %th Bitcoin Address
           %th Amount
+          %th Notes
       %tbody
         %tr.info
-          %td{colspan: 4}
+          %td{colspan: 5}
             =DateTime.now.beginning_of_month.strftime('%b %e, %Y')
             ='-'
             =DateTime.now.strftime('%b %e, %Y')
@@ -36,11 +37,14 @@
               %td= t.coupon.try(:code)
               %td= t.bitcoin_address.try(:address)
               %td= t.amount
+              %td
+                -if t.is_bonus?
+                  Bonus
         -else
           %tr
-            %td{colspan: 4} No transactions for this date range
+            %td{colspan: 5} No transactions for this date range
         %tr.info
-          %td{colspan: 4}
+          %td{colspan: 5}
             =1.month.ago.beginning_of_month.strftime('%b %e, %Y')
             ='-'
             =1.month.ago.end_of_month.strftime('%b %e, %Y')
@@ -51,11 +55,14 @@
               %td= t.coupon.try(:code)
               %td= t.bitcoin_address.try(:address)
               %td= t.amount
+              %td
+                -if t.is_bonus?
+                  Bonus
         -else
           %tr
-            %td{colspan: 4} No transactions for this date range
+            %td{colspan: 5} No transactions for this date range
         %tr.info
-          %td{colspan: 4}
+          %td{colspan: 5}
             =2.months.ago.beginning_of_month.strftime('%b %e, %Y')
             ='-'
             =2.months.ago.end_of_month.strftime('%b %e, %Y')
@@ -66,6 +73,9 @@
               %td= t.coupon.try(:code)
               %td= t.bitcoin_address.try(:address)
               %td= t.amount
+              %td
+                -if t.is_bonus?
+                  Bonus
         -else
           %tr
-            %td{colspan: 4} No transactions for this date range
+            %td{colspan: 5} No transactions for this date range
