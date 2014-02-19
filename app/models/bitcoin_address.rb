@@ -20,12 +20,27 @@ class BitcoinAddress < ActiveRecord::Base
 
     amount = transaction['amount']['amount'].to_f
     hash = transaction['hsh']
-    Payment.create(
+    payment = Payment.create(
       transaction_hash: hash,
       bitcoin_address: self,
       advertiser: advertiser,
       amount: amount
     )
+
+    if DateTime.now.beginning_of_day > Date.parse('February 20th, 2014').beginning_of_day
+      if DateTime.now.end_of_day < Date.parse('February 28th, 2014').end_of_day
+        bonus_amount = if amount > 1.0
+          amount * 0.15
+        else
+          amount * 0.10
+        end
+        Payment.create(
+          advertiser: advertiser,
+          amount: bonus_amount,
+          parent_id: payment.id
+        )
+      end
+    end
   end
 
   def self.generate_new_address(advertiser)

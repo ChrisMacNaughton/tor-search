@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140219164435) do
+ActiveRecord::Schema.define(:version => 20140219184336) do
 
   create_table "ad_campaigns", :force => true do |t|
     t.integer  "advertiser_id"
@@ -245,6 +245,7 @@ ActiveRecord::Schema.define(:version => 20140219164435) do
     t.datetime "updated_at",                                                         :null => false
     t.integer  "coupon_id"
     t.string   "transaction_hash"
+    t.integer  "parent_id"
   end
 
   add_index "payments", ["advertiser_id"], :name => "index_payments_on_advertiser_id"
