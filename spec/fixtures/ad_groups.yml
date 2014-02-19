@@ -1,0 +1,12 @@
+ad_group_1:
+  advertiser: test_advertiser
+  ad_campaign: ad_campaign_1
+  paused: false
+ad_group_2:
+  advertiser: test_advertiser_2
+  ad_campaign: ad_campaign_2
+  paused: false
+ad_group_3:
+  advertiser: test_advertiser
+  ad_campaign: ad_campaign_1
+  paused: true

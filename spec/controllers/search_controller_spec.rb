@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe SearchController do
   include Devise::TestHelpers
-  fixtures :ads, :advertisers, :keywords
+  fixtures :ads, :ad_groups, :ad_campaigns, :advertisers, :keywords
 
   describe 'index' do
 
@@ -17,7 +17,6 @@ describe SearchController do
   describe 'a search' do
 
     it 'credits an ad with views' do
-
       VCR.use_cassette('search-for-testing') do
         get :index, { q: 'testing' }
         response.status.should == 200
@@ -37,12 +36,12 @@ describe SearchController do
     it 'charges an account for a click on an ad with a keyword' do
       ad = ads(:ad)
       keyword = keywords(:otherwise)
-      k = ad.ad_keywords.create(keyword: keyword, bid: 0.01)
+      k = ad.ad_group.ad_group_keywords.create(keyword: keyword, bid: 0.01)
       k.save
       balance = ad.advertiser.balance
       post :ad_redirect, { id: ad.id, k: k.id }
       advertiser = advertisers(:test_advertiser)
-      advertiser.balance.should == balance - ad.ad_keywords.first.bid
+      advertiser.balance.should == balance - k.bid
     end
 
   end

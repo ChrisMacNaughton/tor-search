@@ -1,0 +1,6 @@
+ad_campaign_1:
+  advertiser: test_advertiser
+  paused: false
+ad_campaign_2:
+  advertiser: test_advertiser_2
+  paused: false

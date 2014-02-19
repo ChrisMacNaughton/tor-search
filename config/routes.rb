@@ -34,7 +34,6 @@ TorSearch::Application.routes.draw do
     get '/keyword_tool' => 'keyword_tool#index'
   end
 
-  #
   scope 'ads' do
     resources :campaigns, controller: :ad_campaigns do
       resources :ad_groups
@@ -65,17 +64,7 @@ TorSearch::Application.routes.draw do
     get 'billing' => 'billing#index', as: :billing
   end
   get '/ads' => 'ad_campaigns#index'
-  # namespace 'api' do
-  #   get 'advertiser_balance' => 'ad#advertiser_balance'
-  #   resources :bitcoin_address
-  #   resources :payment
-  #   resources :ad do
-  #     resources :keyword
-  #   end
-  #   resources :keyword
-  # end
-  # resources :keywords
-  # get '/ads/bitcoin-addresses' => 'ads#payment_addresses', as: :btc_address
+
   post '/ads/bitcoin-address' => 'ads#get_payment_address', as: :new_address
 
 

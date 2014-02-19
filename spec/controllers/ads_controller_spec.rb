@@ -32,13 +32,6 @@ describe AdsController do
     end
   end
 
-  it 'allows advertisers to request beta access' do
-    request.env["HTTP_REFERER"] = '/ads'
-    put :request_beta, {id: @advertiser.id}
-    @advertiser.reload
-    @advertiser.wants_beta.should be_true
-  end
-
   describe 'managing ads' do
 
     it 'can create a new ad' do
@@ -55,14 +48,6 @@ describe AdsController do
       put :update, {id: ad.id, ad: {title: 'something else'}}
       ad.reload
       ad.title.should eq 'something else'
-    end
-
-    it 'can toggle an ad\'s status' do
-      ad = ads(:ad)
-      put :toggle, {id: ad.id}
-
-      ad.reload
-      ad.disabled.should eq true
     end
 
   end
