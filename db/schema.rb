@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140213185444) do
+ActiveRecord::Schema.define(:version => 20140219164435) do
 
   create_table "ad_campaigns", :force => true do |t|
     t.integer  "advertiser_id"
@@ -222,8 +222,10 @@ ActiveRecord::Schema.define(:version => 20140213185444) do
 
   create_table "keywords", :force => true do |t|
     t.text     "word"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "searches_counts"
+    t.integer  "status_id",       :default => 1
   end
 
   create_table "messages", :force => true do |t|
