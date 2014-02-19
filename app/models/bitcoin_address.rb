@@ -27,7 +27,7 @@ class BitcoinAddress < ActiveRecord::Base
       amount: amount
     )
 
-    if DateTime.now.beginning_of_day > Date.parse('February 20th, 2014').beginning_of_day
+    if DateTime.now.beginning_of_day > Date.parse('February 19th, 2014').beginning_of_day
       if DateTime.now.end_of_day < Date.parse('March 1st, 2014').beginning_of_day
         bonus_amount = if amount >= 1.0
           amount * 0.15
