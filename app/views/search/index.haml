@@ -12,23 +12,7 @@
     -else
       %p.muted Search is offline for the moment, we are looking into it
   .row.span10.offset1
-    - if DateTime.now < DateTime.parse('January 1st, 2014 21:27:00 EST') && DateTime.now >= DateTime.parse('December 26th, 2013 21:27:00 EST')
-      -# RoadSilk Ad
-      %a.thumbnail{href: 'http://yjhzeedl5osagmmr.onion'}
-        =image_tag asset_path('roadsilk-banner.jpg'), alt: 'RoadSilk', size: '728x90'
-    -elsif DateTime.now < DateTime.parse('January 22nd, 2014 15:15:00 EST') && DateTime.now >= DateTime.parse('January 7th, 2014 15:15:00 EST')
-      -# Airbrake Ad
-      %a.thumbnail{href: 'https://airbrake.io?r=torsearch'}
-        =image_tag asset_path('airbrake-banner.png'), alt: 'AirBrake.io', size: '728x90'
-    -elsif DateTime.now < DateTime.parse('March 2nd, 2014 00:00:00 UTC') && DateTime.now >= DateTime.parse('January 23nd, 2014 09:00:00 EST')
-      -# PremiumTor Ad
-      %a.thumbnail{href: 'http://uizxxzdowrh6rrys.onion'}
-        =image_tag asset_path('premiumtor-banner.png'), alt: 'PremiumTor', size: '728x90'
-    -else
-      -# Default Ad
-      %a.thumbnail{href: 'mailto:sales@torsearch.es'}
-        =image_tag asset_path('banner.png'), alt: 'Advertise here!', size: '728x90'
-    %br/
+    =render partial: 'home_page_banner'
 -content_for(:footer) do
   #footer_home
     .row-fluid
