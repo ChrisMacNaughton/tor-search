@@ -130,10 +130,6 @@ class Ad < ActiveRecord::Base
     end
   end
 
-  def avg_position
-    @sum ||= ad_views.average(:position)
-  end
-
   def status
     if approved?
       if disabled?
@@ -160,5 +156,10 @@ class Ad < ActiveRecord::Base
 
   def valid_bid?
     bid <= advertiser.balance && bid > 0
+  end
+
+  def refresh_counts!
+    self.avg_position = ad_views.average(:position)
+    save!
   end
 end

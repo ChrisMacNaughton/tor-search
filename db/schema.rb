@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140219184336) do
+ActiveRecord::Schema.define(:version => 20140221163724) do
 
   create_table "ad_campaigns", :force => true do |t|
     t.integer  "advertiser_id"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(:version => 20140219184336) do
     t.datetime "created_at",                                                    :null => false
     t.datetime "updated_at",                                                    :null => false
     t.boolean  "paused",                                     :default => false
+    t.integer  "clicks",                                     :default => 0
+    t.integer  "views",                                      :default => 0
   end
 
   add_index "ad_group_keywords", ["ad_group_id", "keyword_id"], :name => "index_ad_group_keywords_on_ad_group_id_and_keyword_id", :unique => true
@@ -50,10 +52,14 @@ ActiveRecord::Schema.define(:version => 20140219184336) do
   create_table "ad_groups", :force => true do |t|
     t.integer  "ad_campaign_id"
     t.integer  "advertiser_id"
-    t.boolean  "paused",         :default => true
+    t.boolean  "paused",                                        :default => true
     t.text     "name"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
+    t.integer  "clicks_count",                                  :default => 0
+    t.integer  "views_count",                                   :default => 0
+    t.decimal  "ctr",            :precision => 16, :scale => 8, :default => 0.0
+    t.decimal  "avg_position",   :precision => 16, :scale => 8, :default => 0.0
   end
 
   add_index "ad_groups", ["ad_campaign_id"], :name => "index_ad_groups_on_ad_campaign_id"
@@ -107,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20140219184336) do
     t.string   "line_2",          :limit => 35,                                :default => ""
     t.integer  "protocol_id",                                                  :default => 0
     t.integer  "ad_group_id"
+    t.decimal  "avg_position",                  :precision => 16, :scale => 8, :default => 0.0
   end
 
   add_index "ads", ["ad_group_id"], :name => "index_ads_on_ad_group_id"

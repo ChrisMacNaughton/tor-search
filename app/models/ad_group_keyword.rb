@@ -18,20 +18,18 @@ class AdGroupKeyword < ActiveRecord::Base
     end
   end
 
-  def clicks
-    AdClick.where(keyword_id: keyword_id).count
-  end
-
-  def views
-    AdView.where(keyword_id: keyword_id).count
-  end
-
   def ctr
     if views > 0
       clicks / views.to_f
     else
       0
     end * 100
+  end
+
+  def refresh_counts!
+    self.clicks = AdClick.where(keyword_id: keyword_id).count
+    self.views = AdView.where(keyword_id: keyword_id).count
+    save!
   end
 
   def word
