@@ -14,6 +14,11 @@ class AdGroup < ActiveRecord::Base
         select sum(ad_views_count) as views_count, sum(ad_clicks_count) as clicks_count, ad_group_id
         from ads
         group by ad_group_id
+      ), averages AS (
+        SELECT AVG(position) as avg_position, ads.ad_group_id
+        FROM ad_views
+        LEFT JOIN ads ON ad_views.ad_id = ads.id
+        GROUP BY ads.ad_group_id
       )
       UPDATE ad_groups SET clicks_count = (
         select clicks_count from ad_stats
@@ -29,12 +34,8 @@ class AdGroup < ActiveRecord::Base
         END
       ), avg_position = (
         SELECT avg_position
-        FROM (
-          SELECT AVG(position) as avg_position
-          FROM ad_views
-          LEFT JOIN ads ON ad_views.ad_id = ads.id
-          WHERE ads.ad_group_id = ad_groups.id
-        ) as averages
+        FROM averages
+        WHERE averages.ad_group_id = ad_groups.id
       )::decimal
     SQL
   end
