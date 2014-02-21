@@ -67,6 +67,9 @@ class AdGroupKeywordsController < AdsCommonController
     end
     if params[:keywords].is_a? String
       keywords = params[:keywords].split(/\n/)
+      if keywords.count == 1
+        keywords = params[:keywords].split(/,/)
+      end
       @keywords = []
       keywords.map do |k|
         word = k.strip
