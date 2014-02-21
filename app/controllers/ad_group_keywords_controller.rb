@@ -3,7 +3,7 @@ class AdGroupKeywordsController < AdsCommonController
 
   def index
     page = (params[:page] || 1).to_i
-    per_page = 5
+    per_page = 15
     if params[:ad_group_id]
       @ad_group = current_advertiser.ad_groups.where(id: params[:ad_group_id]).first
       @campaign = @ad_group.ad_campaign

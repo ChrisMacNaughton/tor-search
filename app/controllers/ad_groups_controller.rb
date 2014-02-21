@@ -3,7 +3,7 @@ class AdGroupsController < AdsCommonController
 
   def index
     page = (params[:page] || 1).to_i
-    per_page = (5).to_i
+    per_page = 15
     @ad_groups = current_advertiser.ad_groups \
       .page(page).per_page(per_page)
 
