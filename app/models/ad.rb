@@ -159,7 +159,6 @@ class Ad < ActiveRecord::Base
   end
 
   def refresh_counts!
-    self.avg_position = ad_views.average(:position)
-    save!
+    Ad.where(id: self.id).update_all(avg_position: ad_views.average(:position))
   end
 end

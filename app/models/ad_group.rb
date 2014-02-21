@@ -9,25 +9,25 @@ class AdGroup < ActiveRecord::Base
     where("NOT EXISTS (select 'x' FROM ad_group_keywords WHERE ad_group_id = ad_groups.id LIMIT 1)")
 
   def refresh_counts!
-    self.clicks_count = ads.sum(&:ad_clicks_count)
-    self.views_count = ads.sum(&:ad_views_count)
 
-    self.ctr = if self.views_count > 0
-      self.clicks_count / self.views_count.to_f
+    clicks = ads.sum(&:ad_clicks_count)
+    views = ads.sum(&:ad_views_count)
+
+    click_through = if views > 0
+      clicks / views.to_f
     else
       0
     end
 
-    if self.views_count > 0
+    if views > 0
       sum = 0
       ads.each do |ad|
         sum += ad.ad_views.sum(:position)
       end
-      self.avg_position = sum / self.views_count.to_f
+      avg = sum / views.to_f
     else
-      self.avg_position = 0
+      avg = 0
     end
-
-    save!
+    AdGroup.where(id: self.id).update_all(clicks_count: clicks, views_count: views, ctr: click_through, avg_position: avg)
   end
 end

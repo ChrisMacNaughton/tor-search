@@ -27,9 +27,9 @@ class AdGroupKeyword < ActiveRecord::Base
   end
 
   def refresh_counts!
-    self.clicks = AdClick.where(keyword_id: keyword_id).count
-    self.views = AdView.where(keyword_id: keyword_id).count
-    save!
+    click_count = AdClick.where(keyword_id: keyword_id).count
+    view_count = AdView.where(keyword_id: keyword_id).count
+    AdGroupKeyword.where(id: self.id).update_all(clicks: click_count, views: view_count)
   end
 
   def word
