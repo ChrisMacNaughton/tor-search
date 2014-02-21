@@ -3,7 +3,7 @@
 .row
   .span4
     %h5 Current Balance
-    =number_to_currency(current_advertiser.balance, precision: 8, unit: '&#x0e3f;', format: "%u%n")
+    =number_to_currency(current_advertiser.balance, precision: 8, unit: '&#x0e3f;'.html_safe, format: "%u%n")
     =form_for :coupon, class: 'form-inline', url: credit_coupon_path do |f|
       .input-append
         =f.text_field :code, {placeholder: t("ads.coupon_code"), class: 'input-medium', id: "appendedInputButtons"}
