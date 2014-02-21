@@ -13,7 +13,7 @@ class AdCampaignsController < AdsCommonController
   end
 
   def new
-    @campaign = AdCampaign.new
+    @campaign = AdCampaign.new(default_bid: 0.0001)
   end
 
   def create
