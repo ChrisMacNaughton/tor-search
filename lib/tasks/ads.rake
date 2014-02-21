@@ -24,12 +24,7 @@ namespace :ads do
         ) as averages
         where averages.ad_id = ads.id
       )
-      <<SQL
+      SQL
     )
-    Ad.where('updated_at < ?', 30.minutes.ago).find_in_batches(batch_size: 200) do |group|
-      group.each do |ad|
-        ad.refresh_counts!
-      end
-    end
   end
 end

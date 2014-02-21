@@ -2,7 +2,7 @@ class AdGroupKeyword < ActiveRecord::Base
   belongs_to :ad_group
   belongs_to :keyword
   has_many :ads, through: :ad_group
-  attr_accessible :ad_group_id, :ad_group, :keyword_id, :keyword, :bid
+  attr_accessible :ad_group_id, :ad_group, :keyword_id, :keyword, :bid, :paused
   validates :ad_group_id, uniqueness: { scope: [:keyword_id, :ad_group_id] }
 
   scope :valid,
