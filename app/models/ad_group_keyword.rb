@@ -27,9 +27,20 @@ class AdGroupKeyword < ActiveRecord::Base
     end * 100
   end
 
-  def refresh_counts!
-    click_count = AdClick.where(keyword_id: keyword_id).count
-    view_count = AdView.where(keyword_id: keyword_id).count
-    AdGroupKeyword.where(id: self.id).update_all(clicks: click_count, views: view_count)
+  def self.refresh_counts!
+    AdGroupKeyword.connection.execute(
+      <<-SQL
+      UPDATE ad_group_keywords
+      SET clicks = (
+        SELECT click_data.click_count
+        FROM (
+          SELECT count(keyword_id) as click_count, keyword_id
+          FROM ad_clicks
+          GROUP BY keyword_id
+        ) as click_data
+        WHERE click_data.keyword_id = ad_group_keywords.keyword_id
+      )
+      SQL
+    )
   end
 end

@@ -158,7 +158,20 @@ class Ad < ActiveRecord::Base
     bid <= advertiser.balance && bid > 0
   end
 
-  def refresh_counts!
-    Ad.where(id: self.id).update_all(avg_position: ad_views.average(:position))
+  def self.refresh_counts!
+    Ad.connection.execute(
+      <<-SQL
+      UPDATE ads
+      SET avg_position = (
+        select averages.average
+        from (
+          select AVG(ad_views.position) as average, ad_views.ad_id
+          from ad_views
+          group by ad_id
+        ) as averages
+        where averages.ad_id = ads.id
+      )
+      SQL
+    )
   end
 end
