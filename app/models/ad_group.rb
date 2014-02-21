@@ -8,26 +8,34 @@ class AdGroup < ActiveRecord::Base
   scope :without_keywords,
     where("NOT EXISTS (select 'x' FROM ad_group_keywords WHERE ad_group_id = ad_groups.id LIMIT 1)")
 
-  def refresh_counts!
-
-    clicks = ads.sum(&:ad_clicks_count)
-    views = ads.sum(&:ad_views_count)
-
-    click_through = if views > 0
-      clicks / views.to_f
-    else
-      0
-    end
-
-    if views > 0
-      sum = 0
-      ads.each do |ad|
-        sum += ad.ad_views.sum(:position)
-      end
-      avg = sum / views.to_f
-    else
-      avg = 0
-    end
-    AdGroup.where(id: self.id).update_all(clicks_count: clicks, views_count: views, ctr: click_through, avg_position: avg)
+  def self.refresh_counts!
+    AdGroup.connection.execute <<-SQL
+      WITH ad_stats AS (
+        select sum(ad_views_count) as views_count, sum(ad_clicks_count) as clicks_count, ad_group_id
+        from ads
+        group by ad_group_id
+      )
+      UPDATE ad_groups SET clicks_count = (
+        select clicks_count from ad_stats
+        WHERE ad_stats.ad_group_id = ad_groups.id
+      ), views_count = (
+        select views_count from ad_stats
+        WHERE ad_stats.ad_group_id = ad_groups.id
+      ), ctr = (
+        CASE WHEN COALESCE(views_count, 0) > 0
+        THEN COALESCE(clicks_count, 0) / views_count::decimal
+        ELSE
+        0
+        END
+      ), avg_position = (
+        SELECT avg_position
+        FROM (
+          SELECT AVG(position) as avg_position
+          FROM ad_views
+          LEFT JOIN ads ON ad_views.ad_id = ads.id
+          WHERE ads.ad_group_id = ad_groups.id
+        ) as averages
+      )::decimal
+    SQL
   end
 end
