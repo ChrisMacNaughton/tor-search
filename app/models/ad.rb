@@ -45,13 +45,17 @@ class Ad < ActiveRecord::Base
   def self.without_keywords
     ad_groups = AdGroup.without_keywords
     return [] if ad_groups.nil?
-    ad_group_ads = ad_groups.map(&:ads)
+    ad_group_ids = ad_groups.map(&:id)
+    advertiser_ids = ad_groups.map(&:advertiser_id)
+    ad_group_ads = Ad.where(ad_group_id: ad_group_ids).group_by(&:ad_group_id)
     return [] if ad_group_ads.nil?
-
+    advertisers = Advertiser.where(id: advertiser_ids)
     ads = []
-    ad_group_ads.map do |ad_group|
+    ad_group_ads.map do |ad_group_id, ad_group|
+
       ad_options = ad_group.select do |ad|
-        ad.approved? && !ad.disabled? && ad.valid_bid?
+        adv = advertisers.detect{|a| ad.advertiser_id = a.id}
+        ad.approved? && !ad.disabled? && ad.bid > 0 && ad.bid >= adv.balance
       end.compact
       next if ad_options.empty?
       ads << ad_options.sample
@@ -62,7 +66,8 @@ class Ad < ActiveRecord::Base
 
   def self.with_keywords(keywords = [])
     keywords = [*keywords]
-    keyword_ids = Keyword.where('LOWER(word) in (?)', keywords).pluck(:id)
+    keywords = Keyword.where('LOWER(word) in (?)', keywords)
+    keyword_ids = keywords.map(&:id)
     return [] if keyword_ids.nil?
 
     ad_group_keywords = AdGroupKeyword.valid.where(keyword_id: keyword_ids).where('bid > 0')
@@ -82,6 +87,7 @@ class Ad < ActiveRecord::Base
       next if ad_options.empty?
       ad = ad_options.sample
       keyword = ad_group_keywords.detect{|k| k.ad_group_id == ad.ad_group_id}
+      keyword = keywords.detect{|k| k.id = keyword.keyword_id}
       ad.keyword_id = keyword.id
       ad.bid = keyword.bid
       ads << ad
