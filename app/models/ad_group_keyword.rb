@@ -10,6 +10,7 @@ class AdGroupKeyword < ActiveRecord::Base
     .joins(:ad_group) \
     .joins('LEFT JOIN advertisers ON advertisers.id = ad_groups.advertiser_id')
 
+  delegate :word, to: :keyword, allow_nil: true
   def status
     if paused?
       "Paused"
@@ -30,9 +31,5 @@ class AdGroupKeyword < ActiveRecord::Base
     click_count = AdClick.where(keyword_id: keyword_id).count
     view_count = AdView.where(keyword_id: keyword_id).count
     AdGroupKeyword.where(id: self.id).update_all(clicks: click_count, views: view_count)
-  end
-
-  def word
-    keyword.word
   end
 end
