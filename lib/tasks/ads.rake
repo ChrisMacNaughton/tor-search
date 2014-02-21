@@ -7,11 +7,22 @@ namespace :ads do
         ad_group.refresh_counts!
       end
     end
-    AdGroupKeyword.where('updated_at < ?', 30.minutes.ago).find_in_batches(batch_size: 200) do |group|
-      group.each do |keyword|
-        keyword.refresh_counts!
-      end
-    end
+
+    AdGroupKeyword.connection.execute(
+      <<-SQL
+      UPDATE ad_group_keywords
+      SET clicks = (
+        SELECT click_data.click_count
+        FROM (
+          SELECT count(keyword_id) as click_count, keyword_id
+          FROM ad_clicks
+          GROUP BY keyword_id
+        ) as click_data
+        WHERE click_data.keyword_id = ad_group_keywords.keyword_id
+      )
+      SQL
+    )
+
     Ad.connection.execute(
       <<-SQL
       UPDATE ads
