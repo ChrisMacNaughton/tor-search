@@ -56,7 +56,7 @@ class AdGroupKeywordsController < AdsCommonController
   end
 
   def create
-    if  params[:ad_group_id].nil? && params[:ad_group][:id].nil?
+    if  params[:ad_group_id].nil? && (params[:ad_group].nil? || params[:ad_group][:id].nil?)
       flash[:alert] = "You must select an ad group"
       redirect_to new_keyword_path and return
     end
