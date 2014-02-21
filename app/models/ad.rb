@@ -55,7 +55,7 @@ class Ad < ActiveRecord::Base
 
       ad_options = ad_group.select do |ad|
         adv = advertisers.detect{|a| ad.advertiser_id = a.id}
-        ad.approved? && !ad.disabled? && ad.bid > 0 && ad.bid >= adv.balance
+        ad.approved? && !ad.disabled? && ad.bid > 0 && ad.bid <= adv.balance
       end.compact
       next if ad_options.empty?
       ads << ad_options.sample
@@ -87,9 +87,9 @@ class Ad < ActiveRecord::Base
       next if ad_options.empty?
       ad = ad_options.sample
       keyword = ad_group_keywords.detect{|k| k.ad_group_id == ad.ad_group_id}
+      ad.bid = keyword.bid
       keyword = keywords.detect{|k| k.id = keyword.keyword_id}
       ad.keyword_id = keyword.id
-      ad.bid = keyword.bid
       ads << ad
     end
 
