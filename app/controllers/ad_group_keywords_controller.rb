@@ -56,14 +56,14 @@ class AdGroupKeywordsController < AdsCommonController
   end
 
   def create
-    if params[:ad_group_id].nil?
-      flash[:alert] = "There was a problem handling your request, please try again"
-      redirect_to :ad_group_keywords
+    if  params[:ad_group_id].nil? && params[:ad_group][:id].nil?
+      flash[:alert] = "You must select an ad group"
+      redirect_to new_keyword_path and return
     end
-    ad_group = current_advertiser.ad_groups.where(id: params[:ad_group_id]).first
+    ad_group = current_advertiser.ad_groups.where(id: (params[:ad_group_id] || params[:ad_group][:id])).first
     if ad_group.nil?
       flash[:alert] = "There was a problem handling your request, please try again"
-      redirect_to :ad_group_keywords
+      redirect_to new_keyword_path and return
     end
     if params[:keywords].is_a? String
       keywords = params[:keywords].split(/\n/)

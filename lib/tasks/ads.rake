@@ -12,6 +12,20 @@ namespace :ads do
         keyword.refresh_counts!
       end
     end
+    Ad.connection.execute(
+      <<-SQL
+      UPDATE ads
+      SET avg_position = (
+        select averages.average
+        from (
+          select AVG(ad_views.position) as average, ad_views.ad_id
+          from ad_views
+          group by ad_id
+        ) as averages
+        where averages.ad_id = ads.id
+      )
+      <<SQL
+    )
     Ad.where('updated_at < ?', 30.minutes.ago).find_in_batches(batch_size: 200) do |group|
       group.each do |ad|
         ad.refresh_counts!
