@@ -1,5 +1,5 @@
 .span4
-  =form_for @ad, builder: WithErrorFields do |f|
+  =form_for @ad, builder: WithErrorFields, html: {novalidate: true} do |f|
     =render partial: 'fields', locals: { f: f }
 .span4
   .row
