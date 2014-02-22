@@ -20,7 +20,7 @@ class AdGroupKeyword < ActiveRecord::Base
   end
 
   def ctr
-    if views > 0
+    if views.present? && views > 0 && clicks.present? && clicks > 0
       clicks / views.to_f
     else
       0
