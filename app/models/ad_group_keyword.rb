@@ -31,7 +31,7 @@ class AdGroupKeyword < ActiveRecord::Base
     AdGroupKeyword.connection.execute(
       <<-SQL
       UPDATE ad_group_keywords
-      SET clicks = (
+      SET clicks = COALESCE((
         SELECT click_data.click_count
         FROM (
           SELECT count(keyword_id) as click_count, keyword_id
@@ -39,7 +39,15 @@ class AdGroupKeyword < ActiveRecord::Base
           GROUP BY keyword_id
         ) as click_data
         WHERE click_data.keyword_id = ad_group_keywords.keyword_id
-      )
+      ), 0), views = COALESCE((
+        SELECT click_data.views_count
+        FROM (
+          SELECT count(keyword_id) as views_count, keyword_id
+          FROM ad_views
+          GROUP BY keyword_id
+        ) as click_data
+        WHERE click_data.keyword_id = ad_group_keywords.keyword_id
+      ), 0)
       SQL
     )
   end
