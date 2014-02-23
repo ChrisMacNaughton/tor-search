@@ -134,6 +134,13 @@ class SearchController < ApplicationController
     else
       path = CGI.escape(path).gsub("%3A", ":").gsub("%2F", "/")
     end
+    if path =~ /([2-7a-zA-Z]{16})\.onion/
+      if request_is_oniony != 'clear'
+        path
+      else
+        path.gsub(/([2-7a-zA-Z]{16})\.onion/, '\1.onion.to')
+      end
+    end
     redirect_to path, status: 302
   end
   # rubocop:enable  MethodLength
