@@ -137,7 +137,7 @@ class SearchController < ApplicationController
     if request_is_oniony != 'clear'
       path
     else
-      path.gsub(/([2-7a-zA-Z]{16})\.onion/, '\1.onion.to')
+      path.gsub!(/([2-7a-zA-Z]{16})\.onion/, '\1.onion.to')
     end
     redirect_to path, status: 302
   end
