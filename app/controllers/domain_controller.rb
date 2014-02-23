@@ -30,6 +30,8 @@ class DomainController < ApplicationController
   # rubocop:enable MethodLength
 
   def flag_page
+    redirect_to root_path and return if params[:search_id].nil?
+
     @flag = Flag.new(path: params[:path], query_id: Search.find(params[:search_id]).query_id)
   end
 

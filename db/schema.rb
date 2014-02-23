@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140221163724) do
+ActiveRecord::Schema.define(:version => 20140223010640) do
 
   create_table "ad_campaigns", :force => true do |t|
     t.integer  "advertiser_id"
@@ -264,6 +264,8 @@ ActiveRecord::Schema.define(:version => 20140221163724) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
   end
+
+  add_index "queries", ["term"], :name => "index_queries_on_term"
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
