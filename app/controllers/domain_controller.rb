@@ -38,7 +38,7 @@ class DomainController < ApplicationController
   def create_flag
     @flag = Flag.new(params[:flag])
     if @flag.save
-      flash[:notice] = "Thank you for helping identify bad pages!"
+      flash[:notice] << "Thank you for helping identify bad pages!"
       redirect_to root_path({q: @flag.query.term})
     else
       render :flag_page
