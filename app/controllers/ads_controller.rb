@@ -148,7 +148,7 @@ class AdsController < AdsCommonController
   def delete
     ad = current_advertiser.ads.where(id: params[:ad_id]).first
     if ad.destroy
-      flash.notice << "Successfully removed your ad"
+      flash.alert << "Successfully removed your ad"
     else
       flash.alert << "Something went wrong, please try again later"
     end

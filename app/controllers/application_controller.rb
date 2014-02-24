@@ -103,7 +103,7 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
     end
     respond_to do |format|
       @layout = false
-      format.html { render template: 'error_404', status: 404 }
+      format.html { render template: 'error_404', status: 404, layout: 'application' }
       format.all { render nothing: true, status: 404 }
     end
     true
@@ -120,7 +120,7 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
     respond_to do |format|
       format.html do
         @nav = false
-        render template: 'errors/error_500', status: 500
+        render template: 'errors/error_500', status: 500, layout: 'application'
       end
     end
     true
