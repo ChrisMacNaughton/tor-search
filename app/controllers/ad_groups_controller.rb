@@ -12,14 +12,14 @@ class AdGroupsController < AdsCommonController
       @ad_groups = @ad_groups.where(ad_campaign_id: params[:campaign_id])
     end
 
-    @ad_groups = @ad_groups.order(:name)
+    @ad_groups = @ad_groups.order(:name, :created_at)
   end
 
   def show
     @ad_group = current_advertiser.ad_groups.where(id: params[:id]).first
     @campaign = @ad_group.ad_campaign
 
-    @ads = @ad_group.ads.order('approved desc').order(:title)
+    @ads = @ad_group.ads.order('approved desc').order(:title, :created_at)
   end
 
   def new
