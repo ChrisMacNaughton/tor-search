@@ -5,4 +5,4 @@
   =f.text_field :bid
   =f.submit "Save", class: 'btn btn-success'
   %br/
-  %a.btn.btn-warning{href: campaigns_path} Cancel
+  =link_to "Cancel", :back, class: 'btn btn-warning'
