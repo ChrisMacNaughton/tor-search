@@ -30,7 +30,7 @@
           %td= group.paused? ? "Paused" : "Active"
           %td= group.clicks_count
           %td= group.views_count
-          %td= number_to_percentage(group.ctr, precision: 4)
+          %td= number_to_percentage(group.ctr * 100, precision: 4)
           %td= number_with_precision(group.avg_position, precision: 2)
 .row
   =will_paginate(@ad_groups)
