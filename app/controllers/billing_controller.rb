@@ -6,7 +6,7 @@ class BillingController < ApplicationController
 
   def index
     if current_advertiser.bitcoin_addresses.empty?
-      flash.now[:notice] = "We've generated a new bitcoin address for you!"
+      flash.now[:notice] << "We've generated a new bitcoin address for you!"
       BitcoinAddress.generate_new_address(current_advertiser)
     end
     @transactions = {}

@@ -38,15 +38,15 @@ class AdGroupKeywordsController < AdsCommonController
         .where( 'ad_group_keywords.id <> ?', @keyword.id)
 
     if existing_keywords.any?
-      flash.alert = "You already have this keyword on this ad group"
+      flash.alert << "You already have this keyword on this ad group"
       redirect_to :back and return
     end
     if @keyword.save
       @mixpanel_tracker.track(current_advertiser.id, 'toggled a keyword', {keyword: {id: @keyword.id, title: word}}, visitor_ip_address)
-      flash.notice = 'Keyword Updated'
+      flash.notice << 'Keyword Updated'
       redirect_to ad_group_keywords_path(@keyword.ad_group_id) and return
     else
-      flash.alert = 'There was a problem, please try again!'
+      flash.alert << 'There was a problem, please try again!'
       render :edit
     end
   end
@@ -57,12 +57,12 @@ class AdGroupKeywordsController < AdsCommonController
 
   def create
     if  params[:ad_group_id].nil? && (params[:ad_group].nil? || params[:ad_group][:id].nil?)
-      flash[:alert] = "You must select an ad group"
+      flash[:alert] << "You must select an ad group"
       redirect_to new_keyword_path and return
     end
     ad_group = current_advertiser.ad_groups.where(id: (params[:ad_group_id] || params[:ad_group][:id])).first
     if ad_group.nil?
-      flash[:alert] = "There was a problem handling your request, please try again"
+      flash[:alert] << "There was a problem handling your request, please try again"
       redirect_to new_keyword_path and return
     end
     if params[:keywords].is_a? String
@@ -91,9 +91,9 @@ class AdGroupKeywordsController < AdsCommonController
     keyword = current_advertiser.ad_group_keywords.where(id: params[:keyword_id]).first
     kw = keyword.keyword.word
     if keyword.destroy
-      flash.notice = "Successfully removed #{kw}"
+      flash.notice << "Successfully removed #{kw}"
     else
-      flash.alert = "Something went wrong, please try again later"
+      flash.alert << "Something went wrong, please try again later"
     end
     redirect_to :back
   end
@@ -101,15 +101,15 @@ class AdGroupKeywordsController < AdsCommonController
   def toggle
     keyword = current_advertiser.ad_group_keywords.where(id: params[:id] || params[:keyword_id]).first
     if keyword.nil?
-      flash.alert = 'There was a problem, try again soon!'
+      flash.alert << 'There was a problem, try again soon!'
       redirect_to :back
     end
     keyword.paused = !keyword.paused
     if keyword.save
       @mixpanel_tracker.track(current_advertiser.id, 'toggled a keyword', {keyword: {id: keyword.id, title: keyword.keyword.word}}, visitor_ip_address)
-      flash.notice = 'Keyword Toggled'
+      flash.notice << 'Keyword Toggled'
     else
-      flash.alert = 'There was a problem, try again soon!'
+      flash.alert << 'There was a problem, try again soon!'
     end
     redirect_to :back
   end

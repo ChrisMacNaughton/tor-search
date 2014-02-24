@@ -3,7 +3,6 @@ class AdsController < AdsCommonController
   before_filter :authenticate_advertiser!, except: [:advertising]
 
   def index
-
     page = (params[:page] || 1).to_i
     per_page = (20).to_i
     @ads = current_advertiser.ads.page(page) \
@@ -18,6 +17,9 @@ class AdsController < AdsCommonController
     if params[:ad_group_id]
       @ads = @ads.where(ad_group_id: params[:ad_group_id])
       @ad_group = current_advertiser.ad_groups.where(id: params[:ad_group_id]).first
+    end
+    if params[:show_deleted]
+      @ads = @ads.with_deleted
     end
     @ads = @ads.order('approved desc').order('title asc, created_at asc').includes(:ad_group, :ad_campaign)
   end
@@ -51,7 +53,7 @@ class AdsController < AdsCommonController
     end
     if @ad.save
       @mixpanel_tracker.track(current_advertiser.id, 'created an ad',  {ad: {id: @ad.id, title: @ad.title}}, visitor_ip_address)
-      flash.notice = 'Your new ad has been successfully created'
+      flash.notice << 'Your new ad has been successfully created'
       redirect_to ads_path
     else
       @mixpanel_tracker.track(current_advertiser.id, 'error creating ad', {error: @ad.errors}, visitor_ip_address)
@@ -82,9 +84,10 @@ class AdsController < AdsCommonController
       ad_attributes[:approved] = false unless approved || current_advertiser.is_auto_approved?
       if @ad.update_attributes(ad_attributes)
         @mixpanel_tracker.track(current_advertiser.id, 'updated ad', {ad: {id: @ad.id, title: @ad.title}}, visitor_ip_address)
-        flash.notice = 'Your ad has been successfully edited'
-        flash.notice += ' and will be approved soon' if @ad.approved = false
-        flash.notice += '!'
+        message = 'Your ad has been successfully edited'
+        message += ' and will be approved soon' if @ad.approved = false
+        message += '!'
+        flash.notice << message
         redirect_to ads_path
       else
         @mixpanel_tracker.track(current_advertiser.id, 'error editing ad', {error: @ad.errors}, visitor_ip_address)
@@ -105,9 +108,9 @@ class AdsController < AdsCommonController
     @mixpanel_tracker.track(current_advertiser.id, 'requested bitcoin address', {}, visitor_ip_address)
     if address.nil? || address.created_at < 1.hour.ago
       @address = BitcoinAddress.generate_new_address(current_advertiser)
-      flash.notice = "Created a new address for you!"
+      flash.notice << "Created a new address for you!"
     else
-      flash.alert = "You can only create a new address once an hour"
+      flash.alert << "You can only create a new address once an hour"
       @address = address
     end
     redirect_to :billing
@@ -123,9 +126,9 @@ class AdsController < AdsCommonController
     ad.disabled = !ad.disabled
     if ad.save
       @mixpanel_tracker.track(current_advertiser.id, 'toggled an ad', {ad: {id: ad.id, title: ad.title}}, visitor_ip_address)
-      flash.notice = 'Ad Toggled'
+      flash.notice << 'Ad Toggled'
     else
-      flash.alert = 'There was a problem, try again soon!'
+      flash.alert << 'There was a problem, try again soon!'
     end
     redirect_to :back
   end
@@ -135,9 +138,19 @@ class AdsController < AdsCommonController
     advertiser = current_advertiser
     advertiser.wants_beta = true
     if advertiser.save
-      flash.notice = 'Beta access requested'
+      flash.notice << 'Beta access requested'
     else
-      flash.alert 'There was a problem, try again soon!'
+      flash.alert << 'There was a problem, try again soon!'
+    end
+    redirect_to :back
+  end
+
+  def delete
+    ad = current_advertiser.ads.where(id: params[:ad_id]).first
+    if ad.destroy
+      flash.notice << "Successfully removed your ad"
+    else
+      flash.alert << "Something went wrong, please try again later"
     end
     redirect_to :back
   end

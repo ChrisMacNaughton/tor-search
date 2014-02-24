@@ -52,7 +52,8 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 #gem 'jbuilder', '~> 1.2'
 
-gem 'acts_as_paranoid', github: 'byroot/rails3_acts_as_paranoid'
+gem 'paranoia'
+
 group :development do
   gem 'meta_request'
   gem 'better_errors'

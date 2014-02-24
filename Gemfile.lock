@@ -1,10 +1,3 @@
-GIT
-  remote: git://github.com/byroot/rails3_acts_as_paranoid.git
-  revision: 908894323aad480c5c2746aaa191f6ac7e379b8c
-  specs:
-    acts_as_paranoid (0.0.0)
-      activerecord (~> 3.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -155,6 +148,8 @@ GEM
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     orm_adapter (0.4.0)
+    paranoia (1.3.3)
+      activerecord (~> 3.2)
     pg (0.15.1)
     polyglot (0.3.4)
     pry (0.9.12.6)
@@ -269,7 +264,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
-  acts_as_paranoid!
   acts_as_textcaptcha (~> 3.0.10)
   airbrake
   angularjs-rails-resource
@@ -289,6 +283,7 @@ DEPENDENCIES
   meta_request
   mixpanel-ruby
   newrelic_rpm
+  paranoia
   pg
   pry
   rails (= 3.2.17)

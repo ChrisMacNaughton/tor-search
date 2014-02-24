@@ -2,6 +2,7 @@
   .row
     %p Ads within an ad group will be randomly selected for display to allow you to determine higher click-through-rate
 %a.btn.btn-primary{href: (defined?(@ad_group)) ? new_ad_path(ad_group_id: @ad_group.id) : new_ad_path} + Ad
+%a.btn.btn-success{href: '?show_deleted=true'} Show Deleted
 .row
   %table.table.table-bordered
     %thead
@@ -21,15 +22,30 @@
       -edit_icon = "<i class='icon-edit'></i>".html_safe
       -pause_icon = "<i class='icon-pause'></i>".html_safe
       -play_icon = "<i class='icon-play'></i>".html_safe
+      -delete_icon = "<i class='icon-remove'></i>".html_safe
+      -restore_icon = "<i class='icon-ok'></i>".html_safe
       -@ads.each do |ad|
-        %tr{class: ad.pending? ? 'alert' : ''}
+        %tr{class: ad.destroyed? ? 'error' : ad.pending? ? 'warning' : ''}
           %td
-            =link_to edit_icon, edit_ad_path(ad)
-            -unless ad.pending?
-              -if ad.paused?
-                =link_to play_icon, ad_toggle_path(ad)
+            %ul.unstyled
+              -if ad.destroyed?
+                %li
+                  =link_to restore_icon, '#', class: 'btn btn-warning', title: 'Restore Ad'
               -else
-                =link_to pause_icon, ad_toggle_path(ad)
+                %li
+                  =link_to edit_icon, edit_ad_path(ad), class: 'btn btn-info', title: 'Edit Ad'
+                -unless ad.pending?
+                  %li
+                    -if ad.paused?
+                      =link_to play_icon, ad_toggle_path(ad), class: 'btn btn-info', title: 'Enable Ad'
+                    -else
+                      =link_to pause_icon, ad_toggle_path(ad), class: 'btn', title: 'Disable Ad'
+                %li
+                  =form_for ad, as: :keyword, url: ad_delete_path(ad) do |f|
+                    =f.hidden_field :delete, value: true
+                    =f.hidden_field :id
+                    %button{type: 'submit', class: 'btn btn-warning'}
+                      = delete_icon
           %td= render partial: 'ad', locals: {ad: ad}
           %td= link_to ad.ad_campaign.name, campaign_path(ad.ad_campaign)
           %td= link_to ad.ad_group.name, ad.ad_group

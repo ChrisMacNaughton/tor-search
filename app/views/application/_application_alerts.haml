@@ -1,10 +1,12 @@
--unless notice.nil? && alert.nil?
+-unless flash[:notice].empty? && flash[:alert].empty?
   .row.span12
-    - if flash[:alert]
-      .alert
-        %a.close{data: {dismiss: 'alert'}} &times;
-        = flash[:alert]
-    - if flash[:notice]
-      .alert.alert-info
-        %a.close{data: {dismiss: 'alert'}} &times;
-        = flash[:notice]
+    - if flash[:alert].any?
+      -flash[:alert].uniq.each do |alert|
+        .alert
+          %a.close{data: {dismiss: 'alert'}} &times;
+          = alert
+    - if flash[:notice].any?
+      -flash[:notice].uniq.each do |notice|
+        .alert.alert-info
+          %a.close{data: {dismiss: 'alert'}} &times;
+          = notice

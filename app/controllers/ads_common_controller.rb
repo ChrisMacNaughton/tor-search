@@ -12,7 +12,7 @@ class AdsCommonController < ApplicationController
       icon = "<i class='icon-exclamation-sign'></i>"
       message = "<strong>Your ads aren't running because your account balance is exhausted.</strong> - Please make a payment."
       link = "<strong><a href='#{billing_path}'>Fix It</a></strong>"
-      flash.now[:alert] = "#{icon} #{message} #{link}".html_safe
+      flash.now[:alert] << "#{icon} #{message} #{link}".html_safe
     end
   end
 

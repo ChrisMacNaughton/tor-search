@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  before_filter :setup_flash
   before_filter :set_locale
 
   before_filter :add_user_to_request
@@ -14,13 +15,19 @@ class ApplicationController < ActionController::Base
 
   before_filter :notify_about_promotions
 
+  def setup_flash
+    flash[:notice] ||= []
+    flash[:alert] ||= []
+    flash.now[:notice] ||= flash[:notice]
+    flash.now[:alert] ||= flash[:alert]
+  end
 
   def notify_about_other_domain_for_tor_to_web
     if is_tor2web?
-      flash.now[:notice] = "You can improve your experience with TorSearch by browsing directly to <a href='https://torsearch.es'>TorSearch.es</a><br/>
+      flash.now[:notice] << "You can improve your experience with TorSearch by browsing directly to <a href='https://torsearch.es'>TorSearch.es</a><br/>
 Because you are using Tor2Web, you have already traded anonymity for convenience and now you can use TorSearch even faster!".html_safe
     elsif request_ip_is_exit?
-      flash.now[:notice] = "You can access this site as a hidden service and use Tor's encryption by using <a href='http://kbhpodhnfxl3clb4.onion'>kbhpodhnfxl3clb4.onion</a>".html_safe
+      flash.now[:notice] << "You can access this site as a hidden service and use Tor's encryption by using <a href='http://kbhpodhnfxl3clb4.onion'>kbhpodhnfxl3clb4.onion</a>".html_safe
     end
   end
 
@@ -139,7 +146,7 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
       message += "<ul><li>If your payment is less than 0.5 BTC, you will get a 10% bonus.</li>"
       message += "<li>If your payment is between 0.5 and 1 BTC, you will get a 12% bonus.</li>"
       message += "<li>If it is greater than or equal to 1 BTC, you will get a 15% bonus!</li></ul>"
-      flash.now[:notice] = message.html_safe
+      flash.now[:notice] << message.html_safe
     end
   end
 

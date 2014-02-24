@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(:version => 20140224210650) do
     t.integer  "protocol_id",                                                  :default => 0
     t.integer  "ad_group_id"
     t.decimal  "avg_position",                  :precision => 16, :scale => 8, :default => 0.0
-    t.time     "is_deleted"
+    t.datetime "deleted_at"
   end
 
   add_index "ads", ["ad_group_id"], :name => "index_ads_on_ad_group_id"
