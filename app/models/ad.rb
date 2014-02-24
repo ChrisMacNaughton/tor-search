@@ -1,6 +1,8 @@
 # encoding: utf-8
 # a specific ad that can be shown
 class Ad < ActiveRecord::Base
+  acts_as_paranoid
+
   PROTOCOL_ID_HTTP = 0
   PROTOCOL_ID_HTTPS = 1
   PROTOCOL_IDS = [PROTOCOL_ID_HTTPS , PROTOCOL_ID_HTTP]

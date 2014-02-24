@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140223010640) do
+ActiveRecord::Schema.define(:version => 20140224210650) do
 
   create_table "ad_campaigns", :force => true do |t|
     t.integer  "advertiser_id"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20140223010640) do
     t.integer  "protocol_id",                                                  :default => 0
     t.integer  "ad_group_id"
     t.decimal  "avg_position",                  :precision => 16, :scale => 8, :default => 0.0
+    t.time     "is_deleted"
   end
 
   add_index "ads", ["ad_group_id"], :name => "index_ads_on_ad_group_id"
