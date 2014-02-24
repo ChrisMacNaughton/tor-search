@@ -37,6 +37,7 @@ class Tracker
   end
 
   def self.track!(options, uri)
+    return true unless Rails.env.production?
     http = Net::HTTP.new(uri.host, uri.port)
 
     if uri.scheme == 'https'

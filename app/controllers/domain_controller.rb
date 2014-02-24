@@ -10,7 +10,7 @@ class DomainController < ApplicationController
   # rubocop:disable MethodLength
   def submit
     domain_params = params[:domain]
-    domain_params.merge!(pending: true)
+
     @domain = Domain.new(domain_params)
     @domain.use_captcha!
     unless verified_request?
@@ -19,7 +19,7 @@ class DomainController < ApplicationController
     end
 
     if @domain.valid?
-      @domain.save
+      Domain.add_later(@domain.path)
       flash.notice = 'Thank you for your submission'
       flash.notice += ' it will be reviewed shortly!'
       redirect_to add_link_path
