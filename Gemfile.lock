@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/byroot/rails3_acts_as_paranoid.git
+  revision: 908894323aad480c5c2746aaa191f6ac7e379b8c
+  specs:
+    acts_as_paranoid (0.0.0)
+      activerecord (~> 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -262,6 +269,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  acts_as_paranoid!
   acts_as_textcaptcha (~> 3.0.10)
   airbrake
   angularjs-rails-resource
