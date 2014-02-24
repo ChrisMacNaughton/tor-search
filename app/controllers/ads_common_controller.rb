@@ -18,8 +18,8 @@ class AdsCommonController < ApplicationController
 
   def set_campaigns_up
     return if current_advertiser.nil?
-    @advertiser_campaigns = current_advertiser.ad_campaigns.order(:name)
-    @advertiser_ad_groups = current_advertiser.ad_groups.order(:name).group_by(&:ad_campaign_id)
+    @advertiser_campaigns = current_advertiser.ad_campaigns.order(:name, :created_at)
+    @advertiser_ad_groups = current_advertiser.ad_groups.order(:name, :created_at).group_by(&:ad_campaign_id)
   end
 
   def track

@@ -19,7 +19,7 @@ class AdsController < AdsCommonController
       @ads = @ads.where(ad_group_id: params[:ad_group_id])
       @ad_group = current_advertiser.ad_groups.where(id: params[:ad_group_id]).first
     end
-    @ads = @ads.order('approved desc').order('title asc').includes(:ad_group, :ad_campaign)
+    @ads = @ads.order('approved desc').order('title asc, created_at asc').includes(:ad_group, :ad_campaign)
   end
 
   def new

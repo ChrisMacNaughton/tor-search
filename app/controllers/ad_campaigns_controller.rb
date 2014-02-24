@@ -5,7 +5,7 @@ class AdCampaignsController < AdsCommonController
     page = (params[:page] || 1).to_i
     per_page = (10).to_i
     @campaigns = @advertiser_campaigns \
-      .page(page).per_page(per_page)
+      .page(page).per_page(per_page).order(:name, :created_at)
   end
 
   def show
