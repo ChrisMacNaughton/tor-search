@@ -14,11 +14,13 @@ TorSearch::Application.routes.draw do
   get 'graphs/daily' => 'graphs#daily', as: :daily
   get 'graphs/unique' => 'graphs#unique', as: :unique
 
+  get '/search' => 'search#search', as: :search
   get 'r' => 'search#redirect', as: :redirect
   get 'flag' => 'domain#flag_page', as: :content_flag
   post 'flag' => 'domain#create_flag', as: :flags
   scope '(:locale)', locale: /en/ do
     devise_for :advertisers
+    get '/search' => 'search#search', as: :search
     get 'add-domain' => 'domain#new', as: :add_link
     post 'add-domain' => 'domain#submit', as: :post_new_link
 

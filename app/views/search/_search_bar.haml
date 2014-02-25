@@ -1,6 +1,6 @@
 -searched ||= ''
 -disabled ||= false
-=form_tag("/#{I18n.locale}", method: "get", id: 'search', class: 'form-search') do
+=form_tag("/#{I18n.locale}/search", method: "get", id: 'search', class: 'form-search') do
   .input-append.span10
     =text_field_tag 'q', searched, class: 'search_bar search-query span6', id: "appendedInputButtons", autofocus: "autofocus", disabled: disabled
     =hidden_field_tag 'j', 'f', id: 'j'
