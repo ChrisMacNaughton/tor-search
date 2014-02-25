@@ -56,7 +56,7 @@
           %td= link_to ad.ad_campaign.name, campaign_path(ad.ad_campaign)
           %td= link_to ad.ad_group.name, ad.ad_group
           %td= ad.status
-          %td= number_to_human ad.ad_clicks_count
-          %td= number_to_human ad.ad_views_count
+          %td= number_with_delimiter ad.ad_clicks_count
+          %td= number_with_delimiter ad.ad_views_count
           %td= number_to_percentage(ad.ctr, precision: 2)
           %td= number_with_precision(ad.avg_position, precision: 2)

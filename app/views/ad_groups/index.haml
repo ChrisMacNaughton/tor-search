@@ -28,8 +28,8 @@
               =link_to pause_icon, ad_group_toggle_path(group)
           %td= link_to group.name, ad_group_path(group)
           %td= group.paused? ? "Paused" : "Active"
-          %td= number_to_human group.clicks_count
-          %td= number_to_human group.views_count
+          %td= number_with_delimiter group.clicks_count
+          %td= number_with_delimiter group.views_count
           %td= number_to_percentage(group.ctr * 100, precision: 4)
           %td= number_with_precision(group.avg_position, precision: 2)
 .row
