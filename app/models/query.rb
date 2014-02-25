@@ -7,6 +7,8 @@ class Query < ActiveRecord::Base
   has_many :searches
   validates :term, uniqueness: true
 
+  EXCLUDED_WORDS = %w(porn pedo porno hard candy lolita cp)
+
   def self.trending
     res = ActiveRecord::Base.connection.execute trending_query
     trending = []
@@ -27,7 +29,7 @@ class Query < ActiveRecord::Base
         FROM last_6_hour_query_counts
         LEFT JOIN last_12_hour_query_counts ON last_12_hour_query_counts.query_id = last_6_hour_query_counts.query_id
       )
-      SELECT count_6_hour, queries.term FROM differences LEFT JOIN queries ON differences.query_id = queries.id WHERE queries.term NOT IN ('porn', 'pedo','porno','hard candy') ORDER BY difference desc LIMIT 5
+      SELECT count_6_hour, queries.term FROM differences LEFT JOIN queries ON differences.query_id = queries.id WHERE queries.term NOT IN ('#{EXCLUDED_WORDS.join("', '")}') ORDER BY difference desc LIMIT 5
     SQL
   end
 end
