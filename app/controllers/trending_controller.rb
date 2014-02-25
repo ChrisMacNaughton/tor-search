@@ -7,7 +7,12 @@ class TrendingController < ApplicationController
   end
 
   def search_graph
-    keywords = params[:q].map{|q|q.downcase.strip}.reject(&:empty?)
+    keywords = params[:q].map{|q|q.downcase.strip}.reject(&:empty?)[0..2]
+    if current_advertiser
+      @mixpanel_tracker.track(current_advertiser.id, 'Checked Trending', {keywords: keywords})
+    else
+      @mixpanel_tracker.track('Guest', 'Checked Trending', {keywords: keywords})
+    end
 
     g = Gruff::Line.new('600x200')
 
