@@ -16,11 +16,13 @@ class AdGroupsController < AdsCommonController
   end
 
   def show
+    @show_deleted = true
     @ad_group = current_advertiser.ad_groups.where(id: params[:id]).first
     @campaign = @ad_group.ad_campaign
 
     @ads = @ad_group.ads.order('approved desc').order(:title, :created_at)
-    if params[:show_deleted]
+    if params[:show_deleted] == 'true'
+      @show_deleted = true
       @ads = @ads.with_deleted
     end
   end

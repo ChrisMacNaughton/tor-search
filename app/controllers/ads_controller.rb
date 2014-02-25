@@ -3,6 +3,7 @@ class AdsController < AdsCommonController
   before_filter :authenticate_advertiser!, except: [:advertising]
 
   def index
+    @show_deleted = false
     page = (params[:page] || 1).to_i
     per_page = (20).to_i
     @ads = current_advertiser.ads.page(page) \
@@ -18,7 +19,8 @@ class AdsController < AdsCommonController
       @ads = @ads.where(ad_group_id: params[:ad_group_id])
       @ad_group = current_advertiser.ad_groups.where(id: params[:ad_group_id]).first
     end
-    if params[:show_deleted]
+    if params[:show_deleted] == 'true'
+      @show_deleted = true
       @ads = @ads.with_deleted
     end
     @ads = @ads.order('approved desc').order('title asc, created_at asc').includes(:ad_group, :ad_campaign)
@@ -148,7 +150,7 @@ class AdsController < AdsCommonController
   def delete
     ad = current_advertiser.ads.where(id: params[:ad_id]).first
     if ad.destroy
-      flash.alert << "Successfully removed your ad"
+      flash.alert << "Successfully hid your ad"
     else
       flash.alert << "Something went wrong, please try again later"
     end
@@ -158,7 +160,7 @@ class AdsController < AdsCommonController
   def restore
     ad = current_advertiser.ads.with_deleted.where(id: params[:ad_id]).first
     if ad.restore
-      flash.notice << "Successfully removed your ad"
+      flash.notice << "Successfully unhid your ad"
     else
       flash.alert << "Something went wrong, please try again later"
     end
