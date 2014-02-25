@@ -20,6 +20,9 @@ class AdGroupsController < AdsCommonController
     @campaign = @ad_group.ad_campaign
 
     @ads = @ad_group.ads.order('approved desc').order(:title, :created_at)
+    if params[:show_deleted]
+      @ads = @ads.with_deleted
+    end
   end
 
   def new

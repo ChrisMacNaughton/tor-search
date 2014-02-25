@@ -30,7 +30,10 @@
             %ul.unstyled
               -if ad.destroyed?
                 %li
-                  =link_to restore_icon, '#', class: 'btn btn-warning', title: 'Restore Ad'
+                  =form_for ad, as: :ad, url: ad_restore_path(ad) do |f|
+                    =f.hidden_field :id
+                    %button{type: 'submit', class: 'btn btn-warning'}
+                      = restore_icon
               -else
                 %li
                   =link_to edit_icon, edit_ad_path(ad), class: 'btn btn-info', title: 'Edit Ad'
@@ -41,7 +44,7 @@
                     -else
                       =link_to pause_icon, ad_toggle_path(ad), class: 'btn', title: 'Disable Ad'
                 %li
-                  =form_for ad, as: :keyword, url: ad_delete_path(ad) do |f|
+                  =form_for ad, as: :ad, url: ad_delete_path(ad) do |f|
                     =f.hidden_field :delete, value: true
                     =f.hidden_field :id
                     %button{type: 'submit', class: 'btn btn-warning'}

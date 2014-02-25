@@ -173,6 +173,7 @@ class Ad < ActiveRecord::Base
         ) as averages
         where averages.ad_id = ads.id
       )
+      WHERE is_deleted IS NULL
       SQL
     )
   end

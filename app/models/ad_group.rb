@@ -13,30 +13,32 @@ class AdGroup < ActiveRecord::Base
       WITH ad_stats AS (
         select sum(ad_views_count) as views_count, sum(ad_clicks_count) as clicks_count, ad_group_id
         from ads
+        WHERE ads.deleted_at IS NULL
         group by ad_group_id
       ), averages AS (
         SELECT AVG(position) as avg_position, ads.ad_group_id
         FROM ad_views
         LEFT JOIN ads ON ad_views.ad_id = ads.id
+        WHERE ads.deleted_at IS NULL
         GROUP BY ads.ad_group_id
       )
-      UPDATE ad_groups SET clicks_count = (
+      UPDATE ad_groups SET clicks_count = COALESCE((
         select clicks_count from ad_stats
         WHERE ad_stats.ad_group_id = ad_groups.id
-      ), views_count = (
+      ), 0), views_count = COALESCE((
         select views_count from ad_stats
         WHERE ad_stats.ad_group_id = ad_groups.id
-      ), ctr = (
+      ), 0), ctr = COALESCE((
         CASE WHEN COALESCE(views_count, 0) > 0
         THEN COALESCE(clicks_count, 0) / views_count::decimal
         ELSE
         0
         END
-      ), avg_position = (
+      ), 0), avg_position = COALESCE((
         SELECT avg_position
         FROM averages
         WHERE averages.ad_group_id = ad_groups.id
-      )::decimal
+      )::decimal, 0.0)
     SQL
   end
 end

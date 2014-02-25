@@ -16,7 +16,13 @@ class ApplicationController < ActionController::Base
   before_filter :notify_about_promotions
 
   def setup_flash
+    if flash[:notice].is_a? String
+      flash[:notice] = [flash[:notice]]
+    end
     flash[:notice] ||= []
+    if flash[:alert].is_a? String
+      flash[:alert] = [flash[:alert]]
+    end
     flash[:alert] ||= []
     flash.now[:notice] ||= flash[:notice]
     flash.now[:alert] ||= flash[:alert]

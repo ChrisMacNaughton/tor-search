@@ -36,17 +36,23 @@ class AdGroupKeyword < ActiveRecord::Base
         FROM (
           SELECT count(keyword_id) as click_count, keyword_id
           FROM ad_clicks
+          LEFT JOIN ads
+          ON ads.id = ad_clicks.ad_id
+          WHERE ads.deleted_at IS NULL
           GROUP BY keyword_id
         ) as click_data
         WHERE click_data.keyword_id = ad_group_keywords.keyword_id
       ), 0), views = COALESCE((
-        SELECT click_data.views_count
+        SELECT view_data.views_count
         FROM (
           SELECT count(keyword_id) as views_count, keyword_id
           FROM ad_views
+          LEFT JOIN ads
+          ON ads.id = ad_views.ad_id
+          WHERE ads.deleted_at IS NULL
           GROUP BY keyword_id
-        ) as click_data
-        WHERE click_data.keyword_id = ad_group_keywords.keyword_id
+        ) as view_data
+        WHERE view_data.keyword_id = ad_group_keywords.keyword_id
       ), 0)
       SQL
     )

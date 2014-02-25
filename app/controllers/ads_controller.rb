@@ -155,4 +155,13 @@ class AdsController < AdsCommonController
     redirect_to :back
   end
 
+  def restore
+    ad = current_advertiser.ads.with_deleted.where(id: params[:ad_id]).first
+    if ad.restore
+      flash.notice << "Successfully removed your ad"
+    else
+      flash.alert << "Something went wrong, please try again later"
+    end
+    redirect_to :back
+  end
 end
