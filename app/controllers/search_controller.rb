@@ -60,7 +60,10 @@ class SearchController < ApplicationController
 
       @search_id = s.id
       @instant = true
-      if params[:j] != 't'
+
+      if params[:j] == 't'
+        s.update_attribute(:js_enabled, true)
+      else
         s.update_attribute(:js_enabled, false)
         @instant = false
         @instant_matches = Matcher.new(@search.term, request).execute || []

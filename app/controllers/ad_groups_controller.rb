@@ -61,7 +61,7 @@ class AdGroupsController < AdsCommonController
     end
     model_name.paused = !model_name.paused
     if model_name.save
-      @mixpanel_tracker.track(current_advertiser.id, 'toggled an Ad Group', {keyword: {id: model_name.id}}, visitor_ip_address)
+      @mixpanel_tracker.track(current_advertiser.id, 'toggled an Ad Group', {model: {id: model_name.id}}, visitor_ip_address)
       flash.notice << 'Ad Group Toggled'
     else
       Rails.logger.info { model_name.errors }
