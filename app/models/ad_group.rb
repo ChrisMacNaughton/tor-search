@@ -12,9 +12,9 @@ class AdGroup < ActiveRecord::Base
     AdGroup.connection.execute <<-SQL
       WITH ad_stats AS (
         select sum(ad_views_count) as views_count, sum(ad_clicks_count) as clicks_count, ad_group_id
-        from ads
+        FROM ads
         WHERE ads.deleted_at IS NULL
-        group by ad_group_id
+        group by ads.ad_group_id
       ), averages AS (
         SELECT AVG(position) as avg_position, ads.ad_group_id
         FROM ad_views

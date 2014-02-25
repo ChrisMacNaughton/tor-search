@@ -30,30 +30,28 @@ class AdGroupKeyword < ActiveRecord::Base
   def self.refresh_counts!
     AdGroupKeyword.connection.execute(
       <<-SQL
-      UPDATE ad_group_keywords
-      SET clicks = COALESCE((
-        SELECT click_data.click_count
-        FROM (
-          SELECT count(keyword_id) as click_count, keyword_id
-          FROM ad_clicks
-          LEFT JOIN ads
-          ON ads.id = ad_clicks.ad_id
-          WHERE ads.deleted_at IS NULL
-          GROUP BY keyword_id
-        ) as click_data
-        WHERE click_data.keyword_id = ad_group_keywords.keyword_id
-      ), 0), views = COALESCE((
-        SELECT view_data.views_count
-        FROM (
-          SELECT count(keyword_id) as views_count, keyword_id
-          FROM ad_views
-          LEFT JOIN ads
-          ON ads.id = ad_views.ad_id
-          WHERE ads.deleted_at IS NULL
-          GROUP BY keyword_id
-        ) as view_data
-        WHERE view_data.keyword_id = ad_group_keywords.keyword_id
-      ), 0)
+      WITH click_counts AS (
+  SELECT sum(ad_clicks.keyword_id) as clicks_count, ad_clicks.keyword_id as keyword_id
+  FROM ad_clicks
+  LEFT JOIN ads
+  ON ad_clicks.ad_id = ads.id
+  WHERE ads.deleted_at IS NULL
+  GROUP BY ad_clicks.keyword_id
+), view_counts AS (
+  SELECT sum(ad_views.keyword_id) as views_count, ad_views.keyword_id as keyword_id
+  FROM ad_views
+  LEFT JOIN ads
+  ON ad_views.ad_id = ads.id
+  WHERE ads.deleted_at IS NULL
+  GROUP BY ad_views.keyword_id
+), keyword_stats AS (
+  SELECT click_counts.clicks_count as clicks, view_counts.views_count AS views, view_counts.keyword_id
+  FROM click_counts
+  JOIN view_counts ON view_counts.keyword_id = click_counts.keyword_id
+)
+UPDATE ad_group_keywords
+  SET clicks = COALESCE((SELECT clicks FROM keyword_stats WHERE keyword_stats.keyword_id = ad_group_keywords.keyword_id), 0),
+  views = COALESCE((SELECT views FROM keyword_stats WHERE keyword_stats.keyword_id = ad_group_keywords.keyword_id), 0)
       SQL
     )
   end
