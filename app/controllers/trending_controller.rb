@@ -1,6 +1,6 @@
 class TrendingController < ApplicationController
   def index
-    @trending_searches = read_through_cache('trending_searches', 3.hours) do
+    @trending_searches = read_through_cache('trending_searches', 1.hour) do
       Query.trending
     end
     @max = 0
