@@ -9,7 +9,7 @@ class AdCampaignsController < AdsCommonController
   end
 
   def show
-    @campaign = AdCampaign.find(params[:id])
+    redirect_to campaign_ad_groups_path(params[:id]) and return
   end
 
   def new
