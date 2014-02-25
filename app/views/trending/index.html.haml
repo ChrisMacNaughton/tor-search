@@ -1,0 +1,8 @@
+%h1 Trending
+%p Compare up to 3 queries at a time
+=form_tag(trending_search_path, method: "get", id: 'search', class: 'form-search') do
+  .input-append.span10
+    =text_field_tag 'q[]', '', class: 'span2', placeholder: '1st term'
+    =text_field_tag 'q[]', '', class: 'span2', placeholder: '2nd term'
+    =text_field_tag 'q[]', '', class: 'span2', placeholder: '3rd term', id: "appendedInputButtons"
+    =button_tag "<i class='icon-search'></i>".html_safe, class: 'btn', type: "submit", name: ''

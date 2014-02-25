@@ -1,0 +1,12 @@
+%h1 Trending
+.row
+  =form_tag(trending_search_path, method: "get", id: 'search', class: 'form-search') do
+    .input-append.span10
+      =text_field_tag 'q[]', params[:q][0], class: 'span2'
+      =text_field_tag 'q[]', params[:q][1], class: 'span2'
+      =text_field_tag 'q[]', params[:q][2], class: 'span2', id: "appendedInputButtons"
+      =button_tag "<i class='icon-search'></i>".html_safe, class: 'btn', type: "submit", name: ''
+%hr/
+.row
+  .trending_graph
+    <img src="#{ search_graph_path(q: params[:q]) }"/>
