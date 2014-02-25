@@ -30,15 +30,15 @@ class AdGroupKeyword < ActiveRecord::Base
   def self.refresh_counts!
     AdGroupKeyword.connection.execute(
       <<-SQL
-      WITH click_counts AS (
-  SELECT sum(ad_clicks.keyword_id) as clicks_count, ad_clicks.keyword_id as keyword_id
+WITH click_counts AS (
+  SELECT count(ad_clicks.keyword_id) as clicks_count, ad_clicks.keyword_id as keyword_id
   FROM ad_clicks
   LEFT JOIN ads
   ON ad_clicks.ad_id = ads.id
   WHERE ads.deleted_at IS NULL
   GROUP BY ad_clicks.keyword_id
 ), view_counts AS (
-  SELECT sum(ad_views.keyword_id) as views_count, ad_views.keyword_id as keyword_id
+  SELECT count(ad_views.keyword_id) as views_count, ad_views.keyword_id as keyword_id
   FROM ad_views
   LEFT JOIN ads
   ON ad_views.ad_id = ads.id
