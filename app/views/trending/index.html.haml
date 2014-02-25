@@ -1,8 +1,28 @@
 %h1 Trending
-%p Compare up to 3 queries at a time
-=form_tag(trending_search_path, method: "get", id: 'search', class: 'form-search') do
-  .input-append.span10
-    =text_field_tag 'q[]', '', class: 'span2', placeholder: '1st term'
-    =text_field_tag 'q[]', '', class: 'span2', placeholder: '2nd term'
-    =text_field_tag 'q[]', '', class: 'span2', placeholder: '3rd term', id: "appendedInputButtons"
-    =button_tag "<i class='icon-search'></i>".html_safe, class: 'btn', type: "submit", name: ''
+.row
+  .span5
+    .row
+      %h2 Right Now
+    .row
+      -if @trending_searches.any?
+        %dl
+        -@trending_searches.each do |search|
+          %dt= link_to search[:term], trending_search_path(q: [search[:term]])
+          %dd
+            .row
+              .span2
+                .progress.progress-striped
+                  .bar{style: "width: #{(search[:volume].to_f / @max.to_f) * 100}%"}
+              .span2
+                %strong #{search[:volume]}+
+                Searches
+      -else
+        %p Nothing found :(
+  .span7
+    %p Compare up to 3 queries at a time
+    =form_tag(trending_search_path, method: "get", id: 'search', class: 'form-search') do
+      .input-append.span10
+        =text_field_tag 'q[]', '', class: 'span2', placeholder: '1st term'
+        =text_field_tag 'q[]', '', class: 'span2', placeholder: '2nd term'
+        =text_field_tag 'q[]', '', class: 'span2', placeholder: '3rd term', id: "appendedInputButtons"
+        =button_tag "<i class='icon-search'></i>".html_safe, class: 'btn', type: "submit", name: ''

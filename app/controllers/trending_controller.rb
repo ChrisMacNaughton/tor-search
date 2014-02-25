@@ -1,5 +1,11 @@
 class TrendingController < ApplicationController
   def index
+    @trending_searches = read_through_cache('trending_searches', 3.hours) do
+      Query.trending
+    end
+    @max = 0
+    @trending_searches.each { |s| @max = s[:volume].to_f if s[:volume].to_f > @max }
+    @max *= 1.2
   end
 
   def search
@@ -42,7 +48,10 @@ class TrendingController < ApplicationController
       labels.each_with_index do |date, index|
         d = date.strftime('%Y-%m')
         g.labels[index] = date.strftime('%b %Y')
-        searches_data << searches[d]
+        searches_data << if searches[d]
+          searches[d]
+        else 0
+        end
       end
 
       g.data(keyword.titleize, searches_data)
