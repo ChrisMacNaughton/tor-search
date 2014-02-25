@@ -16,10 +16,10 @@ class SearchController < ApplicationController
   end
   # rubocop:disable MethodLength
   def search
-    if params[:q].empty?
+    if params[:q].nil? || params[:q].empty?
       track
       @search = SolrSearch.new
-      render :index and return
+      redirect_to :root and return
     end
     @mixpanel_tracker.track(current_advertiser.id, 'searched', {term: params[:q]}, visitor_ip_address) \
       if current_advertiser
