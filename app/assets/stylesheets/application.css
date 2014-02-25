@@ -22,6 +22,7 @@
  *= require base/main
  *= require keyword_tool
  *= require ads
+ *= require trending
  */
 #footer_home {
   vertical-align: middle;

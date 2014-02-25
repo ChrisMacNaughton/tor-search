@@ -36,8 +36,11 @@ TorSearch::Application.routes.draw do
     get 'policies' => 'static#policies', as: :policies
     get '/humans.txt' => 'static#humans'
     get '/keyword_tool' => 'keyword_tool#index'
-  end
 
+    get '/trending' => 'trending#index'
+    get '/trending/explore' => 'trending#search', as: :trending_search
+  end
+  get '/trending/graph' => 'trending#search_graph', as: :search_graph
   scope 'ads' do
     resources :campaigns, controller: :ad_campaigns do
       resources :ad_groups
