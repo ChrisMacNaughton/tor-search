@@ -44,8 +44,7 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
   end
 
   def setup_mixpanel_tracker
-    if Rails.env.test?
-
+    if Rails.env.test? || (params[:controller] =~ /admin/)
       @mixpanel_tracker = Class.new do
         def track(str1, str2 = 'action', hash = {}, ip = ''); end
       end.new if current_advertiser
