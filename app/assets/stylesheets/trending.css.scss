@@ -5,5 +5,5 @@
 .trending_graph {
   width: 940px;
   height: 400px;
-  background-image: url('loading-graph.png');
+  background-image: asset_url('loading-graph.png', 'image');
 }

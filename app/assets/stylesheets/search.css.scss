@@ -73,12 +73,12 @@
 .logo {
   height: 64px;
   width: 188px;
-  background-image: url('<%=asset_path 'logo.png' %>');
+  background-image: asset_url('logo.png', 'image');
 }
 .logo-large {
   width: 486px;
   height: 166px;
-  background-image: url('<%=asset_path 'logo-large.png' %>');
+  background-image: asset_url('logo-large.png', 'image');
 }
 
 .highlight {
