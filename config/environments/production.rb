@@ -24,15 +24,11 @@ TorSearch::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
-  redis_file = Rails.root.join 'config', 'redis.yml'
-  redis_yaml = redis_file.exist? ? YAML::load_file(redis_file) : {}
-  redis_config = HashWithIndifferentAccess.new(redis_yaml)[Rails.env] || {}
-  config.cache_store = :file_store, "/var/rails/tor_search/tmp/cache"
-  # if redis_config.blank?
-  #   config.cache_store = :file_store, "/var/rails/tor_search/tmp/cache"
-  # else
-  #   config.cache_store = :redis_store, redis_config
-  # end
+  if config.redis.blank?
+    config.cache_store = :file_store, "/var/rails/tor_search/tmp/cache"
+  else
+    config.cache_store = :redis_store, config.redis
+  end
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
