@@ -12,7 +12,7 @@ class GraphsController < ApplicationController
 
     ((3.days.ago - beginning) / 60 / 60/ 24).to_i.times do |i|
       wk = beginning + i.days
-      count = read_through_cache("searches_by_day_#{wk.strftime('%m/%d/%Y')}", 100.years) do
+      count = read_through_cache("searches_by_day_#{wk.strftime('%m/%d/%Y')}", 365.days) do
         Search \
           .where(created_at: ((wk-3.days)..(wk + 3.days) )) \
           .count(:id) / 7.0
