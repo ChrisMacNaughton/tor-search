@@ -20,7 +20,7 @@ class TrendingController < ApplicationController
       @mixpanel_tracker.track('Guest', 'Checked Trending', {keywords: keywords})
     end
 
-    g = Gruff::Line.new('600x200')
+    g = Gruff::Line.new('940x400')
 
     g.title = "Searches for #{keywords.join(', ')}"
     green = '#00ff00'
