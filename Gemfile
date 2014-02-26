@@ -77,3 +77,7 @@ gem 'airbrake'
 gem "acts_as_textcaptcha", "~> 3.0.10"
 # Use Capistrano for deployment
 gem 'capistrano', '~> 2.15.5', group: :development
+
+group :production do
+  gem "redis-rails", "~> 3.2.3"
+end

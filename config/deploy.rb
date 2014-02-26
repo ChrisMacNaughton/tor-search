@@ -67,6 +67,7 @@ namespace :deploy do
   task :symlink_shared do
     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{deploy_to}/shared/config/solr.yml #{release_path}/config/solr.yml"
+    run "ln -nfs #{deploy_to}/shared/config/redis.yml #{release_path}/config/redis.yml"
   end
 
   namespace :delayed_job do
