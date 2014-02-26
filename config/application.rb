@@ -32,10 +32,6 @@ module TorSearch
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
-    redis_file = Rails.root.join 'config', 'redis.yml'
-    redis_yaml = redis_file.exist? ? YAML::load_file(redis_file) : {}
-    config.redis = HashWithIndifferentAccess.new(redis_yaml)[Rails.env] || {}
-
     config.mixpanel_token = '0ae5b6c02ed62994748ef62674d29d9e'
 
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
