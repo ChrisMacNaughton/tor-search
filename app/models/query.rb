@@ -23,7 +23,7 @@ class Query < ActiveRecord::Base
       WITH last_6_hour_query_counts AS (
         SELECT count(query_id) AS counts, query_id FROM searches WHERE created_at BETWEEN '#{6.hours.ago.to_s(:db)}' AND '#{0.hours.ago.to_s(:db)}' GROUP BY query_id
       ), last_12_hour_query_counts AS (
-        SELECT count(query_id) AS counts, query_id FROM searches WHERE created_at BETWEEN '#{12.hours.ago.to_s(:db)}' AND '#{6.hours.ago.to_s(:db)}' GROUP BY query_id
+        SELECT count(query_id) AS counts, query_id FROM searches WHERE created_at BETWEEN '#{30.hours.ago.to_s(:db)}' AND '#{24.hours.ago.to_s(:db)}' GROUP BY query_id
       ), differences AS (
         select last_6_hour_query_counts.counts AS count_6_hour, last_12_hour_query_counts.counts AS count_12_hour, (COALESCE(last_6_hour_query_counts.counts, 0) - COALESCE(last_12_hour_query_counts.counts, 0)) AS difference, last_6_hour_query_counts.query_id AS query_id
         FROM last_6_hour_query_counts
