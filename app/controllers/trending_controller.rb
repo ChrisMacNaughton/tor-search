@@ -23,8 +23,19 @@ class TrendingController < ApplicationController
     g = Gruff::Line.new('600x200')
 
     g.title = "Searches for #{keywords.join(', ')}"
-
-    #g.theme_greyscale
+    green = '#00ff00'
+    grey = '#333333'
+    orange = '#ff5d00'
+    red = '#f61100'
+    white = 'white'
+    light_grey = '#999999'
+    black = 'black'
+    colors = [green, grey, orange, red, white, light_grey, black]
+    g.theme = {
+      colors: colors,
+      marker_color: 'blue',
+      background_colors: %w(white white)
+    }
     start = DateTime.parse('September 1, 2013').to_date
     months = ((Date.today - start).to_f / 30).to_i + 1
     labels = []
@@ -39,11 +50,12 @@ class TrendingController < ApplicationController
 
     keywords.each do |keyword|
       searches_data = []
-      searches = Search.joins(:query) \
-        .where('lower(term) like ?', "%#{keyword}%") \
-        .group("to_char(searches.created_at, 'YYYY-MM')") \
-        .order("to_char(searches.created_at, 'YYYY-MM')").count
-
+      searches = read_through_cache("searches_for_#{keyword}", 1.week) do
+        Search.joins(:query) \
+          .where('lower(term) like ?', "%#{keyword}%") \
+          .group("to_char(searches.created_at, 'YYYY-MM')") \
+          .order("to_char(searches.created_at, 'YYYY-MM')").count
+      end
 
       labels.each_with_index do |date, index|
         d = date.strftime('%Y-%m')
