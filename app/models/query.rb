@@ -7,7 +7,7 @@ class Query < ActiveRecord::Base
   has_many :searches
   validates :term, uniqueness: true
 
-  EXCLUDED_WORDS = %w(porn pedo porno hard candy lolita cp)
+  EXCLUDED_WORDS = %w( porn pedo porno hard candy lolita cp ) << 'child porn'
 
   def self.trending
     res = ActiveRecord::Base.connection.execute trending_query
