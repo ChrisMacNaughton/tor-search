@@ -16,7 +16,7 @@ class AdGroupsController < AdsCommonController
   end
 
   def show
-    @show_deleted = true
+    @show_deleted = false
     @ad_group = current_advertiser.ad_groups.where(id: params[:id]).first
     @campaign = @ad_group.ad_campaign
 
