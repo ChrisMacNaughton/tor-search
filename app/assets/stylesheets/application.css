@@ -23,24 +23,3 @@
  *= require ads
  *= require trending
  */
-#footer_home {
-  vertical-align: middle;
-  color: #333;
-  background: #fbfbfb;
-  border-top: 1px solid #e5e5e5;
-  bottom: 0;
-  font-size: 13px;
-  left: 0;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  width: 100%;
-}
-#footer_home_left {
-  float: left;
-  padding-left: 0;
-  color: #747474;
-}
-#footer_home_right {
-  float: right;
-  padding-right: 15px;
-}

@@ -1,12 +1,19 @@
-=render partial: 'application_header'
-%body
-  .container
-    =render partial: 'application_nav'
-    =render partial: 'application_alerts'
-    .row
-      .span12
-        = yield
-  =render partial: 'application_footer'
-  -if current_advertiser.nil? || current_advertiser.wants_js
-    = javascript_include_tag "application"
-  =yield(:javascripts)
+!!! 5
+%html
+  %head
+    %title
+      =yield(:title)
+      TorSearch
+    %meta{property: 'og:image', content: "#{request.protocol}#{request.host_with_port}#{ asset_path 'logo-large.png' }"}
+    %meta{property: 'og:title', content: 'TorSearch | Search Hidden Services'}
+    %meta{property: 'og:type', content: 'company'}
+    %meta{property: 'og:url', content: "#{request.protocol}#{request.host_with_port}"}
+
+
+    = stylesheet_link_tag    "application", media: "all"
+    = #stylesheet_link_tag params[:controller], media: "all", "data-turbolinks-track" => true
+    = csrf_meta_tags
+    %link{rel: "me", href: "http://chrismacnaughton.com"}
+  %body
+    .container-fluid
+      =yield
