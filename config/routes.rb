@@ -7,7 +7,7 @@ TorSearch::Application.routes.draw do
 
   devise_for :admin
 
-  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+  #mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   get 'a/r' => 'search#ad_redirect', as: :ad_redirect
 

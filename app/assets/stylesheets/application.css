@@ -15,7 +15,6 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require bootstrap
- *= require shadowbox
  *= require_self
  *= require instant
  *= require search

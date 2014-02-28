@@ -12,9 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-
 //= require bootstrap
-//= require shadowbox
 //= require instant
 //= require search
 
