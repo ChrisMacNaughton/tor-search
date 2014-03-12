@@ -4,6 +4,6 @@
       =image_tag asset_path('logo-large.png'), alt: 'TorSearch', class: 'img-responsive'
 .row
   .search
-    =render partial: 'search_bar'
+    =render partial: 'search_bar', locals: {disabled: !@search.errors.empty? }
 .ad-banner
   =render partial: 'home_page_banner'

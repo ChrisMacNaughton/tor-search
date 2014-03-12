@@ -12,6 +12,14 @@
       %span.input-group-addon#search-button
         %button.btn.btn-link{type: 'submit'}
           %span.glyphicon.glyphicon-search
+
+    -if @search.errors.empty?
+      %p.muted
+        =t 'search.around'
+        =number_with_precision @search.indexed, delimiter: ',', significant: true, precision: 2, strip_insignificant_zeros: true, separator: '.', locale: I18n.locale
+        =t 'search.pages_indexed'
+    -else
+      %p.muted Search is offline for the moment, we are looking into it
 =content_for :javascripts do
   :javascript
     $().ready(function(){
