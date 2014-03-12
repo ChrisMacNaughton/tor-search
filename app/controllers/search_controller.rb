@@ -96,7 +96,7 @@ class SearchController < ApplicationController
   def ad_redirect
     ad = Ad.where(id: params[:id]).first
     if ad.nil?
-      index && return if parms[:path].nil?
+      index && return if params[:path].nil?
       path = Base64.decode64(params[:path])
     else
       ad_click = AdClick \

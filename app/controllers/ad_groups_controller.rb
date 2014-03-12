@@ -38,7 +38,7 @@ class AdGroupsController < AdsCommonController
   def create
     @ad_group = AdGroup.new(params[:ad_group])
     @ad_group.advertiser_id = current_advertiser.id
-
+    @ad_group.name ||= "Default Campaign"
     if @ad_group.save
       @ad = Ad.new(params[:ad])
       @ad.ad_group_id = @ad_group.id

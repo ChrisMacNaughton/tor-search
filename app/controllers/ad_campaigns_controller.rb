@@ -19,6 +19,7 @@ class AdCampaignsController < AdsCommonController
   def create
     @campaign = AdCampaign.new(params[:ad_campaign])
     @campaign.advertiser = current_advertiser
+    @campaign.name ||= "Default Campaign"
     if @campaign.save
       flash.notice << "Your campaign has been created successfully!"
       redirect_to new_ad_group_path({campaign_id: @campaign.id})
