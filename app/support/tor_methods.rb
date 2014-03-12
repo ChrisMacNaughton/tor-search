@@ -35,4 +35,8 @@ module TorMethods
   def is_tor2web?
     request.headers['X_TOR2WEB'] == 'encrypted'
   end
+
+  def is_tor?
+    !!(request.host =~ /onion/)
+  end
 end
