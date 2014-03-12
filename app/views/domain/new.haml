@@ -1,13 +1,14 @@
-%h1 Submit a new URL
-
-=form_for @domain, builder: WithErrorFields, url: post_new_link_path do |f|
-  =hidden_field_tag :authenticity_token, form_authenticity_token
-  =f.label :path, "URL"
-  =f.text_field_with_error :path, placeholder: "xxx.onion", required: true
-  %br/
-  =textcaptcha_fields(f) do
-    .field
-      =f.label :spam_answer, @domain.spam_question
-      =f.text_field_with_error :spam_answer, value: '', required: true
-  %br/
-  =f.submit
+.row
+  .col-sm-8.col-sm-offset-2
+    %h1 Submit a new URL
+    =form_for @domain, builder: WithErrorFields, url: post_new_link_path, class: 'form-horizontal' do |f|
+      =hidden_field_tag :authenticity_token, form_authenticity_token
+      =f.label :path, "URL"
+      =f.text_field_with_error :path, placeholder: "xxx.onion", required: true, class: 'form-control'
+      %br/
+      =textcaptcha_fields(f) do
+        .field
+          =f.label :spam_answer, @domain.spam_question
+          =f.text_field_with_error :spam_answer, value: '', required: true, class: 'form-control'
+      %br/
+      =f.submit
