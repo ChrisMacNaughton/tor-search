@@ -83,7 +83,7 @@ class Ad < ActiveRecord::Base
 
     ad_group_ads = ad_groups.map(&:ads)
     return [] if ad_group_ads.nil?
-    advertisers = Advertiser.where(id: advertiser_ids)
+    advertisers = Advertiser.where(id: advertiser_ids).group_by(&:id)
     ads = []
     ad_group_ads.map do |ad_group|
       ad_options = ad_group.select do |ad|
@@ -95,7 +95,10 @@ class Ad < ActiveRecord::Base
       ad.bid = keyword.bid
       keyword = keywords.detect{|k| k.id = keyword.keyword_id}
       ad.keyword_id = keyword.id
-      advertiser = advertisers.detect{|a| ad.advertiser_id == a.id }
+
+      advertiser = advertisers[ad.advertiser_id].try(:first)
+
+      next if advertiser.nil?
 
       ads << ad unless advertiser.balance < ad.bid
     end

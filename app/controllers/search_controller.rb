@@ -110,7 +110,7 @@ class SearchController < ApplicationController
           bid_source = 'ad'
         else
           ad_click.keyword_id = params[:k]
-          cost = AdGroupKeyword.where(ad_group_id: ad.ad_group_id, keyword_id: params[:k]).first.try(:bid) || ad.ad_campaigns.default_bid
+          cost = AdGroupKeyword.where(ad_group_id: ad.ad_group_id, keyword_id: params[:k]).where('bid IS NOT NULL').first.try(:bid) || ad.ad_campaign.default_bid
           bid_source = 'keyword'
         end
         ad_click.save

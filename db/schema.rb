@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140224210650) do
+ActiveRecord::Schema.define(:version => 20140225015731) do
 
   create_table "ad_campaigns", :force => true do |t|
     t.integer  "advertiser_id"
@@ -290,5 +290,14 @@ ActiveRecord::Schema.define(:version => 20140224210650) do
     t.boolean  "paginated",     :default => false
     t.boolean  "js_enabled",    :default => false
   end
+
+  create_table "trending_searches", :force => true do |t|
+    t.integer  "query_id"
+    t.integer  "volume"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "trending_searches", ["query_id"], :name => "index_trending_searches_on_query_id"
 
 end
