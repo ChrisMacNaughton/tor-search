@@ -34,7 +34,8 @@
                 - if e[:link]
                   %p= e[:link].html_safe
                 %br/
-      =render partial: 'ad', locals: {ad: @ads[0], search: true, inline: true}
+      -if @ads.present?
+        =render partial: 'ad', locals: {ad: @ads[0], search: true, inline: true}
       .search-results
         -@search.records.each do |page|
           =render partial: 'page', locals: {page: page}
