@@ -19,7 +19,7 @@
       .row
         .col-md-8
           %h1
-            =link_to image_tag('logo.png'), root_path
+            =link_to image_tag('logo.png'), @header_path || campaigns_path
             %small
               Ads
         .col-md-4{style: 'margin-top: 25px;'}

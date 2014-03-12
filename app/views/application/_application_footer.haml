@@ -4,7 +4,7 @@
       %li
         =link_to "TorSearch", root_path
       %li
-        =link_to "Advertising", advertising_path
+        =link_to "Advertising", current_advertiser.nil? ? advertising_path : campaigns_path
       %li
         =link_to "Tor Hidden Service", 'http://kbhpodhnfxl3clb4.onion'
       %li
