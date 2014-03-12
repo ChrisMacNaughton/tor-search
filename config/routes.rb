@@ -7,7 +7,20 @@ TorSearch::Application.routes.draw do
 
   devise_for :admin
 
-  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+  #mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+
+  namespace 'admin' do
+    get '/' => 'dashboard#index'
+    resources 'advertisers' do
+      post 'credit' => 'advertisers#credit', as: :credit
+    end
+    get 'ads/pending' => 'ads#pending'
+    get 'ads/active' => 'ads#active'
+    resources 'ads' do
+      put 'toggle' => 'ads#toggle', as: :toggle
+      put 'update' => 'ads#update', as: :update
+    end
+  end
 
   get 'a/r' => 'search#ad_redirect', as: :ad_redirect
 

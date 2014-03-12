@@ -15,19 +15,19 @@
   -content.gsub!(s, '')
   -title.gsub!(s, '')
 .row
-  .page-listing.span8
+  .page-listing.col-sm-12
     .title
       %a.page-url{href: convert_to_proxy(page['url'])}
         = title.html_safe
       %a{href: content_flag_path(path: page['url'], search_id: @search_id)}
         %i.icon-flag
+    %span.path
+      = page['url'][0..60]
+      = "..." if page['url'].length > 60
     .description
       -if content.nil?
         No Description
       -else
         =content.html_safe
-    %span.path
-      = page['url'][0..60]
-      = "..." if page['url'].length > 60
       -#if include_more_links(@search_term)
         =# link_to "More from #{domain}", root_path(q: "#{@search_term} site:#{domain}")

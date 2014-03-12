@@ -8,7 +8,7 @@ non_onion_ad:
   ppc: true
   display_path: google.com
   line_1: This is an ad
-  line_2: for Google
+  line_2: for Google 1
   ad_group: ad_group_3
   advertiser: test_advertiser
   onion: false
@@ -22,7 +22,7 @@ secure_ad:
   ppc: true
   display_path: google.com
   line_1: This is an ad
-  line_2: for Google
+  line_2: for Google 2
   ad_group: ad_group_2
   advertiser: test_advertiser_2
   onion: false
@@ -36,8 +36,8 @@ ad:
   ppc: true
   display_path: google.com
   line_1: This is an ad
-  line_2: for Google
-  ad_group: ad_group_2
+  line_2: for Google 3
+  ad_group: ad_group_1
   advertiser: test_advertiser
   onion: true
 ad_2:
@@ -50,7 +50,7 @@ ad_2:
   ppc: true
   display_path: google.com
   line_1: This is an ad
-  line_2: for Google
+  line_2: for Google 4
   ad_group: ad_group_1
   advertiser: test_advertiser
   onion: true
@@ -64,7 +64,7 @@ unapproved_ad:
   ppc: true
   display_path: google.com
   line_1: This is an ad
-  line_2: for Google
+  line_2: for Google 5
   ad_group: ad_group_2
   advertiser: test_advertiser_2
   onion: false

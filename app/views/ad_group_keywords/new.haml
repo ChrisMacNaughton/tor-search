@@ -1,11 +1,15 @@
 -if @keywords
-  =form_tag '/ads/keywords', novalidate: true, class: 'form form-inline' do
+  =form_tag '/ads/keywords', novalidate: true, class: 'form-horizontal' do
     =hidden_field_tag :ad_group_id, @keywords.first.ad_group_id
+    %fieldset{disabled: true}
+      .form-group
+        =label_tag 'Keyword', 'Keyword', class: 'col-sm-3'
+        =text_field_tag '', 'Bid', class: 'form-control col-sm-8'
     -@keywords.each do |keyword|
       -word = keyword.keyword.word
-      =label_tag word
-      =text_field_tag "keyword[#{word}]", keyword.bid
-      %br/
+      .form-group
+        =label_tag word, word, class: 'col-sm-3'
+        =text_field_tag "keyword[#{word}]", keyword.bid, class: 'form-control col-sm-8'
     =submit_tag "Save", class: 'btn btn-success'
     %a.btn{href: campaigns_path} Cancel
 -else
@@ -24,6 +28,7 @@
 
       Enter one keyword per line.
     .row
-      =text_area_tag :keywords,'', {rows: 3, class: 'input-xxlarge', placeholder: 'Add your keywords here'}
+      .col-sm-8
+        =text_area_tag :keywords,'', {rows: 3, class: 'form-control', placeholder: 'Add your keywords here'}
     =submit_tag "Save", class: 'btn btn-success'
-    %a.btn{href: campaigns_path} Cancel
+    %a.btn.btn-warning{href: campaigns_path} Cancel

@@ -42,7 +42,7 @@ describe Ad do
     query = Query.create!(term: 'testing')
     AdView.create!(ad_id: @ad.id, query_id: query.id, position: 1)
     AdView.create!(ad_id: @ad.id, query_id: query.id, position: 3)
-
+    Ad.refresh_counts!
     @ad.reload
     @ad.avg_position.should eq 2.0
   end

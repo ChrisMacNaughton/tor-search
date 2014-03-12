@@ -7,7 +7,7 @@ gem 'rails', '3.2.17'
 gem 'pg'
 gem 'syslogger'
 # Use SCSS for stylesheets
-gem 'sass-rails'
+gem 'sass-rails', '>= 3.2' # sass-rails needs to be higher than 3.2
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -41,8 +41,6 @@ gem 'mixpanel-ruby'
 # allows parallel web requests from the application
 gem 'typhoeus'
 
-gem 'rails_admin'
-
 # be able to get addresses and such!
 gem 'coinbase'
 
@@ -53,6 +51,8 @@ gem 'turbolinks'
 #gem 'jbuilder', '~> 1.2'
 
 gem 'paranoia'
+
+gem 'bootstrap-sass', '~> 3.1.1'
 
 group :development do
   gem 'meta_request'

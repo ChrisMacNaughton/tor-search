@@ -37,9 +37,8 @@ describe SearchController do
       ad = ads(:ad)
       keyword = keywords(:otherwise)
       k = ad.ad_group.ad_group_keywords.create(keyword: keyword, bid: 0.01)
-      k.save
       balance = ad.advertiser.balance
-      post :ad_redirect, { id: ad.id, k: k.id }
+      post :ad_redirect, { id: ad.id, k: keyword.id }
       advertiser = advertisers(:test_advertiser)
       advertiser.balance.should == balance - k.bid
     end

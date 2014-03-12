@@ -2,7 +2,7 @@
 require 'spec_helper'
 describe AdFinder do
 
-  fixtures :ads, :ad_groups, :ad_campaigns, :keywords
+  fixtures :ads, :ad_groups, :ad_campaigns, :keywords, :advertisers
 
   it 'can find an ad with no keywords' do
     finder = AdFinder.new('test')

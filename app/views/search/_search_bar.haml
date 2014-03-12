@@ -1,10 +1,17 @@
 -searched ||= ''
 -disabled ||= false
-=form_tag("/#{I18n.locale}/search", method: "get", id: 'search', class: 'form-search') do
-  .input-append.span10
-    =text_field_tag 'q', searched, class: 'search_bar search-query span6', id: "appendedInputButtons", autofocus: "autofocus", disabled: disabled
-    =hidden_field_tag 'j', 'f', id: 'j'
-    =button_tag t('search.search_tor'), class: 'btn', type: "submit", name: ''
+-logo ||= false
+=form_tag("/#{I18n.locale}/search", method: "get", id: 'search', class: 'form-horizontal') do
+  .col-sm-2.col-sm-offset-1
+    -if logo
+      =link_to image_tag('logo.png'), root_path
+  .col-sm-6
+    .input-group.input-group-lg.search-bar
+      =text_field_tag 'q', searched, class: 'form-control', id: "appendedInputButtons", autofocus: "autofocus", disabled: disabled
+      =hidden_field_tag 'j', 'f', id: 'j'
+      %span.input-group-addon#search-button
+        %button.btn.btn-link{type: 'submit'}
+          %span.glyphicon.glyphicon-search
 =content_for :javascripts do
   :javascript
     $().ready(function(){

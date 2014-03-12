@@ -1,37 +1,17 @@
 !!! 5
-%html{'ng-app' => 'TorSearchAdmin'}
+%html
   %head
-    %title TorSearch Admin
+    %title
+      =yield(:title)
+      TorSearch Admin
+
     = stylesheet_link_tag    "admin", media: "all"
     = #stylesheet_link_tag params[:controller], media: "all", "data-turbolinks-track" => true
-    = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"
-    = javascript_include_tag "admin"
-    %style
-      :plain
-        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak { display: none; }
     = csrf_meta_tags
-
+    %link{rel: "me", href: "http://chrismacnaughton.com"}
   %body
+    =render partial: 'layouts/admin_nav'
+    =render partial: 'application/application_alerts'
     .container-fluid
-      .row-fluid.span12
-        %h1= yield(:title)
-        %hr
-        =render partial: 'admin/nav'
-        %hr
-    .container-fluid
-      -unless notice.nil? && alert.nil?
-        .row.span12
-          - if flash[:alert]
-            #flash_alert.alert
-              .center-edge.shadow
-                = flash[:alert]
-          - if flash[:notice]
-            #flash_alert.notice
-              .center-edge.shadow
-                = flash[:notice]
-      .row-fluid.span12
-      .row-fluid.span12
-        = yield
-    .container-fluid
-      =yield(:footer)
-    =yield(:javascripts)
+      =yield
+    =javascript_include_tag 'admin'

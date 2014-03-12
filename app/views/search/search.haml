@@ -1,21 +1,20 @@
 -content_for :title do
   #{@search.term} -
 .row
-  .span2
-    .logo
-  .span9.offset1{style: 'margin-top: 40px'}
-    =render partial: 'search_bar', locals: {searched: @search.term, disabled: !@search.errors.empty?}
+  #search-bar
+    =render partial: 'search_bar', locals: {searched: @search.term, disabled: !@search.errors.empty?, logo: true}
+.row
 -unless @search.errors.empty?
   -@search.errors.each do |err|
-    .row.span12.error=err
+    .row.col-md-12.error=err
 -else
   .row
-    .span8
+    .col-xs-7.col-xs-offset-1
       %p.muted#totals
         = t('search.around')
         = t('search.results_count', count: number_with_precision(@search.total, delimiter: ',', significant: true, precision: 5, strip_insignificant_zeros: true, separator: '.') )
       .row
-        #instant_results.span8{style: "display: #{(@instant || @instant_matches.nil? || @instant_matches.empty? )? "none" : "block"}"}
+        #instant_results.col-md-8{style: "display: #{(@instant || @instant_matches.nil? || @instant_matches.empty? )? "none" : "block"}"}
           -unless @instant
             -@instant_matches.each do |e|
               -method = e[:method]
@@ -35,20 +34,21 @@
                 - if e[:link]
                   %p= e[:link].html_safe
                 %br/
+      =render partial: 'ad', locals: {ad: @ads[0], search: true, inline: true}
       .search-results
         -@search.records.each do |page|
           =render partial: 'page', locals: {page: page}
         .span9
           =will_paginate @search
 
-    .span4{style: 'margin-top: 20px'}
-      .row.span2
+    .col-xs-4{style: 'margin-top: 20px'}
+      .row.col-xs-12
         =t('search.try_this_on')
         %ul.unstyled
           %li=link_to "Amazon", root_path(q: "@amazon #{@search.term}")
         %hr{style: 'margin: 10px 0'}
       -unless @ads.nil? || @ads.empty?
-        - @ads.each do |ad|
+        - @ads[1..-1].each do |ad|
           =render partial: 'ad', locals: {ad: ad, search: true}
   -content_for :javascripts do
     :javascript

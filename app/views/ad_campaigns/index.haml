@@ -14,15 +14,13 @@
         %th Campaign
         %th Campaign Start Date
     %tbody
-      -pause_icon = "<i class='icon-pause'></i>".html_safe
-      -play_icon = "<i class='icon-play'></i>".html_safe
       -@campaigns.each do |campaign|
         %tr
           %td
             -if campaign.paused?
-              =link_to play_icon, campaign_toggle_path(campaign)
+              =link_to play_icon, campaign_toggle_path(campaign), class: 'btn btn-info'
             -else
-              =link_to pause_icon, campaign_toggle_path(campaign)
+              =link_to pause_icon, campaign_toggle_path(campaign), class: 'btn btn-default'
           %td= campaign.paused? ? "Paused" : "Active"
           %td= link_to campaign.name, campaign_ad_groups_path(campaign.try(:id))
           %td= campaign.created_at

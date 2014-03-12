@@ -3,6 +3,8 @@
 class ApplicationController < ActionController::Base
   include TorMethods
   include CacheSupport
+
+  force_ssl unless Proc.new { ssl_configured?  && is_tor? }
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -64,14 +66,14 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
   end
 
   def track
-    #return true unless Rails.env.include? 'production'
+    return true unless Rails.env.include? 'production'
     return if params[:q]
     Tracker.new(request).track_later!
   end
 
   def after_sign_in_path_for(resource)
     if resource.is_a? Admin
-      rails_admin_path
+      admin_path
     else
       campaigns_path
     end

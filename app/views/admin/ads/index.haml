@@ -1,0 +1,41 @@
+.row
+  .col-sm-8.col-sm-offset-2
+    %table.table.table-bordered
+      %thead
+        %th
+        %th Ad
+        %th Campaign
+        %th Ad Group
+        %th Status
+        %th Clicks
+        %th Impr.
+        %th CTR
+        %th
+          Avg.
+          %br/
+          Pos.
+      %tbody
+        -@ads.each do |ad|
+          %tr{class: ad.pending? ? 'info' : ad.disabled? ? 'warning' : ''}
+            %td
+              %ul.list-unstyled
+                %li
+                  =link_to edit_icon, edit_admin_ad_path(ad), class: 'btn btn-info', title: 'Edit Ad'
+                %li
+                  =form_for ad, as: :ad, url: admin_ad_toggle_path(ad) do |f|
+                    %button{type: 'submit', class: 'btn btn-info'}
+                      -if ad.approved?
+                        = delete_icon
+                      -else
+                        = play_icon
+            %td.col-sm-4= render partial: 'application/ad', locals: {ad: ad}
+            %td= ad.ad_campaign.name
+            %td= ad.ad_group.name
+            %td= ad.status
+            %td= number_with_delimiter ad.ad_clicks_count
+            %td= number_with_delimiter ad.ad_views_count
+            %td= number_to_percentage(ad.ctr, precision: 2)
+            %td= number_with_precision(ad.avg_position, precision: 2)
+.row
+  .col-sm-8.col-sm-offset-2
+    =will_paginate @ads

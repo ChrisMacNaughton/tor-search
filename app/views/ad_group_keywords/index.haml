@@ -22,24 +22,17 @@
       %th CTR
       %th Current Bid
     %tbody
-      -edit_icon = "<i class='icon-edit'></i>".html_safe
-      -pause_icon = "<i class='icon-pause'></i>".html_safe
-      -play_icon = "<i class='icon-play'></i>".html_safe
-      -delete_icon = "<i class='icon-remove'></i>".html_safe
-      -up_icon = "<i class='icon-chevron-up'></i>".html_safe
-      -down_icon = "<i class='icon-chevron-down'></i>".html_safe
-      -still_icon = "<i class='icon-minus'></i>".html_safe
       -@keywords.each do |keyword|
         %tr
           %td
-            %ul.unstyled
+            %ul.list-unstyled
               %li
                 =link_to edit_icon, edit_keyword_path(keyword), class: 'btn btn-info'
               %li
                 -if keyword.paused?
                   =link_to play_icon, keyword_toggle_path(keyword), class: 'btn btn-info'
                 -else
-                  =link_to pause_icon, keyword_toggle_path(keyword), class: 'btn'
+                  =link_to pause_icon, keyword_toggle_path(keyword), class: 'btn btn-default'
               %li
                 =form_for keyword, as: :keyword, url: keyword_delete_path(keyword) do |f|
                   =f.hidden_field :delete, value: true

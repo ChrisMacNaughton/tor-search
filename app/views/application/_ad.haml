@@ -1,22 +1,31 @@
 -border ||= false
 -search ||= false
--span ||= 4
+-span ||= 12
+-inline ||= false
+-if inline
+  -name = "#{ad.title} - #{ad.line_1}"
+-else
+  -name = ad.title
 -if search
   -h = {id: ad.id, q: @query.id, s: @search_id, k: ad.keyword_id}
   -h.merge!({path: Base64.encode64(ad.path)}) if ad.include_path
   -ad_path = ad_redirect_path(h)
 -else
   -ad_path = ad.protocol + ad.path.gsub("{{app_path}}", request.env['HTTP_HOST'])
-%div{class: "span#{span}"}
-  .row-fluid{style: 'margin-bottom: 20px;', class: "#{border ? "well" : ""}"}
+%div{class: "col-xs-#{span} ad-container", style: inline ? 'margin-bottom: 10px' : ''}
+  .row-fluid{style: 'margin-bottom: 10px;margin-top: 10px;', class: "#{border ? "well" : ""}"}
     .row-fluid
       -if search
-        =link_to ad.title, ad_path
+        =link_to name, ad_path
       -else
-        =link_to ad.title, ad_path
+        =link_to name, ad_path
     .row-fluid.path
       =ad.display_path
-    .row-fluid{style: 'height: 20px;'}
-      =ad.line_1
+    -unless inline
+      .row-fluid{style: 'height: 20px;'}
+        =ad.line_1
     .row-fluid{style: 'height: 20px;'}
       =ad.line_2
+  -if inline
+    .sponsored-note
+      =link_to "Sponsored Ads", advertising_path

@@ -1,17 +1,19 @@
-=form_for @flag, {html: {class: 'form-horizontal'}} do |f|
-  .control-group
-    =f.label :path, class: 'control-label'
-    .controls
-      =f.text_field :path
-    =f.hidden_field :query_id
-  .control-group
-    =f.label :flag_reason, class: 'control-label'
-    .controls
-      =select_tag 'flag[flag_reason_id]', options_from_collection_for_select(FlagReason.all, 'id','name')
-  .control-group
-    =f.label :comments, class: 'control-label'
-    .controls
-      =f.text_area :comments, rows: 3
-  .control-group
-    .controls
-      %button.btn.btn-info{type: :submit} Flag it!
+.row
+  .col-sm-8.col-sm-offset-2
+    =form_for @flag, {html: {class: 'form-horizontal'}} do |f|
+      .control-group
+        =f.label :path, class: 'control-label'
+        .form-controls
+          =f.text_field :path, class: 'form-control'
+        =f.hidden_field :query_id
+      .control-group
+        =f.label :flag_reason, class: 'control-label'
+        .form-controls
+          =select_tag 'flag[flag_reason_id]', options_from_collection_for_select(FlagReason.all, 'id','name'), class: 'form-control'
+      .control-group
+        =f.label :comments, class: 'control-label'
+        .form-controls
+          =f.text_area :comments, rows: 3, class: 'form-control'
+      .control-group
+        .form-controls
+          %button.btn.btn-info{type: :submit} Flag it!

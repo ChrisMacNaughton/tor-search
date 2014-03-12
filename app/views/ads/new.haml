@@ -1,7 +1,7 @@
 
-.span4
-  =form_for @ad, builder: WithErrorFields, html: {novalidate: true} do |f|
+.col-sm-8
+  =form_for @ad, builder: WithErrorFields, html: {novalidate: true, class: 'form-horizontal'} do |f|
     =render partial: 'fields', locals: { f: f }
-.span4
+.col-sm-3.col-sm-offset-1
   .row
     =render partial: 'ad', locals: {search: false, ad: @ad}
