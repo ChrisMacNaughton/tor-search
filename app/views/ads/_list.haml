@@ -22,15 +22,10 @@
         %br/
         Pos.
     %tbody
-      -edit_icon = "<i class='icon-edit'></i>".html_safe
-      -pause_icon = "<i class='icon-pause'></i>".html_safe
-      -play_icon = "<i class='icon-play'></i>".html_safe
-      -delete_icon = "<i class='icon-eye-close'></i>".html_safe
-      -restore_icon = "<i class='icon-eye-open'></i>".html_safe
       -@ads.each do |ad|
         %tr{class: ad.destroyed? ? 'error' : ad.pending? ? 'warning' : ''}
           %td
-            %ul.unstyled
+            %ul.list-unstyled
               -if ad.destroyed?
                 %li
                   =form_for ad, as: :ad, url: ad_restore_path(ad) do |f|
@@ -45,13 +40,13 @@
                     -if ad.paused?
                       =link_to play_icon, ad_toggle_path(ad), class: 'btn btn-info', title: 'Enable Ad'
                     -else
-                      =link_to pause_icon, ad_toggle_path(ad), class: 'btn', title: 'Disable Ad'
+                      =link_to pause_icon, ad_toggle_path(ad), class: 'btn btn-default', title: 'Disable Ad'
                 %li
                   =form_for ad, as: :ad, url: ad_delete_path(ad) do |f|
                     =f.hidden_field :delete, value: true
                     =f.hidden_field :id
                     %button{type: 'submit', class: 'btn btn-warning'}
-                      = delete_icon
+                      = hide_icon
           %td= render partial: 'ad', locals: {ad: ad}
           %td= link_to ad.ad_campaign.name, campaign_path(ad.ad_campaign)
           %td= link_to ad.ad_group.name, ad.ad_group

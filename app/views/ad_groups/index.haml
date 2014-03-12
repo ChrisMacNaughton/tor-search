@@ -17,15 +17,13 @@
         %th CTR
         %th Avg. Pos.
     %tbody
-      -pause_icon = "<i class='icon-pause'></i>".html_safe
-      -play_icon = "<i class='icon-play'></i>".html_safe
       -@ad_groups.each do |group|
         %tr
           %td
             -if group.paused?
-              =link_to play_icon, ad_group_toggle_path(group)
+              =link_to play_icon, ad_group_toggle_path(group), class: 'btn btn-info'
             -else
-              =link_to pause_icon, ad_group_toggle_path(group)
+              =link_to pause_icon, ad_group_toggle_path(group), class: 'btn btn-default'
           %td= link_to group.name, ad_group_path(group)
           %td= group.paused? ? "Paused" : "Active"
           %td= number_with_delimiter group.clicks_count

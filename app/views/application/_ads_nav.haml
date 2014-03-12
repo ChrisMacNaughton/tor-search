@@ -1,12 +1,11 @@
 - advertiser_campaigns ||= current_advertiser.ad_campaigns
 - advertiser_ad_groups ||= current_advertiser.ad_groups.group(:ad_campaign_id)
-%ul.nav.nav-list.compact{overflow: 'scroll'}
+%ul.nav.nav-pills.nav-stacked.compact{overflow: 'scroll'}
   %li.nav-header= link_to "All Campaigns", campaigns_path
   %hr/
   -advertiser_campaigns.each do |campaign|
-    %li.nav-header
-      = link_to campaign.name, campaign_ad_groups_path(campaign.id)
+    =nav_link("Campaign: #{campaign.name}", campaign_ad_groups_path(campaign.id), 'nav-header')
     -if advertiser_ad_groups[campaign.id]
       -advertiser_ad_groups[campaign.id].each do |group|
-        %li= link_to group.name, group
-      %hr/
+        =nav_link(group.name, group)
+    %hr/

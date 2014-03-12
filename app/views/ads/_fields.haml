@@ -1,19 +1,23 @@
 -ad_group ||= false
 -if @ad.new_record?
   -unless ad_group
-    =f.label :ad_group, "Select an Ad Group"
-    =collection_select(:ad, :ad_group_id, current_advertiser.ad_groups, :id, :name, {prompt: false})
-=f.label_with_error :title, t('.title')
-=f.text_field :title
-=f.label_with_error :path, t('.target')
-=f.select "protocol_id",{"HTTP://"=>0,"HTTPS://"=>1}, {},{class: 'input-small'}
-=f.text_field :path
-=f.label_with_error :display_path, t('.display_path')
-=f.text_field :display_path, style: 'color:#009933'
-%br/
-=f.text_field_with_error :line_1
-%br/
-=f.text_field_with_error :line_2
+    .form-group
+      =f.label :ad_group, "Select an Ad Group", class: 'col-sm-3'
+      =collection_select(:ad, :ad_group_id, current_advertiser.ad_groups, :id, :name, {prompt: false}, class: 'col-sm-9')
+.form-group
+  =f.label :title, t('.title'), class: 'col-sm-3'
+  =f.text_field_with_error :title, class: 'col-sm-9'
+.form-group
+  =f.label :path, t('.target'), class: 'col-sm-3'
+  =f.select "protocol_id",{"HTTP://"=>0,"HTTPS://"=>1}, {}, class: 'col-sm-3'
+  =f.text_field_with_error :path, class: 'col-sm-5 col-sm-offset-1'
+.form-group
+  =f.label :display_path, t('.display_path'), class: 'col-sm-3'
+  =f.text_field_with_error :display_path, style: 'color:#009933', class: 'col-sm-9'
+.form-group
+  =f.text_field_with_error :line_1, class: 'col-sm-9 col-sm-offset-3'
+.form-group
+  =f.text_field_with_error :line_2, class: 'col-sm-9 col-sm-offset-3'
 %br/
 -unless @ad.legacy? || @ad.new_record? || @ad.ad_group.ad_group_keywords.any?
   %hr/

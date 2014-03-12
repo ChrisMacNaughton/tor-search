@@ -1,27 +1,50 @@
+-@show_top = true
 -content_for :title do
   Advertise on
+-content_for :heading do
+  .col-md-4{style: 'margin-top: 25px;'}
+    Already an advertiser?
+    =link_to "Sign In", new_advertiser_session_path
 .row
-  .span8
-    %h1 TorSearch Ads
+  .col-sm-12
     %h3 Grow your business with TorSearch
 
     %p Advertising on TorSearch works with any advertising budget because you only pay when people click on your ads.
-
-    %h3 How It Works
     .row
-      .span5
+      .col-sm-9
         %h4 Create your own ads
         %p You can create ads that you believe will grab people's attention and select keywords that people looking for your product or service will search for.
         %h4 Your ads show up in TorSearch's search results
         %p When people search, your ad will be displayed if the query matches the keywords you selected and if your bid is in the top 5 for the ad slot. Now your ad is being shown to people looking for what you're selling.
-      .span3
-        .thumbnail
-          =image_tag asset_path('/ad.png')
-        %p Your ad is shown to visitors next to relevant results
-        %br/
-        =link_to "Sign up now", new_registration_path('advertiser'), class: 'btn btn-success'
-    %h4 You get more customers
-    %p We're only successful when you are so we want you to do well!
-  .span4
-    .well
-      =render 'interested_sign_in'
+      .col-sm-3
+        .row
+          .thumbnail
+            =image_tag asset_path('/ad.png')
+          %p Your ad is shown to visitors next to relevant results
+        .row
+          =link_to "Sign up now", new_registration_path('advertiser'), class: 'btn btn-success'
+.padding
+.row
+  .col-md-4
+    .panel.panel-default
+      .panel-heading
+        %h4 Only pay for results
+      .panel-body
+        No matter what your budget is, you can advertise on TorSearch. You only pay when people click on your ads and visit your site.
+  .col-md-4
+    .panel.panel-default
+      .panel-heading
+        %h4 We'll help you get setup
+      .panel-body
+        We're here to answer any questions you have and will even help you setup your first campaign for free.
+        =link_to "Get in touch", contact_path
+        for free setup support.
+  .col-md-4
+    .panel.panel-default
+      .panel-heading
+        %h4 How it works
+      .panel-body
+        %ol
+          %li People search
+          %li They see your ad
+          %li You get more business

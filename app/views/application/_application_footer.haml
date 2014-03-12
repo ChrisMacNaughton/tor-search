@@ -1,9 +1,19 @@
-%footer.container
-  =yield(:footer)
-  .row
-    .offset2
-      %p.muted
-        Available over Tor at
-        =link_to 'kbhpodhnfxl3clb4.onion', 'http://kbhpodhnfxl3clb4.onion'
-        or available over the clear internet at
-        =link_to 'TorSearch.es', 'https://torsearch.es'
+#footer
+  .pull-left
+    %ul.list-unstyled.list-inline
+      %li
+        =link_to "TorSearch", root_path
+      %li
+        =link_to "Advertising", advertising_path
+      %li
+        =link_to "Tor Hidden Service", 'http://kbhpodhnfxl3clb4.onion'
+      %li
+        =link_to "Clearnet Address", 'https://torsearch.es'
+  .pull-right
+    %ul.list-unstyled.list-inline
+      %li
+        =link_to "Privacy and Terms", policies_path
+      %li
+        =link_to "Contact Us", contact_path
+      -#%li
+        =#link_to "Settings", '#'

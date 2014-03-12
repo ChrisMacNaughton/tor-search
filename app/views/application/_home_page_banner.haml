@@ -1,10 +1,9 @@
 .row
-  .col-sm-8.col-sm-offset-2
-    -if DateTime.now < DateTime.parse('March 16th, 2014 00:00:00 UTC') && DateTime.now >= DateTime.parse('January 23nd, 2014 09:00:00 EST')
-      -# PremiumTor Ad
-      %a{href: 'http://uizxxzdowrh6rrys.onion'}
-        =image_tag asset_path('premiumtor-banner.png'), alt: 'PremiumTor', class: 'img-responsive'
-    -else
-      -# Default Ad
-      %a{href: 'mailto:sales@torsearch.es'}
-        =image_tag asset_path('banner.png'), alt: 'Advertise here!', class: 'img-responsive'
+  -if DateTime.now < DateTime.parse('March 16th, 2014 00:00:00 UTC') && DateTime.now >= DateTime.parse('January 23nd, 2014 09:00:00 EST')
+    -# PremiumTor Ad
+    %a{href: 'http://uizxxzdowrh6rrys.onion'}
+      =image_tag asset_path('premiumtor-banner.png'), alt: 'PremiumTor', class: 'img-responsive center-block'
+  -else
+    -# Default Ad
+    %a{href: 'mailto:sales@torsearch.es'}
+      =image_tag asset_path('banner.png'), alt: 'Advertise here!', class: 'img-responsive center-block'
