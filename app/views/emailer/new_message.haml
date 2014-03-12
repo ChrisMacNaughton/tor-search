@@ -1,0 +1,11 @@
+A new message was just received.
+
+%dl
+  %dt From:
+  %dd= @message.name
+  %dt Contact Method:
+  %dd= @message.contact_method
+  %dt Message
+  %dd= @message.text
+
+=link_to "View in App", "https://torsearch.es/admin/message/#{@message.id}"
