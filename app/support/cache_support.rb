@@ -8,4 +8,9 @@ module CacheSupport
       yield
     end
   end
+
+  def read_through_cache!(cache_key, expires_in, &block)
+    Rails.cache.delete_matched(cache_key)
+    read_through_cache(cache_key, expires_in, &block)
+  end
 end

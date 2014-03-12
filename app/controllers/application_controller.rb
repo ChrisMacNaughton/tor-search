@@ -71,7 +71,7 @@ Because you are using Tor2Web, you have already traded anonymity for convenience
 
   def after_sign_in_path_for(resource)
     if resource.is_a? Admin
-      rails_admin_path
+      admin_path
     else
       campaigns_path
     end

@@ -7,7 +7,7 @@ class Payment < ActiveRecord::Base
   belongs_to :coupon
 
   belongs_to :parent, class_name: 'Payment', foreign_key: 'parent_id'
-  attr_accessible :amount, :bitcoin_address, :advertiser,
+  attr_accessible :amount, :bitcoin_address, :advertiser, :advertiser_id,
                   :coupon, :transaction_hash, :parent, :parent_id
 
   after_create :credit_advertiser
@@ -26,7 +26,7 @@ class Payment < ActiveRecord::Base
   end
 
   def is_bonus?
-    parent_id.present? || parent.present?
+    parent_id.present? || parent.present? || (bitcoin_address_id.nil? && coupon_id.nil?)
   end
 
 end

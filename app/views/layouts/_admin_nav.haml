@@ -1,0 +1,22 @@
+%nav.navbar.navbar-default
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle{data: {toggle: 'collapse', target: '#navbar'}}
+        %span.sr-only Toggle Navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      =link_to 'TorSearch Admin', admin_path, class: 'navbar-brand'
+    .collapse.navbar-collapse#navbar
+      %ul.nav.navbar-nav
+        =nav_link('Dashboard', admin_path)
+        %li.dropdown
+          =link_to 'Advertisers <b class="caret"></b>'.html_safe, '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'}
+          %ul.dropdown-menu
+            =nav_link 'Advertisers', admin_advertisers_path
+        %li.dropdown
+          =link_to 'Ads <b class="caret"></b>'.html_safe, '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'}
+          %ul.dropdown-menu
+            =nav_link 'Ads', admin_ads_path
+            =nav_link 'Pending', admin_ads_pending_path
+        =nav_link 'Logout', destroy_admin_session_path

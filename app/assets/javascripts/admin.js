@@ -13,9 +13,4 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
-//= require instant
-//= require search
-
-String.prototype.titleize = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-}
+//= require_relative ./admin

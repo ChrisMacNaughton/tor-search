@@ -1,9 +1,0 @@
-.pagination{"ng-show" => 'searchParameters.totalPages > 1'}
-  %button{"ng-disabled"=>"searchParameters.currentPage <= 1", "ng-click"=>"searchParameters.currentPage = searchParameters.currentPage - 1"} Previous
-  {{searchParameters.currentPage | number}} of {{searchParameters.totalPages | number}}
-  %select{"ng-model"=>'searchParameters.perPage'}
-    %option 5
-    %option 10
-    %option 25
-    %option 50
-  %button{"ng-disabled"=>"searchParameters.currentPage >= searchParameters.totalPages", "ng-click"=>"searchParameters.currentPage = searchParameters.currentPage + 1"} Next

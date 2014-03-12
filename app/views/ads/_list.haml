@@ -47,7 +47,7 @@
                     =f.hidden_field :id
                     %button{type: 'submit', class: 'btn btn-warning'}
                       = hide_icon
-          %td= render partial: 'ad', locals: {ad: ad}
+          %td.col-sm-4= render partial: 'ad', locals: {ad: ad}
           %td= link_to ad.ad_campaign.name, campaign_path(ad.ad_campaign)
           %td= link_to ad.ad_group.name, ad.ad_group
           %td= ad.status

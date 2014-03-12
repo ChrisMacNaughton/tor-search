@@ -1,0 +1,51 @@
+.row
+  .col-sm-6
+    -# Advertiser Information
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Advertiser Count
+      .panel-body
+        =@dashboard_params[:advertiser_count]
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          New Advertiser Count
+      .panel-body
+        =@dashboard_params[:new_advertiser_count]
+  .col-sm-6
+    -# Ad Information
+    .panel{class: "panel-#{@dashboard_params[:pending_ads_count] == 0 ? 'success' : 'default'}"}
+      .panel-heading
+        .panel-title
+          =link_to 'Pending Ads Count', admin_ads_pending_path
+      .panel-body
+        =@dashboard_params[:pending_ads_count]
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          =link_to 'Running Ads Count', '#'
+      .panel-body
+        =@dashboard_params[:active_ads_count]
+.row
+  .col-sm-6
+    -# Search Information
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Last Week Searches
+      .panel-body
+        =@dashboard_params[:previous_search_count]
+  -if @dashboard_params[:current_search_count] > @dashboard_params[:previous_search_count]
+    -c = 'success'
+  -elsif @dashboard_params[:current_search_count] == @dashboard_params[:previous_search_count]
+    -c = 'default'
+  -else
+    -c = 'danger'
+  .col-sm-6
+    .panel{class: "panel-#{c}"}
+      .panel-heading
+        .panel-title
+          This Week Searches
+      .panel-body
+        =@dashboard_params[:current_search_count]

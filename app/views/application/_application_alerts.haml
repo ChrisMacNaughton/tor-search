@@ -1,12 +1,14 @@
--unless flash[:notice].empty? && flash[:alert].empty?
+-if flash[:notice].present? || flash[:alert].present?
   .row
     .col-xs-10.col-xs-offset-1
-      - if flash[:alert].any?
+      - if flash[:alert].present?
+        -flash[:alert] = [flash[:alert]] unless flash[:alert].is_a? Array
         -flash[:alert].uniq.each do |alert|
           .alert.alert-warning
             %a.close{data: {dismiss: 'alert'}} &times;
             = alert
-      - if flash[:notice].any?
+      - if flash[:notice].present?
+        -flash[:notice] = [flash[:notice]] unless flash[:notice].is_a? Array
         -flash[:notice].uniq.each do |notice|
           .alert.alert-info
             %a.close{data: {dismiss: 'alert'}} &times;
