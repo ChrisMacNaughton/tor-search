@@ -1,0 +1,15 @@
+%nav.navbar.navbar-default
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle{data: {toggle: 'collapse', target: '#navbar'}}
+        %span.sr-only Toggle Navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      =link_to "TorSearch | Ads", @header_path || campaigns_path, class: 'navbar-brand'
+    .collapse.navbar-collapse#navbar
+      %ul.nav.navbar-nav.pull-right
+        =nav_link 'Campaigns', campaigns_path
+        =nav_link 'Billing', billing_path
+        =nav_link 'Settings', edit_advertiser_registration_path
+        =nav_link 'Sign Out', destroy_advertiser_session_path

@@ -1,0 +1,40 @@
+- content_for(:above_container) do
+  = render partial: 'layouts/ads_nav'
+
+%h2
+
+  = t('advertisers.edit')
+  = Advertiser.model_name.human
+
+.row
+  .col-md-5.col-md-offset-1
+    = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }, class: 'form-signin') do |f|
+      = devise_error_messages!
+      .form-group
+        = f.label :username, t('advertisers.username')
+        = f.text_field :username, :autofocus => true, class: 'form-control'
+      .form-group
+        = t('advertisers.password_recovery_note')
+        %i= f.label :email, t('advertisers.email')
+        = f.email_field :email, class: 'form-control'
+      .form-group
+        = f.label :password, t('advertisers.password')
+        %i= t('advertisers.leave_blank')
+        = f.password_field :password, :autocomplete => "off", class: 'form-control'
+      .form-group
+        = f.label :password_confirmation, t('advertisers.password_confirmation')
+        = f.password_field :password_confirmation, class: 'form-control'
+      .form-group
+        = f.label :current_password, t('advertisers.current_password')
+        %i= t('advertisers.need_current_password')
+        = f.password_field :current_password, class: 'form-control'
+      .form-group
+        %button.btn.btn-info{type: :submit}=t('advertisers.update')
+%h3= t('advertisers.cancel_my_account')
+
+%p
+  =t('advertisers.unhappy')
+  =form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :delete }) do |f|
+    %button.btn.btn-danger{type: :submit}= t('advertisers.cancel_my_account')
+
+= link_to t('advertisers.back'), :back

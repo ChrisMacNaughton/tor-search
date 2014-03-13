@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140225015731) do
+ActiveRecord::Schema.define(:version => 20140313155556) do
 
   create_table "ad_campaigns", :force => true do |t|
     t.integer  "advertiser_id"
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(:version => 20140225015731) do
     t.boolean  "wants_beta"
     t.boolean  "wants_js",                                              :default => false
     t.boolean  "is_auto_approved",                                      :default => false
+    t.datetime "deleted_at"
   end
 
   add_index "advertisers", ["reset_password_token"], :name => "index_advertisers_on_reset_password_token", :unique => true

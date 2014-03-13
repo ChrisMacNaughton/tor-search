@@ -15,20 +15,8 @@
     = csrf_meta_tags
     %link{rel: "me", href: "http://chrismacnaughton.com"}
   %body
+    =render partial: 'layouts/ads_nav'
     .container-fluid
-      .row
-        .col-md-8
-          %h1
-            =link_to image_tag('logo.png'), @header_path || campaigns_path
-            %small
-              Ads
-        .col-md-1{style: 'margin-top: 25px;'}
-          =link_to "Billing", billing_path
-        .col-md-1{style: 'margin-top: 25px;'}
-          =link_to "Sign Out", destroy_advertiser_session_path
-      .row
-        .panel.panel-info
-          .panel-heading
       =render partial: 'application_alerts'
 
       .col-lg-3

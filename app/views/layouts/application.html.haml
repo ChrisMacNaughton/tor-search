@@ -15,6 +15,7 @@
     = csrf_meta_tags
     %link{rel: "me", href: "http://chrismacnaughton.com"}
   %body
+    =yield(:above_container)
     .container-fluid
       =render partial: 'application_alerts'
       -if @show_top
