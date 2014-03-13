@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140313155556) do
+ActiveRecord::Schema.define(:version => 20140313160148) do
 
   create_table "ad_campaigns", :force => true do |t|
     t.integer  "advertiser_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20140313155556) do
     t.datetime "created_at",                                                     :null => false
     t.datetime "updated_at",                                                     :null => false
     t.decimal  "default_bid",   :precision => 16, :scale => 8, :default => 0.0
+    t.datetime "deleted_at"
   end
 
   add_index "ad_campaigns", ["advertiser_id"], :name => "index_ad_campaigns_on_advertiser_id"
@@ -60,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20140313155556) do
     t.integer  "views_count",                                   :default => 0
     t.decimal  "ctr",            :precision => 16, :scale => 8, :default => 0.0
     t.decimal  "avg_position",   :precision => 16, :scale => 8, :default => 0.0
+    t.datetime "deleted_at"
   end
 
   add_index "ad_groups", ["ad_campaign_id"], :name => "index_ad_groups_on_ad_campaign_id"

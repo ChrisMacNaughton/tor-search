@@ -1,4 +1,5 @@
 class AdGroup < ActiveRecord::Base
+  acts_as_paranoid
   belongs_to :ad_campaign
   belongs_to :advertiser
   has_many :ad_group_keywords, dependent: :destroy
