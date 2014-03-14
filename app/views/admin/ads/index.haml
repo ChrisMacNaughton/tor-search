@@ -1,5 +1,5 @@
 .row
-  .col-sm-8.col-sm-offset-2
+  .col-md-8.col-md-offset-2
     %table.table.table-bordered
       %thead
         %th
@@ -37,5 +37,5 @@
             %td= number_to_percentage(ad.ctr, precision: 2)
             %td= number_with_precision(ad.avg_position, precision: 2)
 .row
-  .col-sm-8.col-sm-offset-2
+  .col-md-8.col-md-offset-2
     =will_paginate @ads

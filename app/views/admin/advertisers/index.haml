@@ -1,7 +1,7 @@
 %h2 Advertisers
 
 .row
-  .col-sm-8.col-sm-offset-2
+  .col-md-8.col-md-offset-2
     %table.table-striped
       %thead
         %tr
@@ -15,5 +15,5 @@
             %td= number_to_currency(advertiser.balance, precision: 8, unit: '&#x0e3f;'.html_safe, format: "%u%n")
             %td= advertiser.ads.count
 .row
-  .col-sm-8.col-sm-offset-2
+  .col-md-8.col-md-offset-2
     =will_paginate @advertisers

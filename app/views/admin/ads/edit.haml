@@ -1,4 +1,4 @@
-.col-sm-8
+.col-md-8
   =form_for @ad, url: admin_ad_update_path(@ad), builder: WithErrorFields, html: {novalidate: true, class: 'form-horizontal'} do |f|
     -ad_group ||= false
     -if @ad.new_record?
@@ -33,6 +33,6 @@
     %br
     =f.submit "Save", class: 'btn btn-success'
     =link_to "Cancel", :back, class: 'btn btn-warning'
-.col-sm-3.col-sm-offset-1
+.col-md-3.col-md-offset-1
   .row
     =render partial: 'application/ad', locals: {search: false, ad: @ad}

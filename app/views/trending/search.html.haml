@@ -1,11 +1,13 @@
+-content_for :above_container do
+  -render partial: 'layouts/ads_nav', locals: {title: 'Search Trends', path: trending_path}
 %h1 Trending
 .row
-  =form_tag(trending_search_path, method: "get", id: 'search', class: 'form-search') do
-    .input-append.span10
-      =text_field_tag 'q[]', params[:q][0], class: 'span2'
-      =text_field_tag 'q[]', params[:q][1], class: 'span2'
-      =text_field_tag 'q[]', params[:q][2], class: 'span2', id: "appendedInputButtons"
-      =button_tag "<i class='icon-search'></i>".html_safe, class: 'btn', type: "submit", name: ''
+  =form_tag(trending_search_path, method: "get", id: 'search', class: 'form-inline') do
+    .input-append.col-md-10
+      =text_field_tag 'q[]', params[:q][0], class: 'col-md-2 form-control', placeholder: '1st term'
+      =text_field_tag 'q[]', params[:q][1], class: 'col-md-2 form-control', placeholder: '2nd term'
+      =text_field_tag 'q[]', params[:q][2], class: 'col-md-2 form-control', placeholder: '3rd term', id: "appendedInputButtons"
+      =button_tag glyphicon('search'), class: 'btn btn-default', type: "submit", name: ''
 %hr/
 .row
   .trending_graph

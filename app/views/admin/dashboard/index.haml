@@ -1,5 +1,5 @@
 .row
-  .col-sm-6
+  .col-md-6
     -# Advertiser Information
     .panel.panel-default
       .panel-heading
@@ -13,7 +13,7 @@
           New Advertiser Count
       .panel-body
         =number_with_delimiter @dashboard_params[:new_advertiser_count]
-  .col-sm-6
+  .col-md-6
     -# Ad Information
     .panel{class: "panel-#{@dashboard_params[:pending_ads_count] == 0 ? 'success' : 'default'}"}
       .panel-heading
@@ -28,7 +28,7 @@
       .panel-body
         =number_with_delimiter @dashboard_params[:active_ads_count]
 .row
-  .col-sm-6
+  .col-md-6
     -# Search Information
     .panel.panel-default
       .panel-heading
@@ -42,7 +42,7 @@
     -c = 'default'
   -else
     -c = 'danger'
-  .col-sm-6
+  .col-md-6
     .panel{class: "panel-#{c}"}
       .panel-heading
         .panel-title
