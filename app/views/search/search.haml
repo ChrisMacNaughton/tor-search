@@ -39,8 +39,9 @@
       .search-results
         -@search.records.each do |page|
           =render partial: 'page', locals: {page: page}
-        .col-md-9
-          =will_paginate @search
+        .row
+          .col-md-9
+            =will_paginate @search
 
     .col-xs-4{style: 'margin-top: 20px'}
       .row.col-xs-12
