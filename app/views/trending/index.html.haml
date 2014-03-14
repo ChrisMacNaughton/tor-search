@@ -2,7 +2,7 @@
   -render partial: 'layouts/ads_nav', locals: {title: 'Trending Searches', path: trending_path}
 %h1 Trending
 .row
-  .col-md-4.col-md-offset-1
+  .col-md-5.col-md-offset-1
     .row
       %h2 Right Now
     .row
@@ -12,21 +12,22 @@
           %dt= link_to search[:term], trending_search_path(q: [search[:term]])
           %dd
             .row
-              .col-md-2
-                .progress.progress-striped
-                  .bar{style: "width: #{(search[:volume].to_f / @max.to_f) * 100}%"}
-              .col-md-2
+              .col-md-6
+                .progress
+                  -amount = ((search[:volume].to_f / @max.to_f) * 100)
+                  .progress-bar.progress-bar-info{style: "width: #{amount}%"}
+              .col-md-6
                 %strong #{search[:volume]}+
                 Searches
         %p.muted
           queries are selected based on the difference between the last 6 hours vs the same period yesterday
       -else
         %p Nothing found :(
-  .col-md-7
+  .col-md-6
     %p Compare up to 3 queries at a time
     =form_tag(trending_search_path, method: "get", id: 'search', class: 'form-inline') do
-      .input-append.col-md-10
-        =text_field_tag 'q[]', '', class: 'col-md-2 form-control', placeholder: '1st term'
-        =text_field_tag 'q[]', '', class: 'col-md-2 form-control', placeholder: '2nd term'
-        =text_field_tag 'q[]', '', class: 'col-md-2 form-control', placeholder: '3rd term', id: "appendedInputButtons"
+      .input-append.col-md-12
+        =text_field_tag 'q[]', '', class: 'col-md-1 form-control', placeholder: '1st term'
+        =text_field_tag 'q[]', '', class: 'col-md-1 form-control', placeholder: '2nd term'
+        =text_field_tag 'q[]', '', class: 'col-md-1 form-control', placeholder: '3rd term', id: "appendedInputButtons"
         =button_tag glyphicon('search'), class: 'btn btn-default', type: "submit", name: ''
