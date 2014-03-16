@@ -18,10 +18,10 @@
     =render partial: 'layouts/ads_nav'
     .container-fluid
       =render partial: 'application_alerts'
-
-      .col-lg-3
-        =render partial: 'ads_nav', locals: {advertiser_campaigns: @advertiser_campaigns, advertiser_ad_groups: @advertiser_ad_groups}
-      .col-lg-9
-        =yield
+      .row
+        .col-lg-3
+          =render partial: 'ads_nav', locals: {advertiser_campaigns: @advertiser_campaigns, advertiser_ad_groups: @advertiser_ad_groups}
+        .col-lg-9
+          =yield
       -unless @hide_footer
         =render partial: 'application_footer'
