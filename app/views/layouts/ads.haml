@@ -19,9 +19,9 @@
     .container-fluid
       =render partial: 'application_alerts'
       .row
-        .col-lg-3
-          =render partial: 'ads_nav', locals: {advertiser_campaigns: @advertiser_campaigns, advertiser_ad_groups: @advertiser_ad_groups}
-        .col-lg-9
+        .col-md-3
+          =render partial: 'application/ads_nav', locals: {advertiser_campaigns: @advertiser_campaigns, advertiser_ad_groups: @advertiser_ad_groups}
+        .col-md-9
           =yield
       -unless @hide_footer
         =render partial: 'application_footer'
