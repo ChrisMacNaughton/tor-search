@@ -30,8 +30,6 @@ class Admin::AdsController < Admin::BaseController
   end
 
   def toggle
-    read_through_cache('pending_ads_count', base_cache_time) { Ad.where(approved: false).count }
-    read_through_cache('active_ads_count', base_cache_time) { Ad.joins(:advertiser).where('advertisers.balance > 0').where(approved: true, disabled: false).count }
     ad = Ad.find(params[:ad_id])
     ad.update_attribute(:approved, !ad.approved)
     if ad.approved?
