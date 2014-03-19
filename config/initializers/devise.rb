@@ -12,6 +12,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
   # rubocop:disable all
   config.pepper = '7008474229656912c4e10e2a5c0b93d2c81baebd0a665a870f53fc9072373e01a1df4bde8524b3d67aff64a27fd7eb28e477175c43dede29650a3f848b13817a'
+  config.secret_key = '6c46f32f95efba729fe077ea412645d5c35887f5fcb7c63ebdc238b08a12a18f0386c26518770d7a6888a257edcdaebda76877ff71df911a42e668d66bf481aa'
   # rubocop:enable all
   config.reconfirmable = true
   config.password_length = 6..512

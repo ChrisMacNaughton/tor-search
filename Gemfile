@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '3.2.17'
+gem 'rails', '4.0.4'
 
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 gem 'syslogger'
 # Use SCSS for stylesheets
-gem 'sass-rails', '>= 3.2' # sass-rails needs to be higher than 3.2
-
+gem 'sass-rails', '>= 4.0.2' # sass-rails needs to be higher than 3.2
+gem "rails_admin"
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 gem 'gruff'
@@ -28,6 +28,7 @@ gem 'active_model_serializers'
 
 gem 'angularjs-rails-resource'
 gem "daemons"
+gem 'protected_attributes'
 gem 'delayed_job_active_record'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -54,6 +55,7 @@ gem 'paranoia'
 
 gem 'bootstrap-sass', '~> 3.1.1'
 
+
 group :development do
   gem 'meta_request'
   gem 'better_errors'
@@ -79,5 +81,5 @@ gem "acts_as_textcaptcha", "~> 3.0.10"
 gem 'capistrano', '~> 2.15.5', group: :development
 
 group :production do
-  gem "redis-rails", "~> 3.2.3"
+  gem "redis-rails"
 end

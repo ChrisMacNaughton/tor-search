@@ -23,7 +23,7 @@ class SearchController < ApplicationController
     end
     @mixpanel_tracker.track(current_advertiser.id, 'searched', {term: params[:q]}, visitor_ip_address) \
       if current_advertiser
-    @query = Query.find_or_create_by_term(params[:q])
+    @query = Query.find_or_create_by(term: params[:q])
 
     if params[:q].include? '@'
       require 'bang'
@@ -100,9 +100,7 @@ class SearchController < ApplicationController
       path = Base64.decode64(params[:path])
     else
       ad_click = AdClick \
-        .find_or_initialize_by_ad_id_and_query_id_and_search_id(
-          ad.id, params[:q], params[:s]
-        )
+        .find_or_initialize_by(ad_id: ad.id, query_id: params[:q], search_id: params[:s])
 
       if ad_click.new_record?
         if params[:k].nil?

@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
   before_filter :notify_about_promotions
 
   def setup_flash
+    return if params[:controller] =~ /admin/
     if flash[:notice].is_a? String
       flash[:notice] = [flash[:notice]]
     end

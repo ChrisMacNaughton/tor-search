@@ -29,8 +29,8 @@ class Domain < ActiveRecord::Base
 
   attr_accessible :path, :pending, :spam_answer
   attr_writer :skip_textcaptcha
-  scope :active, where(blocked: false, pending: false)
-  scope :pending, where(pending: true)
+  scope :active, -> { where(blocked: false, pending: false) }
+  scope :pending, -> { where(pending: true) }
 
   def use_captcha!
     @captcha = true

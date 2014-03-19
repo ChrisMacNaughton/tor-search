@@ -40,12 +40,15 @@ class Ad < ActiveRecord::Base
   # }
   attr_accessor :include_path, :keyword_id
 
-  scope :enabled,
+  scope :enabled, -> {
     where(approved: true, disabled: false, ad_groups: {paused: false}, ad_campaigns: {paused: false}) \
     .joins(ad_group: :ad_campaign)
+  }
 
-  scope :pending,
+  scope :pending, -> {
     where(approved: false)
+  }
+
   def self.without_keywords
     ad_groups = AdGroup.without_keywords
     return [] if ad_groups.nil?

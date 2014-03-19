@@ -35,7 +35,7 @@ module TorSearch
     redis_file = Rails.root.join 'config', 'redis.yml'
     redis_yaml = redis_file.exist? ? YAML::load_file(redis_file) : {}
     config.redis = HashWithIndifferentAccess.new(redis_yaml)[Rails.env] || {}
-
+    config.eager_load = false
     config.mixpanel_token = '0ae5b6c02ed62994748ef62674d29d9e'
 
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
@@ -84,7 +84,8 @@ module TorSearch
     config.assets.precompile += ['rails_admin/rails_admin.css', 'rails_admin/rails_admin.js']
     # Custom configuration defaults
     config.tor_search = ActiveSupport::OrderedOptions.new
-    config.tor_search.coinbase_key = 'bfc79be3dc1282001d8fc17f8f664d41af4194449968ce47c0e24d8eba825b18'
+    config.tor_search.coinbase_key = 'yd63kRzfvXgjeUp3'
+    config.tor_search.coinbase_secret = 'Pb8GV9UIj8rPW4tNxGsEL1rpIrWLswVO'
 
     config.tor_search.tor_url = 'http://kbhpodhnfxl3clb4.onion'
     config.tor_search.bitcoin_address = '1PN1JwqftbqFWvpfoBCC2iJ4KBeY4xik6H'

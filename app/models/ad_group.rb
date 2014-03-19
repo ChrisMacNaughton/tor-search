@@ -6,8 +6,9 @@ class AdGroup < ActiveRecord::Base
   has_many :ads, dependent: :destroy
   attr_accessible :name, :paused, :advertiser, :advertiser_id, :ad_campaign, :ad_campaign_id
 
-  scope :without_keywords,
+  scope :without_keywords, -> {
     where("NOT EXISTS (select 'x' FROM ad_group_keywords WHERE ad_group_id = ad_groups.id LIMIT 1)")
+  }
 
   def self.refresh_counts!
     AdGroup.connection.execute <<-SQL

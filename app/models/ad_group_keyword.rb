@@ -5,11 +5,11 @@ class AdGroupKeyword < ActiveRecord::Base
   attr_accessible :ad_group_id, :ad_group, :keyword_id, :keyword, :bid, :paused
   validates :ad_group_id, uniqueness: { scope: [:keyword_id, :ad_group_id] }
 
-  scope :valid,
+  scope :valid, -> {
     where('ad_group_keywords.bid <= advertisers.balance') \
     .joins(:ad_group) \
     .joins('LEFT JOIN advertisers ON advertisers.id = ad_groups.advertiser_id')
-
+  }
   delegate :word, to: :keyword, allow_nil: true
   def status
     if paused?
