@@ -4,7 +4,7 @@ class AdGroupKeyword < ActiveRecord::Base
   has_many :ads, through: :ad_group
   attr_accessible :ad_group_id, :ad_group, :keyword_id, :keyword, :bid, :paused
   validates :ad_group_id, uniqueness: { scope: [:keyword_id, :ad_group_id] }
-
+  validates :keywords, presence: true
   scope :valid, -> {
     where('ad_group_keywords.bid <= advertisers.balance') \
     .joins(:ad_group) \

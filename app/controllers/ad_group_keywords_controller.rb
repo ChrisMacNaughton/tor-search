@@ -19,7 +19,7 @@ class AdGroupKeywordsController < AdsCommonController
       keywords = keywords.where(ad_group_id: ad_group_ids)
     end
 
-    @keywords = keywords.joins(:keyword).order(:word, :created_at).page(page).per_page(per_page)
+    @keywords = keywords.joins(:keyword).order('keywords.word asc').order( :created_at).page(page).per_page(per_page)
   end
 
   def edit
