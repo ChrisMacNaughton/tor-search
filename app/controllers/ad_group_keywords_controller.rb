@@ -65,7 +65,7 @@ class AdGroupKeywordsController < AdsCommonController
       flash[:alert] << "There was a problem handling your request, please try again"
       redirect_to new_keyword_path and return
     end
-    if params[:keywords].present? && params[:keywords].is_a? String
+    if (params[:keywords].present? && params[:keywords].is_a? String)
       keywords = params[:keywords].split(/\n/)
       if keywords.count == 1
         keywords = params[:keywords].split(/,/)
