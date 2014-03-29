@@ -8,7 +8,10 @@
     %meta{property: 'og:title', content: 'TorSearch | Search Hidden Services'}
     %meta{property: 'og:type', content: 'company'}
     %meta{property: 'og:url', content: "#{request.protocol}#{request.host_with_port}"}
-
+    %link{rel: "apple-touch-icon", href: asset_path("apple-touch-icon.png")}
+    %link{rel: "icon", sizes: "76x76", href: asset_path("apple-touch-icon-76x76.png")}
+    %link{rel: "icon", sizes: "120x120", href: asset_path("apple-touch-icon-120x120.png")}
+    %link{rel: "icon", sizes: "152x152", href: asset_path("apple-touch-icon-152x152.png")}
 
     = stylesheet_link_tag "application", media: "all"
     = #stylesheet_link_tag params[:controller], media: "all", "data-turbolinks-track" => true
