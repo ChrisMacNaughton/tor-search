@@ -7,7 +7,7 @@ class CreateAdCampaigns < ActiveRecord::Migration
       t.timestamps
     end
     add_index :ad_campaigns, :advertiser_id
-    Advertiser.all.each do |adv|
+    Advertiser.all.unscoped.each do |adv|
       AdCampaign.create(paused: false, name: 'Default Campaign', advertiser_id: adv.id)
     end
   end

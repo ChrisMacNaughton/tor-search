@@ -14,7 +14,7 @@ class CreateAdGroups < ActiveRecord::Migration
     add_column :ads, :ad_group_id, :integer
     add_index :ads, :ad_group_id
 
-    Ad.all.each do |ad|
+    Ad.all.unscoped.each do |ad|
       c = ad.advertiser.ad_campaigns.first
       ad_group = AdGroup.create(paused: false, ad_campaign_id: c.id, name: "#{ad.title} Ad Group", advertiser_id: ad.advertiser_id)
       ad.update_attribute(:ad_group_id, ad_group.id)

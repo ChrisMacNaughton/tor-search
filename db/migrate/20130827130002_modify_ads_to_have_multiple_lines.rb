@@ -7,7 +7,7 @@ class ModifyAdsToHaveMultipleLines < ActiveRecord::Migration
     change_column :ads, :title, :string, default: "", limit: 25
     add_column :ads, :protocol_id, :integer, default: 0
     change_column :ads, :path, :text, default: "", limit: 2047
-    Ad.all.each do |ad|
+    Ad.all.unscoped.each do |ad|
       desc = ad.body
       ad.line_1 = desc[0...35]
       ad.line_2 = desc[36...70]
