@@ -66,9 +66,11 @@ class SearchController < ApplicationController
       else
         s.update_attribute(:js_enabled, false)
         @instant = false
-        @instant_matches = Matcher.new(@search.term, request).execute || []
       end
+
+      @instant_matches = Matcher.new(@search.term, request).execute || [] unless @instant
     end
+
     Rails.logger.info { @search.errors } unless @search.errors.empty?
 
     render :search

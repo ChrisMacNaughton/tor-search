@@ -15,7 +15,6 @@ class UserAgentMatcher < GenericMatcher
   end
 
   def execute
-
     {
       name: 'Request Headers',
       method: 'title',
@@ -27,10 +26,13 @@ class UserAgentMatcher < GenericMatcher
   end
 
   def data
-    data = HashWithIndifferentAccess.new({})
-    data[:user_agent] = @request.user_agent
-    data.merge!(@request.headers.reject { |k, v| k.include? '.' })
-    reject_headers data
+    d = {}
+    d[:user_agent] = @request.user_agent
+    #d.merge!(@request.headers.reject { |k, v| k.include? '.' })
+    @request.headers.each {|k,v| d[k] = v unless k.include? '.'}
+    
+    binding.pry
+    HashWithIndifferentAccess.new(reject_headers(d))
   end
 
   def reject_headers(data)
