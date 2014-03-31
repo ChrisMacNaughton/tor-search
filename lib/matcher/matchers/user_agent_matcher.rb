@@ -30,8 +30,6 @@ class UserAgentMatcher < GenericMatcher
     d[:user_agent] = @request.user_agent
     #d.merge!(@request.headers.reject { |k, v| k.include? '.' })
     @request.headers.each {|k,v| d[k] = v unless k.include? '.'}
-    
-    binding.pry
     HashWithIndifferentAccess.new(reject_headers(d))
   end
 
