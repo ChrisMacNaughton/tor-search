@@ -2,11 +2,7 @@
 class ErrorsController < ApplicationController
 
   def error_404
-    respond_to do |format|
-      @layout = false
-      format.html { render template: 'errors/error_404', status: 404, layout: 'application' }
-      format.all { render nothing: true, status: 404 }
-    end
+    render template: 'errors/error_404', status: 404, layout: 'application'
     true
   end
 
