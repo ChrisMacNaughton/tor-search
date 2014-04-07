@@ -34,8 +34,7 @@
                 - if e[:link]
                   %p= e[:link].html_safe
                 %br/
-      -if @ads.present?
-        =render partial: 'ad', locals: {ad: @ads[0], search: true, inline: true}
+      =render partial: 'serp_banner'
       .search-results
         -@search.records.each do |page|
           =render partial: 'page', locals: {page: page}
@@ -50,7 +49,7 @@
           %li=link_to "Amazon", root_path(q: "@amazon #{@search.term}")
         %hr{style: 'margin: 10px 0'}
       -unless @ads.nil? || @ads.empty? || @ads.count < 2
-        - @ads[1..-1].each do |ad|
+        - @ads.each do |ad|
           =render partial: 'ad', locals: {ad: ad, search: true}
   -content_for :javascripts do
     :javascript
