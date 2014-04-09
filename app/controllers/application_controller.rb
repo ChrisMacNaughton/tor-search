@@ -29,6 +29,10 @@ class ApplicationController < ActionController::Base
     flash[:alert] ||= []
     flash.now[:notice] ||= flash[:notice]
     flash.now[:alert] ||= flash[:alert]
+
+    if DateTime.now < DateTime.parse('April 11th, 2014 00:00:00 UTC')
+      flash.now[:alert] << "Sorry for the hidden service downtime, upgraded Tor and the webserver to deal with <a href='http://www.heartbleed.com'>Heartbleed</a>".html_safe
+    end
   end
 
   def notify_about_other_domain_for_tor_to_web
