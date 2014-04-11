@@ -8,18 +8,10 @@ class BitcoinAddress < ActiveRecord::Base
     address
   end
 
-  def create_payment!(param)
-    begin
-      res = Net::HTTP.get(URI "https://coinbase.com/api/v1/transactions/#{param[:transaction][:id]}?api_key=#{TorSearch::Application.config.tor_search.coinbase_key}")
-      transaction = JSON.parse(res)['transaction']
-    rescue => e
-      Airbrake.notify(e)
-      false
-    end
-    return false if transaction.nil?
+  def create_payment!(params)
 
-    amount = transaction['amount']['amount'].to_f
-    hash = transaction['hsh']
+    amount = params[:amount].to_f
+    hash = params[:transaction][:hash]
     payment = Payment.create(
       transaction_hash: hash,
       bitcoin_address: self,
@@ -27,22 +19,6 @@ class BitcoinAddress < ActiveRecord::Base
       amount: amount
     )
 
-    if DateTime.now.beginning_of_day > Date.parse('February 19th, 2014').beginning_of_day
-      if DateTime.now.end_of_day < Date.parse('March 1st, 2014').beginning_of_day
-        bonus_amount = if amount >= 1.0
-          amount * 0.15
-        elsif amount >= 0.5
-          amount * 0.12
-        else
-          amount * 0.10
-        end
-        Payment.create(
-          advertiser: advertiser,
-          amount: bonus_amount,
-          parent_id: payment.id
-        )
-      end
-    end
   end
 
   def self.generate_new_address(advertiser)
