@@ -48,7 +48,7 @@
         %ul.unstyled
           %li=link_to "Amazon", root_path(q: "@amazon #{@search.term}")
         %hr{style: 'margin: 10px 0'}
-      -unless @ads.nil? || @ads.empty? || @ads.count < 2
+      -unless @ads.nil? || @ads.empty?
         - @ads.each do |ad|
           =render partial: 'ad', locals: {ad: ad, search: true}
   -content_for :javascripts do
