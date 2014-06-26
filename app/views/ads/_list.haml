@@ -28,10 +28,7 @@
             %ul.list-unstyled
               -if ad.destroyed?
                 %li
-                  =form_for ad, as: :ad, url: ad_restore_path(ad) do |f|
-                    =f.hidden_field :id
-                    %button{type: 'submit', class: 'btn btn-warning'}
-                      = restore_icon
+                  = link_to restore_icon, ad_restore_path(ad)
               -else
                 %li
                   =link_to edit_icon, edit_ad_path(ad), class: 'btn btn-info', title: 'Edit Ad'
@@ -42,11 +39,7 @@
                     -else
                       =link_to pause_icon, ad_toggle_path(ad), class: 'btn btn-default', title: 'Disable Ad'
                 %li
-                  =form_for ad, as: :ad, url: ad_delete_path(ad) do |f|
-                    =f.hidden_field :delete, value: true
-                    =f.hidden_field :id
-                    %button{type: 'submit', class: 'btn btn-warning'}
-                      = hide_icon
+                  =link_to hide_icon, ad_delete_path(ad)
           %td.col-sm-4= render partial: 'ad', locals: {ad: ad}
           %td= link_to ad.ad_campaign.name, campaign_path(ad.ad_campaign)
           %td= link_to ad.ad_group.name, ad.ad_group
