@@ -28,7 +28,7 @@
             %ul.list-unstyled
               -if ad.destroyed?
                 %li
-                  =form_for ad, as: :ad, url: ad_restore_path(ad) do |f|
+                  =form_for ad, as: :ad, url: ad_restore_path(ad), method: :put do |f|
                     =f.hidden_field :id
                     %button{type: 'submit', class: 'btn btn-warning'}
                       = restore_icon

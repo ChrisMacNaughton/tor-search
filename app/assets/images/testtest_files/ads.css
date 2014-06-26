@@ -1,0 +1,20 @@
+/*
+
+
+
+*/
+
+.compact li {
+  line-height: 13px;
+}
+.path{
+  color: #093;
+  font-size: 0.8em;
+}
+.toggle-button {
+  display: block;
+  background-color: #87CEFA;
+  padding: 5px 0 5px 10px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}

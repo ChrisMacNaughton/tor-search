@@ -1,0 +1,92 @@
+/* line 10, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+.field_with_errors {
+  position: relative;
+}
+/* line 12, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+.field_with_errors label {
+  color: #990000;
+  font-style: italic;
+}
+/* line 16, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+.field_with_errors input, .field_with_errors select {
+  border: 1px solid #990000 !important;
+}
+/* line 20, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+.field_with_errors .chzn-single {
+  background: #ef4848;
+  color: black;
+}
+/* line 23, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+.field_with_errors .chzn-single div {
+  background: #f7a6a6;
+}
+
+/* line 27, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+.formErrorMessage {
+  color: #ef4848;
+}
+
+/* line 31, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+#error_explanation {
+  color: #f00000;
+}
+/* line 33, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+#error_explanation h2 {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: .8em;
+  font-style: italic;
+  font-weight: 900;
+  width: 450px;
+}
+/* line 40, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+#error_explanation ul {
+  float: none;
+  font-size: .8em;
+  left: 10px;
+  padding: 0 0 10px 10px;
+}
+/* line 45, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+#error_explanation ul li {
+  display: list-item;
+  list-style: disc inside;
+}
+
+/* line 50, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+form .error_mesg {
+  color: #ef4848;
+  font-style: italic;
+  margin: 0 5px;
+}
+
+/* Forms, error highlighting */
+/* line 57, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+.formErrorMessage {
+  color: #f00000;
+}
+
+/* line 60, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+.errors-holder {
+  float: left;
+  position: absolute;
+}
+
+/* line 63, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+.formErrorList {
+  float: left;
+  position: relative;
+  background: #fafaf6;
+  border: none;
+  color: #f00000;
+  margin: 5px 0 5px 10px;
+  padding: 5px;
+}
+/* line 71, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+.formErrorList h5 {
+  margin: 2px 8px;
+  width: 100%;
+}
+/* line 74, /home/chris/projects/torsearch/app/assets/stylesheets/base/_errors.scss */
+.formErrorList h5.title {
+  color: #742c2c;
+  margin: 2px 0;
+}

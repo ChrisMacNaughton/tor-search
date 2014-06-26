@@ -1,0 +1,6 @@
+/* line 5, /home/chris/projects/torsearch/app/assets/stylesheets/trending.css.scss */
+.trending_graph {
+  width: 940px;
+  height: 400px;
+  background-image: url(/assets/loading-graph.png);
+}
