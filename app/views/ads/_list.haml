@@ -28,7 +28,7 @@
             %ul.list-unstyled
               -if ad.destroyed?
                 %li
-                  = link_to restore_icon, ad_restore_path(ad)
+                  = link_to restore_icon, ad_restore_path(ad), class: 'btn btn-warning', title: 'Show Ad'
               -else
                 %li
                   =link_to edit_icon, edit_ad_path(ad), class: 'btn btn-info', title: 'Edit Ad'
@@ -39,7 +39,7 @@
                     -else
                       =link_to pause_icon, ad_toggle_path(ad), class: 'btn btn-default', title: 'Disable Ad'
                 %li
-                  =link_to hide_icon, ad_delete_path(ad)
+                  =link_to hide_icon, ad_delete_path(ad), class: 'btn btn-warning', title: 'Hide Ad'
           %td.col-sm-4= render partial: 'ad', locals: {ad: ad}
           %td= link_to ad.ad_campaign.name, campaign_path(ad.ad_campaign)
           %td= link_to ad.ad_group.name, ad.ad_group
