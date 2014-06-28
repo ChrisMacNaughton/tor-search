@@ -34,7 +34,7 @@
                 -else
                   =link_to pause_icon, keyword_toggle_path(keyword), class: 'btn btn-default'
               %li
-                =form_for keyword, as: :keyword, url: keyword_delete_path(keyword) do |f|
+                =form_for keyword, as: :keyword, url: keyword_delete_path(keyword), method: :post do |f|
                   =f.hidden_field :delete, value: true
                   =f.hidden_field :id
                   %button{type: 'submit', class: 'btn btn-warning'}

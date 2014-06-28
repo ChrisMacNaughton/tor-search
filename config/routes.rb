@@ -59,7 +59,7 @@ TorSearch::Application.routes.draw do
       # put 'toggle' => 'ads#toggle', as: :toggle
     end
     resources :keywords, controller: :ad_group_keywords do
-      put 'delete' => 'ad_group_keywords#delete', as: :delete
+      post 'delete' => 'ad_group_keywords#delete', as: :delete
       get 'toggle' => 'ad_group_keywords#toggle', as: :toggle
       # put 'toggle' => 'ad_group_keywords#toggle', as: :toggle
     end
