@@ -12,7 +12,7 @@ class Payment < ActiveRecord::Base
 
   after_create :credit_advertiser
   validates :coupon_id, uniqueness: {
-    scope: [:advertiser_id, :bitcoin_address_id]
+    scope: [:advertiser_id, :bitcoin_address_id, :transaction_hash]
   }, unless: :is_bonus?
   validates :transaction_hash, uniqueness: {
     scope: [:advertiser_id, :coupon_id, :bitcoin_address_id]
