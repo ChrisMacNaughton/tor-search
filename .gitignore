@@ -20,3 +20,4 @@
 /public/assets
 coverage
 .env
+.DS_Store
