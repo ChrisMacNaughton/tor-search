@@ -33,7 +33,12 @@
         .row
           .panel.panel-info
             .panel-heading
-
+      .alert.alert-warning
+        %a.close{data: {dismiss: 'alert'}} &times;
+        TorSearch is available for purchase. If interested, please contact me through the
+        =link_to "contact form", contact_path
+        or by email at
+        =link_to 'sales@torsearch.es', 'mailto:sales@torsearch.es'
       =yield
       -unless @hide_footer
         =render partial: 'application_footer'
