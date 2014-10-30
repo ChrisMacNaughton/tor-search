@@ -6,6 +6,7 @@
 .row
 -unless @search.errors.empty?
   -@search.errors.each do |err|
+    =render partial: 'serp_banner'
     .row.col-md-12.error=err
 -else
   .row
