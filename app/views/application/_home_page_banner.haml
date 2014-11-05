@@ -1,15 +1,18 @@
 .row
-  -if DateTime.now < DateTime.parse('October 31st, 2014 21:00:00 UTC') && DateTime.now >= DateTime.parse('October 29th, 2014 20:00:00 UTC')
+  -if DateTime.now < DateTime.parse('November 16th, 2014 00:00:00 UTC') && DateTime.now >= DateTime.parse('October 30th, 2014 13:20:00 UTC')
     -# Bungee Ad
-    %a{href: 'http://7hll5xm2muaczxlb.onion/'}
-      =image_tag asset_path('bStore_banner.png'), alt: 'bStore', class: 'img-responsive center-block'
+    %a{href: 'http://ukhejtt6kkvwlmzx.onion/'}
+      =image_tag asset_path('tor_supermarket.png'), alt: 'Tor Supermarket', class: 'img-responsive center-block'
   -else
     -# S2Disk Ad
-    -#%a{href: 'https://www.s2disk.com'}
-    -#  =image_tag asset_path('s2disk.png'), alt: 'S2Disk', class: 'img-responsive center-block'
-      -# Default Ad
-      %a{href: 'mailto:sales@torsearch.es'}
-        =image_tag asset_path('banner.png'), alt: 'Advertise here!', class: 'img-responsive center-block'
+    %a{href: 'https://www.s2disk.com'}
+      =image_tag asset_path('s2disk.png'), alt: 'S2Disk', class: 'img-responsive center-block'
+    -# Consumer Law Group ad
+    -# %a{href: 'http://torsearch.consumerlawsuitgroup.com'}
+    -#  =image_tag asset_path('cs_banner.jpg'), alt: 'Injured in an accident?', class: 'img-responsive center-block'
+    -# Default Ad
+    -# %a{href: 'mailto:sales@torsearch.es'}
+    -#   =image_tag asset_path('banner.png'), alt: 'Advertise here!', class: 'img-responsive center-block'
   .ad-notice.col-xs-1.col-xs-offset-8
     =link_to 'Advertising', advertising_path
 .padding
