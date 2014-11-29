@@ -10,7 +10,7 @@ RailsAdmin.config do |config|  config.main_app_name = ['Tor Search', 'Admin']
   config.current_user_method { current_admin } # auto-generated
 
   config.authorize_with do |controller|
-    redirect_to main_app.root_path unless current_admin
+    redirect_to new_session_path(:admin) unless current_admin
   end
 
   config.audit_with :history, 'Admin'
