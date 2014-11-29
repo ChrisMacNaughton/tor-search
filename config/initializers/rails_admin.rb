@@ -8,6 +8,11 @@ end
 RailsAdmin.config do |config|  config.main_app_name = ['Tor Search', 'Admin']
 
   config.current_user_method { current_admin } # auto-generated
+
+  config.authorize_with do |controller|
+    redirect_to main_app.root_path unless current_admin
+  end
+
   config.audit_with :history, 'Admin'
   config.included_models = %w(
     Ad AdGroup AdCampaign AdGroupKeyword Admin Advertiser
