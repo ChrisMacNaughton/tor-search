@@ -84,8 +84,8 @@ module TorSearch
     config.assets.precompile += ['rails_admin/rails_admin.css', 'rails_admin/rails_admin.js']
     # Custom configuration defaults
     config.tor_search = ActiveSupport::OrderedOptions.new
-    config.tor_search.coinbase_key = 'yd63kRzfvXgjeUp3'
-    config.tor_search.coinbase_secret = 'Pb8GV9UIj8rPW4tNxGsEL1rpIrWLswVO'
+    config.tor_search.coinbase_key = ENV['COINBASE_KEY']
+    config.tor_search.coinbase_secret = ENV['COINBASE_SECRET']
 
     config.tor_search.tor_url = 'http://kbhpodhnfxl3clb4.onion'
     config.tor_search.bitcoin_address = '1PN1JwqftbqFWvpfoBCC2iJ4KBeY4xik6H'

@@ -10,7 +10,7 @@ class Tracker
   end
 
   def auth_token
-    @auth_token ||= '3c5ab420b37daa3c643fca412a1f8da8'
+    @auth_token ||= ENV['PIWIK_TOKEN']
   end
 
   def initialize(request, search = nil, action = nil, site_id = 5)
