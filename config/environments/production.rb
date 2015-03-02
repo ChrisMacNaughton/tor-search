@@ -43,14 +43,16 @@ TorSearch::Application.configure do
 
   config.action_mailer.default_url_options = { :host => 'torsearch.es' }
 
-  ActionMailer::Base.smtp_settings = {
-    :address => "smtp.sendgrid.net",
-    :port => 587,
-    :domain => "torsearch.es",
-    :authentication => :plain,
-    :user_name => 'torsearch_mail',
-    :password => 'jDFkTzo9Tk4N7f^THy%4&eDr2sboVjO#19MgakUDx*Xx#3LG!Z'
-  }
+  config.action_mailer.raise_delivery_errors = false
+  
+  # ActionMailer::Base.smtp_settings = {
+  #   :address => "smtp.sendgrid.net",
+  #   :port => 587,
+  #   :domain => "torsearch.es",
+  #   :authentication => :plain,
+  #   :user_name => 'torsearch_mail',
+  #   :password => 'jDFkTzo9Tk4N7f^THy%4&eDr2sboVjO#19MgakUDx*Xx#3LG!Z'
+  # }
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
