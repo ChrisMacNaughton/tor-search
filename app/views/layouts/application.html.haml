@@ -35,7 +35,8 @@
             .panel-heading
       .alert.alert-warning
         %a.close{data: {dismiss: 'alert'}} &times;
-        TorSearch will soon be shut down. At or around that time, it will be made open source, and the search index will be made available for download.
+        TorSearch will soon be shut down. The source code for TorSearch is available at
+        =link_to 'Github', 'https://github.com/ChrisMacNaughton/tor-search'
       =yield
       -unless @hide_footer
         =render partial: 'application_footer'
