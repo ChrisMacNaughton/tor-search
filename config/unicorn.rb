@@ -19,9 +19,6 @@ preload_app       true
 
 before_exec do |server|
   ENV['BUNDLE_GEMFILE'] = "#{app_path}/Gemfile"
-  # rubocop:disable all
-  ENV['SECRET_TOKEN'] = 'fd52e049ef76b6e1a50cbe33d8967b32f0e9741e17ccb3d49e254426790318597107b4a6df160b7d5fd4ccfea8513b3f55e640e3c1be1de0a673d4e2514c4c96'
-  # rubocop:enable all
 end
 
 before_fork do |server, worker|
